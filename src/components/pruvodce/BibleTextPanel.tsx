@@ -105,12 +105,16 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
                 {localRef}
               </p>
             )}
-            <div className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto opacity-60">
-              {localText}
+            <div className="relative">
+              <div className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto blur-[3px] select-none">
+                {localText}
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <p className="rounded-lg bg-cream/90 px-4 py-2 text-xs italic text-text-muted shadow-sm">
+                  {`S textem budete pracovat od dal\u0161\u00EDho kroku.`}
+                </p>
+              </div>
             </div>
-            <p className="mt-3 text-[11px] italic text-text-light">
-              {`S textem budete pracovat od dal\u0161\u00EDho kroku. Te\u010F se soust\u0159e\u010Fte na p\u0159\u00EDpravu srdce.`}
-            </p>
           </div>
         ) : (
           <>
