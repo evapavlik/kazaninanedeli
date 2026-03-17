@@ -466,7 +466,7 @@ function AnnotationGuide({ hasAnnotations }: { hasAnnotations: boolean }) {
           <path d="M10 9v4M10 7v0" />
         </svg>
         <span className="text-[11px] font-medium text-sage">
-          {`Jak ozna\u010Dovat text`}
+          {`Pro\u010D ozna\u010Dovat text?`}
         </span>
         <svg
           width="12"
@@ -481,19 +481,43 @@ function AnnotationGuide({ hasAnnotations }: { hasAnnotations: boolean }) {
         </svg>
       </button>
       {open && (
-        <div className="mt-2 rounded-lg border border-sage/20 bg-sage-pale/50 px-3 py-2.5">
-          <p className="mb-2 text-[11px] leading-relaxed text-text-muted">
-            {`Ozna\u010Dte my\u0161\u00ED libovolnou fr\u00E1zi v textu a vyberte kategorii. Kliknut\u00EDm na zv\u00FDrazn\u011Bn\u00FD text m\u016F\u017Eete p\u0159idat pozn\u00E1mku nebo anotaci smazat.`}
+        <div className="mt-2 rounded-lg border border-sage/20 bg-sage-pale/50 px-3 py-3">
+          <p className="mb-3 text-[11px] leading-relaxed text-text-muted">
+            {`Ozna\u010Dov\u00E1n\u00ED v\u00E1m pom\u016F\u017Ee vid\u011Bt text hloub\u011Bji. Ozna\u010Dte my\u0161\u00ED libovolnou fr\u00E1zi a vyberte kategorii. Pozn\u00E1mky z\u016Fstanou ulo\u017Een\u00E9 a prov\u00E1z\u00ED v\u00E1s v\u0161emi kroky.`}
           </p>
-          <div className="flex flex-wrap gap-1.5">
-            {annotationCategories.map((cat) => (
-              <span
-                key={cat.id}
-                className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${cat.bg} ${cat.color}`}
-              >
-                {cat.name}
+          <div className="space-y-2">
+            <div className="flex items-start gap-2">
+              <span className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${annotationCategories[0].bg} ${annotationCategories[0].color}`}>
+                {annotationCategories[0].name}
               </span>
-            ))}
+              <p className="text-[11px] leading-relaxed text-text-muted">
+                {`Slova, kter\u00E1 nesou hlavn\u00ED v\u00FDznam textu. Ve v\u00FDkladu z nich vych\u00E1z\u00EDte.`}
+              </p>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${annotationCategories[1].bg} ${annotationCategories[1].color}`}>
+                {annotationCategories[1].name}
+              </span>
+              <p className="text-[11px] leading-relaxed text-text-muted">
+                {`Opakuj\u00EDc\u00ED se obrazy a t\u00E9mata. Odhal\u00ED, o \u010Dem text skute\u010Dn\u011B je.`}
+              </p>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${annotationCategories[2].bg} ${annotationCategories[2].color}`}>
+                {annotationCategories[2].name}
+              </span>
+              <p className="text-[11px] leading-relaxed text-text-muted">
+                {`P\u0159elomy, za\u010D\u00E1tky a konce odd\u00EDl\u016F. Pom\u016F\u017Ee v\u00E1m p\u0159i stavb\u011B k\u00E1z\u00E1n\u00ED.`}
+              </p>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${annotationCategories[3].bg} ${annotationCategories[3].color}`}>
+                {annotationCategories[3].name}
+              </span>
+              <p className="text-[11px] leading-relaxed text-text-muted">
+                {`M\u00EDsta, kde v\u00E1s text zaraz\u00ED nebo kde nech\u00E1pete. Pr\u00E1v\u011B tam b\u00FDv\u00E1 j\u00E1dro k\u00E1z\u00E1n\u00ED.`}
+              </p>
+            </div>
           </div>
         </div>
       )}
