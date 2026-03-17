@@ -93,18 +93,8 @@ export default function TextAnnotation({ slug }: { slug: string }) {
   return (
     <div className="space-y-4">
       <p className="text-xs leading-relaxed text-text-muted">
-        {`Vlo\u017Ete biblick\u00FD text a ozna\u010Dte kl\u00ED\u010Dov\u00E1 slova, motivy, strukturn\u00ED prvky a ot\u00E1zky.`}
+        {`Ozna\u010Dte kl\u00ED\u010Dov\u00E1 slova, motivy, strukturn\u00ED prvky a ot\u00E1zky z textu vlevo.`}
       </p>
-
-      {/* Bible text input */}
-      <DebouncedTextarea
-        label={`Biblick\u00FD text`}
-        value={data.bibleText}
-        onChange={updateBibleText}
-        placeholder={`Vlo\u017Ete text perikopy\u2026`}
-        rows={5}
-        variant="sage"
-      />
 
       {/* Add annotation */}
       <div className="space-y-2">
