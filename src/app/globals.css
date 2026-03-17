@@ -43,3 +43,34 @@ html {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Breathing circle idle animation */
+@keyframes breathe-idle {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+.breathe-idle {
+  animation: breathe-idle 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes breathe-ring {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.3;
+  }
+}
+
+.breathe-ring {
+  animation: breathe-ring 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}

@@ -147,6 +147,44 @@ export default function StepContentPanel({
           <p className="text-sm font-light leading-[1.8] italic text-text-muted">
             {step.tip}
           </p>
+          {/* Translation links for step 2 (čtení) and step 4 (výklad) */}
+          {(step.slug === "cteni" || step.slug === "vyklad") && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              <span className="text-[11px] text-sage">{`Porovnat p\u0159eklady:`}</span>
+              <a
+                href="https://www.bibleserver.com/CEP"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] font-medium text-sage underline decoration-sage/30 hover:decoration-sage"
+              >
+                {`\u010CEP`}
+              </a>
+              <a
+                href="https://www.bible21.cz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] font-medium text-sage underline decoration-sage/30 hover:decoration-sage"
+              >
+                Bible21
+              </a>
+              <a
+                href="https://www.bibleserver.com/BKR"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] font-medium text-sage underline decoration-sage/30 hover:decoration-sage"
+              >
+                {`Kralick\u00E1`}
+              </a>
+              <a
+                href="https://www.bibleserver.com/B21"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] font-medium text-sage underline decoration-sage/30 hover:decoration-sage"
+              >
+                BibleServer
+              </a>
+            </div>
+          )}
         </section>
 
         {/* Notepad */}
