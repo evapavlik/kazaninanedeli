@@ -91,40 +91,39 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
   // Annotations enabled only from step 2 onwards
   const annotationsEnabled = !isFirstStep && currentSlug !== "modlitba";
 
-  // Step 1: breathing exercise + blurred text preview
+  // Step 1: breathing exercise first, blurred text underneath
   if (isFirstStep) {
     return (
-      <div className="space-y-4">
-        {/* Breathing exercise */}
+      <div className="rounded-xl border border-border bg-cream p-5 lg:p-6">
+        {/* Breathing exercise — always visible, always first */}
         <BreathingExercise />
 
-        {/* Blurred text preview or suggestion */}
-        <div className="rounded-xl border border-border bg-cream p-5">
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
-            {`Biblick\u00FD text`}
-          </p>
-          {hasText ? (
-            <div className="relative">
-              <div className="max-h-48 overflow-hidden font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto blur-[3px] select-none">
+        {/* Blurred text underneath — fades out at bottom */}
+        {hasText ? (
+          <div className="relative mt-6">
+            <div className="max-h-[280px] overflow-hidden">
+              {localRef && (
+                <p className="mb-3 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick blur-[2px]">
+                  {localRef}
+                </p>
+              )}
+              <div className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto blur-[3px] select-none">
                 {localText}
               </div>
-              <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-cream via-cream/60 to-transparent pb-4">
-                <p className="text-xs italic text-text-muted">
-                  {`S textem budete pracovat od dal\u0161\u00EDho kroku.`}
-                </p>
-              </div>
             </div>
-          ) : (
-            <>
-              <p className="text-sm italic leading-relaxed text-text-muted">
-                {`V dal\u0161\u00EDm kroku sem vlo\u017E\u00EDte text perikopy, se kterou budete pracovat.`}
-              </p>
-              {showSuggestion && (
-                <SundaySuggestion reading={currentReading} onApply={applyReading} />
-              )}
-            </>
-          )}
-        </div>
+            {/* Fade-out gradient */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-cream to-transparent" />
+          </div>
+        ) : (
+          <div className="mt-6">
+            <p className="text-sm italic leading-relaxed text-text-muted">
+              {`V dal\u0161\u00EDm kroku sem vlo\u017E\u00EDte text perikopy, se kterou budete pracovat.`}
+            </p>
+            {showSuggestion && (
+              <SundaySuggestion reading={currentReading} onApply={applyReading} />
+            )}
+          </div>
+        )}
       </div>
     );
   }
@@ -275,7 +274,7 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
 /** Breathing exercise for step 1 — inspired by meditation apps */
 function BreathingExercise() {
   const [active, setActive] = useState(false);
-  const [phase, setPhase] = useState<"inhale" | "hold" | "exhale">("inhale");
+  const [phase, setPhase] = useState<"inhale" | "hold" | "exhale">("exhale");
   const [count, setCount] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -297,8 +296,13 @@ function BreathingExercise() {
     let tick = 0;
     let cycles = 0;
 
-    setPhase("inhale");
+    setPhase("exhale");
     setCount(INHALE);
+
+    // Brief delay so browser renders small circle, then start growing
+    const startDelay = setTimeout(() => {
+      setPhase("inhale");
+    }, 50);
 
     const phaseDurations = { inhale: INHALE, hold: HOLD, exhale: EXHALE };
 
@@ -336,6 +340,7 @@ function BreathingExercise() {
     }, 1000);
 
     return () => {
+      clearTimeout(startDelay);
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [active]);
@@ -348,65 +353,89 @@ function BreathingExercise() {
 
   if (!active) {
     return (
-      <div className="flex flex-col items-center rounded-xl border border-border bg-cream p-8">
-        <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
+      <div className="flex min-h-[420px] flex-col items-center justify-center py-12">
+        <p className="mb-2 font-cormorant text-[13px] font-semibold uppercase tracking-[0.2em] text-sage/70">
           {`P\u0159\u00EDprava srdce`}
         </p>
-        <p className="mb-6 text-center text-sm italic leading-relaxed text-text-muted">
+        <p className="mb-10 max-w-[240px] text-center font-literata text-[15px] italic leading-relaxed text-text-muted">
           {`Zt\u0161\u00EDte se a otev\u0159ete se Bohu i textu.`}
         </p>
         <button
           onClick={() => setActive(true)}
-          className="group flex flex-col items-center gap-3"
+          className="group flex flex-col items-center gap-4"
         >
-          <div className="flex h-24 w-24 items-center justify-center rounded-full border-2 border-sage/30 bg-sage-pale transition-all group-hover:border-sage/50 group-hover:shadow-lg group-hover:shadow-sage/10">
-            <span className="text-sm font-medium text-sage">{`D\u00FDchat`}</span>
+          <div className="relative flex h-40 w-40 items-center justify-center">
+            {/* Outer pulsing ring */}
+            <div className="breathe-ring absolute inset-0 rounded-full border border-sage/20" />
+            {/* Inner breathing circle */}
+            <div className="breathe-idle flex h-32 w-32 items-center justify-center rounded-full bg-sage-pale/60 backdrop-blur-sm transition-colors duration-500 group-hover:bg-sage-pale">
+              <span className="font-literata text-base font-medium text-sage">{`D\u00FDchat`}</span>
+            </div>
           </div>
-          <span className="text-[11px] text-text-light">
-            {`3 cykly \u2022 nep\u0159ed\u00E1no`}
+          <span className="text-[11px] tracking-wide text-text-light/60">
+            {`3 klidn\u00E9 cykly`}
           </span>
         </button>
       </div>
     );
   }
 
-  // Animation scale based on phase
-  const scaleClass =
-    phase === "inhale"
-      ? "scale-100"
-      : phase === "hold"
-        ? "scale-100"
-        : "scale-75";
+  // Circle scale: small at start/exhale, grows on inhale, holds at full
+  const expanded = phase === "inhale" || phase === "hold";
+  const duration = phase === "inhale" ? INHALE : phase === "exhale" ? EXHALE : 0.3;
 
-  const bgClass =
-    phase === "inhale"
-      ? "bg-sage/20"
-      : phase === "hold"
-        ? "bg-sage/25"
-        : "bg-sage/15";
+  const circleStyle: React.CSSProperties = {
+    transform: expanded ? "scale(1)" : "scale(0.55)",
+    transition: `transform ${duration}s cubic-bezier(0.4, 0, 0.2, 1)`,
+  };
+
+  const ringOuterStyle: React.CSSProperties = {
+    transform: expanded ? "scale(1)" : "scale(0.6)",
+    opacity: expanded ? 0.35 : 0.1,
+    transition: `all ${duration}s cubic-bezier(0.4, 0, 0.2, 1)`,
+  };
+
+  const ringInnerStyle: React.CSSProperties = {
+    transform: expanded ? "scale(1)" : "scale(0.58)",
+    opacity: expanded ? 0.15 : 0.05,
+    transition: `all ${duration}s cubic-bezier(0.4, 0, 0.2, 1)`,
+  };
 
   return (
-    <div className="flex flex-col items-center rounded-xl border border-border bg-cream p-8">
-      <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
+    <div className="flex min-h-[420px] flex-col items-center justify-center py-12">
+      <p className="mb-10 font-cormorant text-[13px] font-semibold uppercase tracking-[0.2em] text-sage/60">
         {`P\u0159\u00EDprava srdce`}
       </p>
 
-      {/* Breathing circle */}
-      <div className="relative mb-6 flex h-32 w-32 items-center justify-center">
+      {/* Breathing circle — large, immersive */}
+      <div className="relative mb-10 flex h-64 w-64 items-center justify-center">
+        {/* Outer ring */}
         <div
-          className={`absolute inset-0 rounded-full ${bgClass} transition-all duration-1000 ease-in-out ${scaleClass}`}
+          className="absolute inset-0 rounded-full border border-sage/30"
+          style={ringOuterStyle}
         />
-        <div className="relative z-10 flex flex-col items-center">
-          <span className="text-3xl font-light text-sage">{count}</span>
-          <span className="mt-1 text-[11px] font-medium uppercase tracking-wider text-sage">
-            {phaseLabels[phase]}
-          </span>
+        {/* Middle ring */}
+        <div
+          className="absolute inset-4 rounded-full bg-sage/10"
+          style={ringInnerStyle}
+        />
+        {/* Main breathing circle */}
+        <div
+          className="flex h-48 w-48 items-center justify-center rounded-full bg-sage-pale/80 shadow-[0_0_60px_rgba(74,124,111,0.12)]"
+          style={circleStyle}
+        >
+          <div className="flex flex-col items-center">
+            <span className="font-literata text-6xl font-light text-sage">{count}</span>
+            <span className="mt-2 font-cormorant text-[15px] font-semibold uppercase tracking-[0.25em] text-sage/70">
+              {phaseLabels[phase]}
+            </span>
+          </div>
         </div>
       </div>
 
       <button
         onClick={() => setActive(false)}
-        className="text-[11px] text-text-light hover:text-text-muted"
+        className="text-[11px] tracking-wide text-text-light/50 transition-colors hover:text-text-muted"
       >
         {`Ukon\u010Dit`}
       </button>
