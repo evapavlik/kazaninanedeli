@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Lora, Plus_Jakarta_Sans, Cormorant_Garamond } from "next/font/google";
+import { Lora, Plus_Jakarta_Sans, Cormorant_Garamond, Literata } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -25,6 +25,13 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
 });
 
+const literata = Literata({
+  variable: "--font-literata",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+});
+
 export const metadata: Metadata = {
   title: {
     default: "Kázání na neděli — Průvodce přípravou kázání",
@@ -43,7 +50,7 @@ export default function RootLayout({
   return (
     <html lang="cs">
       <body
-        className={`${lora.variable} ${jakarta.variable} ${cormorant.variable} font-jakarta antialiased`}
+        className={`${lora.variable} ${jakarta.variable} ${cormorant.variable} ${literata.variable} font-jakarta antialiased`}
       >
         <div className="flex min-h-screen flex-col">
           <Header />

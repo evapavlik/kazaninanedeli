@@ -141,7 +141,7 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
               {localRef}
             </p>
           )}
-          <div className="font-cormorant text-[19px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto">
+          <div className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto">
             {localText}
           </div>
         </div>
@@ -160,7 +160,7 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
             }}
             placeholder={`Vlo\u017Ete text perikopy\u2026`}
             rows={8}
-            className="w-full resize-none rounded-lg border border-border/70 bg-white/80 p-4 font-cormorant text-[18px] leading-[1.9] text-text placeholder:text-text-light/50 focus:border-brick/30 focus:outline-none focus:ring-2 focus:ring-brick/10"
+            className="w-full resize-none rounded-lg border border-border/70 bg-white/80 p-4 font-literata text-[17px] leading-[1.9] text-text placeholder:text-text-light/50 focus:border-brick/30 focus:outline-none focus:ring-2 focus:ring-brick/10"
           />
           {editing && hasText && (
             <button
