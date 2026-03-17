@@ -3,17 +3,27 @@
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { narrativeTypes } from "@/data/narrative-types";
+import { parseReference } from "@/lib/bible-refs";
 
 export default function NarrativeTypeIdentifier({ slug }: { slug: string }) {
   const [savedType, setSavedType] = useLocalStorage<string>(
     `kazani-narrative-type-${slug}`,
     ""
   );
+  const [bibleRef] = useLocalStorage<string>("kazani-bible-ref", "");
   const [selectedId, setSelectedId] = useState("");
+  const [suggestedId, setSuggestedId] = useState("");
 
   useEffect(() => {
     setSelectedId(savedType);
   }, [savedType]);
+
+  // Suggest narrative type from bible reference
+  useEffect(() => {
+    if (!bibleRef) { setSuggestedId(""); return; }
+    const parsed = parseReference(bibleRef);
+    setSuggestedId(parsed?.narrativeType || "");
+  }, [bibleRef]);
 
   const handleSelect = (id: string) => {
     const newId = id === selectedId ? "" : id;
@@ -26,7 +36,9 @@ export default function NarrativeTypeIdentifier({ slug }: { slug: string }) {
   return (
     <div className="space-y-4">
       <p className="text-xs leading-relaxed text-text-muted">
-        {`Ur\u010Dete, jak\u00FD typ textu p\u0159ipravujete. Ka\u017Ed\u00FD \u017E\u00E1nr m\u00E1 sv\u00E1 specifika pro pozorov\u00E1n\u00ED.`}
+        {suggestedId && !selectedId
+          ? `Na z\u00E1klad\u011B odkazu navrhujeme typ textu. Klikn\u011Bte pro potvrzen\u00ED nebo vyberte jin\u00FD.`
+          : `Ur\u010Dete, jak\u00FD typ textu p\u0159ipravujete. Ka\u017Ed\u00FD \u017E\u00E1nr m\u00E1 sv\u00E1 specifika pro pozorov\u00E1n\u00ED.`}
       </p>
 
       {/* Type grid */}
@@ -38,7 +50,9 @@ export default function NarrativeTypeIdentifier({ slug }: { slug: string }) {
             className={`flex flex-col items-center gap-1 rounded-lg border p-3 text-center transition-all ${
               selectedId === type.id
                 ? "border-brick bg-white shadow-sm"
-                : "border-border/50 bg-white/60 hover:border-brick/30"
+                : suggestedId === type.id && !selectedId
+                  ? "border-brick/40 bg-brick-pale ring-1 ring-brick/20"
+                  : "border-border/50 bg-white/60 hover:border-brick/30"
             }`}
           >
             <span className="text-lg">{type.icon}</span>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useCurrentReading } from "@/hooks/useCurrentReading";
 
 interface BibleTextPanelProps {
   currentSlug: string;
@@ -22,6 +23,9 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
   const [showSaved, setShowSaved] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const savedIndicatorRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  // Fetch current Sunday reading from CČSH lectionary
+  const { data: currentReading, loading: readingLoading } = useCurrentReading();
 
   useEffect(() => {
     setLocalText(savedText);
@@ -55,11 +59,22 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
     };
   }, []);
 
+  const applyReading = (reference: string, text: string) => {
+    setLocalRef(reference);
+    setLocalText(text);
+    setSavedRef(reference);
+    setSavedText(text);
+    setEditing(false);
+  };
+
   const hasText = localText.trim().length > 0;
   const isFirstStep = currentSlug === "modlitba";
   const showTextarea = !hasText || editing || isFirstStep;
 
-  // Step 1: just a placeholder
+  // Show reading suggestion when no text is entered yet
+  const showSuggestion = !hasText && !readingLoading && currentReading && currentReading.readings.length > 0;
+
+  // Step 1: placeholder + suggestion
   if (isFirstStep && !hasText) {
     return (
       <div className="rounded-xl border border-border bg-cream p-5">
@@ -69,6 +84,11 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
         <p className="text-sm italic leading-relaxed text-text-muted">
           {`V dal\u0161\u00EDm kroku sem vlo\u017E\u00EDte text perikopy, se kterou budete pracovat.`}
         </p>
+
+        {/* Sunday reading suggestion */}
+        {showSuggestion && (
+          <SundaySuggestion reading={currentReading} onApply={applyReading} />
+        )}
       </div>
     );
   }
@@ -93,6 +113,11 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
           )}
         </div>
       </div>
+
+      {/* Sunday reading suggestion when empty */}
+      {showSuggestion && (
+        <SundaySuggestion reading={currentReading} onApply={applyReading} />
+      )}
 
       {/* Reference input */}
       {(showTextarea || !hasText) && (
@@ -145,6 +170,68 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
               {`Hotovo`}
             </button>
           )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Compact card showing current Sunday's readings from CČSH lectionary */
+function SundaySuggestion({
+  reading,
+  onApply,
+}: {
+  reading: NonNullable<ReturnType<typeof useCurrentReading>["data"]>;
+  onApply: (reference: string, text: string) => void;
+}) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div className="mt-3 rounded-lg border border-brick/15 bg-white/70 p-3">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="flex w-full items-center justify-between text-left"
+      >
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-brick">
+            {`Tuto ned\u011Bli v CC\u0160H`}
+          </p>
+          <p className="mt-0.5 text-xs font-medium text-text">
+            {reading.sundayTitle}
+          </p>
+        </div>
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className={`shrink-0 text-text-light transition-transform ${expanded ? "rotate-180" : ""}`}
+        >
+          <path d="M5 8l5 5 5-5" />
+        </svg>
+      </button>
+
+      {expanded && (
+        <div className="mt-3 space-y-2">
+          {reading.readings.map((r) => (
+            <button
+              key={r.type}
+              onClick={() => onApply(r.reference, r.text)}
+              className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left transition-all hover:bg-brick-pale"
+            >
+              <span className="shrink-0 text-[10px] font-semibold uppercase text-text-light">
+                {r.label}
+              </span>
+              <span className="flex-1 truncate text-xs font-medium text-text">
+                {r.reference}
+              </span>
+              <span className="shrink-0 text-[10px] text-brick">
+                {`Pou\u017E\u00EDt \u2192`}
+              </span>
+            </button>
+          ))}
         </div>
       )}
     </div>

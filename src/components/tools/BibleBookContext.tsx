@@ -3,18 +3,35 @@
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { bibleBooks } from "@/data/bible-books";
+import { parseReference } from "@/lib/bible-refs";
 
 export default function BibleBookContext({ slug }: { slug: string }) {
   const [savedBook, setSavedBook] = useLocalStorage<string>(
     `kazani-bible-book-${slug}`,
     ""
   );
+  const [bibleRef] = useLocalStorage<string>("kazani-bible-ref", "");
   const [selectedId, setSelectedId] = useState("");
   const [search, setSearch] = useState("");
+  const [autoDetected, setAutoDetected] = useState(false);
 
   useEffect(() => {
     setSelectedId(savedBook);
   }, [savedBook]);
+
+  // Auto-detect book from bible reference when nothing is selected
+  useEffect(() => {
+    if (savedBook || !bibleRef) return;
+    const parsed = parseReference(bibleRef);
+    if (parsed?.bookId) {
+      const book = bibleBooks.find((b) => b.id === parsed.bookId);
+      if (book) {
+        setSelectedId(book.id);
+        setSavedBook(book.id);
+        setAutoDetected(true);
+      }
+    }
+  }, [bibleRef, savedBook, setSavedBook]);
 
   const handleSelect = (id: string) => {
     setSelectedId(id);
@@ -41,7 +58,9 @@ export default function BibleBookContext({ slug }: { slug: string }) {
   return (
     <div className="space-y-4">
       <p className="text-xs leading-relaxed text-text-muted">
-        {`Vyberte biblickou knihu, ze kter\u00E9 p\u0159ipravujete k\u00E1z\u00E1n\u00ED, a z\u00EDskejte z\u00E1kladn\u00ED kontext.`}
+        {selected && autoDetected
+          ? `Kniha byla rozpozn\u00E1na z odkazu \u201E${bibleRef}\u201C. M\u016F\u017Eete ji zm\u011Bnit.`
+          : `Vyberte biblickou knihu, ze kter\u00E9 p\u0159ipravujete k\u00E1z\u00E1n\u00ED, a z\u00EDskejte z\u00E1kladn\u00ED kontext.`}
       </p>
 
       {/* Search or selected display */}
