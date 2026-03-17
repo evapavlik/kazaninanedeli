@@ -94,8 +94,8 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
   }
 
   return (
-    <div className="rounded-xl border border-border bg-cream p-5">
-      <div className="mb-3 flex items-center justify-between">
+    <div className="rounded-xl border border-border bg-cream p-5 lg:p-6">
+      <div className="mb-4 flex items-center justify-between">
         <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
           {`Biblick\u00FD text`}
         </p>
@@ -137,18 +137,18 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
       {hasText && !editing ? (
         <div>
           {localRef && (
-            <p className="mb-2 font-cormorant text-[13px] font-semibold text-brick">
+            <p className="mb-3 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
               {localRef}
             </p>
           )}
-          <div className="font-cormorant text-[15px] leading-[1.9] text-text whitespace-pre-wrap">
+          <div className="font-cormorant text-[19px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto">
             {localText}
           </div>
         </div>
       ) : (
         <div>
           {localRef && !showTextarea && (
-            <p className="mb-2 font-cormorant text-[13px] font-semibold text-brick">
+            <p className="mb-3 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
               {localRef}
             </p>
           )}
@@ -160,7 +160,7 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
             }}
             placeholder={`Vlo\u017Ete text perikopy\u2026`}
             rows={8}
-            className="w-full resize-none rounded-lg border border-border/70 bg-white/80 p-3 font-cormorant text-[15px] leading-[1.9] text-text placeholder:text-text-light/50 focus:border-brick/30 focus:outline-none focus:ring-2 focus:ring-brick/10"
+            className="w-full resize-none rounded-lg border border-border/70 bg-white/80 p-4 font-cormorant text-[18px] leading-[1.9] text-text placeholder:text-text-light/50 focus:border-brick/30 focus:outline-none focus:ring-2 focus:ring-brick/10"
           />
           {editing && hasText && (
             <button
