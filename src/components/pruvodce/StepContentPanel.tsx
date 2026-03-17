@@ -67,7 +67,7 @@ export default function StepContentPanel({
   }));
 
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(280px,1fr)_minmax(0,2fr)]">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(320px,2fr)]">
       {/* Left panel: Biblical text */}
       <div className="lg:sticky lg:top-[84px] lg:self-start lg:max-h-[calc(100vh-100px)] lg:overflow-y-auto">
         {/* Mobile toggle */}
@@ -109,22 +109,22 @@ export default function StepContentPanel({
 
       {/* Right panel: Step content */}
       <div>
-        {/* Step header */}
-        <div className="mb-8">
-          <div className="mb-3 flex items-center gap-4">
-            <span className="flex h-14 w-14 items-center justify-center rounded-[12px] bg-brick-pale text-3xl">
+        {/* Step header — compact, secondary to text */}
+        <div className="mb-6">
+          <div className="mb-2 flex items-center gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brick-pale text-xl">
               {step.icon}
             </span>
             <div>
-              <p className="font-cormorant text-[13px] font-semibold uppercase tracking-[0.1em] text-brick">
+              <p className="font-cormorant text-[11px] font-semibold uppercase tracking-[0.12em] text-brick">
                 {`Krok 0${step.number} ze 7`}
               </p>
-              <h1 className="font-lora text-2xl font-bold text-text sm:text-3xl">
+              <h1 className="font-lora text-lg font-bold text-text sm:text-xl">
                 {step.title}
               </h1>
             </div>
           </div>
-          <p className="mt-4 text-base font-light leading-[1.85] text-text-muted">
+          <p className="mt-2 text-sm font-light leading-[1.8] text-text-muted">
             {step.description}
           </p>
         </div>
