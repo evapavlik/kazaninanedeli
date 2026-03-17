@@ -168,9 +168,9 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
         />
       )}
 
-      {/* Annotation guide — shown when no annotations yet */}
-      {annotationsEnabled && annotations.length === 0 && hasText && !editing && (
-        <AnnotationGuide />
+      {/* Annotation guide — always available on annotation-enabled steps */}
+      {annotationsEnabled && hasText && !editing && (
+        <AnnotationGuide hasAnnotations={annotations.length > 0} />
       )}
 
       {/* Text mismatch warning */}
@@ -443,20 +443,47 @@ function BreathingExercise() {
   );
 }
 
-/** Short guide explaining how to use annotations */
-function AnnotationGuide() {
-  const [dismissed, setDismissed] = useState(false);
-  if (dismissed) return null;
+/** Guide explaining annotation categories — collapsible, always available */
+function AnnotationGuide({ hasAnnotations }: { hasAnnotations: boolean }) {
+  const [open, setOpen] = useState(!hasAnnotations);
 
   return (
-    <div className="mb-3 rounded-lg border border-sage/20 bg-sage-pale/50 px-3 py-2.5">
-      <div className="flex items-start justify-between gap-2">
-        <div>
-          <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-sage">
-            {`Ozna\u010Dov\u00E1n\u00ED textu`}
-          </p>
+    <div className="mb-3">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-center gap-1.5 text-left"
+      >
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="shrink-0 text-sage"
+        >
+          <circle cx="10" cy="10" r="8" />
+          <path d="M10 9v4M10 7v0" />
+        </svg>
+        <span className="text-[11px] font-medium text-sage">
+          {`Jak ozna\u010Dovat text`}
+        </span>
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className={`shrink-0 text-sage/50 transition-transform ${open ? "rotate-180" : ""}`}
+        >
+          <path d="M5 8l5 5 5-5" />
+        </svg>
+      </button>
+      {open && (
+        <div className="mt-2 rounded-lg border border-sage/20 bg-sage-pale/50 px-3 py-2.5">
           <p className="mb-2 text-[11px] leading-relaxed text-text-muted">
-            {`Ozna\u010Dte my\u0161\u00ED libovolnou fr\u00E1zi v textu a vyberte kategorii:`}
+            {`Ozna\u010Dte my\u0161\u00ED libovolnou fr\u00E1zi v textu a vyberte kategorii. Kliknut\u00EDm na zv\u00FDrazn\u011Bn\u00FD text m\u016F\u017Eete p\u0159idat pozn\u00E1mku nebo anotaci smazat.`}
           </p>
           <div className="flex flex-wrap gap-1.5">
             {annotationCategories.map((cat) => (
@@ -469,14 +496,7 @@ function AnnotationGuide() {
             ))}
           </div>
         </div>
-        <button
-          onClick={() => setDismissed(true)}
-          className="shrink-0 text-[11px] text-text-light hover:text-text-muted"
-          title="Skr\u00FDt"
-        >
-          {"\u2715"}
-        </button>
-      </div>
+      )}
     </div>
   );
 }
