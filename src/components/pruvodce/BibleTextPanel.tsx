@@ -3,6 +3,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useCurrentReading } from "@/hooks/useCurrentReading";
+import { useAnnotations } from "@/hooks/useAnnotations";
+import { annotationCategories } from "@/data/annotation-categories";
+import AnnotatedTextDisplay from "./AnnotatedTextDisplay";
 
 interface BibleTextPanelProps {
   currentSlug: string;
@@ -26,6 +29,17 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
 
   // Fetch current Sunday reading from CČSH lectionary
   const { data: currentReading, loading: readingLoading } = useCurrentReading();
+
+  // Interactive annotations
+  const {
+    annotations,
+    addAnnotation,
+    removeAnnotation,
+    updateNote,
+    clearAnnotations,
+    textMismatch,
+    syncHash,
+  } = useAnnotations(localText);
 
   useEffect(() => {
     setLocalText(savedText);
@@ -133,6 +147,50 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
         />
       )}
 
+      {/* Text mismatch warning */}
+      {textMismatch && hasText && !editing && (
+        <div className="mb-3 flex items-center justify-between rounded-lg border border-brick/20 bg-brick-pale px-3 py-2">
+          <p className="text-[11px] text-brick">
+            {`Text se zm\u011Bnil, anotace nemus\u00ED odpov\u00EDdat.`}
+          </p>
+          <div className="flex gap-2">
+            <button
+              onClick={syncHash}
+              className="text-[11px] font-medium text-brick hover:underline"
+            >
+              {`Ponechat`}
+            </button>
+            <button
+              onClick={clearAnnotations}
+              className="text-[11px] font-medium text-text-light hover:text-brick"
+            >
+              {`Smazat anotace`}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Annotation legend */}
+      {annotations.length > 0 && hasText && !editing && (
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          <span className="text-[10px] text-text-light">
+            {`${annotations.length} anotac\u00ED`}
+          </span>
+          {annotationCategories.map((cat) => {
+            const count = annotations.filter((a) => a.category === cat.id).length;
+            if (count === 0) return null;
+            return (
+              <span
+                key={cat.id}
+                className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${cat.bg} ${cat.color}`}
+              >
+                {cat.name} {count}
+              </span>
+            );
+          })}
+        </div>
+      )}
+
       {/* Text display or textarea */}
       {hasText && !editing ? (
         <div>
@@ -141,9 +199,14 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
               {localRef}
             </p>
           )}
-          <div className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto">
-            {localText}
-          </div>
+          <AnnotatedTextDisplay
+            text={localText}
+            annotations={annotations}
+            onAddAnnotation={addAnnotation}
+            onRemoveAnnotation={removeAnnotation}
+            onUpdateNote={updateNote}
+            className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto"
+          />
         </div>
       ) : (
         <div>
