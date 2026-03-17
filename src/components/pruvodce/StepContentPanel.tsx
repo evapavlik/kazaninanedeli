@@ -15,7 +15,6 @@ import Notepad from "./Notepad";
 import NarrativeTypeIdentifier from "@/components/tools/NarrativeTypeIdentifier";
 import BibleBookContext from "@/components/tools/BibleBookContext";
 import LiturgicalCalendar from "@/components/tools/LiturgicalCalendar";
-import TextAnnotation from "@/components/tools/TextAnnotation";
 import RoleIdentifier from "@/components/tools/RoleIdentifier";
 import FCFHelper from "@/components/tools/FCFHelper";
 import OutlineBuilder from "@/components/tools/OutlineBuilder";
@@ -37,8 +36,6 @@ function resolveToolComponent(
       return <BibleBookContext slug={slug} />;
     case "LiturgicalCalendar":
       return <LiturgicalCalendar />;
-    case "TextAnnotation":
-      return <TextAnnotation slug={slug} />;
     case "RoleIdentifier":
       return <RoleIdentifier slug={slug} />;
     case "FCFHelper":

@@ -32,14 +32,7 @@ export const checklistToolMap: Record<string, ToolMapping[]> = {
       componentKey: "LiturgicalCalendar",
     },
   ],
-  vyklad: [
-    {
-      itemIndex: 0,
-      label: `Anotace textu`,
-      icon: "\u270F\uFE0F",
-      componentKey: "TextAnnotation",
-    },
-  ],
+  vyklad: [],
   aktualizace: [
     {
       itemIndex: 0,
