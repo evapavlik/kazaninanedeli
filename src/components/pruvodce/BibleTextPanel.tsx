@@ -91,42 +91,40 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
   // Annotations enabled only from step 2 onwards
   const annotationsEnabled = !isFirstStep && currentSlug !== "modlitba";
 
-  // Step 1: quiet preview — no annotations, no editing, just text if present
+  // Step 1: breathing exercise + blurred text preview
   if (isFirstStep) {
     return (
-      <div className="rounded-xl border border-border bg-cream p-5">
-        <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
-          {`Biblick\u00FD text`}
-        </p>
-        {hasText ? (
-          <div>
-            {localRef && (
-              <p className="mb-3 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
-                {localRef}
-              </p>
-            )}
+      <div className="space-y-4">
+        {/* Breathing exercise */}
+        <BreathingExercise />
+
+        {/* Blurred text preview or suggestion */}
+        <div className="rounded-xl border border-border bg-cream p-5">
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
+            {`Biblick\u00FD text`}
+          </p>
+          {hasText ? (
             <div className="relative">
-              <div className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto blur-[3px] select-none">
+              <div className="max-h-48 overflow-hidden font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto blur-[3px] select-none">
                 {localText}
               </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <p className="rounded-lg bg-cream/90 px-4 py-2 text-xs italic text-text-muted shadow-sm">
+              <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-cream via-cream/60 to-transparent pb-4">
+                <p className="text-xs italic text-text-muted">
                   {`S textem budete pracovat od dal\u0161\u00EDho kroku.`}
                 </p>
               </div>
             </div>
-          </div>
-        ) : (
-          <>
-            <p className="text-sm italic leading-relaxed text-text-muted">
-              {`V dal\u0161\u00EDm kroku sem vlo\u017E\u00EDte text perikopy, se kterou budete pracovat.`}
-            </p>
-            {/* Sunday reading suggestion */}
-            {showSuggestion && (
-              <SundaySuggestion reading={currentReading} onApply={applyReading} />
-            )}
-          </>
-        )}
+          ) : (
+            <>
+              <p className="text-sm italic leading-relaxed text-text-muted">
+                {`V dal\u0161\u00EDm kroku sem vlo\u017E\u00EDte text perikopy, se kterou budete pracovat.`}
+              </p>
+              {showSuggestion && (
+                <SundaySuggestion reading={currentReading} onApply={applyReading} />
+              )}
+            </>
+          )}
+        </div>
       </div>
     );
   }
@@ -270,6 +268,148 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
           )}
         </div>
       )}
+    </div>
+  );
+}
+
+/** Breathing exercise for step 1 — inspired by meditation apps */
+function BreathingExercise() {
+  const [active, setActive] = useState(false);
+  const [phase, setPhase] = useState<"inhale" | "hold" | "exhale">("inhale");
+  const [count, setCount] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  const INHALE = 4;
+  const HOLD = 2;
+  const EXHALE = 6;
+  const TOTAL_CYCLES = 3;
+
+  const phaseLabels = {
+    inhale: `N\u00E1dech`,
+    hold: `Zadr\u017Eet`,
+    exhale: `V\u00FDdech`,
+  };
+
+  useEffect(() => {
+    if (!active) return;
+
+    let currentPhase: "inhale" | "hold" | "exhale" = "inhale";
+    let tick = 0;
+    let cycles = 0;
+
+    setPhase("inhale");
+    setCount(INHALE);
+
+    const phaseDurations = { inhale: INHALE, hold: HOLD, exhale: EXHALE };
+
+    intervalRef.current = setInterval(() => {
+      tick++;
+      const duration = phaseDurations[currentPhase];
+      const remaining = duration - (tick % duration === 0 ? duration : tick % duration);
+
+      if (tick % duration === 0) {
+        // Move to next phase
+        if (currentPhase === "inhale") {
+          currentPhase = "hold";
+          tick = 0;
+          setPhase("hold");
+          setCount(HOLD);
+        } else if (currentPhase === "hold") {
+          currentPhase = "exhale";
+          tick = 0;
+          setPhase("exhale");
+          setCount(EXHALE);
+        } else {
+          cycles++;
+          if (cycles >= TOTAL_CYCLES) {
+            setActive(false);
+            return;
+          }
+          currentPhase = "inhale";
+          tick = 0;
+          setPhase("inhale");
+          setCount(INHALE);
+        }
+      } else {
+        setCount(remaining);
+      }
+    }, 1000);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [active]);
+
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
+
+  if (!active) {
+    return (
+      <div className="flex flex-col items-center rounded-xl border border-border bg-cream p-8">
+        <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
+          {`P\u0159\u00EDprava srdce`}
+        </p>
+        <p className="mb-6 text-center text-sm italic leading-relaxed text-text-muted">
+          {`Zt\u0161\u00EDte se a otev\u0159ete se Bohu i textu.`}
+        </p>
+        <button
+          onClick={() => setActive(true)}
+          className="group flex flex-col items-center gap-3"
+        >
+          <div className="flex h-24 w-24 items-center justify-center rounded-full border-2 border-sage/30 bg-sage-pale transition-all group-hover:border-sage/50 group-hover:shadow-lg group-hover:shadow-sage/10">
+            <span className="text-sm font-medium text-sage">{`D\u00FDchat`}</span>
+          </div>
+          <span className="text-[11px] text-text-light">
+            {`3 cykly \u2022 nep\u0159ed\u00E1no`}
+          </span>
+        </button>
+      </div>
+    );
+  }
+
+  // Animation scale based on phase
+  const scaleClass =
+    phase === "inhale"
+      ? "scale-100"
+      : phase === "hold"
+        ? "scale-100"
+        : "scale-75";
+
+  const bgClass =
+    phase === "inhale"
+      ? "bg-sage/20"
+      : phase === "hold"
+        ? "bg-sage/25"
+        : "bg-sage/15";
+
+  return (
+    <div className="flex flex-col items-center rounded-xl border border-border bg-cream p-8">
+      <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
+        {`P\u0159\u00EDprava srdce`}
+      </p>
+
+      {/* Breathing circle */}
+      <div className="relative mb-6 flex h-32 w-32 items-center justify-center">
+        <div
+          className={`absolute inset-0 rounded-full ${bgClass} transition-all duration-1000 ease-in-out ${scaleClass}`}
+        />
+        <div className="relative z-10 flex flex-col items-center">
+          <span className="text-3xl font-light text-sage">{count}</span>
+          <span className="mt-1 text-[11px] font-medium uppercase tracking-wider text-sage">
+            {phaseLabels[phase]}
+          </span>
+        </div>
+      </div>
+
+      <button
+        onClick={() => setActive(false)}
+        className="text-[11px] text-text-light hover:text-text-muted"
+      >
+        {`Ukon\u010Dit`}
+      </button>
     </div>
   );
 }
