@@ -88,20 +88,40 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
   // Show reading suggestion when no text is entered yet
   const showSuggestion = !hasText && !readingLoading && currentReading && currentReading.readings.length > 0;
 
-  // Step 1: placeholder + suggestion
-  if (isFirstStep && !hasText) {
+  // Annotations enabled only from step 2 onwards
+  const annotationsEnabled = !isFirstStep && currentSlug !== "modlitba";
+
+  // Step 1: quiet preview — no annotations, no editing, just text if present
+  if (isFirstStep) {
     return (
       <div className="rounded-xl border border-border bg-cream p-5">
         <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
           {`Biblick\u00FD text`}
         </p>
-        <p className="text-sm italic leading-relaxed text-text-muted">
-          {`V dal\u0161\u00EDm kroku sem vlo\u017E\u00EDte text perikopy, se kterou budete pracovat.`}
-        </p>
-
-        {/* Sunday reading suggestion */}
-        {showSuggestion && (
-          <SundaySuggestion reading={currentReading} onApply={applyReading} />
+        {hasText ? (
+          <div>
+            {localRef && (
+              <p className="mb-3 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
+                {localRef}
+              </p>
+            )}
+            <div className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto opacity-60">
+              {localText}
+            </div>
+            <p className="mt-3 text-[11px] italic text-text-light">
+              {`S textem budete pracovat od dal\u0161\u00EDho kroku. Te\u010F se soust\u0159e\u010Fte na p\u0159\u00EDpravu srdce.`}
+            </p>
+          </div>
+        ) : (
+          <>
+            <p className="text-sm italic leading-relaxed text-text-muted">
+              {`V dal\u0161\u00EDm kroku sem vlo\u017E\u00EDte text perikopy, se kterou budete pracovat.`}
+            </p>
+            {/* Sunday reading suggestion */}
+            {showSuggestion && (
+              <SundaySuggestion reading={currentReading} onApply={applyReading} />
+            )}
+          </>
         )}
       </div>
     );
@@ -147,6 +167,11 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
         />
       )}
 
+      {/* Annotation guide — shown when no annotations yet */}
+      {annotationsEnabled && annotations.length === 0 && hasText && !editing && (
+        <AnnotationGuide />
+      )}
+
       {/* Text mismatch warning */}
       {textMismatch && hasText && !editing && (
         <div className="mb-3 flex items-center justify-between rounded-lg border border-brick/20 bg-brick-pale px-3 py-2">
@@ -171,7 +196,7 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
       )}
 
       {/* Annotation legend */}
-      {annotations.length > 0 && hasText && !editing && (
+      {annotationsEnabled && annotations.length > 0 && hasText && !editing && (
         <div className="mb-3 flex flex-wrap items-center gap-2">
           <span className="text-[10px] text-text-light">
             {`${annotations.length} anotac\u00ED`}
@@ -199,14 +224,20 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
               {localRef}
             </p>
           )}
-          <AnnotatedTextDisplay
-            text={localText}
-            annotations={annotations}
-            onAddAnnotation={addAnnotation}
-            onRemoveAnnotation={removeAnnotation}
-            onUpdateNote={updateNote}
-            className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto"
-          />
+          {annotationsEnabled ? (
+            <AnnotatedTextDisplay
+              text={localText}
+              annotations={annotations}
+              onAddAnnotation={addAnnotation}
+              onRemoveAnnotation={removeAnnotation}
+              onUpdateNote={updateNote}
+              className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto"
+            />
+          ) : (
+            <div className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto">
+              {localText}
+            </div>
+          )}
         </div>
       ) : (
         <div>
@@ -235,6 +266,44 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
           )}
         </div>
       )}
+    </div>
+  );
+}
+
+/** Short guide explaining how to use annotations */
+function AnnotationGuide() {
+  const [dismissed, setDismissed] = useState(false);
+  if (dismissed) return null;
+
+  return (
+    <div className="mb-3 rounded-lg border border-sage/20 bg-sage-pale/50 px-3 py-2.5">
+      <div className="flex items-start justify-between gap-2">
+        <div>
+          <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-sage">
+            {`Ozna\u010Dov\u00E1n\u00ED textu`}
+          </p>
+          <p className="mb-2 text-[11px] leading-relaxed text-text-muted">
+            {`Ozna\u010Dte my\u0161\u00ED libovolnou fr\u00E1zi v textu a vyberte kategorii:`}
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {annotationCategories.map((cat) => (
+              <span
+                key={cat.id}
+                className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${cat.bg} ${cat.color}`}
+              >
+                {cat.name}
+              </span>
+            ))}
+          </div>
+        </div>
+        <button
+          onClick={() => setDismissed(true)}
+          className="shrink-0 text-[11px] text-text-light hover:text-text-muted"
+          title="Skr\u00FDt"
+        >
+          {"\u2715"}
+        </button>
+      </div>
     </div>
   );
 }
