@@ -6,6 +6,7 @@ import TheoryPanel from "@/components/pruvodce/TheoryPanel";
 import Checklist from "@/components/pruvodce/Checklist";
 import Notepad from "@/components/pruvodce/Notepad";
 import QuestionNotes from "@/components/pruvodce/QuestionNotes";
+import StepTools from "@/components/pruvodce/StepTools";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -67,6 +68,9 @@ export default async function StepPage({ params }: PageProps) {
 
         {/* Questions — with note fields */}
         <QuestionNotes slug={step.slug} questions={step.questions} />
+
+        {/* Phase 3 tools */}
+        <StepTools slug={step.slug} />
 
         {/* Theory panel */}
         <TheoryPanel theory={step.theory} />
