@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { supabase, supabaseEnabled } from "@/lib/supabase";
 import { extractReadingsFromMarkdown } from "@/lib/bible-refs";
 
 export interface SundayReading {
@@ -25,6 +25,10 @@ export function useCurrentReading() {
     let cancelled = false;
 
     async function fetchReading() {
+      if (!supabaseEnabled) {
+        setLoading(false);
+        return;
+      }
       try {
         const { data: rows, error: err } = await supabase
           .from("readings_cache")
