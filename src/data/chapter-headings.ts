@@ -202,6 +202,177 @@ const HEADINGS_BY_BOOK_NUMBER: Record<number, BookHeadings> = {
       },
     ],
   },
+
+  // ==================== JOHN (43) ====================
+  43: {
+    bookId: "john",
+    bookName: "Jan",
+    chapters: [
+      {
+        chapter: 1,
+        sections: [
+          { title: "Prolog", startVerse: 1, endVerse: 18 },
+          { title: "Jan K\u0159titel", startVerse: 19, endVerse: 34 },
+          { title: "Povol\u00E1n\u00ED u\u010Dedn\u00EDk\u016F", startVerse: 35, endVerse: 51 },
+        ],
+      },
+      {
+        chapter: 2,
+        sections: [
+          { title: "Svatba v K\u00E1n\u011B Galilejsk\u00E9", startVerse: 1, endVerse: 12 },
+          { title: "O\u010Di\u0161t\u011Bn\u00ED chr\u00E1mu", startVerse: 13, endVerse: 25 },
+        ],
+      },
+      {
+        chapter: 3,
+        sections: [
+          { title: "Rozmluva s Nikod\u00E9mem", startVerse: 1, endVerse: 21 },
+          { title: "Je\u017E\u00ED\u0161 a Jan K\u0159titel", startVerse: 22, endVerse: 36 },
+        ],
+      },
+      {
+        chapter: 4,
+        sections: [
+          { title: "Rozmluva se sama\u0159skou \u017Eenou", startVerse: 1, endVerse: 42 },
+          { title: "Uzdraven\u00ED syna kr\u00E1lovsk\u00E9ho \u00FA\u0159edn\u00EDka", startVerse: 43, endVerse: 54 },
+        ],
+      },
+      {
+        chapter: 5,
+        sections: [
+          { title: "Uzdraven\u00ED u rybn\u00EDka Bethesda", startVerse: 1, endVerse: 18 },
+          { title: "O Synovu posl\u00E1n\u00ED", startVerse: 19, endVerse: 30 },
+          { title: "Je\u017E\u00ED\u0161ovo sv\u011Bdectv\u00ED", startVerse: 31, endVerse: 47 },
+        ],
+      },
+      {
+        chapter: 6,
+        sections: [
+          { title: "Nasycen\u00ED p\u011Bti tis\u00EDc\u016F", startVerse: 1, endVerse: 15 },
+          { title: "Je\u017E\u00ED\u0161 kr\u00E1\u010D\u00ED po mo\u0159i", startVerse: 16, endVerse: 21 },
+          { title: "O chlebu \u017Eivota", startVerse: 22, endVerse: 59 },
+          { title: "Petrovo vyzn\u00E1n\u00ED", startVerse: 60, endVerse: 71 },
+        ],
+      },
+      {
+        chapter: 7,
+        sections: [
+          { title: "Vystoupen\u00ED o slavnosti st\u00E1nk\u016F", startVerse: 1, endVerse: 52 },
+          { title: "Je\u017E\u00ED\u0161 a cizolo\u017Enice", startVerse: 53, endVerse: 53 },
+        ],
+      },
+      {
+        chapter: 8,
+        sections: [
+          { title: "Je\u017E\u00ED\u0161 a cizolo\u017Enice (dokon\u010Den\u00ED)", startVerse: 1, endVerse: 11 },
+          { title: "Spor o Je\u017E\u00ED\u0161\u016Fv p\u016Fvod", startVerse: 12, endVerse: 30 },
+          { title: "Spor o otcovstv\u00ED Abrahamovo", startVerse: 31, endVerse: 59 },
+        ],
+      },
+      {
+        chapter: 9,
+        sections: [
+          { title: "Uzdraven\u00ED slep\u00E9ho", startVerse: 1, endVerse: 41 },
+        ],
+      },
+      {
+        chapter: 10,
+        sections: [
+          { title: "O dobr\u00E9m past\u00FD\u0159i", startVerse: 1, endVerse: 21 },
+          { title: "Rozmluva ve sv\u00E1tek posv\u011Bcen\u00ED chr\u00E1mu", startVerse: 22, endVerse: 42 },
+        ],
+      },
+      {
+        chapter: 11,
+        sections: [
+          { title: "Vzk\u0159\u00ED\u0161en\u00ED Lazara", startVerse: 1, endVerse: 44 },
+          { title: "\u00DAmysl velekn\u011B\u017E\u00ED", startVerse: 45, endVerse: 57 },
+        ],
+      },
+      {
+        chapter: 12,
+        sections: [
+          { title: "Pomaz\u00E1n\u00ED v Betanii", startVerse: 1, endVerse: 11 },
+          { title: "Vjezd do Jeruzal\u00E9ma", startVerse: 12, endVerse: 19 },
+          { title: "Odpov\u011B\u010F \u0159eck\u00FDm poutn\u00EDk\u016Fm", startVerse: 20, endVerse: 26 },
+          { title: "P\u0159edpov\u011B\u010F utrpen\u00ED", startVerse: 27, endVerse: 50 },
+        ],
+      },
+      {
+        chapter: 13,
+        sections: [
+          { title: "Um\u00FDv\u00E1n\u00ED nohou u\u010Dedn\u00EDk\u016Fm", startVerse: 1, endVerse: 20 },
+          { title: "Ozna\u010Den\u00ED zr\u00E1dce", startVerse: 21, endVerse: 30 },
+          { title: "O Je\u017E\u00ED\u0161ov\u011B odchodu", startVerse: 31, endVerse: 38 },
+        ],
+      },
+      {
+        chapter: 14,
+        sections: [
+          { title: "Cesta k Otci", startVerse: 1, endVerse: 14 },
+          { title: "Zasl\u00EDben\u00ED P\u0159\u00EDmluvce", startVerse: 15, endVerse: 26 },
+          { title: "Pokoj v\u00E1m zanech\u00E1v\u00E1m", startVerse: 27, endVerse: 31 },
+        ],
+      },
+      {
+        chapter: 15,
+        sections: [
+          { title: "O kmeni a ratolestech", startVerse: 1, endVerse: 11 },
+          { title: "O posl\u00E1n\u00ED u\u010Dedn\u00EDk\u016F", startVerse: 12, endVerse: 27 },
+        ],
+      },
+      {
+        chapter: 16,
+        sections: [
+          { title: "Nen\u00E1vist sv\u011Bta", startVerse: 1, endVerse: 4 },
+          { title: "O p\u0159\u00EDchodu P\u0159\u00EDmluvce", startVerse: 5, endVerse: 15 },
+          { title: "Smutek se prom\u011Bn\u00ED v radost", startVerse: 16, endVerse: 24 },
+          { title: "P\u0159emohl jsem sv\u011Bt", startVerse: 25, endVerse: 33 },
+        ],
+      },
+      {
+        chapter: 17,
+        sections: [
+          { title: "Je\u017E\u00ED\u0161ova modlitba za u\u010Dedn\u00EDky", startVerse: 1, endVerse: 26 },
+        ],
+      },
+      {
+        chapter: 18,
+        sections: [
+          { title: "Zat\u010Den\u00ED", startVerse: 1, endVerse: 14 },
+          { title: "Je\u017E\u00ED\u0161 p\u0159ed velekn\u011Bzem", startVerse: 15, endVerse: 24 },
+          { title: "Petrovo zap\u0159en\u00ED", startVerse: 25, endVerse: 27 },
+          { title: "Je\u017E\u00ED\u0161 p\u0159ed Pil\u00E1tem", startVerse: 28, endVerse: 40 },
+        ],
+      },
+      {
+        chapter: 19,
+        sections: [
+          { title: "Bi\u010Dov\u00E1n\u00ED a odsouzen\u00ED", startVerse: 1, endVerse: 16 },
+          { title: "Uk\u0159i\u017Eov\u00E1n\u00ED", startVerse: 17, endVerse: 27 },
+          { title: "Je\u017E\u00ED\u0161ova smrt", startVerse: 28, endVerse: 37 },
+          { title: "Poh\u0159eb Je\u017E\u00ED\u0161\u016Fv", startVerse: 38, endVerse: 42 },
+        ],
+      },
+      {
+        chapter: 20,
+        sections: [
+          { title: "Pr\u00E1zdn\u00FD hrob", startVerse: 1, endVerse: 10 },
+          { title: "Zjeven\u00ED Marii Magdalsk\u00E9", startVerse: 11, endVerse: 18 },
+          { title: "Dvoj\u00ED zjeven\u00ED v Jeruzal\u00E9m\u011B", startVerse: 19, endVerse: 29 },
+          { title: "Prvn\u00ED dov\u011Btek", startVerse: 30, endVerse: 31 },
+        ],
+      },
+      {
+        chapter: 21,
+        sections: [
+          { title: "Zjeven\u00ED v Galileji", startVerse: 1, endVerse: 14 },
+          { title: "Rozhovor s \u0160imonem Petrem", startVerse: 15, endVerse: 23 },
+          { title: "Druh\u00FD dov\u011Btek evangelia", startVerse: 24, endVerse: 25 },
+        ],
+      },
+    ],
+  },
 };
 
 /**
