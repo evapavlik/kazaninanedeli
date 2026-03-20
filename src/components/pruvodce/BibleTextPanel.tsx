@@ -10,6 +10,7 @@ import BibleContextView from "./BibleContextView";
 import TranslationCompare from "./TranslationCompare";
 import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
 import CentralIdeaField from "./CentralIdeaField";
+import { parseReferenceForApi, getBibleHubCommentaryUrl } from "@/lib/getbible";
 
 interface BibleTextPanelProps {
   currentSlug: string;
@@ -296,12 +297,24 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle }
                 <TranslationCompare reference={localRef} />
               )}
 
-              {/* Step 4 (výklad): exegesis tools */}
+              {/* Step 4 (výklad): exegesis tools — ordered to match checklist */}
               {isExegesisStep && localRef && (
                 <div className="mt-4 space-y-4">
-                  <CentralIdeaField />
+                  {/* Matches checklist step 1: "klíčová slova → význam v původním kontextu" */}
                   <OriginalLanguagesPanel reference={localRef} />
-                  <TranslationCompare reference={localRef} />
+                  {/* Matches checklist step 3: "centrální myšlenku jednou větou" */}
+                  <CentralIdeaField />
+                  {/* Matches checklist step 4: "porovnejte různé překlady" */}
+                  <div>
+                    <div className="mb-1 flex items-center gap-2">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-md bg-brick/10 text-[11px] font-bold text-brick">
+                        {`4`}
+                      </span>
+                    </div>
+                    <TranslationCompare reference={localRef} />
+                  </div>
+                  {/* Matches checklist step 5: "nahlédněte do komentáře" */}
+                  <CommentaryLink reference={localRef} />
                 </div>
               )}
             </div>
@@ -636,6 +649,56 @@ function AnnotationGuide({ hasAnnotations }: { hasAnnotations: boolean }) {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+/** Commentary link for step 4 — matches checklist step 5 */
+function CommentaryLink({ reference }: { reference: string }) {
+  const parsed = parseReferenceForApi(reference);
+  if (!parsed) return null;
+
+  const commentaryUrl = getBibleHubCommentaryUrl(parsed.bookNumber, parsed.chapter);
+  if (!commentaryUrl) return null;
+
+  return (
+    <div className="rounded-lg border border-border/50 bg-white/60 p-4">
+      <div className="mb-2 flex items-center gap-2">
+        <span className="flex h-6 w-6 items-center justify-center rounded-md bg-brick/10 text-[11px] font-bold text-brick">
+          {`5`}
+        </span>
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-text-light">
+          <path d="M4 3h12v14H4z" />
+          <path d="M7 7h6M7 10h4" />
+        </svg>
+        <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-text-light">
+          {`Koment\u00E1\u0159e k textu`}
+        </p>
+      </div>
+      <a
+        href={commentaryUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-3 rounded-lg border border-sage/20 bg-white/70 px-3 py-2.5 transition-all hover:border-sage/40 hover:bg-white"
+      >
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-sage/10">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-sage">
+            <path d="M4 3h12v14H4z" />
+            <path d="M7 7h6M7 10h6M7 13h4" />
+          </svg>
+        </span>
+        <div className="flex-1">
+          <p className="text-[12px] font-semibold text-text">
+            {`BibleHub Commentaries`}
+          </p>
+          <p className="text-[10px] text-text-muted">
+            {`V\u00FDkladov\u00E9 koment\u00E1\u0159e k dan\u00E9 kapitole (anglicky)`}
+          </p>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 text-sage/50">
+          <path d="M5 15L15 5M15 5H8M15 5v7" />
+        </svg>
+      </a>
     </div>
   );
 }
