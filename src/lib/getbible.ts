@@ -21,7 +21,7 @@ export interface BibleChapter {
 
 /** Czech abbreviation \u2192 getbible.net book number */
 const ABBREV_TO_BOOK_NUMBER: Record<string, number> = {
-  // Old Testament
+  // Old Testament — abbreviations
   "Gn": 1, "Ex": 2, "Lv": 3, "Nu": 4, "Dt": 5,
   "Joz": 6, "Sd": 7, "Rt": 8,
   "1Sam": 9, "2Sam": 10, "Sam": 9,
@@ -35,7 +35,20 @@ const ABBREV_TO_BOOK_NUMBER: Record<string, number> = {
   "Oz": 28, "Jl": 29, "Am": 30, "Abd": 31,
   "Jon": 32, "Mi": 33, "Na": 34, "Abk": 35,
   "Sf": 36, "Ag": 37, "Za": 38, "Mal": 39,
-  // New Testament
+  // Old Testament — full Czech names
+  "Genesis": 1, "Exodus": 2, "Leviticus": 3, "Numeri": 4, "Deuteronomium": 5,
+  "Jozue": 6, "Soudc\u016F": 7, "R\u00FAt": 8,
+  "Samuel": 9, "Kr\u00E1lovsk\u00E1": 11,
+  "Paralipomenon": 13,
+  "Ezdr\u00E1\u0161": 15, "Nehemj\u00E1\u0161": 16, "Ester": 17,
+  "J\u00F3b": 18, "\u017Dalmy": 19, "\u017Dalm": 19,
+  "P\u0159\u00EDslov\u00ED": 20, "Kazatel": 21, "P\u00EDse\u0148": 22,
+  "Izaj\u00E1\u0161": 23, "Jeremj\u00E1\u0161": 24, "Pl\u00E1\u010D": 25,
+  "Ezechiel": 26, "Daniel": 27,
+  "Oze\u00E1\u0161": 28, "Joel": 29, "Amos": 30, "Abdij\u00E1\u0161": 31,
+  "Jon\u00E1\u0161": 32, "Miche\u00E1\u0161": 33, "Nahum": 34, "Habakuk": 35,
+  "Sofonj\u00E1\u0161": 36, "Haggeus": 37, "Zacharj\u00E1\u0161": 38, "Malachi\u00E1\u0161": 39,
+  // New Testament — abbreviations
   "Mt": 40, "Mk": 41, "Lk": 42, "J": 43,
   "Sk": 44,
   "\u0158": 45, "R": 45,
@@ -49,6 +62,15 @@ const ABBREV_TO_BOOK_NUMBER: Record<string, number> = {
   "1Pt": 60, "2Pt": 61, "Pt": 60,
   "1J": 62, "2J": 63, "3J": 64,
   "Jud": 65, "Zj": 66,
+  // New Testament — full Czech names
+  "Matou\u0161": 40, "Marek": 41, "Markus": 41, "Luk\u00E1\u0161": 42, "Jan": 43,
+  "Skutky": 44,
+  "\u0158\u00EDman\u016Fm": 45,
+  "Korintsk\u00FDm": 46, "Galatsk\u00FDm": 48, "Efezsk\u00FDm": 49,
+  "Filipsk\u00FDm": 50, "Kolosk\u00FDm": 51, "Solunsk\u00FDm": 52,
+  "Timoteovi": 54, "Titovi": 56, "Filemonovi": 57,
+  "\u017Did\u016Fm": 58, "Jakub": 59, "Petr": 60,
+  "Juda": 65, "Zjeven\u00ED": 66,
 };
 
 /** Book number \u2192 total chapters (for bounds checking) */
@@ -112,9 +134,9 @@ export function parseReferenceForApi(raw: string): {
 
   if (!bookNumber) return null;
 
-  // Parse chapter and verses: "4,1-20" or "4,1" or "4"
+  // Parse chapter and verses: "4,1-20" or "37, 12-14" or "4,1" or "4"
   const cvMatch = chapterVerse.match(
-    /^(\d+)(?:[,:](\d+)(?:\s*[-\u2013\u2014]\s*(\d+))?)?/
+    /^(\d+)(?:[,:]\s*(\d+)(?:\s*[-\u2013\u2014]\s*(\d+))?)?/
   );
   if (!cvMatch) return null;
 

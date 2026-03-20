@@ -219,68 +219,112 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
         </div>
       )}
 
-      {/* Text display or textarea */}
-      {hasText && !editing ? (
+      {/* Step 3 (kontext): context view is the main content */}
+      {isContextStep && hasText && !editing && localRef ? (
         <div>
-          {localRef && (
-            <p className="mb-3 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
-              {localRef}
-            </p>
-          )}
-          {annotationsEnabled ? (
-            <AnnotatedTextDisplay
-              text={localText}
-              annotations={annotations}
-              onAddAnnotation={addAnnotation}
-              onRemoveAnnotation={removeAnnotation}
-              onUpdateNote={updateNote}
-              className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto"
-            />
-          ) : (
-            <div className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto">
-              {localText}
-            </div>
-          )}
+          <BibleContextView reference={localRef} />
+          <PericopeCollapsible refText={localRef} text={localText} />
         </div>
       ) : (
-        <div>
-          {localRef && !showTextarea && (
-            <p className="mb-3 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
-              {localRef}
-            </p>
+        <>
+          {/* Text display or textarea */}
+          {hasText && !editing ? (
+            <div>
+              {localRef && (
+                <p className="mb-3 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
+                  {localRef}
+                </p>
+              )}
+              {annotationsEnabled ? (
+                <AnnotatedTextDisplay
+                  text={localText}
+                  annotations={annotations}
+                  onAddAnnotation={addAnnotation}
+                  onRemoveAnnotation={removeAnnotation}
+                  onUpdateNote={updateNote}
+                  className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto"
+                />
+              ) : (
+                <div className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto">
+                  {localText}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div>
+              {localRef && !showTextarea && (
+                <p className="mb-3 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
+                  {localRef}
+                </p>
+              )}
+              <textarea
+                value={localText}
+                onChange={(e) => {
+                  setLocalText(e.target.value);
+                  saveText(e.target.value);
+                }}
+                placeholder={`Vlo\u017Ete text perikopy\u2026`}
+                rows={8}
+                className="w-full resize-none rounded-lg border border-border/70 bg-white/80 p-4 font-literata text-[17px] leading-[1.9] text-text placeholder:text-text-light/50 focus:border-brick/30 focus:outline-none focus:ring-2 focus:ring-brick/10"
+              />
+              {editing && hasText && (
+                <button
+                  onClick={() => setEditing(false)}
+                  className="mt-2 text-xs font-medium text-brick hover:text-brick-light"
+                >
+                  {`Hotovo`}
+                </button>
+              )}
+            </div>
           )}
-          <textarea
-            value={localText}
-            onChange={(e) => {
-              setLocalText(e.target.value);
-              saveText(e.target.value);
-            }}
-            placeholder={`Vlo\u017Ete text perikopy\u2026`}
-            rows={8}
-            className="w-full resize-none rounded-lg border border-border/70 bg-white/80 p-4 font-literata text-[17px] leading-[1.9] text-text placeholder:text-text-light/50 focus:border-brick/30 focus:outline-none focus:ring-2 focus:ring-brick/10"
-          />
-          {editing && hasText && (
-            <button
-              onClick={() => setEditing(false)}
-              className="mt-2 text-xs font-medium text-brick hover:text-brick-light"
-            >
-              {`Hotovo`}
-            </button>
-          )}
-        </div>
-      )}
-
-      {/* Step 3 (kontext): show surrounding chapters from Bible API */}
-      {isContextStep && hasText && !editing && localRef && (
-        <div className="mt-5 border-t border-border/50 pt-5">
-          <BibleContextView reference={localRef} />
-        </div>
+        </>
       )}
     </div>
   );
 }
 
 
+
+/** Collapsible pericope text shown below context view in step 3 */
+function PericopeCollapsible({ refText, text }: { refText: string; text: string }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="mt-4 rounded-lg border border-border/50 bg-white/60">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-center justify-between px-4 py-3 text-left"
+      >
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-text-light">
+            {`V\u00E1\u0161 text`}
+          </span>
+          <span className="font-cormorant text-[13px] font-semibold text-brick">
+            {refText}
+          </span>
+        </div>
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className={`shrink-0 text-text-light/50 transition-transform ${open ? "rotate-180" : ""}`}
+        >
+          <path d="M5 8l5 5 5-5" />
+        </svg>
+      </button>
+      {open && (
+        <div className="border-t border-border/30 px-4 py-3">
+          <div className="font-literata text-[15px] leading-[1.8] text-text-muted whitespace-pre-wrap">
+            {text}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 /** Breathing exercise for step 1 — inspired by meditation apps */
 function BreathingExercise() {
