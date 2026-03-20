@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import type { Step } from "@/types";
 import { checklistToolMap } from "@/data/checklist-tool-map";
 import type { ChecklistToolHelper } from "./Checklist";
 import BibleTextPanel from "./BibleTextPanel";
+import StepContext from "./StepContext";
+import SectionNav, { type SectionKey } from "./SectionNav";
 import Checklist from "./Checklist";
 import QuestionNotes from "./QuestionNotes";
-import TheoryPanel from "./TheoryPanel";
 import Notepad from "./Notepad";
 
 // Tool components
@@ -53,6 +54,24 @@ export default function StepContentPanel({
   nextStep,
 }: StepContentPanelProps) {
   const [textPanelOpen, setTextPanelOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<SectionKey>("checklist");
+
+  // Section progress tracking
+  const [checklistCount, setChecklistCount] = useState({ completed: 0, total: 0 });
+  const [questionsCount, setQuestionsCount] = useState({ answered: 0, total: 0 });
+  const [notepadHasContent, setNotepadHasContent] = useState(false);
+
+  const handleChecklistCount = useCallback((completed: number, total: number) => {
+    setChecklistCount({ completed, total });
+  }, []);
+
+  const handleQuestionsCount = useCallback((answered: number, total: number) => {
+    setQuestionsCount({ answered, total });
+  }, []);
+
+  const handleNotepadContent = useCallback((hasContent: boolean) => {
+    setNotepadHasContent(hasContent);
+  }, []);
 
   // Resolve tool helpers for checklist
   const mappings = checklistToolMap[step.slug] || [];
@@ -62,6 +81,10 @@ export default function StepContentPanel({
     icon: m.icon,
     component: resolveToolComponent(m.componentKey, step.slug),
   }));
+
+  const toggleSection = (key: SectionKey) => {
+    setActiveSection((prev) => (prev === key ? key : key));
+  };
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(320px,2fr)]">
@@ -106,7 +129,7 @@ export default function StepContentPanel({
 
       {/* Right panel: Step content */}
       <div>
-        {/* Step header — compact, secondary to text */}
+        {/* 1. Step header */}
         <div className="mb-6">
           <div className="mb-2 flex items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brick-pale text-xl">
@@ -126,72 +149,68 @@ export default function StepContentPanel({
           </p>
         </div>
 
-        {/* Practical steps — interactive checklist with inline tools */}
-        <Checklist
-          slug={step.slug}
-          items={step.practicalSteps}
-          toolHelpers={toolHelpers}
+        {/* 2. StepContext — theory + tip (always near top) */}
+        <StepContext theory={step.theory} tip={step.tip} slug={step.slug} />
+
+        {/* 3. Section navigation pills */}
+        <SectionNav
+          sections={[
+            {
+              key: "checklist",
+              label: "Kroky",
+              completed: checklistCount.completed,
+              total: checklistCount.total,
+            },
+            {
+              key: "questions",
+              label: `Ot\u00E1zky`,
+              completed: questionsCount.answered,
+              total: questionsCount.total,
+            },
+            {
+              key: "notepad",
+              label: `Z\u00E1pisky`,
+              completed: 0,
+              total: 0,
+              hasContent: notepadHasContent,
+            },
+          ]}
+          activeSection={activeSection}
+          onSelect={toggleSection}
         />
 
-        {/* Questions — with note fields */}
-        <QuestionNotes slug={step.slug} questions={step.questions} />
+        {/* 4. Accordion work sections */}
+        <div className="space-y-3">
+          {/* a. Checklist */}
+          <Checklist
+            slug={step.slug}
+            items={step.practicalSteps}
+            toolHelpers={toolHelpers}
+            isOpen={activeSection === "checklist"}
+            onToggle={() => toggleSection("checklist")}
+            onCountChange={handleChecklistCount}
+          />
 
-        {/* Theory panel */}
-        <TheoryPanel theory={step.theory} />
+          {/* b. Questions */}
+          <QuestionNotes
+            slug={step.slug}
+            questions={step.questions}
+            isOpen={activeSection === "questions"}
+            onToggle={() => toggleSection("questions")}
+            onCountChange={handleQuestionsCount}
+          />
 
-        {/* Tip */}
-        <section className="mb-8 rounded-xl border border-sage/20 bg-sage-pale p-6">
-          <h2 className="mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-sage">
-            Tip
-          </h2>
-          <p className="text-sm font-light leading-[1.8] italic text-text-muted">
-            {step.tip}
-          </p>
-          {/* Translation links for step 2 (čtení) and step 4 (výklad) */}
-          {(step.slug === "cteni" || step.slug === "vyklad") && (
-            <div className="mt-3 flex flex-wrap gap-2">
-              <span className="text-[11px] text-sage">{`Porovnat p\u0159eklady:`}</span>
-              <a
-                href="https://www.bibleserver.com/CEP"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[11px] font-medium text-sage underline decoration-sage/30 hover:decoration-sage"
-              >
-                {`\u010CEP`}
-              </a>
-              <a
-                href="https://www.bible21.cz"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[11px] font-medium text-sage underline decoration-sage/30 hover:decoration-sage"
-              >
-                Bible21
-              </a>
-              <a
-                href="https://www.bibleserver.com/BKR"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[11px] font-medium text-sage underline decoration-sage/30 hover:decoration-sage"
-              >
-                {`Kralick\u00E1`}
-              </a>
-              <a
-                href="https://www.bibleserver.com/B21"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[11px] font-medium text-sage underline decoration-sage/30 hover:decoration-sage"
-              >
-                BibleServer
-              </a>
-            </div>
-          )}
-        </section>
+          {/* c. Notepad */}
+          <Notepad
+            slug={step.slug}
+            isOpen={activeSection === "notepad"}
+            onToggle={() => toggleSection("notepad")}
+            onHasContentChange={handleNotepadContent}
+          />
+        </div>
 
-        {/* Notepad */}
-        <Notepad slug={step.slug} />
-
-        {/* Navigation */}
-        <nav className="flex items-center justify-between border-t border-border pt-6">
+        {/* 5. Navigation */}
+        <nav className="mt-6 flex items-center justify-between border-t border-border pt-6">
           {prevStep ? (
             <Link
               href={`/pruvodce/${prevStep.slug}`}
