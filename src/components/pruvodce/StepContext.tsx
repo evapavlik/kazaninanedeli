@@ -13,21 +13,30 @@ interface StepContextProps {
 }
 
 export default function StepContext({ theory, tip, slug }: StepContextProps) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <section className="mb-6">
       <button
         onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between rounded-t-xl border-l-3 border-sage bg-sage-pale px-4 py-3 text-left transition-all hover:bg-sage-pale/80"
+        className={`flex w-full items-center justify-between border-l-3 border-sage px-4 py-3 text-left transition-all hover:bg-sage-pale/80 ${
+          open ? "rounded-t-xl bg-sage-pale" : "rounded-xl bg-sage-pale/60"
+        }`}
       >
         <div className="flex items-center gap-3">
           <span className="text-lg">{"\uD83D\uDCD6"}</span>
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
-              {`Teoretick\u00E9 pozad\u00ED`}
-            </p>
-            <p className="font-lora text-sm font-bold text-text">
+            {!open && (
+              <p className="text-[10px] font-medium text-sage/70">
+                {`Teoretick\u00E9 pozad\u00ED`}
+              </p>
+            )}
+            {open && (
+              <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+                {`Teoretick\u00E9 pozad\u00ED`}
+              </p>
+            )}
+            <p className={`font-lora font-bold text-text ${open ? "text-sm" : "text-[13px]"}`}>
               {theory.concept}
             </p>
           </div>
