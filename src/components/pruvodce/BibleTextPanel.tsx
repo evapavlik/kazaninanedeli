@@ -219,11 +219,11 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
         </div>
       )}
 
-      {/* Step 3 (kontext): context view is the main content */}
+      {/* Step 3 (kontext): pericope card on top, then context TOC below */}
       {isContextStep && hasText && !editing && localRef ? (
         <div>
+          <PericopeCard refText={localRef} text={localText} />
           <BibleContextView reference={localRef} />
-          <PericopeCollapsible refText={localRef} text={localText} />
         </div>
       ) : (
         <>
@@ -285,21 +285,26 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
 
 
 
-/** Collapsible pericope text shown below context view in step 3 */
-function PericopeCollapsible({ refText, text }: { refText: string; text: string }) {
-  const [open, setOpen] = useState(false);
+/** Pericope text shown above context view in step 3 — clearly marked as sermon text */
+function PericopeCard({ refText, text }: { refText: string; text: string }) {
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className="mt-4 rounded-lg border border-border/50 bg-white/60">
+    <div className="mb-4 rounded-lg border-2 border-brick/30 bg-white/90 shadow-sm">
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => setCollapsed(!collapsed)}
         className="flex w-full items-center justify-between px-4 py-3 text-left"
       >
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-text-light">
-            {`V\u00E1\u0161 text`}
+          <span className="flex items-center gap-1.5">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" className="text-brick">
+              <path d="M4 4h12M4 8h12M4 12h8" />
+            </svg>
+            <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brick">
+              {`Text ke k\u00E1z\u00E1n\u00ED`}
+            </span>
           </span>
-          <span className="font-cormorant text-[13px] font-semibold text-brick">
+          <span className="font-cormorant text-[14px] font-semibold text-text">
             {refText}
           </span>
         </div>
@@ -310,14 +315,14 @@ function PericopeCollapsible({ refText, text }: { refText: string; text: string 
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
-          className={`shrink-0 text-text-light/50 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`shrink-0 text-text-light/50 transition-transform ${collapsed ? "" : "rotate-180"}`}
         >
           <path d="M5 8l5 5 5-5" />
         </svg>
       </button>
-      {open && (
-        <div className="border-t border-border/30 px-4 py-3">
-          <div className="font-literata text-[15px] leading-[1.8] text-text-muted whitespace-pre-wrap">
+      {!collapsed && (
+        <div className="border-t border-brick/15 px-4 py-3">
+          <div className="font-literata text-[16px] leading-[1.9] text-text whitespace-pre-wrap text-justify hyphens-auto">
             {text}
           </div>
         </div>

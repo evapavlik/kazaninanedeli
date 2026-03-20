@@ -240,6 +240,11 @@ function SectionRow({
           }`}
         >
           {section.title}
+          {isActive && (
+            <span className="ml-1.5 inline-block rounded bg-brick/10 px-1.5 py-0.5 align-middle text-[9px] font-bold uppercase tracking-wider text-brick">
+              {`va\u0161e perikopa`}
+            </span>
+          )}
         </span>
 
         {/* Verse range */}
