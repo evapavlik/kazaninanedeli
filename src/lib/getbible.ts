@@ -88,6 +88,52 @@ const BOOK_CHAPTER_COUNTS: Record<number, number> = {
   65: 1, 66: 22,
 };
 
+/** Book number \u2192 biblehub.com URL slug */
+const BOOK_NUMBER_TO_BIBLEHUB: Record<number, string> = {
+  1: "genesis", 2: "exodus", 3: "leviticus", 4: "numbers", 5: "deuteronomy",
+  6: "joshua", 7: "judges", 8: "ruth", 9: "1_samuel", 10: "2_samuel",
+  11: "1_kings", 12: "2_kings", 13: "1_chronicles", 14: "2_chronicles",
+  15: "ezra", 16: "nehemiah", 17: "esther", 18: "job", 19: "psalms",
+  20: "proverbs", 21: "ecclesiastes", 22: "songs", 23: "isaiah",
+  24: "jeremiah", 25: "lamentations", 26: "ezekiel", 27: "daniel",
+  28: "hosea", 29: "joel", 30: "amos", 31: "obadiah", 32: "jonah",
+  33: "micah", 34: "nahum", 35: "habakkuk", 36: "zephaniah",
+  37: "haggai", 38: "zechariah", 39: "malachi",
+  40: "matthew", 41: "mark", 42: "luke", 43: "john", 44: "acts",
+  45: "romans", 46: "1_corinthians", 47: "2_corinthians",
+  48: "galatians", 49: "ephesians", 50: "philippians", 51: "colossians",
+  52: "1_thessalonians", 53: "2_thessalonians",
+  54: "1_timothy", 55: "2_timothy", 56: "titus", 57: "philemon",
+  58: "hebrews", 59: "james", 60: "1_peter", 61: "2_peter",
+  62: "1_john", 63: "2_john", 64: "3_john", 65: "jude", 66: "revelation",
+};
+
+/** Whether a book is Old Testament (Hebrew) or New Testament (Greek) */
+export function isOldTestament(bookNumber: number): boolean {
+  return bookNumber >= 1 && bookNumber <= 39;
+}
+
+/** Get biblehub.com interlinear URL for a chapter */
+export function getBibleHubInterlinearUrl(bookNumber: number, chapter: number): string | null {
+  const slug = BOOK_NUMBER_TO_BIBLEHUB[bookNumber];
+  if (!slug) return null;
+  return `https://biblehub.com/interlinear/${slug}/${chapter}.htm`;
+}
+
+/** Get biblehub.com commentary URL for a chapter */
+export function getBibleHubCommentaryUrl(bookNumber: number, chapter: number): string | null {
+  const slug = BOOK_NUMBER_TO_BIBLEHUB[bookNumber];
+  if (!slug) return null;
+  return `https://biblehub.com/commentaries/${slug}/${chapter}.htm`;
+}
+
+/** Get biblehub.com text URL for a chapter */
+export function getBibleHubTextUrl(bookNumber: number, chapter: number): string | null {
+  const slug = BOOK_NUMBER_TO_BIBLEHUB[bookNumber];
+  if (!slug) return null;
+  return `https://biblehub.com/${slug}/${chapter}.htm`;
+}
+
 /** Translation labels */
 export const TRANSLATION_LABELS: Record<BibleTranslation, string> = {
   cep: "\u010CEP",

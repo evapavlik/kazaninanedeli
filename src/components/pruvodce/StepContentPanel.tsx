@@ -57,8 +57,10 @@ export default function StepContentPanel({
   const [activeSection, setActiveSection] = useState<SectionKey>("checklist");
   const [focusMode, setFocusMode] = useState(false);
 
-  // Focus mode: only for reading step on desktop
+  // Focus mode: for text-heavy steps on desktop
   const isReadingStep = step.slug === "cteni";
+  const isExegesisStep = step.slug === "vyklad";
+  const hasFocusMode = isReadingStep || isExegesisStep;
 
   // Section progress tracking
   const [checklistCount, setChecklistCount] = useState({ completed: 0, total: 0 });
@@ -124,14 +126,14 @@ export default function StepContentPanel({
           </button>
           {textPanelOpen && (
             <div className="mt-2">
-              <BibleTextPanel currentSlug={step.slug} focusMode={focusMode} onFocusToggle={isReadingStep ? () => setFocusMode(!focusMode) : undefined} />
+              <BibleTextPanel currentSlug={step.slug} focusMode={focusMode} onFocusToggle={hasFocusMode ? () => setFocusMode(!focusMode) : undefined} />
             </div>
           )}
         </div>
 
         {/* Desktop: always visible */}
         <div className="hidden lg:block">
-          <BibleTextPanel currentSlug={step.slug} focusMode={focusMode} onFocusToggle={isReadingStep ? () => setFocusMode(!focusMode) : undefined} />
+          <BibleTextPanel currentSlug={step.slug} focusMode={focusMode} onFocusToggle={hasFocusMode ? () => setFocusMode(!focusMode) : undefined} />
         </div>
       </div>
 
