@@ -7,12 +7,15 @@ import { useAnnotations } from "@/hooks/useAnnotations";
 import { annotationCategories } from "@/data/annotation-categories";
 import AnnotatedTextDisplay from "./AnnotatedTextDisplay";
 import BibleContextView from "./BibleContextView";
+import TranslationCompare from "./TranslationCompare";
 
 interface BibleTextPanelProps {
   currentSlug: string;
+  focusMode?: boolean;
+  onFocusToggle?: () => void;
 }
 
-export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
+export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle }: BibleTextPanelProps) {
   const [savedText, setSavedText] = useLocalStorage<string>(
     "kazani-bible-text",
     ""
@@ -85,6 +88,7 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
   const hasText = localText.trim().length > 0;
   const isFirstStep = currentSlug === "modlitba";
   const isContextStep = currentSlug === "kontext";
+  const isReadingStep = currentSlug === "cteni";
   const showTextarea = !hasText || editing || isFirstStep;
 
   // Show reading suggestion when no text is entered yet
@@ -248,6 +252,45 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
                 <div className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto">
                   {localText}
                 </div>
+              )}
+
+              {/* Step 2 (čtení): translation comparison below the text */}
+              {isReadingStep && localRef && (
+                <>
+                  {onFocusToggle && (
+                    <div className="mt-3 hidden lg:flex lg:justify-end">
+                      <button
+                        onClick={onFocusToggle}
+                        className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[11px] font-medium transition-all ${
+                          focusMode
+                            ? "bg-brick text-white hover:bg-brick-light"
+                            : "border border-sage/30 bg-sage-pale/50 text-sage hover:border-sage/50"
+                        }`}
+                      >
+                        {focusMode ? (
+                          <>
+                            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <rect x="2" y="3" width="7" height="14" rx="1" />
+                              <rect x="11" y="3" width="7" height="14" rx="1" />
+                            </svg>
+                            {`Zp\u011Bt k \u00FAkol\u016Fm`}
+                          </>
+                        ) : (
+                          <>
+                            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
+                              <rect x="1" y="3" width="18" height="14" rx="1" />
+                              <line x1="5" y1="7" x2="15" y2="7" />
+                              <line x1="5" y1="10" x2="15" y2="10" />
+                              <line x1="5" y1="13" x2="12" y2="13" />
+                            </svg>
+                            {`Soust\u0159edit se na text`}
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
+                  <TranslationCompare reference={localRef} />
+                </>
               )}
             </div>
           ) : (
