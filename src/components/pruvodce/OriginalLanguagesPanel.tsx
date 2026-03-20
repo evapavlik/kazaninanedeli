@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import {
   parseReferenceForApi,
   getBibleHubInterlinearUrl,
-  getBibleHubCommentaryUrl,
   isOldTestament,
 } from "@/lib/getbible";
 
@@ -52,7 +51,6 @@ export default function OriginalLanguagesPanel({
 
   const { bookNumber, chapter } = parsed;
   const interlinearUrl = getBibleHubInterlinearUrl(bookNumber, chapter);
-  const commentaryUrl = getBibleHubCommentaryUrl(bookNumber, chapter);
   const isOT = isOldTestament(bookNumber);
   const langLabel = isOT ? `hebrej\u0161tina` : `\u0159e\u010Dtina`;
   const langIcon = isOT ? "\u05D0" : "\u03B1";
@@ -61,15 +59,18 @@ export default function OriginalLanguagesPanel({
     <div className="rounded-lg border border-sage/20 bg-sage-pale/30 p-4">
       {/* Header */}
       <div className="mb-3 flex items-center gap-2">
+        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-brick/10 text-[11px] font-bold text-brick">
+          {`1`}
+        </span>
         <span className="flex h-7 w-7 items-center justify-center rounded-md bg-sage/10 text-[14px] font-semibold text-sage">
           {langIcon}
         </span>
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sage/70">
-            {`Origin\u00E1ln\u00ED jazyky`}
+            {`Kl\u00ED\u010Dov\u00E1 slova v origin\u00E1le`}
           </p>
           <p className="text-[11px] text-text-muted">
-            {`Text je v `}{isOT ? `hebrej\u0161tin\u011B` : `\u0159e\u010Dtin\u011B`}{` \u2014 prozkoumejte origin\u00E1l`}
+            {`Text je v `}{isOT ? `hebrej\u0161tin\u011B` : `\u0159e\u010Dtin\u011B`}{` \u2014 prozkoumejte v\u00FDznam slov`}
           </p>
         </div>
       </div>
@@ -140,30 +141,6 @@ export default function OriginalLanguagesPanel({
         </div>
       )}
 
-      {/* Commentary link */}
-      {commentaryUrl && (
-        <a
-          href={commentaryUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-3 rounded-lg border border-border/50 bg-white/50 px-3 py-2 transition-all hover:border-sage/30 hover:bg-white/70"
-        >
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-white">
-            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-text-light">
-              <path d="M4 3h12v14H4z" />
-              <path d="M7 7h6M7 10h4" />
-            </svg>
-          </span>
-          <div className="flex-1">
-            <p className="text-[11px] font-medium text-text-muted">
-              {`Koment\u00E1\u0159e k textu`}
-            </p>
-          </div>
-          <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 text-text-light/40">
-            <path d="M5 15L15 5M15 5H8M15 5v7" />
-          </svg>
-        </a>
-      )}
     </div>
   );
 }

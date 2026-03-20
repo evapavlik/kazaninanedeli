@@ -47,6 +47,9 @@ export default function CentralIdeaField() {
       {/* Header */}
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
+          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-brick/10 text-[11px] font-bold text-brick">
+            {`3`}
+          </span>
           <span className="flex h-6 w-6 items-center justify-center rounded-md bg-brick-pale text-[12px]">
             {"\uD83C\uDFAF"}
           </span>
