@@ -373,6 +373,469 @@ const HEADINGS_BY_BOOK_NUMBER: Record<number, BookHeadings> = {
       },
     ],
   },
+
+  // ==================== EZEKIEL (26) ====================
+  26: {
+    bookId: "ezekiel",
+    bookName: "Ezechiel",
+    chapters: [
+      {
+        chapter: 1,
+        sections: [
+          { title: "Vid\u011Bn\u00ED Bo\u017E\u00ED sl\u00E1vy", startVerse: 1, endVerse: 28 },
+        ],
+      },
+      {
+        chapter: 2,
+        sections: [
+          { title: "Povol\u00E1n\u00ED proroka", startVerse: 1, endVerse: 7 },
+          { title: "Svitek", startVerse: 8, endVerse: 10 },
+        ],
+      },
+      {
+        chapter: 3,
+        sections: [
+          { title: "Svitek (pokra\u010Dov\u00E1n\u00ED)", startVerse: 1, endVerse: 3 },
+          { title: "Ezechiel str\u00E1\u017Ecem Izraele", startVerse: 4, endVerse: 27 },
+        ],
+      },
+      {
+        chapter: 4,
+        sections: [
+          { title: "Symbolick\u00E9 obl\u00E9h\u00E1n\u00ED Jeruzal\u00E9ma", startVerse: 1, endVerse: 17 },
+        ],
+      },
+      {
+        chapter: 5,
+        sections: [
+          { title: "Ohl\u00E1\u0161en\u00ED soudu nad Jeruzal\u00E9mem", startVerse: 1, endVerse: 17 },
+        ],
+      },
+      {
+        chapter: 6,
+        sections: [
+          { title: "Proroctv\u00ED proti izraelsk\u00FDm hor\u00E1m", startVerse: 1, endVerse: 14 },
+        ],
+      },
+      {
+        chapter: 7,
+        sections: [
+          { title: "Konec p\u0159ich\u00E1z\u00ED", startVerse: 1, endVerse: 27 },
+        ],
+      },
+      {
+        chapter: 8,
+        sections: [
+          { title: "Vid\u011Bn\u00ED ohavnost\u00ED v chr\u00E1m\u011B", startVerse: 1, endVerse: 18 },
+        ],
+      },
+      {
+        chapter: 9,
+        sections: [
+          { title: "Soud nad Jeruzal\u00E9mem", startVerse: 1, endVerse: 11 },
+        ],
+      },
+      {
+        chapter: 10,
+        sections: [
+          { title: "Bo\u017E\u00ED sl\u00E1va opou\u0161t\u00ED chr\u00E1m", startVerse: 1, endVerse: 22 },
+        ],
+      },
+      {
+        chapter: 11,
+        sections: [
+          { title: "Soud nad kn\u00ED\u017Eaty", startVerse: 1, endVerse: 13 },
+          { title: "Zasl\u00EDben\u00ED obnovy", startVerse: 14, endVerse: 25 },
+        ],
+      },
+      {
+        chapter: 12,
+        sections: [
+          { title: "Symbolick\u00E9 st\u011Bhov\u00E1n\u00ED", startVerse: 1, endVerse: 20 },
+          { title: "Proroctv\u00ED se napln\u00ED", startVerse: 21, endVerse: 28 },
+        ],
+      },
+      {
+        chapter: 13,
+        sections: [
+          { title: "Proti fale\u0161n\u00FDm prorok\u016Fm", startVerse: 1, endVerse: 16 },
+          { title: "Proti fale\u0161n\u00FDm prorokyn\u00EDm", startVerse: 17, endVerse: 23 },
+        ],
+      },
+      {
+        chapter: 14,
+        sections: [
+          { title: "Proti modl\u00E1\u0159\u016Fm", startVerse: 1, endVerse: 11 },
+          { title: "Noe Daniel a J\u00F3b", startVerse: 12, endVerse: 23 },
+        ],
+      },
+      {
+        chapter: 15,
+        sections: [
+          { title: "Jeruzal\u00E9m jako vinn\u00FD kmen", startVerse: 1, endVerse: 8 },
+        ],
+      },
+      {
+        chapter: 16,
+        sections: [
+          { title: "Nev\u011Brn\u00FD Jeruzal\u00E9m", startVerse: 1, endVerse: 34 },
+          { title: "Soud nad Jeruzal\u00E9mem", startVerse: 35, endVerse: 52 },
+          { title: "Zasl\u00EDben\u00ED obnovy", startVerse: 53, endVerse: 63 },
+        ],
+      },
+      {
+        chapter: 17,
+        sections: [
+          { title: "Podobenstv\u00ED o orlech", startVerse: 1, endVerse: 24 },
+        ],
+      },
+      {
+        chapter: 18,
+        sections: [
+          { title: "Osobn\u00ED odpov\u011Bdnost", startVerse: 1, endVerse: 20 },
+          { title: "V\u00FDzva k obr\u00E1cen\u00ED", startVerse: 21, endVerse: 32 },
+        ],
+      },
+      {
+        chapter: 19,
+        sections: [
+          { title: "\u017Dalozp\u011Bv nad izraelsk\u00FDmi kn\u00ED\u017Eaty", startVerse: 1, endVerse: 14 },
+        ],
+      },
+      {
+        chapter: 20,
+        sections: [
+          { title: "D\u011Bjiny Izraele jako vzpoura", startVerse: 1, endVerse: 32 },
+          { title: "Zasl\u00EDben\u00ED obnovy", startVerse: 33, endVerse: 44 },
+        ],
+      },
+      {
+        chapter: 21,
+        sections: [
+          { title: "Hospodin\u016Fv me\u010D", startVerse: 1, endVerse: 37 },
+        ],
+      },
+      {
+        chapter: 22,
+        sections: [
+          { title: "H\u0159\u00EDchy Jeruzal\u00E9ma", startVerse: 1, endVerse: 16 },
+          { title: "Tavic\u00ED pec", startVerse: 17, endVerse: 22 },
+          { title: "Ob\u017Ealoba v\u016Fdc\u016F", startVerse: 23, endVerse: 31 },
+        ],
+      },
+      {
+        chapter: 23,
+        sections: [
+          { title: "Ohola a Ohol\u00EDba", startVerse: 1, endVerse: 35 },
+          { title: "Soud nad ob\u011Bma sestrami", startVerse: 36, endVerse: 49 },
+        ],
+      },
+      {
+        chapter: 24,
+        sections: [
+          { title: "Podobenstv\u00ED o hrnci", startVerse: 1, endVerse: 14 },
+          { title: "Smrt Ezechielovy \u017Eeny", startVerse: 15, endVerse: 27 },
+        ],
+      },
+      {
+        chapter: 25,
+        sections: [
+          { title: "Proti Amm\u00F3nu", startVerse: 1, endVerse: 7 },
+          { title: "Proti Mo\u00E1bu", startVerse: 8, endVerse: 11 },
+          { title: "Proti Ed\u00F3mu", startVerse: 12, endVerse: 14 },
+          { title: "Proti Peli\u0161tejc\u016Fm", startVerse: 15, endVerse: 17 },
+        ],
+      },
+      {
+        chapter: 26,
+        sections: [
+          { title: "Proti T\u00FDru", startVerse: 1, endVerse: 21 },
+        ],
+      },
+      {
+        chapter: 27,
+        sections: [
+          { title: "\u017Dalozp\u011Bv nad T\u00FDrem", startVerse: 1, endVerse: 36 },
+        ],
+      },
+      {
+        chapter: 28,
+        sections: [
+          { title: "P\u00E1d t\u00FDrsk\u00E9ho kr\u00E1le", startVerse: 1, endVerse: 19 },
+          { title: "Proti Sid\u00F3nu", startVerse: 20, endVerse: 24 },
+          { title: "Zasl\u00EDben\u00ED Izraeli", startVerse: 25, endVerse: 26 },
+        ],
+      },
+      {
+        chapter: 29,
+        sections: [
+          { title: "Proti Egyptu", startVerse: 1, endVerse: 16 },
+          { title: "Babyl\u00F3n dostane Egypt", startVerse: 17, endVerse: 21 },
+        ],
+      },
+      {
+        chapter: 30,
+        sections: [
+          { title: "Bi\u010D na Egypt", startVerse: 1, endVerse: 19 },
+          { title: "Zlomen\u00ED fara\u00F3novy pa\u017Ee", startVerse: 20, endVerse: 26 },
+        ],
+      },
+      {
+        chapter: 31,
+        sections: [
+          { title: "Farao jako cedr libanonsk\u00FD", startVerse: 1, endVerse: 18 },
+        ],
+      },
+      {
+        chapter: 32,
+        sections: [
+          { title: "\u017Dalozp\u011Bv nad fara\u00F3nem", startVerse: 1, endVerse: 16 },
+          { title: "Sestup do podsv\u011Bt\u00ED", startVerse: 17, endVerse: 32 },
+        ],
+      },
+      {
+        chapter: 33,
+        sections: [
+          { title: "Ezechiel str\u00E1\u017Ecem", startVerse: 1, endVerse: 20 },
+          { title: "P\u00E1d Jeruzal\u00E9ma", startVerse: 21, endVerse: 33 },
+        ],
+      },
+      {
+        chapter: 34,
+        sections: [
+          { title: "Proti \u0161patn\u00FDm past\u00FD\u0159\u016Fm", startVerse: 1, endVerse: 10 },
+          { title: "Hospodin past\u00FD\u0159em", startVerse: 11, endVerse: 22 },
+          { title: "Zasl\u00EDben\u00ED pokoje", startVerse: 23, endVerse: 31 },
+        ],
+      },
+      {
+        chapter: 35,
+        sections: [
+          { title: "Proroctv\u00ED proti Se\u00EDru", startVerse: 1, endVerse: 15 },
+        ],
+      },
+      {
+        chapter: 36,
+        sections: [
+          { title: "Zasl\u00EDben\u00ED izraelsk\u00FDm hor\u00E1m", startVerse: 1, endVerse: 15 },
+          { title: "Nov\u00E9 srdce a nov\u00FD duch", startVerse: 16, endVerse: 38 },
+        ],
+      },
+      {
+        chapter: 37,
+        sections: [
+          { title: "\u00DAdol\u00ED such\u00FDch kost\u00ED", startVerse: 1, endVerse: 14 },
+          { title: "Dv\u011B d\u0159eva", startVerse: 15, endVerse: 28 },
+        ],
+      },
+      {
+        chapter: 38,
+        sections: [
+          { title: "Proroctv\u00ED proti G\u00F3govi", startVerse: 1, endVerse: 23 },
+        ],
+      },
+      {
+        chapter: 39,
+        sections: [
+          { title: "Zk\u00E1za G\u00F3ga", startVerse: 1, endVerse: 20 },
+          { title: "Obnova Izraele", startVerse: 21, endVerse: 29 },
+        ],
+      },
+      {
+        chapter: 40,
+        sections: [
+          { title: "Vid\u011Bn\u00ED nov\u00E9ho chr\u00E1mu", startVerse: 1, endVerse: 49 },
+        ],
+      },
+      {
+        chapter: 41,
+        sections: [
+          { title: "Chr\u00E1mov\u00E1 s\u00ED\u0148", startVerse: 1, endVerse: 26 },
+        ],
+      },
+      {
+        chapter: 42,
+        sections: [
+          { title: "Kn\u011B\u017Esk\u00E9 m\u00EDstnosti", startVerse: 1, endVerse: 20 },
+        ],
+      },
+      {
+        chapter: 43,
+        sections: [
+          { title: "N\u00E1vrat Bo\u017E\u00ED sl\u00E1vy", startVerse: 1, endVerse: 12 },
+          { title: "Olt\u00E1\u0159", startVerse: 13, endVerse: 27 },
+        ],
+      },
+      {
+        chapter: 44,
+        sections: [
+          { title: "Slu\u017Eba v chr\u00E1m\u011B", startVerse: 1, endVerse: 31 },
+        ],
+      },
+      {
+        chapter: 45,
+        sections: [
+          { title: "Posv\u00E1tn\u00FD d\u00EDl zem\u011B", startVerse: 1, endVerse: 12 },
+          { title: "Ob\u011Bti", startVerse: 13, endVerse: 25 },
+        ],
+      },
+      {
+        chapter: 46,
+        sections: [
+          { title: "Bohoslu\u017Eebn\u00E9 \u0159\u00E1dy", startVerse: 1, endVerse: 18 },
+          { title: "Chr\u00E1mov\u00E9 kuchyn\u011B", startVerse: 19, endVerse: 24 },
+        ],
+      },
+      {
+        chapter: 47,
+        sections: [
+          { title: "Pramen z chr\u00E1mu", startVerse: 1, endVerse: 12 },
+          { title: "Hranice zem\u011B", startVerse: 13, endVerse: 23 },
+        ],
+      },
+      {
+        chapter: 48,
+        sections: [
+          { title: "Rozd\u011Blen\u00ED zem\u011B", startVerse: 1, endVerse: 29 },
+          { title: "Br\u00E1ny Jeruzal\u00E9ma", startVerse: 30, endVerse: 35 },
+        ],
+      },
+    ],
+  },
+
+  // ==================== ROMANS (45) ====================
+  45: {
+    bookId: "romans",
+    bookName: "\u0158\u00EDman\u016Fm",
+    chapters: [
+      {
+        chapter: 1,
+        sections: [
+          { title: "Pozdrav", startVerse: 1, endVerse: 7 },
+          { title: "Pavlova touha nav\u0161t\u00EDvit \u0158\u00EDm", startVerse: 8, endVerse: 15 },
+          { title: "Moc evangelia", startVerse: 16, endVerse: 17 },
+          { title: "Hn\u011Bv Bo\u017E\u00ED nad bezbo\u017Enost\u00ED", startVerse: 18, endVerse: 32 },
+        ],
+      },
+      {
+        chapter: 2,
+        sections: [
+          { title: "Bo\u017E\u00ED soud", startVerse: 1, endVerse: 16 },
+          { title: "\u017Did\u00E9 a Z\u00E1kon", startVerse: 17, endVerse: 29 },
+        ],
+      },
+      {
+        chapter: 3,
+        sections: [
+          { title: "P\u0159ednost \u017Did\u016F", startVerse: 1, endVerse: 8 },
+          { title: "V\u0161ichni jsou pod h\u0159\u00EDchem", startVerse: 9, endVerse: 20 },
+          { title: "Ospravedln\u011Bn\u00ED z v\u00EDry", startVerse: 21, endVerse: 31 },
+        ],
+      },
+      {
+        chapter: 4,
+        sections: [
+          { title: "P\u0159\u00EDklad Abraham\u016Fv", startVerse: 1, endVerse: 12 },
+          { title: "Zasl\u00EDben\u00ED se uskute\u010D\u0148uje v\u00EDrou", startVerse: 13, endVerse: 25 },
+        ],
+      },
+      {
+        chapter: 5,
+        sections: [
+          { title: "Ovoce ospravedln\u011Bn\u00ED", startVerse: 1, endVerse: 11 },
+          { title: "Adam a Kristus", startVerse: 12, endVerse: 21 },
+        ],
+      },
+      {
+        chapter: 6,
+        sections: [
+          { title: "K\u0159est a nov\u00FD \u017Eivot", startVerse: 1, endVerse: 14 },
+          { title: "Slu\u017Eba spravedlnosti", startVerse: 15, endVerse: 23 },
+        ],
+      },
+      {
+        chapter: 7,
+        sections: [
+          { title: "Od Z\u00E1kona k milosti", startVerse: 1, endVerse: 6 },
+          { title: "Z\u00E1kon a h\u0159\u00EDch", startVerse: 7, endVerse: 13 },
+          { title: "Vnit\u0159n\u00ED rozpor \u010Dlov\u011Bka", startVerse: 14, endVerse: 25 },
+        ],
+      },
+      {
+        chapter: 8,
+        sections: [
+          { title: "\u017Divot z moci Ducha svat\u00E9ho", startVerse: 1, endVerse: 11 },
+          { title: "Synov\u00E9 Bo\u017E\u00ED", startVerse: 12, endVerse: 17 },
+          { title: "Budouc\u00ED sl\u00E1va", startVerse: 18, endVerse: 30 },
+          { title: "Hymnus o Bo\u017E\u00ED l\u00E1sce", startVerse: 31, endVerse: 39 },
+        ],
+      },
+      {
+        chapter: 9,
+        sections: [
+          { title: "Bolest nad Izraelem", startVerse: 1, endVerse: 5 },
+          { title: "Bo\u017E\u00ED vyvolen\u00ED", startVerse: 6, endVerse: 13 },
+          { title: "Bo\u017E\u00ED svrchovanost", startVerse: 14, endVerse: 29 },
+          { title: "Izrael a evangelium", startVerse: 30, endVerse: 33 },
+        ],
+      },
+      {
+        chapter: 10,
+        sections: [
+          { title: "Spravedlnost z v\u00EDry", startVerse: 1, endVerse: 13 },
+          { title: "V\u00EDra ze zv\u011Bstov\u00E1n\u00ED", startVerse: 14, endVerse: 21 },
+        ],
+      },
+      {
+        chapter: 11,
+        sections: [
+          { title: "Bo\u017E\u00ED pl\u00E1n s Izraelem", startVerse: 1, endVerse: 12 },
+          { title: "P\u0159ijet\u00ED pohan\u016F", startVerse: 13, endVerse: 24 },
+          { title: "Kone\u010Dn\u00E1 sp\u00E1sa Izraele", startVerse: 25, endVerse: 36 },
+        ],
+      },
+      {
+        chapter: 12,
+        sections: [
+          { title: "Prav\u00E1 bohoslu\u017Eba", startVerse: 1, endVerse: 2 },
+          { title: "Dary milosti", startVerse: 3, endVerse: 8 },
+          { title: "Pravidla k\u0159es\u0165ansk\u00E9ho \u017Eivota", startVerse: 9, endVerse: 21 },
+        ],
+      },
+      {
+        chapter: 13,
+        sections: [
+          { title: "Pod\u0159\u00EDzenost vl\u00E1dn\u00ED moci", startVerse: 1, endVerse: 7 },
+          { title: "L\u00E1ska \u2014 napln\u011Bn\u00ED Z\u00E1kona", startVerse: 8, endVerse: 10 },
+          { title: "Bl\u00EDzko je den", startVerse: 11, endVerse: 14 },
+        ],
+      },
+      {
+        chapter: 14,
+        sections: [
+          { title: "Siln\u00ED a slab\u00ED ve v\u00ED\u0159e", startVerse: 1, endVerse: 12 },
+          { title: "Nikoho nepohor\u0161ovat", startVerse: 13, endVerse: 23 },
+        ],
+      },
+      {
+        chapter: 15,
+        sections: [
+          { title: "Sn\u00E1\u0161et slabosti bli\u017En\u00EDch", startVerse: 1, endVerse: 13 },
+          { title: "Pavlova slu\u017Eba pohan\u016Fm", startVerse: 14, endVerse: 21 },
+          { title: "Pl\u00E1n cesty do \u0158\u00EDma", startVerse: 22, endVerse: 33 },
+        ],
+      },
+      {
+        chapter: 16,
+        sections: [
+          { title: "Doporu\u010Den\u00ED a pozdravy", startVerse: 1, endVerse: 16 },
+          { title: "Varov\u00E1n\u00ED", startVerse: 17, endVerse: 20 },
+          { title: "Z\u00E1v\u011Bre\u010Dn\u00E9 pozdravy", startVerse: 21, endVerse: 24 },
+          { title: "Doxologie", startVerse: 25, endVerse: 27 },
+        ],
+      },
+    ],
+  },
 };
 
 /**

@@ -55,6 +55,10 @@ export default function StepContentPanel({
 }: StepContentPanelProps) {
   const [textPanelOpen, setTextPanelOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionKey>("checklist");
+  const [focusMode, setFocusMode] = useState(false);
+
+  // Focus mode: only for reading step on desktop
+  const isReadingStep = step.slug === "cteni";
 
   // Section progress tracking
   const [checklistCount, setChecklistCount] = useState({ completed: 0, total: 0 });
@@ -87,7 +91,11 @@ export default function StepContentPanel({
   };
 
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(320px,2fr)]">
+    <div className={`grid grid-cols-1 gap-6 transition-all duration-300 ${
+      focusMode
+        ? "lg:grid-cols-[minmax(0,1fr)_56px]"
+        : "lg:grid-cols-[minmax(0,3fr)_minmax(320px,2fr)]"
+    }`}>
       {/* Left panel: Biblical text */}
       <div className="lg:sticky lg:top-[84px] lg:self-start lg:max-h-[calc(100vh-100px)] lg:overflow-y-auto">
         {/* Mobile toggle */}
@@ -116,19 +124,75 @@ export default function StepContentPanel({
           </button>
           {textPanelOpen && (
             <div className="mt-2">
-              <BibleTextPanel currentSlug={step.slug} />
+              <BibleTextPanel currentSlug={step.slug} focusMode={focusMode} onFocusToggle={isReadingStep ? () => setFocusMode(!focusMode) : undefined} />
             </div>
           )}
         </div>
 
         {/* Desktop: always visible */}
         <div className="hidden lg:block">
-          <BibleTextPanel currentSlug={step.slug} />
+          <BibleTextPanel currentSlug={step.slug} focusMode={focusMode} onFocusToggle={isReadingStep ? () => setFocusMode(!focusMode) : undefined} />
         </div>
       </div>
 
       {/* Right panel: Step content */}
-      <div>
+      <div className={focusMode ? "hidden lg:block" : ""}>
+        {/* Minimized focus mode sidebar */}
+        {focusMode && (
+          <div className="sticky top-[84px] flex flex-col items-center gap-3 rounded-xl border border-border/50 bg-cream py-4">
+            <button
+              onClick={() => setFocusMode(false)}
+              className="flex h-10 w-10 items-center justify-center rounded-lg bg-brick text-white transition-colors hover:bg-brick-light"
+              title={`Zp\u011Bt k \u00FAkol\u016Fm`}
+            >
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M14 3l-5 5 5 5" />
+                <rect x="12" y="3" width="5" height="14" rx="1" opacity="0.3" />
+              </svg>
+            </button>
+            <div className="h-px w-6 bg-border/50" />
+            <button
+              onClick={() => { setFocusMode(false); setActiveSection("checklist"); }}
+              className="flex h-9 w-9 items-center justify-center rounded-lg text-text-light transition-colors hover:bg-white hover:text-brick"
+              title={`Kroky ${checklistCount.completed}/${checklistCount.total}`}
+            >
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 10l4 4 8-8" />
+              </svg>
+            </button>
+            <button
+              onClick={() => { setFocusMode(false); setActiveSection("questions"); }}
+              className="flex h-9 w-9 items-center justify-center rounded-lg text-text-light transition-colors hover:bg-white hover:text-brick"
+              title={`Ot\u00E1zky ${questionsCount.answered}/${questionsCount.total}`}
+            >
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="10" cy="10" r="8" />
+                <path d="M8 8a2.5 2.5 0 013 2.5c0 1-1.5 1.5-1.5 2.5M10 15v0" />
+              </svg>
+            </button>
+            <button
+              onClick={() => { setFocusMode(false); setActiveSection("notepad"); }}
+              className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:bg-white hover:text-brick ${notepadHasContent ? "text-sage" : "text-text-light"}`}
+              title={`Z\u00E1pisky`}
+            >
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 4h12M4 8h12M4 12h8" />
+              </svg>
+            </button>
+            {/* Progress indicator */}
+            {checklistCount.total > 0 && (
+              <>
+                <div className="h-px w-6 bg-border/50" />
+                <span className="text-[9px] font-bold text-text-light">
+                  {checklistCount.completed}/{checklistCount.total}
+                </span>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Full right panel content (hidden when in focus mode) */}
+        <div className={focusMode ? "hidden" : ""}>
         {/* 1. Step header */}
         <div className="mb-6">
           <div className="mb-2 flex items-center gap-3">
@@ -252,6 +316,7 @@ export default function StepContentPanel({
             </Link>
           )}
         </nav>
+        </div>
       </div>
     </div>
   );
