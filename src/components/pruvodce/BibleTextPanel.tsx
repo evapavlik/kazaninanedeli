@@ -6,6 +6,7 @@ import { useCurrentReading } from "@/hooks/useCurrentReading";
 import { useAnnotations } from "@/hooks/useAnnotations";
 import { annotationCategories } from "@/data/annotation-categories";
 import AnnotatedTextDisplay from "./AnnotatedTextDisplay";
+import BibleContextView from "./BibleContextView";
 
 interface BibleTextPanelProps {
   currentSlug: string;
@@ -83,6 +84,7 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
 
   const hasText = localText.trim().length > 0;
   const isFirstStep = currentSlug === "modlitba";
+  const isContextStep = currentSlug === "kontext";
   const showTextarea = !hasText || editing || isFirstStep;
 
   // Show reading suggestion when no text is entered yet
@@ -267,9 +269,18 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
           )}
         </div>
       )}
+
+      {/* Step 3 (kontext): show surrounding chapters from Bible API */}
+      {isContextStep && hasText && !editing && localRef && (
+        <div className="mt-5 border-t border-border/50 pt-5">
+          <BibleContextView reference={localRef} />
+        </div>
+      )}
     </div>
   );
 }
+
+
 
 /** Breathing exercise for step 1 — inspired by meditation apps */
 function BreathingExercise() {
