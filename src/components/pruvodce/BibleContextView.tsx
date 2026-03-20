@@ -1,102 +1,70 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useBibleContext } from "@/hooks/useBibleContext";
+import { useState, useCallback } from "react";
 import {
   type BibleTranslation,
-  type BibleChapter,
   type BibleVerse,
   TRANSLATION_LABELS,
-  getChapterCount,
+  parseReferenceForApi,
+  fetchChapter,
 } from "@/lib/getbible";
+import {
+  getBookHeadings,
+  type SectionHeading,
+  type ChapterHeadings,
+} from "@/data/chapter-headings";
 
 interface BibleContextViewProps {
   reference: string;
 }
 
 /**
- * Vertical scrollable context view showing surrounding chapters.
- * The user's pericope is highlighted; surrounding text is shown in muted style.
- * Auto-scrolls to the highlighted passage on load.
+ * Book table-of-contents view for step 3 (context).
+ * Shows chapter sections as a TOC; click to expand and read full text from API.
+ * User's pericope section is highlighted.
  */
 export default function BibleContextView({ reference }: BibleContextViewProps) {
-  const { data, loading, error, translation, setTranslation } =
-    useBibleContext(reference);
-  const highlightRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [hasScrolled, setHasScrolled] = useState(false);
+  const parsed = parseReferenceForApi(reference);
+  const [translation, setTranslation] = useState<BibleTranslation>("cep");
 
-  // Auto-scroll to highlighted pericope when data loads
-  useEffect(() => {
-    if (data && highlightRef.current && containerRef.current && !hasScrolled) {
-      const timer = setTimeout(() => {
-        highlightRef.current?.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-        setHasScrolled(true);
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [data, hasScrolled]);
-
-  // Reset scroll tracking when reference changes
-  useEffect(() => {
-    setHasScrolled(false);
-  }, [reference, translation]);
-
-  if (!reference.trim()) {
+  if (!parsed) {
     return (
-      <div className="flex items-center justify-center rounded-xl border border-border bg-cream p-8">
+      <div className="rounded-lg border border-border/50 bg-white/60 p-4">
         <p className="text-sm italic text-text-muted">
-          {`Zadejte odkaz na biblick\u00FD text pro zobrazen\u00ED kontextu.`}
+          {`Nepoda\u0159ilo se rozpoznat odkaz \u201E${reference}\u201C.`}
         </p>
       </div>
     );
   }
 
-  if (loading) {
-    return (
-      <div className="rounded-xl border border-border bg-cream p-5 lg:p-6">
-        <div className="flex items-center justify-center py-16">
-          <div className="flex flex-col items-center gap-3">
-            <div className="h-8 w-8 animate-spin rounded-full border-2 border-sage/30 border-t-sage" />
-            <p className="text-xs text-text-muted">
-              {`Na\u010D\u00EDt\u00E1m kontext\u2026`}
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const { bookNumber, chapter, verseStart, verseEnd } = parsed;
+  const bookHeadings = getBookHeadings(bookNumber);
 
-  if (error || !data?.current) {
+  if (!bookHeadings) {
     return (
-      <div className="rounded-xl border border-border bg-cream p-5 lg:p-6">
-        <p className="text-sm text-text-muted">
-          {error ||
-            `Nepoda\u0159ilo se na\u010D\u00EDst kontext pro \u201E${reference}\u201C.`}
+      <div className="rounded-lg border border-border/50 bg-white/60 p-4">
+        <p className="text-sm italic text-text-muted">
+          {`Obsah knihy nen\u00ED zat\u00EDm k dispozici. Brzy p\u0159id\u00E1me dal\u0161\u00ED knihy.`}
         </p>
       </div>
     );
   }
 
-  const { prev, current, next, chapter, verseStart, verseEnd } = data;
-  const maxChapters = getChapterCount(data.bookNumber);
-
-  // Book name from API data
-  const bookName = current.verses[0]?.name.replace(/\s*\d+:\d+$/, "") || "";
+  // Find surrounding chapters to show (prev, current, next)
+  const chaptersToShow = bookHeadings.chapters.filter(
+    (ch) => ch.chapter >= chapter - 1 && ch.chapter <= chapter + 1
+  );
 
   return (
-    <div className="rounded-xl border border-border bg-cream p-5 lg:p-6">
-      {/* Header with translation switcher */}
+    <div className="rounded-lg border border-sage/20 bg-sage-pale/30 p-4">
+      {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
-            {`Liter\u00E1rn\u00ED kontext`}
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sage/70">
+            {`Obsah knihy`}
           </p>
-          <p className="mt-0.5 font-cormorant text-[15px] font-semibold text-brick">
-            {bookName} {chapter}
+          <p className="mt-0.5 font-cormorant text-[16px] font-semibold text-text">
+            {bookHeadings.bookName}
           </p>
         </div>
         <div className="flex items-center gap-1 rounded-lg border border-border/70 bg-white/80 p-0.5">
@@ -116,165 +84,218 @@ export default function BibleContextView({ reference }: BibleContextViewProps) {
         </div>
       </div>
 
-      {/* Scrollable context */}
-      <div
-        ref={containerRef}
-        className="relative max-h-[70vh] overflow-y-auto scroll-smooth rounded-lg"
-      >
-        {/* Previous chapter */}
-        {prev && (
-          <ContextChapter
-            chapter={prev}
-            label={`${bookName} ${chapter - 1}`}
-            variant="context"
+      {/* Chapter TOC */}
+      <div className="space-y-3">
+        {chaptersToShow.map((ch) => (
+          <ChapterTOC
+            key={ch.chapter}
+            chapter={ch}
+            bookNumber={bookNumber}
+            bookName={bookHeadings.bookName}
+            isCurrent={ch.chapter === chapter}
+            verseStart={ch.chapter === chapter ? verseStart : null}
+            verseEnd={ch.chapter === chapter ? verseEnd : null}
+            translation={translation}
           />
-        )}
-        {prev && (
-          <div className="my-4 flex items-center gap-3">
-            <div className="h-px flex-1 bg-brick/20" />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-brick/50">
-              {`Kapitola ${chapter}`}
-            </span>
-            <div className="h-px flex-1 bg-brick/20" />
-          </div>
-        )}
-
-        {/* Current chapter with pericope highlighted */}
-        <div ref={highlightRef}>
-          <ContextChapter
-            chapter={current}
-            label={`${bookName} ${chapter}`}
-            variant="current"
-            highlightStart={verseStart}
-            highlightEnd={verseEnd}
-          />
-        </div>
-
-        {next && (
-          <div className="my-4 flex items-center gap-3">
-            <div className="h-px flex-1 bg-border" />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-text-light/50">
-              {`Kapitola ${chapter + 1}`}
-            </span>
-            <div className="h-px flex-1 bg-border" />
-          </div>
-        )}
-
-        {/* Next chapter */}
-        {next && (
-          <ContextChapter
-            chapter={next}
-            label={`${bookName} ${chapter + 1}`}
-            variant="context"
-          />
-        )}
-
-        {/* Book boundary indicators */}
-        {!prev && chapter === 1 && (
-          <div className="mb-3 text-center text-[10px] italic text-text-light/50">
-            {`\u2190 Za\u010D\u00E1tek knihy ${bookName}`}
-          </div>
-        )}
-        {!next && chapter === maxChapters && (
-          <div className="mt-3 text-center text-[10px] italic text-text-light/50">
-            {`Konec knihy ${bookName} \u2192`}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/** Render a single chapter's verses, grouping highlighted pericope into a block */
-function ContextChapter({
-  chapter,
-  label,
-  variant,
-  highlightStart,
-  highlightEnd,
-}: {
-  chapter: BibleChapter;
-  label: string;
-  variant: "context" | "current";
-  highlightStart?: number | null;
-  highlightEnd?: number | null;
-}) {
-  const isContext = variant === "context";
-  const hasHighlight = variant === "current" && highlightStart != null;
-
-  // Split verses into groups: before, highlighted, after
-  const beforeVerses: BibleVerse[] = [];
-  const highlightedVerses: BibleVerse[] = [];
-  const afterVerses: BibleVerse[] = [];
-
-  if (hasHighlight) {
-    for (const verse of chapter.verses) {
-      if (verse.verse < highlightStart!) {
-        beforeVerses.push(verse);
-      } else if (highlightEnd == null || verse.verse <= highlightEnd) {
-        highlightedVerses.push(verse);
-      } else {
-        afterVerses.push(verse);
-      }
-    }
-  }
-
-  const contextStyle = "font-literata text-[15px] leading-[1.9] text-text-muted";
-  const beforeAfterStyle = "font-literata text-[15px] leading-[1.9] text-text-muted";
-
-  if (!hasHighlight) {
-    return (
-      <div className={isContext ? "opacity-50" : ""}>
-        {chapter.verses.map((verse) => (
-          <VerseSpan key={verse.verse} verse={verse} className={isContext ? contextStyle : "font-literata text-[17px] leading-[2.0] text-text"} />
         ))}
       </div>
-    );
-  }
-
-  return (
-    <div>
-      {/* Verses before pericope */}
-      {beforeVerses.length > 0 && (
-        <div className="opacity-50">
-          {beforeVerses.map((verse) => (
-            <VerseSpan key={verse.verse} verse={verse} className={beforeAfterStyle} />
-          ))}
-        </div>
-      )}
-
-      {/* Highlighted pericope block */}
-      {highlightedVerses.length > 0 && (
-        <div className="my-3 rounded-lg border-l-4 border-brick/40 bg-brick-pale/50 px-4 py-3">
-          <div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-brick/60">
-            {`Va\u0161e perikopa`}
-          </div>
-          {highlightedVerses.map((verse) => (
-            <VerseSpan key={verse.verse} verse={verse} className="font-literata text-[17px] leading-[2.0] text-text" />
-          ))}
-        </div>
-      )}
-
-      {/* Verses after pericope */}
-      {afterVerses.length > 0 && (
-        <div className="opacity-50">
-          {afterVerses.map((verse) => (
-            <VerseSpan key={verse.verse} verse={verse} className={beforeAfterStyle} />
-          ))}
-        </div>
-      )}
     </div>
   );
 }
 
-/** Single verse as inline span with verse number */
-function VerseSpan({ verse, className }: { verse: BibleVerse; className: string }) {
+/** Single chapter in the TOC */
+function ChapterTOC({
+  chapter,
+  bookNumber,
+  bookName,
+  isCurrent,
+  verseStart,
+  verseEnd,
+  translation,
+}: {
+  chapter: ChapterHeadings;
+  bookNumber: number;
+  bookName: string;
+  isCurrent: boolean;
+  verseStart: number | null;
+  verseEnd: number | null;
+  translation: BibleTranslation;
+}) {
   return (
-    <span className={className}>
-      <sup className="mr-0.5 text-[10px] font-semibold text-text-light/60">
-        {verse.verse}
-      </sup>
-      {verse.text.trim()}{" "}
-    </span>
+    <div
+      className={`rounded-lg ${
+        isCurrent
+          ? "border border-brick/20 bg-white/80"
+          : "border border-transparent bg-white/40"
+      }`}
+    >
+      {/* Chapter header */}
+      <div className={`px-3 py-2 ${isCurrent ? "" : "opacity-60"}`}>
+        <p
+          className={`text-[11px] font-semibold uppercase tracking-[0.15em] ${
+            isCurrent ? "text-brick" : "text-text-light"
+          }`}
+        >
+          {`Kapitola ${chapter.chapter}`}
+        </p>
+      </div>
+
+      {/* Sections list */}
+      <div className="px-1 pb-1">
+        {chapter.sections.map((section, i) => {
+          const isActive =
+            isCurrent &&
+            verseStart != null &&
+            section.startVerse <= (verseEnd ?? verseStart) &&
+            section.endVerse >= verseStart;
+
+          return (
+            <SectionRow
+              key={i}
+              section={section}
+              bookNumber={bookNumber}
+              bookName={bookName}
+              chapterNumber={chapter.chapter}
+              isActive={isActive}
+              isCurrent={isCurrent}
+              translation={translation}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/** Single section row — click to expand and show full text */
+function SectionRow({
+  section,
+  bookNumber,
+  bookName,
+  chapterNumber,
+  isActive,
+  isCurrent,
+  translation,
+}: {
+  section: SectionHeading;
+  bookNumber: number;
+  bookName: string;
+  chapterNumber: number;
+  isActive: boolean;
+  isCurrent: boolean;
+  translation: BibleTranslation;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const [verses, setVerses] = useState<BibleVerse[] | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const loadText = useCallback(async () => {
+    if (verses) {
+      setExpanded(!expanded);
+      return;
+    }
+    setLoading(true);
+    setExpanded(true);
+    const chapter = await fetchChapter(bookNumber, chapterNumber, translation);
+    if (chapter) {
+      const filtered = chapter.verses.filter(
+        (v) => v.verse >= section.startVerse && v.verse <= section.endVerse
+      );
+      setVerses(filtered);
+    }
+    setLoading(false);
+  }, [verses, expanded, bookNumber, chapterNumber, translation, section]);
+
+  return (
+    <div
+      className={`rounded-md transition-colors ${
+        isActive
+          ? "bg-brick-pale/60"
+          : "hover:bg-white/60"
+      }`}
+    >
+      <button
+        onClick={loadText}
+        className={`flex w-full items-center gap-2 px-2 py-1.5 text-left ${
+          isCurrent ? "" : "opacity-60"
+        }`}
+      >
+        {/* Active indicator */}
+        {isActive ? (
+          <span className="shrink-0 text-brick">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
+              <circle cx="5" cy="5" r="4" />
+            </svg>
+          </span>
+        ) : (
+          <span className="w-[10px]" />
+        )}
+
+        {/* Section title */}
+        <span
+          className={`flex-1 text-[13px] leading-snug ${
+            isActive
+              ? "font-semibold text-text"
+              : "text-text-muted"
+          }`}
+        >
+          {section.title}
+          {isActive && (
+            <span className="ml-1.5 inline-block rounded bg-brick/10 px-1.5 py-0.5 align-middle text-[9px] font-bold uppercase tracking-wider text-brick">
+              {`va\u0161e perikopa`}
+            </span>
+          )}
+        </span>
+
+        {/* Verse range */}
+        <span className="shrink-0 text-[10px] text-text-light/60">
+          {section.startVerse === section.endVerse
+            ? `v. ${section.startVerse}`
+            : `v. ${section.startVerse}\u2013${section.endVerse}`}
+        </span>
+
+        {/* Expand icon */}
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className={`shrink-0 text-text-light/40 transition-transform ${
+            expanded ? "rotate-180" : ""
+          }`}
+        >
+          <path d="M5 8l5 5 5-5" />
+        </svg>
+      </button>
+
+      {/* Expanded text */}
+      {expanded && (
+        <div className="px-6 pb-3 pt-1">
+          {loading ? (
+            <div className="flex items-center gap-2 py-2">
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-sage/30 border-t-sage" />
+              <span className="text-[11px] text-text-muted">{`Na\u010D\u00EDt\u00E1m\u2026`}</span>
+            </div>
+          ) : verses ? (
+            <div className="font-literata text-[15px] leading-[1.9] text-text">
+              {verses.map((v) => (
+                <span key={v.verse}>
+                  <sup className="mr-0.5 text-[10px] font-semibold text-text-light/60">
+                    {v.verse}
+                  </sup>
+                  {v.text.trim()}{" "}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p className="text-[11px] text-text-muted">
+              {`Text se nepoda\u0159ilo na\u010D\u00EDst.`}
+            </p>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
