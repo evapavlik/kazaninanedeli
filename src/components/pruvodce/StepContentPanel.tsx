@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import type { Step } from "@/types";
 import { checklistToolMap } from "@/data/checklist-tool-map";
@@ -67,6 +67,16 @@ export default function StepContentPanel({
   const [questionsCount, setQuestionsCount] = useState({ answered: 0, total: 0 });
   const [notepadHasContent, setNotepadHasContent] = useState(false);
 
+  // Change 3: Questions unlock after checklist is done
+  const checklistDone = checklistCount.total > 0 && checklistCount.completed === checklistCount.total;
+
+  // Auto-switch to questions when checklist is completed
+  useEffect(() => {
+    if (checklistDone && activeSection === "checklist") {
+      setActiveSection("questions");
+    }
+  }, [checklistDone, activeSection]);
+
   const handleChecklistCount = useCallback((completed: number, total: number) => {
     setChecklistCount({ completed, total });
   }, []);
@@ -89,6 +99,8 @@ export default function StepContentPanel({
   }));
 
   const toggleSection = (key: SectionKey) => {
+    // Only allow questions if checklist is done
+    if (key === "questions" && !checklistDone) return;
     setActiveSection((prev) => (prev === key ? key : key));
   };
 
@@ -195,16 +207,25 @@ export default function StepContentPanel({
 
         {/* Full right panel content (hidden when in focus mode) */}
         <div className={focusMode ? "hidden" : ""}>
-        {/* 1. Step header */}
+        {/* 1. Step header with time estimate */}
         <div className="mb-6">
           <div className="mb-2 flex items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brick-pale text-xl">
               {step.icon}
             </span>
             <div>
-              <p className="font-cormorant text-[11px] font-semibold uppercase tracking-[0.12em] text-brick">
-                {`Krok 0${step.number} ze 7`}
-              </p>
+              <div className="flex items-center gap-2">
+                <p className="font-cormorant text-[11px] font-semibold uppercase tracking-[0.12em] text-brick">
+                  {`Krok 0${step.number} ze 7`}
+                </p>
+                <span className="flex items-center gap-1 rounded-full bg-cream px-2 py-0.5 text-[10px] text-text-light">
+                  <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-text-light/70">
+                    <circle cx="8" cy="8" r="6.5" />
+                    <path d="M8 4.5V8l2.5 1.5" />
+                  </svg>
+                  {`~${step.estimatedMinutes} min`}
+                </span>
+              </div>
               <h1 className="font-lora text-lg font-bold text-text sm:text-xl">
                 {step.title}
               </h1>
@@ -215,7 +236,7 @@ export default function StepContentPanel({
           </p>
         </div>
 
-        {/* 2. StepContext — theory + tip (always near top) */}
+        {/* 2. StepContext — theory + tip (collapsed by default) */}
         <StepContext theory={step.theory} tip={step.tip} slug={step.slug} />
 
         {/* 3. Section navigation pills */}
@@ -232,6 +253,7 @@ export default function StepContentPanel({
               label: `Ot\u00E1zky`,
               completed: questionsCount.answered,
               total: questionsCount.total,
+              locked: !checklistDone,
             },
             {
               key: "notepad",
@@ -257,14 +279,39 @@ export default function StepContentPanel({
             onCountChange={handleChecklistCount}
           />
 
-          {/* b. Questions */}
-          <QuestionNotes
-            slug={step.slug}
-            questions={step.questions}
-            isOpen={activeSection === "questions"}
-            onToggle={() => toggleSection("questions")}
-            onCountChange={handleQuestionsCount}
-          />
+          {/* b. Questions — locked until checklist done */}
+          {checklistDone ? (
+            <QuestionNotes
+              slug={step.slug}
+              questions={step.questions}
+              isOpen={activeSection === "questions"}
+              onToggle={() => toggleSection("questions")}
+              onCountChange={handleQuestionsCount}
+            />
+          ) : (
+            <section className="rounded-xl border border-sage/10 bg-sage-pale/30">
+              <button
+                className="flex w-full items-center justify-between p-4 text-left opacity-50 cursor-not-allowed"
+                disabled
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-base">{"\u2753"}</span>
+                  <h2 className="font-lora text-base font-bold text-text-light">
+                    {`Ot\u00E1zky k zamy\u0161len\u00ED`}
+                  </h2>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-text-light">
+                    {`Dokon\u010Dete kroky`}
+                  </span>
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="text-text-light">
+                    <rect x="3" y="5" width="10" height="8" rx="1.5" />
+                    <path d="M5.5 5V3.5a2.5 2.5 0 015 0V5" />
+                  </svg>
+                </div>
+              </button>
+            </section>
+          )}
 
           {/* c. Notepad */}
           <Notepad

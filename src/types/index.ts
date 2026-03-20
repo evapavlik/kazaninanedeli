@@ -5,6 +5,7 @@ export interface Step {
   subtitle: string;
   icon: string;
   description: string;
+  estimatedMinutes: number;
   theory: {
     concept: string;
     source: string;

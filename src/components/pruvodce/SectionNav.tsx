@@ -9,6 +9,8 @@ interface SectionNavItem {
   total: number;
   /** For notepad: show dot indicator instead of count */
   hasContent?: boolean;
+  /** For questions: locked until checklist is done */
+  locked?: boolean;
 }
 
 interface SectionNavProps {
@@ -26,27 +28,37 @@ export default function SectionNav({
     <div className="mb-4 flex gap-2">
       {sections.map((section) => {
         const isActive = activeSection === section.key;
+        const isLocked = section.locked;
         const badge =
           section.key === "notepad"
             ? section.hasContent
               ? "\u25CF"
               : "\u25CB"
-            : `${section.completed}/${section.total}`;
+            : isLocked
+              ? "\uD83D\uDD12"
+              : `${section.completed}/${section.total}`;
 
         return (
           <button
             key={section.key}
-            onClick={() => onSelect(section.key)}
+            onClick={() => !isLocked && onSelect(section.key)}
+            disabled={isLocked}
             className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
-              isActive
-                ? "bg-brick text-white"
-                : "bg-cream text-text-muted hover:bg-sand/30 hover:text-text"
+              isLocked
+                ? "cursor-not-allowed bg-cream/50 text-text-light/50"
+                : isActive
+                  ? "bg-brick text-white"
+                  : "bg-cream text-text-muted hover:bg-sand/30 hover:text-text"
             }`}
           >
             <span>{section.label}</span>
             <span
               className={`${
-                isActive ? "text-white/80" : "text-text-light"
+                isLocked
+                  ? "text-text-light/40"
+                  : isActive
+                    ? "text-white/80"
+                    : "text-text-light"
               }`}
             >
               {badge}

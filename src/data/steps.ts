@@ -7,6 +7,7 @@ export const steps: Step[] = [
     title: "Modlitba a p\u0159\u00EDprava srdce",
     subtitle: "Otev\u0159\u00EDt se textu",
     icon: "\uD83D\uDD6F\uFE0F",
+    estimatedMinutes: 10,
     description: `Ka\u017Ed\u00E9 setk\u00E1n\u00ED s biblick\u00FDm textem za\u010D\u00EDn\u00E1 uv\u011Bdom\u011Bn\u00EDm si vlastn\u00EDho p\u0159edporozum\u011Bn\u00ED. P\u0159ich\u00E1z\u00EDme k textu se sv\u00FDmi zku\u0161enostmi, ot\u00E1zkami a o\u010Dek\u00E1v\u00E1n\u00EDmi \u2014 a pr\u00E1v\u011B to je m\u00EDsto, kde za\u010D\u00EDn\u00E1 hermeneutick\u00FD kruh.`,
     theory: {
       concept: `P\u0159edporozum\u011Bn\u00ED (Vorverst\u00E4ndnis)`,
@@ -33,6 +34,7 @@ export const steps: Step[] = [
     title: "\u010Cten\u00ED a pozorov\u00E1n\u00ED textu",
     subtitle: "Naslouchat textu",
     icon: "\uD83D\uDCD6",
+    estimatedMinutes: 20,
     description: `Prvn\u00EDm krokem vlastn\u00ED pr\u00E1ce s textem je jeho pozorn\u00E9, opakovan\u00E9 \u010Dten\u00ED. Text je k\u00F3dovac\u00ED syst\u00E9m \u2014 m\u00E1 sv\u016Fj slovn\u00EDk, gramatiku a strukturu. U\u010D\u00EDme se mu naslouchat d\u0159\u00EDve, ne\u017E ho za\u010Dneme vykl\u00E1dat.`,
     theory: {
       concept: `Text jako k\u00F3dovac\u00ED syst\u00E9m`,
@@ -60,6 +62,7 @@ export const steps: Step[] = [
     title: "Zasazen\u00ED do kontextu",
     subtitle: "Porozum\u011Bt sv\u011Btu textu",
     icon: "\uD83D\uDDFA\uFE0F",
+    estimatedMinutes: 15,
     description: `Biblick\u00E9 texty nevznikly ve vzduchopr\u00E1zdnu. Maj\u00ED sv\u016Fj liter\u00E1rn\u00ED kontext (co je p\u0159ed nimi a za nimi), historick\u00FD kontext (kdy a pro\u010D vznikly) a liturgick\u00FD kontext (kde v c\u00EDrkevn\u00EDm roce je \u010Dteme).`,
     theory: {
       concept: `Historick\u00E1 kritika a intertextualita`,
@@ -87,6 +90,7 @@ export const steps: Step[] = [
     title: "V\u00FDklad textu",
     subtitle: "Hledat smysl",
     icon: "\uD83D\uDD0D",
+    estimatedMinutes: 30,
     description: `Exegeze je j\u00E1drem p\u0159\u00EDpravy k\u00E1z\u00E1n\u00ED. Zkoum\u00E1me v\u00FDznam kl\u00ED\u010Dov\u00FDch slov, strukturu textu a jeho hlavn\u00ED sd\u011Blen\u00ED. Hled\u00E1me, kde se setk\u00E1v\u00E1 sv\u011Bt textu se sv\u011Btem \u010Dten\u00E1\u0159e \u2014 to Gadamer naz\u00FDv\u00E1 spl\u00FDv\u00E1n\u00EDm horizont\u016F.`,
     theory: {
       concept: `Spl\u00FDv\u00E1n\u00ED horizont\u016F (Horizontverschmelzung)`,
@@ -114,6 +118,7 @@ export const steps: Step[] = [
     title: "Aktualizace",
     subtitle: "Postavit most",
     icon: "\uD83C\uDF09",
+    estimatedMinutes: 20,
     description: `Nyn\u00ED stav\u00EDme most mezi starov\u011Bk\u00FDm textem a dne\u0161n\u00EDmi poslucha\u010Di. Pt\u00E1me se: co text \u0159\u00EDk\u00E1 n\u00E1m, dnes, v na\u0161\u00ED situaci? Porozum\u011Bn\u00ED textu se podle Ricoeura st\u00E1v\u00E1 sebeporozum\u011Bn\u00EDm \u2014 text n\u00E1m pom\u00E1h\u00E1 vid\u011Bt vlastn\u00ED \u017Eivot nov\u00FDma o\u010Dima.`,
     theory: {
       concept: `Porozum\u011Bn\u00ED jako sebeporozum\u011Bn\u00ED`,
@@ -141,6 +146,7 @@ export const steps: Step[] = [
     title: "Stavba k\u00E1z\u00E1n\u00ED",
     subtitle: "D\u00E1t formu",
     icon: "\uD83C\uDFD7\uFE0F",
+    estimatedMinutes: 25,
     description: `M\u00E1te centr\u00E1ln\u00ED my\u0161lenku a v\u00EDte, k \u010Demu chcete poslucha\u010De v\u00E9st. Te\u010F d\u00E1te k\u00E1z\u00E1n\u00ED formu \u2014 osnovu, \u00FAvod a z\u00E1v\u011Br, ilustrace a konkr\u00E9tn\u00ED aplikace. K\u00E1z\u00E1n\u00ED m\u00E1 b\u00FDt srozumiteln\u00E9, p\u0159ehledn\u00E9 a zapamatovateln\u00E9.`,
     theory: {
       concept: `Homiletick\u00E1 idea a struktura`,
@@ -170,6 +176,7 @@ export const steps: Step[] = [
     title: "P\u0159\u00EDprava na p\u0159ednes",
     subtitle: "P\u0159edat \u017Eiv\u011B",
     icon: "\uD83C\uDFA4",
+    estimatedMinutes: 15,
     description: `K\u00E1z\u00E1n\u00ED \u017Eije v momentu p\u0159ednesu. I skv\u011Ble p\u0159ipraven\u00E9 k\u00E1z\u00E1n\u00ED m\u016F\u017Ee ztratit s\u00EDlu, pokud je p\u0159edneseno nezaujat\u011B. A naopak \u2014 autentick\u00FD, osobn\u00ED p\u0159ednes dod\u00E1 k\u00E1z\u00E1n\u00ED \u017Eivot, i kdy\u017E osnova nen\u00ED dokonal\u00E1.`,
     theory: {
       concept: `R\u00E9torick\u00E1 kritika v praxi`,
