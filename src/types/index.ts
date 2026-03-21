@@ -1,4 +1,26 @@
+export type FlowItem =
+  | { type: "check"; text: string }
+  | { type: "reflect"; text: string };
+
 export interface SubStep {
+  slug: string;
+  title: string;
+  subtitle: string;
+  icon: string;
+  estimatedMinutes: number;
+  description: string;
+  theory: {
+    concept: string;
+    source: string;
+    explanation: string;
+  };
+  flow: FlowItem[];
+  tip: string;
+}
+
+/** @deprecated Use Phase + SubStep instead */
+export interface Step {
+  number: number;
   slug: string;
   title: string;
   subtitle: string;
@@ -14,9 +36,6 @@ export interface SubStep {
   questions: string[];
   tip: string;
 }
-
-/** @deprecated Use Phase + SubStep instead */
-export type Step = SubStep & { number: number };
 
 export interface Phase {
   number: number;
