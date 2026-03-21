@@ -106,6 +106,12 @@ export default function StepContentPanel({
       }));
   }, [subSlug, currentSub.flow]);
 
+  // Active tool in right panel (opened from left panel action checklist)
+  const [activeToolIndex, setActiveToolIndex] = useState<number | null>(null);
+  const activeToolHelper = activeToolIndex !== null
+    ? checkToolHelpers.find((h) => h.itemIndex === activeToolIndex)
+    : null;
+
   // Progress tracking
   const [checkCount, setCheckCount] = useState({ completed: 0, total: 0 });
   const [reflectCount, setReflectCount] = useState({ completed: 0, total: 0 });
@@ -177,6 +183,8 @@ export default function StepContentPanel({
                 checkItems={checkItems}
                 checkToolHelpers={checkToolHelpers}
                 onCheckCountChange={handleCheckCount}
+                onToolOpen={(idx) => setActiveToolIndex(activeToolIndex === idx ? null : idx)}
+                activeToolIndex={activeToolIndex}
               />
             </div>
           )}
@@ -191,6 +199,8 @@ export default function StepContentPanel({
             checkItems={checkItems}
             checkToolHelpers={checkToolHelpers}
             onCheckCountChange={handleCheckCount}
+            onToolOpen={(idx) => setActiveToolIndex(activeToolIndex === idx ? null : idx)}
+            activeToolIndex={activeToolIndex}
           />
         </div>
       </div>
@@ -270,10 +280,29 @@ export default function StepContentPanel({
         {/* 4. Theory (collapsed) */}
         <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} />
 
-        {/* 5. Previous step outputs */}
+        {/* 5. Active tool (opened from left panel) */}
+        {activeToolHelper && (
+          <div className="mb-4 rounded-xl border border-brick/15 bg-brick-pale/30 p-4">
+            <div className="mb-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span>{activeToolHelper.icon}</span>
+                <h3 className="text-sm font-semibold text-text">{activeToolHelper.label}</h3>
+              </div>
+              <button
+                onClick={() => setActiveToolIndex(null)}
+                className="text-[11px] text-text-light hover:text-brick"
+              >
+                {`Zav\u0159\u00EDt`}
+              </button>
+            </div>
+            {activeToolHelper.component}
+          </div>
+        )}
+
+        {/* 6. Previous step outputs */}
         <PreviousStepOutputs subStepSlug={subSlug} />
 
-        {/* 6. Reflections (wizard pattern for reflect items) */}
+        {/* 7. Reflections (wizard pattern for reflect items) */}
         <div className="space-y-3">
           {reflectItems.length > 0 && (
             <Checklist

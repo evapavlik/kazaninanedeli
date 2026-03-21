@@ -22,9 +22,11 @@ interface BibleTextPanelProps {
   checkItems?: FlowItem[];
   checkToolHelpers?: ActionToolHelper[];
   onCheckCountChange?: (completed: number, total: number) => void;
+  onToolOpen?: (itemIndex: number) => void;
+  activeToolIndex?: number | null;
 }
 
-export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, checkItems, checkToolHelpers, onCheckCountChange }: BibleTextPanelProps) {
+export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, checkItems, checkToolHelpers, onCheckCountChange, onToolOpen, activeToolIndex }: BibleTextPanelProps) {
   const [savedText, setSavedText] = useLocalStorage<string>(
     "kazani-bible-text",
     ""
@@ -153,6 +155,8 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
           items={checkItems}
           toolHelpers={checkToolHelpers}
           onCountChange={onCheckCountChange}
+          onToolOpen={onToolOpen}
+          activeToolIndex={activeToolIndex}
         />
       )}
 

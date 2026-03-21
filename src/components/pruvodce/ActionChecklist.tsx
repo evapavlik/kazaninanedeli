@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { FlowItem } from "@/types";
 
@@ -16,6 +16,8 @@ interface ActionChecklistProps {
   items: FlowItem[];
   toolHelpers?: ActionToolHelper[];
   onCountChange?: (completed: number, total: number) => void;
+  onToolOpen?: (itemIndex: number) => void;
+  activeToolIndex?: number | null;
 }
 
 export default function ActionChecklist({
@@ -23,12 +25,13 @@ export default function ActionChecklist({
   items,
   toolHelpers = [],
   onCountChange,
+  onToolOpen,
+  activeToolIndex,
 }: ActionChecklistProps) {
   const [checked, setChecked] = useLocalStorage<boolean[]>(
     `kazani-actions-${slug}`,
     new Array(items.length).fill(false)
   );
-  const [openToolIndex, setOpenToolIndex] = useState<number | null>(null);
 
   const toggle = (index: number) => {
     setChecked((prev) => prev.map((v, i) => (i === index ? !v : v)));
@@ -58,7 +61,6 @@ export default function ActionChecklist({
       <ul className="space-y-1.5">
         {items.map((item, i) => {
           const helper = getHelper(i);
-          const isToolOpen = openToolIndex === i;
 
           return (
             <li key={i}>
@@ -90,29 +92,23 @@ export default function ActionChecklist({
                 </span>
               </button>
 
-              {/* Inline tool helper */}
+              {/* Tool helper — opens in right panel */}
               {helper && (
                 <div className="ml-7 mt-1">
                   <button
-                    onClick={() => setOpenToolIndex(isToolOpen ? null : i)}
+                    onClick={() => onToolOpen?.(i)}
                     className={`flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[11px] font-medium transition-all ${
-                      isToolOpen
+                      activeToolIndex === i
                         ? "bg-brick/10 text-brick"
                         : "text-text-light hover:bg-brick-pale hover:text-brick"
                     }`}
                   >
                     <span>{helper.icon}</span>
                     <span>{helper.label}</span>
-                    <svg width="10" height="10" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2"
-                      className={`transition-transform ${isToolOpen ? "rotate-180" : ""}`}>
-                      <path d="M5 8l5 5 5-5" />
+                    <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="text-text-light">
+                      <path d="M6 3l5 5-5 5" />
                     </svg>
                   </button>
-                  {isToolOpen && (
-                    <div className="mt-1.5 rounded-lg border border-brick/15 bg-white p-3">
-                      {helper.component}
-                    </div>
-                  )}
                 </div>
               )}
             </li>
