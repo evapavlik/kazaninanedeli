@@ -67,19 +67,23 @@ export default function Checklist({
   const getHelper = (index: number) =>
     toolHelpers.find((h) => h.itemIndex === index);
 
-  // Reflect textarea handler with debounce
+  // Reflect textarea handler — save text only, no auto-complete
   const handleReflection = useCallback(
     (index: number, value: string) => {
       if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
       saveTimeoutRef.current = setTimeout(() => {
         setReflections((prev) => ({ ...prev, [index]: value }));
-        // Auto-mark as done when text is entered
-        if (value.trim().length > 0 && !checked[index]) {
-          setChecked((prev) => prev.map((v, i) => (i === index ? true : v)));
-        }
       }, 400);
     },
-    [checked, setChecked, setReflections]
+    [setReflections]
+  );
+
+  // Explicit "done" for reflect items
+  const completeReflect = useCallback(
+    (index: number) => {
+      setChecked((prev) => prev.map((v, i) => (i === index ? true : v)));
+    },
+    [setChecked]
   );
 
   useEffect(() => {
@@ -253,12 +257,20 @@ export default function Checklist({
                           defaultValue={reflections[i] || ""}
                           onChange={(e) => handleReflection(i, e.target.value)}
                           placeholder={`Va\u0161e odpov\u011B\u010F\u2026`}
-                          rows={2}
-                          className="w-full rounded-lg border border-sage/20 bg-white px-3 py-2 text-sm leading-relaxed text-text placeholder:text-text-light/50 focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30 resize-none"
+                          rows={3}
+                          className="w-full rounded-lg border border-sage/20 bg-white px-3 py-2 text-sm leading-relaxed text-text placeholder:text-text-light/50 focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30 resize-y"
                         />
-                        <p className="mt-1 text-[10px] text-text-light">
-                          {`Ulo\u017E\u00ED se automaticky po zaps\u00E1n\u00ED`}
-                        </p>
+                        <div className="mt-2 flex items-center justify-between">
+                          <p className="text-[10px] text-text-light">
+                            {`Ukl\u00E1d\u00E1 se pr\u016Fb\u011B\u017En\u011B`}
+                          </p>
+                          <button
+                            onClick={() => completeReflect(i)}
+                            className="rounded-md bg-sage/80 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-sage"
+                          >
+                            {`Hotovo \u2192`}
+                          </button>
+                        </div>
                       </div>
                     )}
 
