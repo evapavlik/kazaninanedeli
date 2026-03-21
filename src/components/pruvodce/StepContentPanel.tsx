@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useMemo } from "react";
 import Link from "next/link";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Phase, SubStep, FlowItem } from "@/types";
 import { checklistToolMap } from "@/data/checklist-tool-map";
 import type { ActionToolHelper } from "./ActionChecklist";
@@ -57,8 +58,15 @@ export default function StepContentPanel({
   const [activeSubStep, setActiveSubStep] = useState(0);
   const [focusMode, setFocusMode] = useState(false);
 
-  // Track which sub-steps are completed
-  const [completedSubSteps, setCompletedSubSteps] = useState<Set<number>>(new Set());
+  // Track which sub-steps are completed — persist to localStorage
+  const [completedSubStepsArr, setCompletedSubStepsArr] = useLocalStorage<number[]>(
+    `kazani-completed-substeps-${phase.slug}`,
+    []
+  );
+  const completedSubSteps = useMemo(() => new Set(completedSubStepsArr), [completedSubStepsArr]);
+  const setCompletedSubSteps = useCallback((updater: (prev: Set<number>) => Set<number>) => {
+    setCompletedSubStepsArr((prev) => [...updater(new Set(prev))]);
+  }, [setCompletedSubStepsArr]);
 
   const currentSub: SubStep = phase.subSteps[activeSubStep];
   const subSlug = currentSub.slug;
@@ -98,26 +106,30 @@ export default function StepContentPanel({
       }));
   }, [subSlug, currentSub.flow]);
 
+  // Active tool in right panel (opened from left panel action checklist)
+  const [activeToolIndex, setActiveToolIndex] = useState<number | null>(null);
+  const activeToolHelper = activeToolIndex !== null
+    ? checkToolHelpers.find((h) => h.itemIndex === activeToolIndex)
+    : null;
+
   // Progress tracking
   const [checkCount, setCheckCount] = useState({ completed: 0, total: 0 });
   const [reflectCount, setReflectCount] = useState({ completed: 0, total: 0 });
   const [notepadHasContent, setNotepadHasContent] = useState(false);
 
-  const allDone =
-    checkCount.total > 0 &&
-    checkCount.completed === checkCount.total &&
-    (reflectCount.total === 0 || reflectCount.completed === reflectCount.total);
+  // Sub-step unlocks after check items are done (reflect items are optional)
+  const checksDone = checkCount.total > 0 && checkCount.completed === checkCount.total;
 
-  // When all done, mark sub-step as completed
   useEffect(() => {
-    if (allDone) {
+    if (checksDone) {
       setCompletedSubSteps((prev) => {
+        if (prev.has(activeSubStep)) return prev;
         const next = new Set(prev);
         next.add(activeSubStep);
         return next;
       });
     }
-  }, [allDone, activeSubStep]);
+  }, [checksDone, activeSubStep]);
 
   const handleCheckCount = useCallback((completed: number, total: number) => {
     setCheckCount({ completed, total });
@@ -136,13 +148,6 @@ export default function StepContentPanel({
     setActiveSubStep(index);
     setFocusMode(false);
   };
-
-  // Reset tracking on sub-step change
-  useEffect(() => {
-    setCheckCount({ completed: 0, total: 0 });
-    setReflectCount({ completed: 0, total: 0 });
-    setNotepadHasContent(false);
-  }, [activeSubStep]);
 
   return (
     <div className={`grid grid-cols-1 gap-6 transition-all duration-300 ${
@@ -178,6 +183,8 @@ export default function StepContentPanel({
                 checkItems={checkItems}
                 checkToolHelpers={checkToolHelpers}
                 onCheckCountChange={handleCheckCount}
+                onToolOpen={(idx) => setActiveToolIndex(activeToolIndex === idx ? null : idx)}
+                activeToolIndex={activeToolIndex}
               />
             </div>
           )}
@@ -192,6 +199,8 @@ export default function StepContentPanel({
             checkItems={checkItems}
             checkToolHelpers={checkToolHelpers}
             onCheckCountChange={handleCheckCount}
+            onToolOpen={(idx) => setActiveToolIndex(activeToolIndex === idx ? null : idx)}
+            activeToolIndex={activeToolIndex}
           />
         </div>
       </div>
@@ -271,10 +280,29 @@ export default function StepContentPanel({
         {/* 4. Theory (collapsed) */}
         <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} />
 
-        {/* 5. Previous step outputs */}
+        {/* 5. Active tool (opened from left panel) */}
+        {activeToolHelper && (
+          <div className="mb-4 rounded-xl border border-brick/15 bg-brick-pale/30 p-4">
+            <div className="mb-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span>{activeToolHelper.icon}</span>
+                <h3 className="text-sm font-semibold text-text">{activeToolHelper.label}</h3>
+              </div>
+              <button
+                onClick={() => setActiveToolIndex(null)}
+                className="text-[11px] text-text-light hover:text-brick"
+              >
+                {`Zav\u0159\u00EDt`}
+              </button>
+            </div>
+            {activeToolHelper.component}
+          </div>
+        )}
+
+        {/* 6. Previous step outputs */}
         <PreviousStepOutputs subStepSlug={subSlug} />
 
-        {/* 6. Reflections (wizard pattern for reflect items) */}
+        {/* 7. Reflections (wizard pattern for reflect items) */}
         <div className="space-y-3">
           {reflectItems.length > 0 && (
             <Checklist

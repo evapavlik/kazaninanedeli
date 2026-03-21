@@ -22,7 +22,9 @@ export default function SubStepNav({
       {subSteps.map((sub, i) => {
         const isActive = i === activeIndex;
         const isDone = completedIndices.has(i);
-        const isLocked = !isDone && i > activeIndex;
+        // Unlock if previous sub-step is completed (or if it's the first one)
+        const previousDone = i === 0 || completedIndices.has(i - 1);
+        const isLocked = !isDone && !isActive && !previousDone;
 
         return (
           <button
