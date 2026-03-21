@@ -10,15 +10,21 @@ import BibleContextView from "./BibleContextView";
 import TranslationCompare from "./TranslationCompare";
 import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
 import CentralIdeaField from "./CentralIdeaField";
+import ActionChecklist from "./ActionChecklist";
+import type { ActionToolHelper } from "./ActionChecklist";
+import type { FlowItem } from "@/types";
 import { parseReferenceForApi, getBibleHubCommentaryUrl } from "@/lib/getbible";
 
 interface BibleTextPanelProps {
   currentSlug: string;
   focusMode?: boolean;
   onFocusToggle?: () => void;
+  checkItems?: FlowItem[];
+  checkToolHelpers?: ActionToolHelper[];
+  onCheckCountChange?: (completed: number, total: number) => void;
 }
 
-export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle }: BibleTextPanelProps) {
+export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, checkItems, checkToolHelpers, onCheckCountChange }: BibleTextPanelProps) {
   const [savedText, setSavedText] = useLocalStorage<string>(
     "kazani-bible-text",
     ""
@@ -140,6 +146,16 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle }
 
   return (
     <div className="rounded-xl border border-border bg-cream p-5 lg:p-6">
+      {/* Action checklist — above text */}
+      {checkItems && checkItems.length > 0 && (
+        <ActionChecklist
+          slug={currentSlug}
+          items={checkItems}
+          toolHelpers={checkToolHelpers}
+          onCountChange={onCheckCountChange}
+        />
+      )}
+
       <div className="mb-4 flex items-center justify-between">
         <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
           {`Biblick\u00FD text`}

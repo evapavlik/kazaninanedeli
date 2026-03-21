@@ -58,6 +58,27 @@ export default function OutlineBuilder({ slug }: { slug: string }) {
     setData(saved);
   }, [saved]);
 
+  // Sync central idea from global storage if outline's field is empty
+  useEffect(() => {
+    if (!data.centralIdea) {
+      try {
+        const stored = localStorage.getItem("kazani-central-idea");
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (typeof parsed === "string" && parsed.trim()) {
+            const updated = { ...data, centralIdea: parsed };
+            setData(updated);
+            setSaved(updated);
+          }
+        }
+      } catch {
+        // ignore
+      }
+    }
+    // Run only once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const persist = useCallback(
     (updated: SermonOutline) => {
       setData(updated);
