@@ -8,9 +8,7 @@ import type { ChecklistToolHelper } from "./Checklist";
 import BibleTextPanel from "./BibleTextPanel";
 import StepContext from "./StepContext";
 import SubStepNav from "./SubStepNav";
-import SectionNav, { type SectionKey } from "./SectionNav";
 import Checklist from "./Checklist";
-import QuestionNotes from "./QuestionNotes";
 import Notepad from "./Notepad";
 
 // Tool components
@@ -56,7 +54,6 @@ export default function StepContentPanel({
 }: StepContentPanelProps) {
   const [textPanelOpen, setTextPanelOpen] = useState(false);
   const [activeSubStep, setActiveSubStep] = useState(0);
-  const [activeSection, setActiveSection] = useState<SectionKey>("checklist");
   const [focusMode, setFocusMode] = useState(false);
 
   // Track which sub-steps are completed (all checklist items done)
@@ -68,31 +65,25 @@ export default function StepContentPanel({
   // Focus mode: for text-heavy sub-steps
   const hasFocusMode = subSlug === "cteni" || subSlug === "vyklad";
 
-  // Section progress tracking
-  const [checklistCount, setChecklistCount] = useState({ completed: 0, total: 0 });
-  const [questionsCount, setQuestionsCount] = useState({ answered: 0, total: 0 });
+  // Flow progress tracking
+  const [flowCount, setFlowCount] = useState({ completed: 0, total: 0 });
   const [notepadHasContent, setNotepadHasContent] = useState(false);
 
-  // Questions unlock after checklist is done
-  const checklistDone = checklistCount.total > 0 && checklistCount.completed === checklistCount.total;
+  const flowDone = flowCount.total > 0 && flowCount.completed === flowCount.total;
 
-  // When checklist is done, mark sub-step as completed
+  // When flow is done, mark sub-step as completed
   useEffect(() => {
-    if (checklistDone) {
+    if (flowDone) {
       setCompletedSubSteps((prev) => {
         const next = new Set(prev);
         next.add(activeSubStep);
         return next;
       });
     }
-  }, [checklistDone, activeSubStep]);
+  }, [flowDone, activeSubStep]);
 
-  const handleChecklistCount = useCallback((completed: number, total: number) => {
-    setChecklistCount({ completed, total });
-  }, []);
-
-  const handleQuestionsCount = useCallback((answered: number, total: number) => {
-    setQuestionsCount({ answered, total });
+  const handleFlowCount = useCallback((completed: number, total: number) => {
+    setFlowCount({ completed, total });
   }, []);
 
   const handleNotepadContent = useCallback((hasContent: boolean) => {
@@ -110,22 +101,15 @@ export default function StepContentPanel({
     }));
   }, [subSlug]);
 
-  const toggleSection = (key: SectionKey) => {
-    setActiveSection(key);
-  };
-
   // Sub-step navigation
   const handleSubStepSelect = (index: number) => {
     setActiveSubStep(index);
-    setActiveSection("checklist");
     setFocusMode(false);
   };
 
-  // When switching sub-steps, reset section
+  // When switching sub-steps, reset tracking
   useEffect(() => {
-    setActiveSection("checklist");
-    setChecklistCount({ completed: 0, total: 0 });
-    setQuestionsCount({ answered: 0, total: 0 });
+    setFlowCount({ completed: 0, total: 0 });
     setNotepadHasContent(false);
   }, [activeSubStep]);
 
@@ -189,40 +173,11 @@ export default function StepContentPanel({
                 <rect x="12" y="3" width="5" height="14" rx="1" opacity="0.3" />
               </svg>
             </button>
-            <div className="h-px w-6 bg-border/50" />
-            <button
-              onClick={() => { setFocusMode(false); setActiveSection("checklist"); }}
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-text-light transition-colors hover:bg-white hover:text-brick"
-              title={`Kroky ${checklistCount.completed}/${checklistCount.total}`}
-            >
-              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M4 10l4 4 8-8" />
-              </svg>
-            </button>
-            <button
-              onClick={() => { setFocusMode(false); setActiveSection("questions"); }}
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-text-light transition-colors hover:bg-white hover:text-brick"
-              title={`Ot\u00E1zky ${questionsCount.answered}/${questionsCount.total}`}
-            >
-              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="10" cy="10" r="8" />
-                <path d="M8 8a2.5 2.5 0 013 2.5c0 1-1.5 1.5-1.5 2.5M10 15v0" />
-              </svg>
-            </button>
-            <button
-              onClick={() => { setFocusMode(false); setActiveSection("notepad"); }}
-              className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:bg-white hover:text-brick ${notepadHasContent ? "text-sage" : "text-text-light"}`}
-              title={`Z\u00E1pisky`}
-            >
-              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M4 4h12M4 8h12M4 12h8" />
-              </svg>
-            </button>
-            {checklistCount.total > 0 && (
+            {flowCount.total > 0 && (
               <>
                 <div className="h-px w-6 bg-border/50" />
                 <span className="text-[9px] font-bold text-text-light">
-                  {checklistCount.completed}/{checklistCount.total}
+                  {flowCount.completed}/{flowCount.total}
                 </span>
               </>
             )}
@@ -268,7 +223,7 @@ export default function StepContentPanel({
           onSelect={handleSubStepSelect}
         />
 
-        {/* 3. Sub-step title (when multi-step, show current sub-step name) */}
+        {/* 3. Sub-step title (when multi-step) */}
         {phase.subSteps.length > 1 && (
           <div className="mb-4 flex items-center gap-2">
             <span className="text-base">{currentSub.icon}</span>
@@ -286,64 +241,27 @@ export default function StepContentPanel({
         {/* 4. StepContext — theory + tip (collapsed by default) */}
         <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} />
 
-        {/* 5. Section navigation pills */}
-        <SectionNav
-          sections={[
-            {
-              key: "checklist",
-              label: "Kroky",
-              completed: checklistCount.completed,
-              total: checklistCount.total,
-            },
-            {
-              key: "questions",
-              label: `Ot\u00E1zky`,
-              completed: questionsCount.answered,
-              total: questionsCount.total,
-            },
-            {
-              key: "notepad",
-              label: `Z\u00E1pisky`,
-              completed: 0,
-              total: 0,
-              hasContent: notepadHasContent,
-            },
-          ]}
-          activeSection={activeSection}
-          onSelect={toggleSection}
-        />
-
-        {/* 6. Accordion work sections */}
+        {/* 5. Unified flow — checklist + reflections in one stream */}
         <div className="space-y-3">
-          {/* a. Checklist */}
           <Checklist
             slug={subSlug}
-            items={currentSub.practicalSteps}
+            items={currentSub.flow}
             toolHelpers={toolHelpers}
-            isOpen={activeSection === "checklist"}
-            onToggle={() => toggleSection("checklist")}
-            onCountChange={handleChecklistCount}
+            isOpen={true}
+            onToggle={() => {}}
+            onCountChange={handleFlowCount}
           />
 
-          {/* b. Questions — always accessible */}
-          <QuestionNotes
-            slug={subSlug}
-            questions={currentSub.questions}
-            isOpen={activeSection === "questions"}
-            onToggle={() => toggleSection("questions")}
-            onCountChange={handleQuestionsCount}
-          />
-
-          {/* c. Notepad */}
+          {/* Notepad — always accessible */}
           <Notepad
             slug={subSlug}
-            isOpen={activeSection === "notepad"}
-            onToggle={() => toggleSection("notepad")}
+            isOpen={false}
+            onToggle={() => {}}
             onHasContentChange={handleNotepadContent}
           />
         </div>
 
-        {/* 7. Navigation */}
+        {/* 6. Navigation */}
         <nav className="mt-6 flex items-center justify-between border-t border-border pt-6">
           {prevPhase ? (
             <Link

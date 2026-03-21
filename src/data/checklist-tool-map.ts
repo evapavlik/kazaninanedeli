@@ -1,6 +1,7 @@
 /**
- * Mapping: which checklist item (by step slug + index) gets an inline tool helper.
+ * Mapping: which flow item (by sub-step slug + index) gets an inline tool helper.
  * The componentKey is resolved in StepContentPanel to the actual React component.
+ * Indices reference the flow[] array in phases.ts.
  */
 export interface ToolMapping {
   itemIndex: number;
@@ -20,13 +21,13 @@ export const checklistToolMap: Record<string, ToolMapping[]> = {
   ],
   kontext: [
     {
-      itemIndex: 1,
+      itemIndex: 2,
       label: `Kontext knihy`,
       icon: "\uD83D\uDCD6",
       componentKey: "BibleBookContext",
     },
     {
-      itemIndex: 3,
+      itemIndex: 6,
       label: `Liturgick\u00FD kalend\u00E1\u0159`,
       icon: "\uD83D\uDCC5",
       componentKey: "LiturgicalCalendar",
@@ -41,7 +42,7 @@ export const checklistToolMap: Record<string, ToolMapping[]> = {
       componentKey: "FCFHelper",
     },
     {
-      itemIndex: 2,
+      itemIndex: 3,
       label: `Role v p\u0159\u00EDb\u011Bhu`,
       icon: "\uD83C\uDFAD",
       componentKey: "RoleIdentifier",
@@ -49,7 +50,7 @@ export const checklistToolMap: Record<string, ToolMapping[]> = {
   ],
   stavba: [
     {
-      itemIndex: 2,
+      itemIndex: 4,
       label: `Osnova k\u00E1z\u00E1n\u00ED`,
       icon: "\uD83D\uDDD2\uFE0F",
       componentKey: "OutlineBuilder",

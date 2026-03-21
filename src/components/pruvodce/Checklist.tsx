@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import type { FlowItem } from "@/types";
 
 export interface ChecklistToolHelper {
   itemIndex: number;
@@ -12,7 +13,7 @@ export interface ChecklistToolHelper {
 
 interface ChecklistProps {
   slug: string;
-  items: string[];
+  items: FlowItem[];
   toolHelpers?: ChecklistToolHelper[];
   isOpen?: boolean;
   onToggle?: () => void;
@@ -31,7 +32,12 @@ export default function Checklist({
     `kazani-checklist-${slug}`,
     new Array(items.length).fill(false)
   );
+  const [reflections, setReflections] = useLocalStorage<Record<number, string>>(
+    `kazani-reflect-${slug}`,
+    {}
+  );
   const [openToolIndex, setOpenToolIndex] = useState<number | null>(null);
+  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   // Wizard: find the first unchecked item as the active step
   const activeStepIndex = checked.findIndex((v) => !v);
@@ -50,6 +56,7 @@ export default function Checklist({
 
   const reset = () => {
     setChecked(new Array(items.length).fill(false));
+    setReflections({});
     setOpenToolIndex(null);
   };
 
@@ -59,6 +66,27 @@ export default function Checklist({
 
   const getHelper = (index: number) =>
     toolHelpers.find((h) => h.itemIndex === index);
+
+  // Reflect textarea handler with debounce
+  const handleReflection = useCallback(
+    (index: number, value: string) => {
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+      saveTimeoutRef.current = setTimeout(() => {
+        setReflections((prev) => ({ ...prev, [index]: value }));
+        // Auto-mark as done when text is entered
+        if (value.trim().length > 0 && !checked[index]) {
+          setChecked((prev) => prev.map((v, i) => (i === index ? true : v)));
+        }
+      }, 400);
+    },
+    [checked, setChecked, setReflections]
+  );
+
+  useEffect(() => {
+    return () => {
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    };
+  }, []);
 
   const controlled = isOpen !== undefined;
   const showContent = controlled ? isOpen : true;
@@ -74,7 +102,7 @@ export default function Checklist({
           <div className="flex items-center gap-2">
             <span className="text-base">{"\u2611\uFE0F"}</span>
             <h2 className="font-lora text-base font-bold text-text">
-              {`Praktick\u00E9 kroky`}
+              {`Pr\u016Fvodce krokem`}
             </h2>
           </div>
           <div className="flex items-center gap-2">
@@ -97,7 +125,7 @@ export default function Checklist({
       ) : (
         <div className="flex items-center justify-between p-6 pb-4">
           <h2 className="font-lora text-lg font-bold text-text">
-            {`Praktick\u00E9 kroky`}
+            {`Pr\u016Fvodce krokem`}
           </h2>
           <span className="text-xs text-text-muted">
             {completedCount}/{items.length} hotovo
@@ -151,30 +179,39 @@ export default function Checklist({
                 const isActive = i === activeStepIndex;
                 const isDone = checked[i];
                 const isFuture = !isDone && !isActive;
+                const isReflect = item.type === "reflect";
 
                 return (
                   <li
                     key={i}
                     className={`transition-all duration-300 ${
                       isActive
-                        ? "rounded-lg border border-brick/15 bg-brick-pale/40 p-3"
+                        ? `rounded-lg border p-3 ${
+                            isReflect
+                              ? "border-sage/20 bg-sage-pale/30"
+                              : "border-brick/15 bg-brick-pale/40"
+                          }`
                         : isFuture
                           ? "opacity-40 px-3 py-1"
                           : "px-3 py-1"
                     }`}
                   >
                     <button
-                      onClick={() => toggle(i)}
-                      className="flex w-full gap-3 text-left group items-start"
-                      disabled={isFuture}
+                      onClick={() => !isReflect && toggle(i)}
+                      className={`flex w-full gap-3 text-left group items-start ${
+                        isReflect && isActive ? "cursor-default" : ""
+                      }`}
+                      disabled={isFuture || (isReflect && isActive)}
                     >
                       <span
                         className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full transition-all duration-200 ${
                           isDone
                             ? "bg-brick text-white"
-                            : isActive
-                              ? "bg-brick-pale text-brick ring-2 ring-brick/20"
-                              : "bg-brick-pale text-brick/50"
+                            : isActive && isReflect
+                              ? "bg-sage-pale text-sage ring-2 ring-sage/20"
+                              : isActive
+                                ? "bg-brick-pale text-brick ring-2 ring-brick/20"
+                                : "bg-brick-pale text-brick/50"
                         }`}
                       >
                         {isDone ? (
@@ -190,6 +227,8 @@ export default function Checklist({
                           >
                             <path d="M3 7l3 3 5-6" />
                           </svg>
+                        ) : isReflect ? (
+                          <span className="text-xs">{"\u270F\uFE0F"}</span>
                         ) : (
                           <span className="text-xs font-bold">{i + 1}</span>
                         )}
@@ -203,12 +242,28 @@ export default function Checklist({
                               : "text-text-light"
                         }`}
                       >
-                        {item}
+                        {item.text}
                       </span>
                     </button>
 
-                    {/* Inline tool helper button — only for active step */}
-                    {helper && isActive && (
+                    {/* Reflect textarea — visible when active */}
+                    {isReflect && isActive && (
+                      <div className="ml-9 mt-2">
+                        <textarea
+                          defaultValue={reflections[i] || ""}
+                          onChange={(e) => handleReflection(i, e.target.value)}
+                          placeholder={`Va\u0161e odpov\u011B\u010F\u2026`}
+                          rows={2}
+                          className="w-full rounded-lg border border-sage/20 bg-white px-3 py-2 text-sm leading-relaxed text-text placeholder:text-text-light/50 focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/30 resize-none"
+                        />
+                        <p className="mt-1 text-[10px] text-text-light">
+                          {`Ulo\u017E\u00ED se automaticky po zaps\u00E1n\u00ED`}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Inline tool helper button — only for active check items */}
+                    {helper && isActive && !isReflect && (
                       <div className="ml-9 mt-2">
                         <button
                           onClick={() => toggleTool(i)}
