@@ -1,11 +1,10 @@
-export interface Step {
-  number: number;
+export interface SubStep {
   slug: string;
   title: string;
   subtitle: string;
   icon: string;
-  description: string;
   estimatedMinutes: number;
+  description: string;
   theory: {
     concept: string;
     source: string;
@@ -14,6 +13,20 @@ export interface Step {
   practicalSteps: string[];
   questions: string[];
   tip: string;
+}
+
+/** @deprecated Use Phase + SubStep instead */
+export type Step = SubStep & { number: number };
+
+export interface Phase {
+  number: number;
+  slug: string;
+  title: string;
+  subtitle: string;
+  icon: string;
+  estimatedMinutes: number;
+  description: string;
+  subSteps: SubStep[];
 }
 
 export interface GlossaryTerm {

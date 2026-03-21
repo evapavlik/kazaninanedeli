@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import Link from "next/link";
-import type { Step } from "@/types";
+import type { Phase, SubStep } from "@/types";
 import { checklistToolMap } from "@/data/checklist-tool-map";
 import type { ChecklistToolHelper } from "./Checklist";
 import BibleTextPanel from "./BibleTextPanel";
 import StepContext from "./StepContext";
+import SubStepNav from "./SubStepNav";
 import SectionNav, { type SectionKey } from "./SectionNav";
 import Checklist from "./Checklist";
 import QuestionNotes from "./QuestionNotes";
@@ -21,9 +22,9 @@ import FCFHelper from "@/components/tools/FCFHelper";
 import OutlineBuilder from "@/components/tools/OutlineBuilder";
 
 interface StepContentPanelProps {
-  step: Step;
-  prevStep: { slug: string; title: string } | null;
-  nextStep: { slug: string; title: string } | null;
+  phase: Phase;
+  prevPhase: { slug: string; title: string } | null;
+  nextPhase: { slug: string; title: string } | null;
 }
 
 function resolveToolComponent(
@@ -49,33 +50,42 @@ function resolveToolComponent(
 }
 
 export default function StepContentPanel({
-  step,
-  prevStep,
-  nextStep,
+  phase,
+  prevPhase,
+  nextPhase,
 }: StepContentPanelProps) {
   const [textPanelOpen, setTextPanelOpen] = useState(false);
+  const [activeSubStep, setActiveSubStep] = useState(0);
   const [activeSection, setActiveSection] = useState<SectionKey>("checklist");
   const [focusMode, setFocusMode] = useState(false);
 
-  // Focus mode: for text-heavy steps on desktop
-  const isReadingStep = step.slug === "cteni";
-  const isExegesisStep = step.slug === "vyklad";
-  const hasFocusMode = isReadingStep || isExegesisStep;
+  // Track which sub-steps are completed (all checklist items done)
+  const [completedSubSteps, setCompletedSubSteps] = useState<Set<number>>(new Set());
+
+  const currentSub: SubStep = phase.subSteps[activeSubStep];
+  const subSlug = currentSub.slug;
+
+  // Focus mode: for text-heavy sub-steps
+  const hasFocusMode = subSlug === "cteni" || subSlug === "vyklad";
 
   // Section progress tracking
   const [checklistCount, setChecklistCount] = useState({ completed: 0, total: 0 });
   const [questionsCount, setQuestionsCount] = useState({ answered: 0, total: 0 });
   const [notepadHasContent, setNotepadHasContent] = useState(false);
 
-  // Change 3: Questions unlock after checklist is done
+  // Questions unlock after checklist is done
   const checklistDone = checklistCount.total > 0 && checklistCount.completed === checklistCount.total;
 
-  // Auto-switch to questions when checklist is completed
+  // When checklist is done, mark sub-step as completed
   useEffect(() => {
-    if (checklistDone && activeSection === "checklist") {
-      setActiveSection("questions");
+    if (checklistDone) {
+      setCompletedSubSteps((prev) => {
+        const next = new Set(prev);
+        next.add(activeSubStep);
+        return next;
+      });
     }
-  }, [checklistDone, activeSection]);
+  }, [checklistDone, activeSubStep]);
 
   const handleChecklistCount = useCallback((completed: number, total: number) => {
     setChecklistCount({ completed, total });
@@ -89,20 +99,35 @@ export default function StepContentPanel({
     setNotepadHasContent(hasContent);
   }, []);
 
-  // Resolve tool helpers for checklist
-  const mappings = checklistToolMap[step.slug] || [];
-  const toolHelpers: ChecklistToolHelper[] = mappings.map((m) => ({
-    itemIndex: m.itemIndex,
-    label: m.label,
-    icon: m.icon,
-    component: resolveToolComponent(m.componentKey, step.slug),
-  }));
+  // Resolve tool helpers for current sub-step
+  const toolHelpers: ChecklistToolHelper[] = useMemo(() => {
+    const mappings = checklistToolMap[subSlug] || [];
+    return mappings.map((m) => ({
+      itemIndex: m.itemIndex,
+      label: m.label,
+      icon: m.icon,
+      component: resolveToolComponent(m.componentKey, subSlug),
+    }));
+  }, [subSlug]);
 
   const toggleSection = (key: SectionKey) => {
-    // Only allow questions if checklist is done
-    if (key === "questions" && !checklistDone) return;
-    setActiveSection((prev) => (prev === key ? key : key));
+    setActiveSection(key);
   };
+
+  // Sub-step navigation
+  const handleSubStepSelect = (index: number) => {
+    setActiveSubStep(index);
+    setActiveSection("checklist");
+    setFocusMode(false);
+  };
+
+  // When switching sub-steps, reset section
+  useEffect(() => {
+    setActiveSection("checklist");
+    setChecklistCount({ completed: 0, total: 0 });
+    setQuestionsCount({ answered: 0, total: 0 });
+    setNotepadHasContent(false);
+  }, [activeSubStep]);
 
   return (
     <div className={`grid grid-cols-1 gap-6 transition-all duration-300 ${
@@ -138,18 +163,18 @@ export default function StepContentPanel({
           </button>
           {textPanelOpen && (
             <div className="mt-2">
-              <BibleTextPanel currentSlug={step.slug} focusMode={focusMode} onFocusToggle={hasFocusMode ? () => setFocusMode(!focusMode) : undefined} />
+              <BibleTextPanel currentSlug={subSlug} focusMode={focusMode} onFocusToggle={hasFocusMode ? () => setFocusMode(!focusMode) : undefined} />
             </div>
           )}
         </div>
 
         {/* Desktop: always visible */}
         <div className="hidden lg:block">
-          <BibleTextPanel currentSlug={step.slug} focusMode={focusMode} onFocusToggle={hasFocusMode ? () => setFocusMode(!focusMode) : undefined} />
+          <BibleTextPanel currentSlug={subSlug} focusMode={focusMode} onFocusToggle={hasFocusMode ? () => setFocusMode(!focusMode) : undefined} />
         </div>
       </div>
 
-      {/* Right panel: Step content */}
+      {/* Right panel: Phase content */}
       <div className={focusMode ? "hidden lg:block" : ""}>
         {/* Minimized focus mode sidebar */}
         {focusMode && (
@@ -193,7 +218,6 @@ export default function StepContentPanel({
                 <path d="M4 4h12M4 8h12M4 12h8" />
               </svg>
             </button>
-            {/* Progress indicator */}
             {checklistCount.total > 0 && (
               <>
                 <div className="h-px w-6 bg-border/50" />
@@ -205,41 +229,64 @@ export default function StepContentPanel({
           </div>
         )}
 
-        {/* Full right panel content (hidden when in focus mode) */}
+        {/* Full right panel content */}
         <div className={focusMode ? "hidden" : ""}>
-        {/* 1. Step header with time estimate */}
+        {/* 1. Phase header */}
         <div className="mb-6">
           <div className="mb-2 flex items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brick-pale text-xl">
-              {step.icon}
+              {phase.icon}
             </span>
             <div>
               <div className="flex items-center gap-2">
                 <p className="font-cormorant text-[11px] font-semibold uppercase tracking-[0.12em] text-brick">
-                  {`Krok 0${step.number} ze 7`}
+                  {`F\u00E1ze ${phase.number} ze 4`}
                 </p>
                 <span className="flex items-center gap-1 rounded-full bg-cream px-2 py-0.5 text-[10px] text-text-light">
                   <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-text-light/70">
                     <circle cx="8" cy="8" r="6.5" />
                     <path d="M8 4.5V8l2.5 1.5" />
                   </svg>
-                  {`~${step.estimatedMinutes} min`}
+                  {`~${phase.estimatedMinutes} min`}
                 </span>
               </div>
               <h1 className="font-lora text-lg font-bold text-text sm:text-xl">
-                {step.title}
+                {phase.title}
               </h1>
             </div>
           </div>
           <p className="mt-2 text-sm font-light leading-[1.8] text-text-muted">
-            {step.description}
+            {phase.description}
           </p>
         </div>
 
-        {/* 2. StepContext — theory + tip (collapsed by default) */}
-        <StepContext theory={step.theory} tip={step.tip} slug={step.slug} />
+        {/* 2. Sub-step navigation (only if >1 sub-step) */}
+        <SubStepNav
+          subSteps={phase.subSteps}
+          activeIndex={activeSubStep}
+          completedIndices={completedSubSteps}
+          onSelect={handleSubStepSelect}
+        />
 
-        {/* 3. Section navigation pills */}
+        {/* 3. Sub-step title (when multi-step, show current sub-step name) */}
+        {phase.subSteps.length > 1 && (
+          <div className="mb-4 flex items-center gap-2">
+            <span className="text-base">{currentSub.icon}</span>
+            <div>
+              <h2 className="font-lora text-base font-bold text-text">
+                {currentSub.title}
+              </h2>
+              <p className="text-xs text-text-muted">
+                {`~${currentSub.estimatedMinutes} min`}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* 4. StepContext — theory + tip (collapsed by default) */}
+        <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} />
+
+        {/* 5. Section navigation pills */}
         <SectionNav
           sections={[
             {
@@ -253,7 +300,6 @@ export default function StepContentPanel({
               label: `Ot\u00E1zky`,
               completed: questionsCount.answered,
               total: questionsCount.total,
-              locked: !checklistDone,
             },
             {
               key: "notepad",
@@ -267,98 +313,73 @@ export default function StepContentPanel({
           onSelect={toggleSection}
         />
 
-        {/* 4. Accordion work sections */}
+        {/* 6. Accordion work sections */}
         <div className="space-y-3">
           {/* a. Checklist */}
           <Checklist
-            slug={step.slug}
-            items={step.practicalSteps}
+            slug={subSlug}
+            items={currentSub.practicalSteps}
             toolHelpers={toolHelpers}
             isOpen={activeSection === "checklist"}
             onToggle={() => toggleSection("checklist")}
             onCountChange={handleChecklistCount}
           />
 
-          {/* b. Questions — locked until checklist done */}
-          {checklistDone ? (
-            <QuestionNotes
-              slug={step.slug}
-              questions={step.questions}
-              isOpen={activeSection === "questions"}
-              onToggle={() => toggleSection("questions")}
-              onCountChange={handleQuestionsCount}
-            />
-          ) : (
-            <section className="rounded-xl border border-sage/10 bg-sage-pale/30">
-              <button
-                className="flex w-full items-center justify-between p-4 text-left opacity-50 cursor-not-allowed"
-                disabled
-              >
-                <div className="flex items-center gap-2">
-                  <span className="text-base">{"\u2753"}</span>
-                  <h2 className="font-lora text-base font-bold text-text-light">
-                    {`Ot\u00E1zky k zamy\u0161len\u00ED`}
-                  </h2>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] text-text-light">
-                    {`Dokon\u010Dete kroky`}
-                  </span>
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="text-text-light">
-                    <rect x="3" y="5" width="10" height="8" rx="1.5" />
-                    <path d="M5.5 5V3.5a2.5 2.5 0 015 0V5" />
-                  </svg>
-                </div>
-              </button>
-            </section>
-          )}
+          {/* b. Questions — always accessible */}
+          <QuestionNotes
+            slug={subSlug}
+            questions={currentSub.questions}
+            isOpen={activeSection === "questions"}
+            onToggle={() => toggleSection("questions")}
+            onCountChange={handleQuestionsCount}
+          />
 
           {/* c. Notepad */}
           <Notepad
-            slug={step.slug}
+            slug={subSlug}
             isOpen={activeSection === "notepad"}
             onToggle={() => toggleSection("notepad")}
             onHasContentChange={handleNotepadContent}
           />
         </div>
 
-        {/* 5. Navigation */}
+        {/* 7. Navigation */}
         <nav className="mt-6 flex items-center justify-between border-t border-border pt-6">
-          {prevStep ? (
+          {prevPhase ? (
             <Link
-              href={`/pruvodce/${prevStep.slug}`}
+              href={`/pruvodce/${prevPhase.slug}`}
               className="flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-text-muted no-underline transition-all hover:bg-cream hover:text-text"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M10 3L5 8l5 5" />
               </svg>
-              {prevStep.title}
+              {prevPhase.title}
             </Link>
           ) : (
             <Link
-              href="/pruvodce"
+              href="/"
               className="flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-text-muted no-underline transition-all hover:bg-cream hover:text-text"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M10 3L5 8l5 5" />
               </svg>
-              {`P\u0159ehled`}
+              {`\u00DAvod`}
             </Link>
           )}
 
-          {nextStep ? (
+          {nextPhase ? (
             <Link
-              href={`/pruvodce/${nextStep.slug}`}
+              href={`/pruvodce/${nextPhase.slug}`}
               className="flex items-center gap-2 rounded-md bg-brick px-6 py-2.5 text-sm font-semibold text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-brick-light"
             >
-              {nextStep.title}
+              {nextPhase.title}
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M6 3l5 5-5 5" />
               </svg>
             </Link>
           ) : (
             <Link
-              href="/pruvodce"
+              href="/"
               className="flex items-center gap-2 rounded-md bg-brick px-6 py-2.5 text-sm font-semibold text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-brick-light"
             >
               Hotovo!
