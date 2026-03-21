@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useMemo } from "react";
 import Link from "next/link";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Phase, SubStep, FlowItem } from "@/types";
 import { checklistToolMap } from "@/data/checklist-tool-map";
 import type { ActionToolHelper } from "./ActionChecklist";
@@ -57,8 +58,15 @@ export default function StepContentPanel({
   const [activeSubStep, setActiveSubStep] = useState(0);
   const [focusMode, setFocusMode] = useState(false);
 
-  // Track which sub-steps are completed
-  const [completedSubSteps, setCompletedSubSteps] = useState<Set<number>>(new Set());
+  // Track which sub-steps are completed — persist to localStorage
+  const [completedSubStepsArr, setCompletedSubStepsArr] = useLocalStorage<number[]>(
+    `kazani-completed-substeps-${phase.slug}`,
+    []
+  );
+  const completedSubSteps = useMemo(() => new Set(completedSubStepsArr), [completedSubStepsArr]);
+  const setCompletedSubSteps = useCallback((updater: (prev: Set<number>) => Set<number>) => {
+    setCompletedSubStepsArr((prev) => [...updater(new Set(prev))]);
+  }, [setCompletedSubStepsArr]);
 
   const currentSub: SubStep = phase.subSteps[activeSubStep];
   const subSlug = currentSub.slug;
@@ -103,21 +111,19 @@ export default function StepContentPanel({
   const [reflectCount, setReflectCount] = useState({ completed: 0, total: 0 });
   const [notepadHasContent, setNotepadHasContent] = useState(false);
 
-  const allDone =
-    checkCount.total > 0 &&
-    checkCount.completed === checkCount.total &&
-    (reflectCount.total === 0 || reflectCount.completed === reflectCount.total);
+  // Sub-step unlocks after check items are done (reflect items are optional)
+  const checksDone = checkCount.total > 0 && checkCount.completed === checkCount.total;
 
-  // When all done, mark sub-step as completed
   useEffect(() => {
-    if (allDone) {
+    if (checksDone) {
       setCompletedSubSteps((prev) => {
+        if (prev.has(activeSubStep)) return prev;
         const next = new Set(prev);
         next.add(activeSubStep);
         return next;
       });
     }
-  }, [allDone, activeSubStep]);
+  }, [checksDone, activeSubStep]);
 
   const handleCheckCount = useCallback((completed: number, total: number) => {
     setCheckCount({ completed, total });
@@ -136,13 +142,6 @@ export default function StepContentPanel({
     setActiveSubStep(index);
     setFocusMode(false);
   };
-
-  // Reset tracking on sub-step change
-  useEffect(() => {
-    setCheckCount({ completed: 0, total: 0 });
-    setReflectCount({ completed: 0, total: 0 });
-    setNotepadHasContent(false);
-  }, [activeSubStep]);
 
   return (
     <div className={`grid grid-cols-1 gap-6 transition-all duration-300 ${
