@@ -76,7 +76,7 @@ export default function StepContentPanel({
   // Questions unlock after checklist is done
   const checklistDone = checklistCount.total > 0 && checklistCount.completed === checklistCount.total;
 
-  // When checklist is done, mark sub-step as completed and auto-advance
+  // When checklist is done, mark sub-step as completed
   useEffect(() => {
     if (checklistDone) {
       setCompletedSubSteps((prev) => {
@@ -84,12 +84,8 @@ export default function StepContentPanel({
         next.add(activeSubStep);
         return next;
       });
-      // Auto-switch to questions
-      if (activeSection === "checklist") {
-        setActiveSection("questions");
-      }
     }
-  }, [checklistDone, activeSubStep, activeSection]);
+  }, [checklistDone, activeSubStep]);
 
   const handleChecklistCount = useCallback((completed: number, total: number) => {
     setChecklistCount({ completed, total });
@@ -115,7 +111,6 @@ export default function StepContentPanel({
   }, [subSlug]);
 
   const toggleSection = (key: SectionKey) => {
-    if (key === "questions" && !checklistDone) return;
     setActiveSection(key);
   };
 
@@ -305,7 +300,6 @@ export default function StepContentPanel({
               label: `Ot\u00E1zky`,
               completed: questionsCount.answered,
               total: questionsCount.total,
-              locked: !checklistDone,
             },
             {
               key: "notepad",
@@ -331,39 +325,14 @@ export default function StepContentPanel({
             onCountChange={handleChecklistCount}
           />
 
-          {/* b. Questions — locked until checklist done */}
-          {checklistDone ? (
-            <QuestionNotes
-              slug={subSlug}
-              questions={currentSub.questions}
-              isOpen={activeSection === "questions"}
-              onToggle={() => toggleSection("questions")}
-              onCountChange={handleQuestionsCount}
-            />
-          ) : (
-            <section className="rounded-xl border border-sage/10 bg-sage-pale/30">
-              <button
-                className="flex w-full items-center justify-between p-4 text-left opacity-50 cursor-not-allowed"
-                disabled
-              >
-                <div className="flex items-center gap-2">
-                  <span className="text-base">{"\u2753"}</span>
-                  <h2 className="font-lora text-base font-bold text-text-light">
-                    {`Ot\u00E1zky k zamy\u0161len\u00ED`}
-                  </h2>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] text-text-light">
-                    {`Dokon\u010Dete kroky`}
-                  </span>
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="text-text-light">
-                    <rect x="3" y="5" width="10" height="8" rx="1.5" />
-                    <path d="M5.5 5V3.5a2.5 2.5 0 015 0V5" />
-                  </svg>
-                </div>
-              </button>
-            </section>
-          )}
+          {/* b. Questions — always accessible */}
+          <QuestionNotes
+            slug={subSlug}
+            questions={currentSub.questions}
+            isOpen={activeSection === "questions"}
+            onToggle={() => toggleSection("questions")}
+            onCountChange={handleQuestionsCount}
+          />
 
           {/* c. Notepad */}
           <Notepad
