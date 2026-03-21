@@ -77,18 +77,7 @@ export default function ActionChecklist({
         </div>
       ) : (
         <div className="space-y-1">
-          {/* Completed items — minimal dots */}
-          {completedCount > 0 && (
-            <div className="flex items-center gap-1 px-1 mb-1">
-              {checked.map((done, i) =>
-                done ? (
-                  <span key={i} className="h-2 w-2 rounded-full bg-brick" />
-                ) : null
-              )}
-            </div>
-          )}
-
-          {/* Active item — prominent */}
+          {/* Active item */}
           {activeIndex !== -1 && (
             <div className="rounded-lg border border-brick/15 bg-white p-3">
               <button
