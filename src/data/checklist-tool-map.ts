@@ -13,7 +13,7 @@ export interface ToolMapping {
 export const checklistToolMap: Record<string, ToolMapping[]> = {
   cteni: [
     {
-      itemIndex: 2,
+      itemIndex: 1,
       label: `Typ textu`,
       icon: "\uD83D\uDD0D",
       componentKey: "NarrativeTypeIdentifier",

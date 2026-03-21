@@ -38,6 +38,8 @@ export default function ActionChecklist({
   };
 
   const completedCount = checked.filter(Boolean).length;
+  const activeIndex = checked.findIndex((v) => !v);
+  const allDone = activeIndex === -1;
 
   useEffect(() => {
     onCountChange?.(completedCount, items.length);
@@ -50,71 +52,79 @@ export default function ActionChecklist({
 
   return (
     <div className="mb-4 rounded-lg border border-brick/10 bg-brick-pale/30 p-3">
-      <div className="mb-2 flex items-center justify-between">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-brick/70">
-          {`\u00DAkoly`}
-        </p>
-        <span className="text-[10px] text-text-light">
-          {completedCount}/{items.length}
-        </span>
+      {/* Progress bar */}
+      <div className="mb-3 flex gap-0.5">
+        {items.map((_, i) => (
+          <div
+            key={i}
+            className={`h-1 flex-1 rounded-full transition-all duration-300 ${
+              checked[i]
+                ? "bg-brick"
+                : i === activeIndex
+                  ? "bg-brick/30"
+                  : "bg-border/40"
+            }`}
+          />
+        ))}
       </div>
-      <ul className="space-y-1.5">
-        {items.map((item, i) => {
-          const helper = getHelper(i);
 
-          return (
-            <li key={i}>
+      {allDone ? (
+        /* All done */
+        <div className="rounded-md bg-sage-pale/50 px-3 py-2 text-center">
+          <p className="text-xs font-medium text-sage">
+            {`\u2705 V\u0161echny \u00FAkoly hotovy`}
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-1">
+          {/* Completed items — minimal dots */}
+          {completedCount > 0 && (
+            <div className="flex items-center gap-1 px-1 mb-1">
+              {checked.map((done, i) =>
+                done ? (
+                  <span key={i} className="h-2 w-2 rounded-full bg-brick" />
+                ) : null
+              )}
+            </div>
+          )}
+
+          {/* Active item — prominent */}
+          {activeIndex !== -1 && (
+            <div className="rounded-lg border border-brick/15 bg-white p-3">
               <button
-                onClick={() => toggle(i)}
+                onClick={() => toggle(activeIndex)}
                 className="flex w-full gap-2.5 text-left group items-start"
               >
-                <span
-                  className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded transition-all duration-200 ${
-                    checked[i]
-                      ? "bg-brick text-white"
-                      : "border border-brick/30 bg-white text-transparent group-hover:border-brick/50"
-                  }`}
-                >
-                  {checked[i] && (
-                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M3 7l3 3 5-6" />
-                    </svg>
-                  )}
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 border-brick/40 bg-white text-transparent transition-all group-hover:border-brick">
                 </span>
-                <span
-                  className={`text-[13px] leading-relaxed transition-all duration-200 ${
-                    checked[i]
-                      ? "text-text-muted line-through"
-                      : "text-text"
-                  }`}
-                >
-                  {item.text}
+                <span className="text-[13px] font-medium leading-relaxed text-text">
+                  {items[activeIndex].text}
                 </span>
               </button>
 
-              {/* Tool helper — opens in right panel */}
-              {helper && (
-                <div className="ml-7 mt-1">
+              {/* Tool helper for active item */}
+              {getHelper(activeIndex) && (
+                <div className="ml-7 mt-2">
                   <button
-                    onClick={() => onToolOpen?.(i)}
+                    onClick={() => onToolOpen?.(activeIndex)}
                     className={`flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[11px] font-medium transition-all ${
-                      activeToolIndex === i
+                      activeToolIndex === activeIndex
                         ? "bg-brick/10 text-brick"
                         : "text-text-light hover:bg-brick-pale hover:text-brick"
                     }`}
                   >
-                    <span>{helper.icon}</span>
-                    <span>{helper.label}</span>
+                    <span>{getHelper(activeIndex)!.icon}</span>
+                    <span>{getHelper(activeIndex)!.label}</span>
                     <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="text-text-light">
                       <path d="M6 3l5 5-5 5" />
                     </svg>
                   </button>
                 </div>
               )}
-            </li>
-          );
-        })}
-      </ul>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
