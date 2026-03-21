@@ -2,13 +2,14 @@
 
 import { useState, useCallback, useEffect, useMemo } from "react";
 import Link from "next/link";
-import type { Phase, SubStep } from "@/types";
+import type { Phase, SubStep, FlowItem } from "@/types";
 import { checklistToolMap } from "@/data/checklist-tool-map";
-import type { ChecklistToolHelper } from "./Checklist";
+import type { ActionToolHelper } from "./ActionChecklist";
 import BibleTextPanel from "./BibleTextPanel";
 import StepContext from "./StepContext";
 import SubStepNav from "./SubStepNav";
 import Checklist from "./Checklist";
+import PreviousStepOutputs from "./PreviousStepOutputs";
 import Notepad from "./Notepad";
 
 // Tool components
@@ -56,7 +57,7 @@ export default function StepContentPanel({
   const [activeSubStep, setActiveSubStep] = useState(0);
   const [focusMode, setFocusMode] = useState(false);
 
-  // Track which sub-steps are completed (all checklist items done)
+  // Track which sub-steps are completed
   const [completedSubSteps, setCompletedSubSteps] = useState<Set<number>>(new Set());
 
   const currentSub: SubStep = phase.subSteps[activeSubStep];
@@ -65,41 +66,70 @@ export default function StepContentPanel({
   // Focus mode: for text-heavy sub-steps
   const hasFocusMode = subSlug === "cteni" || subSlug === "vyklad";
 
-  // Flow progress tracking
-  const [flowCount, setFlowCount] = useState({ completed: 0, total: 0 });
+  // Split flow items: check → left panel, reflect → right panel
+  const checkItems = useMemo(
+    () => currentSub.flow.filter((f) => f.type === "check"),
+    [currentSub.flow]
+  );
+  const reflectItems = useMemo(
+    () => currentSub.flow.filter((f) => f.type === "reflect"),
+    [currentSub.flow]
+  );
+
+  // Map tool helpers from flow indices to check-item indices
+  const checkToolHelpers: ActionToolHelper[] = useMemo(() => {
+    const mappings = checklistToolMap[subSlug] || [];
+    // Build a map: flow index → check-item index
+    let checkIdx = 0;
+    const flowToCheckIdx: Record<number, number> = {};
+    currentSub.flow.forEach((item, flowIdx) => {
+      if (item.type === "check") {
+        flowToCheckIdx[flowIdx] = checkIdx;
+        checkIdx++;
+      }
+    });
+    return mappings
+      .filter((m) => flowToCheckIdx[m.itemIndex] !== undefined)
+      .map((m) => ({
+        itemIndex: flowToCheckIdx[m.itemIndex],
+        label: m.label,
+        icon: m.icon,
+        component: resolveToolComponent(m.componentKey, subSlug),
+      }));
+  }, [subSlug, currentSub.flow]);
+
+  // Progress tracking
+  const [checkCount, setCheckCount] = useState({ completed: 0, total: 0 });
+  const [reflectCount, setReflectCount] = useState({ completed: 0, total: 0 });
   const [notepadHasContent, setNotepadHasContent] = useState(false);
 
-  const flowDone = flowCount.total > 0 && flowCount.completed === flowCount.total;
+  const allDone =
+    checkCount.total > 0 &&
+    checkCount.completed === checkCount.total &&
+    (reflectCount.total === 0 || reflectCount.completed === reflectCount.total);
 
-  // When flow is done, mark sub-step as completed
+  // When all done, mark sub-step as completed
   useEffect(() => {
-    if (flowDone) {
+    if (allDone) {
       setCompletedSubSteps((prev) => {
         const next = new Set(prev);
         next.add(activeSubStep);
         return next;
       });
     }
-  }, [flowDone, activeSubStep]);
+  }, [allDone, activeSubStep]);
 
-  const handleFlowCount = useCallback((completed: number, total: number) => {
-    setFlowCount({ completed, total });
+  const handleCheckCount = useCallback((completed: number, total: number) => {
+    setCheckCount({ completed, total });
+  }, []);
+
+  const handleReflectCount = useCallback((completed: number, total: number) => {
+    setReflectCount({ completed, total });
   }, []);
 
   const handleNotepadContent = useCallback((hasContent: boolean) => {
     setNotepadHasContent(hasContent);
   }, []);
-
-  // Resolve tool helpers for current sub-step
-  const toolHelpers: ChecklistToolHelper[] = useMemo(() => {
-    const mappings = checklistToolMap[subSlug] || [];
-    return mappings.map((m) => ({
-      itemIndex: m.itemIndex,
-      label: m.label,
-      icon: m.icon,
-      component: resolveToolComponent(m.componentKey, subSlug),
-    }));
-  }, [subSlug]);
 
   // Sub-step navigation
   const handleSubStepSelect = (index: number) => {
@@ -107,9 +137,10 @@ export default function StepContentPanel({
     setFocusMode(false);
   };
 
-  // When switching sub-steps, reset tracking
+  // Reset tracking on sub-step change
   useEffect(() => {
-    setFlowCount({ completed: 0, total: 0 });
+    setCheckCount({ completed: 0, total: 0 });
+    setReflectCount({ completed: 0, total: 0 });
     setNotepadHasContent(false);
   }, [activeSubStep]);
 
@@ -119,7 +150,7 @@ export default function StepContentPanel({
         ? "lg:grid-cols-[minmax(0,1fr)_56px]"
         : "lg:grid-cols-[minmax(0,3fr)_minmax(320px,2fr)]"
     }`}>
-      {/* Left panel: Biblical text */}
+      {/* LEFT PANEL: Text + action checklist */}
       <div className="lg:sticky lg:top-[84px] lg:self-start lg:max-h-[calc(100vh-100px)] lg:overflow-y-auto">
         {/* Mobile toggle */}
         <div className="lg:hidden mb-4">
@@ -130,35 +161,42 @@ export default function StepContentPanel({
             <div className="flex items-center gap-2">
               <span className="text-sm">{"\uD83D\uDCD6"}</span>
               <span className="text-xs font-medium text-text-muted">
-                {`Biblick\u00FD text`}
+                {`Biblick\u00FD text + \u00FAkoly`}
               </span>
             </div>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 20 20"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className={`text-text-light transition-transform ${textPanelOpen ? "rotate-180" : ""}`}
-            >
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2"
+              className={`text-text-light transition-transform ${textPanelOpen ? "rotate-180" : ""}`}>
               <path d="M5 8l5 5 5-5" />
             </svg>
           </button>
           {textPanelOpen && (
             <div className="mt-2">
-              <BibleTextPanel currentSlug={subSlug} focusMode={focusMode} onFocusToggle={hasFocusMode ? () => setFocusMode(!focusMode) : undefined} />
+              <BibleTextPanel
+                currentSlug={subSlug}
+                focusMode={focusMode}
+                onFocusToggle={hasFocusMode ? () => setFocusMode(!focusMode) : undefined}
+                checkItems={checkItems}
+                checkToolHelpers={checkToolHelpers}
+                onCheckCountChange={handleCheckCount}
+              />
             </div>
           )}
         </div>
 
         {/* Desktop: always visible */}
         <div className="hidden lg:block">
-          <BibleTextPanel currentSlug={subSlug} focusMode={focusMode} onFocusToggle={hasFocusMode ? () => setFocusMode(!focusMode) : undefined} />
+          <BibleTextPanel
+            currentSlug={subSlug}
+            focusMode={focusMode}
+            onFocusToggle={hasFocusMode ? () => setFocusMode(!focusMode) : undefined}
+            checkItems={checkItems}
+            checkToolHelpers={checkToolHelpers}
+            onCheckCountChange={handleCheckCount}
+          />
         </div>
       </div>
 
-      {/* Right panel: Phase content */}
+      {/* RIGHT PANEL: Guide + reflections */}
       <div className={focusMode ? "hidden lg:block" : ""}>
         {/* Minimized focus mode sidebar */}
         {focusMode && (
@@ -166,21 +204,13 @@ export default function StepContentPanel({
             <button
               onClick={() => setFocusMode(false)}
               className="flex h-10 w-10 items-center justify-center rounded-lg bg-brick text-white transition-colors hover:bg-brick-light"
-              title={`Zp\u011Bt k \u00FAkol\u016Fm`}
+              title={`Zp\u011Bt k pr\u016Fvodci`}
             >
               <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M14 3l-5 5 5 5" />
                 <rect x="12" y="3" width="5" height="14" rx="1" opacity="0.3" />
               </svg>
             </button>
-            {flowCount.total > 0 && (
-              <>
-                <div className="h-px w-6 bg-border/50" />
-                <span className="text-[9px] font-bold text-text-light">
-                  {flowCount.completed}/{flowCount.total}
-                </span>
-              </>
-            )}
           </div>
         )}
 
@@ -215,7 +245,7 @@ export default function StepContentPanel({
           </p>
         </div>
 
-        {/* 2. Sub-step navigation (only if >1 sub-step) */}
+        {/* 2. Sub-step navigation */}
         <SubStepNav
           subSteps={phase.subSteps}
           activeIndex={activeSubStep}
@@ -238,19 +268,23 @@ export default function StepContentPanel({
           </div>
         )}
 
-        {/* 4. StepContext — theory + tip (collapsed by default) */}
+        {/* 4. Theory (collapsed) */}
         <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} />
 
-        {/* 5. Unified flow — checklist + reflections in one stream */}
+        {/* 5. Previous step outputs */}
+        <PreviousStepOutputs subStepSlug={subSlug} />
+
+        {/* 6. Reflections (wizard pattern for reflect items) */}
         <div className="space-y-3">
-          <Checklist
-            slug={subSlug}
-            items={currentSub.flow}
-            toolHelpers={toolHelpers}
-            isOpen={true}
-            onToggle={() => {}}
-            onCountChange={handleFlowCount}
-          />
+          {reflectItems.length > 0 && (
+            <Checklist
+              slug={`${subSlug}-reflect`}
+              items={reflectItems}
+              isOpen={true}
+              onToggle={() => {}}
+              onCountChange={handleReflectCount}
+            />
+          )}
 
           {/* Notepad — always accessible */}
           <Notepad
@@ -261,7 +295,7 @@ export default function StepContentPanel({
           />
         </div>
 
-        {/* 6. Navigation */}
+        {/* 7. Navigation */}
         <nav className="mt-6 flex items-center justify-between border-t border-border pt-6">
           {prevPhase ? (
             <Link
