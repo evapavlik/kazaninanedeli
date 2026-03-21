@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { steps } from "@/data/steps";
+import { phases } from "@/data/phases";
 
 interface StepProgressProps {
   currentStep?: number;
@@ -8,14 +8,14 @@ interface StepProgressProps {
 export default function StepProgress({ currentStep }: StepProgressProps) {
   return (
     <div className="flex items-center gap-1 overflow-x-auto py-2">
-      {steps.map((step, index) => {
-        const isActive = currentStep === step.number;
-        const isPast = currentStep !== undefined && step.number < currentStep;
+      {phases.map((phase, index) => {
+        const isActive = currentStep === phase.number;
+        const isPast = currentStep !== undefined && phase.number < currentStep;
 
         return (
-          <div key={step.slug} className="flex items-center">
+          <div key={phase.slug} className="flex items-center">
             <Link
-              href={`/pruvodce/${step.slug}`}
+              href={`/pruvodce/${phase.slug}`}
               className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold no-underline transition-all ${
                 isActive
                   ? "bg-brick text-white shadow-md"
@@ -23,13 +23,13 @@ export default function StepProgress({ currentStep }: StepProgressProps) {
                     ? "bg-brick/20 text-brick"
                     : "bg-border text-text-muted hover:bg-brick/10"
               }`}
-              title={step.title}
+              title={phase.title}
             >
-              {step.number}
+              {phase.number}
             </Link>
-            {index < steps.length - 1 && (
+            {index < phases.length - 1 && (
               <div
-                className={`mx-1 h-0.5 w-4 sm:w-8 ${
+                className={`mx-1 h-0.5 w-6 sm:w-10 ${
                   isPast ? "bg-brick/30" : "bg-border"
                 }`}
               />
