@@ -3,13 +3,13 @@
 import { useState, useCallback, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import type { Phase, SubStep, FlowItem } from "@/types";
+import type { Phase, SubStep } from "@/types";
 import { checklistToolMap } from "@/data/checklist-tool-map";
-import type { ActionToolHelper } from "./ActionChecklist";
+import type { FlowToolHelper } from "./UnifiedFlow";
 import BibleTextPanel from "./BibleTextPanel";
 import StepContext from "./StepContext";
 import SubStepNav from "./SubStepNav";
-import Checklist from "./Checklist";
+import UnifiedFlow from "./UnifiedFlow";
 import PreviousStepOutputs from "./PreviousStepOutputs";
 import Notepad from "./Notepad";
 
@@ -74,52 +74,24 @@ export default function StepContentPanel({
   // Focus mode: for text-heavy sub-steps
   const hasFocusMode = subSlug === "cteni" || subSlug === "vyklad";
 
-  // Split flow items: check → left panel, reflect → right panel
-  const checkItems = useMemo(
-    () => currentSub.flow.filter((f) => f.type === "check"),
-    [currentSub.flow]
-  );
-  const reflectItems = useMemo(
-    () => currentSub.flow.filter((f) => f.type === "reflect"),
-    [currentSub.flow]
-  );
-
-  // Map tool helpers from flow indices to check-item indices
-  const checkToolHelpers: ActionToolHelper[] = useMemo(() => {
+  // Tool helpers mapped to flow[] indices (no longer split by type)
+  const flowToolHelpers: FlowToolHelper[] = useMemo(() => {
     const mappings = checklistToolMap[subSlug] || [];
-    // Build a map: flow index → check-item index
-    let checkIdx = 0;
-    const flowToCheckIdx: Record<number, number> = {};
-    currentSub.flow.forEach((item, flowIdx) => {
-      if (item.type === "check") {
-        flowToCheckIdx[flowIdx] = checkIdx;
-        checkIdx++;
-      }
-    });
-    return mappings
-      .filter((m) => flowToCheckIdx[m.itemIndex] !== undefined)
-      .map((m) => ({
-        itemIndex: flowToCheckIdx[m.itemIndex],
-        label: m.label,
-        icon: m.icon,
-        component: resolveToolComponent(m.componentKey, subSlug),
-      }));
-  }, [subSlug, currentSub.flow]);
+    return mappings.map((m) => ({
+      itemIndex: m.itemIndex,
+      label: m.label,
+      icon: m.icon,
+      component: resolveToolComponent(m.componentKey, subSlug),
+    }));
+  }, [subSlug]);
 
-  // Active tool in right panel (opened from left panel action checklist)
-  const [activeToolIndex, setActiveToolIndex] = useState<number | null>(null);
-  const activeToolHelper = activeToolIndex !== null
-    ? checkToolHelpers.find((h) => h.itemIndex === activeToolIndex)
-    : null;
-
-  // Progress tracking
+  // Progress tracking — only check items count for sub-step completion
   const [checkCount, setCheckCount] = useState({ completed: 0, total: 0 });
-  const [reflectCount, setReflectCount] = useState({ completed: 0, total: 0 });
   const [notepadHasContent, setNotepadHasContent] = useState(false);
 
-  // Sub-step unlocks after check items are done (reflect items are optional)
   const checksDone = checkCount.total > 0 && checkCount.completed === checkCount.total;
 
+  // Mark sub-step as complete when all check items are done
   useEffect(() => {
     if (checksDone) {
       setCompletedSubSteps((prev) => {
@@ -131,12 +103,20 @@ export default function StepContentPanel({
     }
   }, [checksDone, activeSubStep]);
 
-  const handleCheckCount = useCallback((completed: number, total: number) => {
-    setCheckCount({ completed, total });
-  }, []);
+  // Auto-advance to next sub-step when complete
+  useEffect(() => {
+    if (checksDone && activeSubStep < phase.subSteps.length - 1) {
+      const nextIdx = activeSubStep + 1;
+      if (!completedSubSteps.has(nextIdx)) {
+        // Small delay for UX
+        const timer = setTimeout(() => setActiveSubStep(nextIdx), 800);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [checksDone, activeSubStep, phase.subSteps.length, completedSubSteps]);
 
-  const handleReflectCount = useCallback((completed: number, total: number) => {
-    setReflectCount({ completed, total });
+  const handleFlowCountChange = useCallback((completed: number, total: number) => {
+    setCheckCount({ completed, total });
   }, []);
 
   const handleNotepadContent = useCallback((hasContent: boolean) => {
@@ -153,9 +133,9 @@ export default function StepContentPanel({
     <div className={`grid grid-cols-1 gap-6 transition-all duration-300 ${
       focusMode
         ? "lg:grid-cols-[minmax(0,1fr)_56px]"
-        : "lg:grid-cols-[minmax(0,3fr)_minmax(320px,2fr)]"
+        : "lg:grid-cols-[minmax(0,2fr)_minmax(300px,1fr)]"
     }`}>
-      {/* LEFT PANEL: Text + action checklist */}
+      {/* LEFT PANEL: Clean text + annotations */}
       <div className="lg:sticky lg:top-[84px] lg:self-start lg:max-h-[calc(100vh-100px)] lg:overflow-y-auto">
         {/* Mobile toggle */}
         <div className="lg:hidden mb-4">
@@ -166,7 +146,7 @@ export default function StepContentPanel({
             <div className="flex items-center gap-2">
               <span className="text-sm">{"\uD83D\uDCD6"}</span>
               <span className="text-xs font-medium text-text-muted">
-                {`Biblick\u00FD text + \u00FAkoly`}
+                {`Biblick\u00FD text`}
               </span>
             </div>
             <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2"
@@ -180,11 +160,6 @@ export default function StepContentPanel({
                 currentSlug={subSlug}
                 focusMode={focusMode}
                 onFocusToggle={hasFocusMode ? () => setFocusMode(!focusMode) : undefined}
-                checkItems={checkItems}
-                checkToolHelpers={checkToolHelpers}
-                onCheckCountChange={handleCheckCount}
-                onToolOpen={(idx) => setActiveToolIndex(activeToolIndex === idx ? null : idx)}
-                activeToolIndex={activeToolIndex}
               />
             </div>
           )}
@@ -196,16 +171,11 @@ export default function StepContentPanel({
             currentSlug={subSlug}
             focusMode={focusMode}
             onFocusToggle={hasFocusMode ? () => setFocusMode(!focusMode) : undefined}
-            checkItems={checkItems}
-            checkToolHelpers={checkToolHelpers}
-            onCheckCountChange={handleCheckCount}
-            onToolOpen={(idx) => setActiveToolIndex(activeToolIndex === idx ? null : idx)}
-            activeToolIndex={activeToolIndex}
           />
         </div>
       </div>
 
-      {/* RIGHT PANEL: Guide + reflections */}
+      {/* RIGHT PANEL: Guide */}
       <div className={focusMode ? "hidden lg:block" : ""}>
         {/* Minimized focus mode sidebar */}
         {focusMode && (
@@ -226,7 +196,7 @@ export default function StepContentPanel({
         {/* Full right panel content */}
         <div className={focusMode ? "hidden" : ""}>
         {/* 1. Phase header */}
-        <div className="mb-6">
+        <div className="mb-5">
           <div className="mb-2 flex items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brick-pale text-xl">
               {phase.icon}
@@ -249,9 +219,6 @@ export default function StepContentPanel({
               </h1>
             </div>
           </div>
-          <p className="mt-2 text-sm font-light leading-[1.8] text-text-muted">
-            {phase.description}
-          </p>
         </div>
 
         {/* 2. Sub-step navigation */}
@@ -264,7 +231,7 @@ export default function StepContentPanel({
 
         {/* 3. Sub-step title (when multi-step) */}
         {phase.subSteps.length > 1 && (
-          <div className="mb-4 flex items-center gap-2">
+          <div className="mb-3 flex items-center gap-2">
             <span className="text-base">{currentSub.icon}</span>
             <div>
               <h2 className="font-lora text-base font-bold text-text">
@@ -277,44 +244,29 @@ export default function StepContentPanel({
           </div>
         )}
 
-        {/* 4. Theory (collapsed) */}
-        <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} />
+        {/* 4. Description */}
+        <p className="mb-4 text-[13px] font-light leading-[1.8] text-text-muted">
+          {currentSub.description}
+        </p>
 
-        {/* 5. Active tool (opened from left panel) */}
-        {activeToolHelper && (
-          <div className="mb-4 rounded-xl border border-brick/15 bg-brick-pale/30 p-4">
-            <div className="mb-3 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span>{activeToolHelper.icon}</span>
-                <h3 className="text-sm font-semibold text-text">{activeToolHelper.label}</h3>
-              </div>
-              <button
-                onClick={() => setActiveToolIndex(null)}
-                className="text-[11px] text-text-light hover:text-brick"
-              >
-                {`Zav\u0159\u00EDt`}
-              </button>
-            </div>
-            {activeToolHelper.component}
-          </div>
-        )}
+        {/* 5. Unified flow (check + reflect + tools) */}
+        <UnifiedFlow
+          slug={subSlug}
+          items={currentSub.flow}
+          toolHelpers={flowToolHelpers}
+          onCountChange={handleFlowCountChange}
+        />
 
         {/* 6. Previous step outputs */}
         <PreviousStepOutputs subStepSlug={subSlug} />
 
-        {/* 7. Reflections (wizard pattern for reflect items) */}
-        <div className="space-y-3">
-          {reflectItems.length > 0 && (
-            <Checklist
-              slug={`${subSlug}-reflect`}
-              items={reflectItems}
-              isOpen={true}
-              onToggle={() => {}}
-              onCountChange={handleReflectCount}
-            />
-          )}
+        {/* 7. Theory (collapsed) */}
+        <div className="mt-3">
+          <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} />
+        </div>
 
-          {/* Notepad — always accessible */}
+        {/* 8. Notepad */}
+        <div className="mt-3">
           <Notepad
             slug={subSlug}
             isOpen={false}
@@ -323,7 +275,7 @@ export default function StepContentPanel({
           />
         </div>
 
-        {/* 7. Navigation */}
+        {/* 9. Navigation */}
         <nav className="mt-6 flex items-center justify-between border-t border-border pt-6">
           {prevPhase ? (
             <Link
