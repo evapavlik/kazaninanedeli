@@ -262,15 +262,21 @@ export async function fetchContext(
  * Returns BibleChapter in the same format as getBible.net data.
  * HTML tags in text are stripped.
  */
+/**
+ * Fetch a chapter from Bolls.life API.
+ * Supports CSP09 (\u010CSP), WLC (Hebrew OT), TR (Greek NT), and others.
+ * HTML tags in text are stripped.
+ */
 export async function fetchChapterBolls(
   bookNumber: number,
   chapter: number,
+  translationCode: string = "CSP09",
 ): Promise<BibleChapter | null> {
   const maxChapters = getChapterCount(bookNumber);
   if (chapter < 1 || chapter > maxChapters) return null;
 
   try {
-    const url = `https://bolls.life/get-text/CSP09/${bookNumber}/${chapter}/`;
+    const url = `https://bolls.life/get-text/${translationCode}/${bookNumber}/${chapter}/`;
     const response = await fetch(url);
 
     if (!response.ok) return null;
@@ -281,7 +287,7 @@ export async function fetchChapterBolls(
       chapter: chapter,
       verse: v.verse as number,
       name: `${bookNumber} ${chapter}:${v.verse}`,
-      // Strip HTML tags (sup, i, etc.) from Bolls response
+      // Strip HTML tags (sup, i, etc.) and footnote markers from Bolls response
       text: (v.text as string).replace(/<[^>]*>/g, "").replace(/\[\d+\]/g, "").trim(),
     }));
 

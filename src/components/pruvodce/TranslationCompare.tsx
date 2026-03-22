@@ -6,9 +6,7 @@ import {
   fetchChapter,
   fetchChapterBolls,
   isOldTestament,
-  type BibleTranslation,
   type BibleVerse,
-  TRANSLATION_LABELS,
 } from "@/lib/getbible";
 
 interface TranslationCompareProps {
@@ -19,7 +17,7 @@ type FetchState =
   | { status: "idle" }
   | { status: "loading" }
   | { status: "error"; message: string }
-  | { status: "success"; cep: BibleVerse[]; csp: BibleVerse[]; bkr: BibleVerse[]; greek: BibleVerse[] | null };
+  | { status: "success"; original: BibleVerse[]; csp: BibleVerse[]; bkr: BibleVerse[]; isOT: boolean };
 
 export default function TranslationCompare({
   reference,
@@ -47,24 +45,20 @@ export default function TranslationCompare({
     setState({ status: "loading" });
 
     try {
-      const isNT = !isOldTestament(parsed.bookNumber);
-      const fetches: Promise<Awaited<ReturnType<typeof fetchChapter>>>[] = [
-        fetchChapter(parsed.bookNumber, parsed.chapter, "cep"),
+      const isOT = isOldTestament(parsed.bookNumber);
+      // Original: Hebrew (WLC) for OT, Greek (TR) for NT — both from Bolls
+      const originalCode = isOT ? "WLC" : "TR";
+
+      const [originalChapter, cspChapter, bkrChapter] = await Promise.all([
+        fetchChapterBolls(parsed.bookNumber, parsed.chapter, originalCode),
         fetchChapterBolls(parsed.bookNumber, parsed.chapter),
         fetchChapter(parsed.bookNumber, parsed.chapter, "bkr"),
-      ];
-      if (isNT) {
-        fetches.push(fetchChapter(parsed.bookNumber, parsed.chapter, "textusreceptus"));
-      }
-
-      const results = await Promise.all(fetches);
+      ]);
 
       // Check if this request was aborted while fetching
       if (abortRef.current?.signal.aborted) return;
 
-      const [cepChapter, cspChapter, bkrChapter, greekChapter] = results;
-
-      if (!cepChapter && !cspChapter && !bkrChapter) {
+      if (!cspChapter && !bkrChapter) {
         setState({
           status: "error",
           message: `Kapitolu se nepoda\u0159ilo na\u010D\u00EDst. Zkontrolujte odkaz a p\u0159ipojen\u00ED k internetu.`,
@@ -82,10 +76,10 @@ export default function TranslationCompare({
 
       setState({
         status: "success",
-        cep: cepChapter ? filterVerses(cepChapter.verses) : [],
+        original: originalChapter ? filterVerses(originalChapter.verses) : [],
         csp: cspChapter ? filterVerses(cspChapter.verses) : [],
         bkr: bkrChapter ? filterVerses(bkrChapter.verses) : [],
-        greek: greekChapter ? filterVerses(greekChapter.verses) : null,
+        isOT,
       });
     } catch {
       if (abortRef.current?.signal.aborted) return;
@@ -208,33 +202,24 @@ export default function TranslationCompare({
 
           {/* Success state — columns */}
           {state.status === "success" && (
-            <div>
-              {/* Translation columns — responsive grid */}
-              <div className={`grid gap-4 ${
-                state.greek
-                  ? "lg:grid-cols-4 md:grid-cols-2"
-                  : "lg:grid-cols-3 md:grid-cols-2"
-              }`}>
-                <TranslationColumn
-                  translation="cep"
-                  verses={state.cep}
-                />
-                <TranslationColumn
-                  translation="csp"
-                  verses={state.csp}
-                />
-                <TranslationColumn
-                  translation="bkr"
-                  verses={state.bkr}
-                />
-                {state.greek && (
-                  <TranslationColumn
-                    translation="textusreceptus"
-                    verses={state.greek}
-                    isGreek
-                  />
-                )}
-              </div>
+            <div className="grid gap-4 lg:grid-cols-3 md:grid-cols-2">
+              {/* 1. Original — Hebrew or Greek */}
+              <TranslationColumn
+                label={state.isOT ? `Hebrejsky (WLC)` : `\u0158ecky (TR)`}
+                verses={state.original}
+                isOriginal
+                isRTL={state.isOT}
+              />
+              {/* 2. ČSP */}
+              <TranslationColumn
+                label={`\u010CSP`}
+                verses={state.csp}
+              />
+              {/* 3. Kralická */}
+              <TranslationColumn
+                label={`Kralick\u00E1`}
+                verses={state.bkr}
+              />
             </div>
           )}
         </div>
@@ -244,19 +229,21 @@ export default function TranslationCompare({
 }
 
 function TranslationColumn({
-  translation,
+  label,
   verses,
-  isGreek,
+  isOriginal,
+  isRTL,
 }: {
-  translation: BibleTranslation;
+  label: string;
   verses: BibleVerse[];
-  isGreek?: boolean;
+  isOriginal?: boolean;
+  isRTL?: boolean;
 }) {
   if (verses.length === 0) {
     return (
       <div className="rounded-lg bg-white/50 p-4">
         <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage/70">
-          {TRANSLATION_LABELS[translation]}
+          {label}
         </p>
         <p className="text-[12px] italic text-text-muted">
           {`P\u0159eklad nen\u00ED k dispozici.`}
@@ -268,12 +255,15 @@ function TranslationColumn({
   return (
     <div className="rounded-lg bg-white/50 p-4">
       <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage/70">
-        {TRANSLATION_LABELS[translation]}
+        {label}
       </p>
-      <div className={`text-[15px] leading-[1.9] text-text ${isGreek ? "font-serif" : "font-literata"}`}>
+      <div
+        className={`text-[15px] leading-[1.9] text-text ${isOriginal ? "font-serif" : "font-literata"}`}
+        dir={isRTL ? "rtl" : undefined}
+      >
         {verses.map((v) => (
           <span key={v.verse}>
-            <sup className="mr-0.5 text-[10px] font-semibold text-text-light/60">
+            <sup className={`${isRTL ? "ml-0.5" : "mr-0.5"} text-[10px] font-semibold text-text-light/60`}>
               {v.verse}
             </sup>
             {v.text}{" "}
