@@ -86,6 +86,9 @@ export default function AnnotatedTextDisplay({
     selectedText: string;
   } | null>(null);
 
+  // Margin note editing
+  const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
+
   // Annotation detail popover state
   const [detailPopover, setDetailPopover] = useState<{
     x: number;
@@ -196,29 +199,100 @@ export default function AnnotatedTextDisplay({
 
   const segments = buildSegments(text, annotations);
 
+  // Margin notes: only show when there are annotations
+  const sortedAnnotations = [...annotations].sort(
+    (a, b) => a.startIndex - b.startIndex
+  );
+  const hasMarginNotes = sortedAnnotations.length > 0;
+
   return (
     <>
-      <div
-        ref={containerRef}
-        onMouseUp={handleMouseUp}
-        className={`select-text cursor-text ${className}`}
-      >
-        {segments.map((seg, i) => {
-          if (seg.annotation) {
-            const cat = getCategory(seg.annotation.category);
-            return (
-              <mark
-                key={`${seg.annotation.id}-${i}`}
-                onClick={(e) => handleAnnotationClick(e, seg.annotation!)}
-                className={`cursor-pointer rounded-sm px-0.5 ${cat.markBg} transition-all hover:ring-1 hover:ring-current ${cat.color}`}
-                title={`${cat.name}${seg.annotation.note ? `: ${seg.annotation.note}` : ""}`}
-              >
-                {seg.text}
-              </mark>
-            );
-          }
-          return <span key={i}>{seg.text}</span>;
-        })}
+      <div className={`grid grid-cols-1 gap-3 ${
+        hasMarginNotes ? "lg:grid-cols-[1fr_minmax(160px,35%)]" : ""
+      }`}>
+        {/* Text column */}
+        <div
+          ref={containerRef}
+          onMouseUp={handleMouseUp}
+          className={`select-text cursor-text ${className}`}
+        >
+          {segments.map((seg, i) => {
+            if (seg.annotation) {
+              const cat = getCategory(seg.annotation.category);
+              return (
+                <mark
+                  key={`${seg.annotation.id}-${i}`}
+                  onClick={(e) => handleAnnotationClick(e, seg.annotation!)}
+                  className={`cursor-pointer rounded-sm px-0.5 ${cat.markBg} transition-all hover:ring-1 hover:ring-current ${cat.color}`}
+                  title={`${cat.name}${seg.annotation.note ? `: ${seg.annotation.note}` : ""}`}
+                >
+                  {seg.text}
+                </mark>
+              );
+            }
+            return <span key={i}>{seg.text}</span>;
+          })}
+        </div>
+
+        {/* Margin notes column — desktop only */}
+        {hasMarginNotes && (
+          <div className="hidden lg:block space-y-2 pt-1">
+            {sortedAnnotations.map((ann) => {
+              const cat = getCategory(ann.category);
+              const isEditing = editingNoteId === ann.id;
+              const snippet =
+                ann.selectedText.length > 30
+                  ? ann.selectedText.slice(0, 30) + "\u2026"
+                  : ann.selectedText;
+
+              return (
+                <div
+                  key={ann.id}
+                  className={`rounded-md border-l-2 px-2.5 py-1.5 transition-all cursor-pointer hover:shadow-sm ${
+                    cat.id === "keyword"
+                      ? "border-brick/40 bg-brick/5"
+                      : cat.id === "actor"
+                        ? "border-sage/40 bg-sage/5"
+                        : cat.id === "tension"
+                          ? "border-sand/60 bg-sand/10"
+                          : "border-[#7b5ea7]/40 bg-[#7b5ea7]/5"
+                  }`}
+                  onClick={() => setEditingNoteId(isEditing ? null : ann.id)}
+                >
+                  {/* Snippet from text */}
+                  <p className={`text-[10px] font-medium leading-tight ${cat.color}`}>
+                    {`\u201E${snippet}\u201C`}
+                  </p>
+
+                  {/* Note or placeholder */}
+                  {isEditing ? (
+                    <textarea
+                      autoFocus
+                      defaultValue={ann.note}
+                      onChange={(e) => onUpdateNote(ann.id, e.target.value)}
+                      onBlur={() => setEditingNoteId(null)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Escape") setEditingNoteId(null);
+                      }}
+                      placeholder={`Pozn\u00E1mka\u2026`}
+                      rows={2}
+                      className="mt-1 w-full rounded border border-border/50 bg-white px-1.5 py-1 text-[11px] leading-relaxed text-text placeholder:text-text-light/40 focus:border-sage focus:outline-none resize-y"
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  ) : ann.note ? (
+                    <p className="mt-0.5 text-[11px] leading-relaxed text-text-muted">
+                      {ann.note}
+                    </p>
+                  ) : (
+                    <p className="mt-0.5 text-[10px] italic text-text-light/50">
+                      {`+ p\u0159idat pozn\u00E1mku`}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Selection popup */}

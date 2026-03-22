@@ -7,7 +7,7 @@ import DebouncedTextarea from "@/components/pruvodce/DebouncedTextarea";
 interface Annotation {
   id: string;
   text: string;
-  category: "keyword" | "motif" | "structure" | "question";
+  category: "keyword" | "actor" | "tension" | "question";
   note: string;
 }
 
@@ -25,8 +25,8 @@ const categories: {
   bg: string;
 }[] = [
   { id: "keyword", name: `Kl\u00ED\u010Dov\u00E9 slovo`, color: "text-brick", bg: "bg-brick/10" },
-  { id: "motif", name: "Motiv", color: "text-sage", bg: "bg-sage/10" },
-  { id: "structure", name: "Struktura", color: "text-text", bg: "bg-sand/30" },
+  { id: "actor", name: `Osoby a d\u011Bje`, color: "text-sage", bg: "bg-sage/10" },
+  { id: "tension", name: `Zlom / nap\u011Bt\u00ED`, color: "text-text", bg: "bg-sand/30" },
   { id: "question", name: `Ot\u00E1zka`, color: "text-[#7b5ea7]", bg: "bg-[#7b5ea7]/10" },
 ];
 

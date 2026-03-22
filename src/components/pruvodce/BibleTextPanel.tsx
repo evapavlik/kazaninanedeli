@@ -619,7 +619,7 @@ function AnnotationGuide({ hasAnnotations }: { hasAnnotations: boolean }) {
                 {annotationCategories[0].name}
               </span>
               <p className="text-[11px] leading-relaxed text-text-muted">
-                {`Slova, kter\u00E1 nesou hlavn\u00ED v\u00FDznam textu. Ve v\u00FDkladu z nich vych\u00E1z\u00EDte.`}
+                {`Opakuj\u00EDc\u00ED se slova a hlavn\u00ED pojmy. Ve v\u00FDkladu z nich vych\u00E1z\u00EDte.`}
               </p>
             </div>
             <div className="flex items-start gap-2">
@@ -627,7 +627,7 @@ function AnnotationGuide({ hasAnnotations }: { hasAnnotations: boolean }) {
                 {annotationCategories[1].name}
               </span>
               <p className="text-[11px] leading-relaxed text-text-muted">
-                {`Opakuj\u00EDc\u00ED se obrazy a t\u00E9mata. Odhal\u00ED, o \u010Dem text skute\u010Dn\u011B je.`}
+                {`Kdo v textu jedn\u00E1, mluv\u00ED, co se d\u011Bje. Pom\u016F\u017Ee vid\u011Bt p\u0159\u00EDb\u011Bh.`}
               </p>
             </div>
             <div className="flex items-start gap-2">
@@ -635,7 +635,7 @@ function AnnotationGuide({ hasAnnotations }: { hasAnnotations: boolean }) {
                 {annotationCategories[2].name}
               </span>
               <p className="text-[11px] leading-relaxed text-text-muted">
-                {`P\u0159elomy, za\u010D\u00E1tky a konce odd\u00EDl\u016F. Pom\u016F\u017Ee v\u00E1m p\u0159i stavb\u011B k\u00E1z\u00E1n\u00ED.`}
+                {`P\u0159ed\u011Bly, kontrasty, p\u0159ekvapen\u00ED. Pr\u00E1v\u011B tam b\u00FDv\u00E1 j\u00E1dro k\u00E1z\u00E1n\u00ED.`}
               </p>
             </div>
             <div className="flex items-start gap-2">
@@ -643,7 +643,7 @@ function AnnotationGuide({ hasAnnotations }: { hasAnnotations: boolean }) {
                 {annotationCategories[3].name}
               </span>
               <p className="text-[11px] leading-relaxed text-text-muted">
-                {`M\u00EDsta, kde v\u00E1s text zaraz\u00ED nebo kde nech\u00E1pete. Pr\u00E1v\u011B tam b\u00FDv\u00E1 j\u00E1dro k\u00E1z\u00E1n\u00ED.`}
+                {`Co v\u00E1m nen\u00ED jasn\u00E9 nebo v\u00E1s zarazilo. Stoj\u00ED za to hledat odpov\u011B\u010F.`}
               </p>
             </div>
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useMemo } from "react";
+import { useState, useCallback, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Phase, SubStep } from "@/types";
@@ -57,6 +57,23 @@ export default function StepContentPanel({
   const [textPanelOpen, setTextPanelOpen] = useState(false);
   const [activeSubStep, setActiveSubStep] = useState(0);
   const [focusMode, setFocusMode] = useState(false);
+
+  // Auto-minimize: guide shrinks when user focuses on text
+  const [autoMinimized, setAutoMinimized] = useState(false);
+  const minimizeTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  const handleTextEnter = useCallback(() => {
+    minimizeTimerRef.current = setTimeout(() => setAutoMinimized(true), 400);
+  }, []);
+
+  const handleTextLeave = useCallback(() => {
+    if (minimizeTimerRef.current) clearTimeout(minimizeTimerRef.current);
+  }, []);
+
+  const handleGuideEnter = useCallback(() => {
+    if (minimizeTimerRef.current) clearTimeout(minimizeTimerRef.current);
+    setAutoMinimized(false);
+  }, []);
 
   // Track which sub-steps are completed — persist to localStorage
   const [completedSubStepsArr, setCompletedSubStepsArr] = useLocalStorage<number[]>(
@@ -129,14 +146,20 @@ export default function StepContentPanel({
     setFocusMode(false);
   };
 
+  const isMinimized = focusMode || autoMinimized;
+
   return (
-    <div className={`grid grid-cols-1 gap-6 transition-all duration-300 ${
-      focusMode
-        ? "lg:grid-cols-[minmax(0,1fr)_56px]"
+    <div className={`grid grid-cols-1 gap-6 transition-all duration-500 ease-in-out ${
+      isMinimized
+        ? "lg:grid-cols-[minmax(0,1fr)_48px]"
         : "lg:grid-cols-[minmax(0,2fr)_minmax(300px,1fr)]"
     }`}>
       {/* LEFT PANEL: Clean text + annotations */}
-      <div className="lg:sticky lg:top-[84px] lg:self-start lg:max-h-[calc(100vh-100px)] lg:overflow-y-auto">
+      <div
+        className="lg:sticky lg:top-[84px] lg:self-start lg:max-h-[calc(100vh-100px)] lg:overflow-y-auto"
+        onMouseEnter={handleTextEnter}
+        onMouseLeave={handleTextLeave}
+      >
         {/* Mobile toggle */}
         <div className="lg:hidden mb-4">
           <button
@@ -175,26 +198,28 @@ export default function StepContentPanel({
         </div>
       </div>
 
-      {/* RIGHT PANEL: Guide */}
-      <div className={focusMode ? "hidden lg:block" : ""}>
-        {/* Minimized focus mode sidebar */}
-        {focusMode && (
-          <div className="sticky top-[84px] flex flex-col items-center gap-3 rounded-xl border border-border/50 bg-cream py-4">
+      {/* RIGHT PANEL: Guide — sticky, auto-minimizes */}
+      <div
+        className="lg:sticky lg:top-[84px] lg:self-start lg:max-h-[calc(100vh-100px)] lg:overflow-y-auto"
+        onMouseEnter={handleGuideEnter}
+      >
+        {/* Minimized sidebar */}
+        {isMinimized && (
+          <div className="hidden lg:flex flex-col items-center gap-3 rounded-xl border border-border/50 bg-cream py-4">
             <button
-              onClick={() => setFocusMode(false)}
-              className="flex h-10 w-10 items-center justify-center rounded-lg bg-brick text-white transition-colors hover:bg-brick-light"
-              title={`Zp\u011Bt k pr\u016Fvodci`}
+              onClick={() => { setFocusMode(false); setAutoMinimized(false); }}
+              className="flex h-9 w-9 items-center justify-center rounded-lg bg-brick/10 text-brick transition-colors hover:bg-brick hover:text-white"
+              title={`Zobrazit pr\u016Fvodce`}
             >
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M14 3l-5 5 5 5" />
-                <rect x="12" y="3" width="5" height="14" rx="1" opacity="0.3" />
               </svg>
             </button>
           </div>
         )}
 
         {/* Full right panel content */}
-        <div className={focusMode ? "hidden" : ""}>
+        <div className={isMinimized ? "hidden" : ""}>
         {/* 1. Phase header */}
         <div className="mb-5">
           <div className="mb-2 flex items-center gap-3">
