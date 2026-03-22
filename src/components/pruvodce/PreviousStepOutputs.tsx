@@ -33,11 +33,11 @@ export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputs
   const keywords = annotations?.annotations
     ?.filter((a) => a.category === "keyword")
     ?.map((a) => a.selectedText) || [];
-  const motifs = annotations?.annotations
-    ?.filter((a) => a.category === "motif")
+  const actors = annotations?.annotations
+    ?.filter((a) => a.category === "actor")
     ?.map((a) => a.selectedText) || [];
 
-  const hasAnnotations = showAnnotations && (keywords.length > 0 || motifs.length > 0);
+  const hasAnnotations = showAnnotations && (keywords.length > 0 || actors.length > 0);
   const hasCentralIdea = showCentralIdea && centralIdea.trim().length > 0;
   const hasFCF = showFCF && fcfData && (fcfData.need || fcfData.intersection);
 
@@ -68,13 +68,13 @@ export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputs
               </div>
             </div>
           )}
-          {motifs.length > 0 && (
+          {actors.length > 0 && (
             <div>
               <p className="mb-1 text-[11px] font-medium text-text-muted">
-                {`Motivy:`}
+                {`Osoby a d\u011Bje:`}
               </p>
               <div className="flex flex-wrap gap-1">
-                {motifs.map((m, i) => (
+                {actors.map((m, i) => (
                   <span
                     key={i}
                     className="rounded-full bg-sage-pale px-2 py-0.5 text-[11px] font-medium text-sage"
