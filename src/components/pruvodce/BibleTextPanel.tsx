@@ -312,7 +312,7 @@ interface ToolBubble {
 
 const TOOLS_BY_STEP: Record<string, ToolBubble[]> = {
   cteni: [
-    { key: "translations", icon: "\uD83D\uDD04", label: `Jak to \u010Dtou jin\u00ED?` },
+    { key: "translations", icon: "\uD83D\uDD04", label: `Porovnat p\u0159eklady` },
   ],
   kontext: [
     { key: "bookContext", icon: "\uD83D\uDCD6", label: `Co je kolem textu?` },
@@ -321,7 +321,7 @@ const TOOLS_BY_STEP: Record<string, ToolBubble[]> = {
   vyklad: [
     { key: "originals", icon: "\u03B1", label: `Co \u0159\u00EDk\u00E1 origin\u00E1l?` },
     { key: "centralIdea", icon: "\uD83D\uDCA1", label: `Hlavn\u00ED my\u0161lenka` },
-    { key: "translations", icon: "\uD83D\uDD04", label: `Jak to \u010Dtou jin\u00ED?` },
+    { key: "translations", icon: "\uD83D\uDD04", label: `Porovnat p\u0159eklady` },
     { key: "commentary", icon: "\uD83D\uDCD6", label: `Co \u0159\u00EDkaj\u00ED odborn\u00EDci?` },
   ],
 };
