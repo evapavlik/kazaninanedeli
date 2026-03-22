@@ -227,17 +227,10 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle }
         </div>
       )}
 
-      {/* Step 3 (kontext): pericope card on top, then context TOC below */}
-      {isContextStep && hasText && !editing && localRef ? (
-        <div>
-          <PericopeCard refText={localRef} text={localText} />
-          <BibleContextView reference={localRef} />
-        </div>
-      ) : (
+      {/* Text display or textarea */}
+      {hasText && !editing ? (
         <>
-          {/* Text display or textarea */}
-          {hasText && !editing ? (
-            <div>
+          <div>
               {localRef && (
                 <p className="mb-3 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
                   {localRef}
@@ -318,34 +311,38 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle }
                 </div>
               )}
             </div>
-          ) : (
-            <div>
-              {localRef && !showTextarea && (
-                <p className="mb-3 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
-                  {localRef}
-                </p>
-              )}
-              <textarea
-                value={localText}
-                onChange={(e) => {
-                  setLocalText(e.target.value);
-                  saveText(e.target.value);
-                }}
-                placeholder={`Vlo\u017Ete text perikopy\u2026`}
-                rows={8}
-                className="w-full resize-none rounded-lg border border-border/70 bg-white/80 p-4 font-literata text-[17px] leading-[1.9] text-text placeholder:text-text-light/50 focus:border-brick/30 focus:outline-none focus:ring-2 focus:ring-brick/10"
-              />
-              {editing && hasText && (
-                <button
-                  onClick={() => setEditing(false)}
-                  className="mt-2 text-xs font-medium text-brick hover:text-brick-light"
-                >
-                  {`Hotovo`}
-                </button>
-              )}
-            </div>
+
+          {/* Context step: show Bible context TOC below text */}
+          {isContextStep && localRef && (
+            <BibleContextView reference={localRef} />
           )}
         </>
+      ) : (
+        <div>
+          {localRef && !showTextarea && (
+            <p className="mb-3 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
+              {localRef}
+            </p>
+          )}
+          <textarea
+            value={localText}
+            onChange={(e) => {
+              setLocalText(e.target.value);
+              saveText(e.target.value);
+            }}
+            placeholder={`Vlo\u017Ete text perikopy\u2026`}
+            rows={8}
+            className="w-full resize-none rounded-lg border border-border/70 bg-white/80 p-4 font-literata text-[17px] leading-[1.9] text-text placeholder:text-text-light/50 focus:border-brick/30 focus:outline-none focus:ring-2 focus:ring-brick/10"
+          />
+          {editing && hasText && (
+            <button
+              onClick={() => setEditing(false)}
+              className="mt-2 text-xs font-medium text-brick hover:text-brick-light"
+            >
+              {`Hotovo`}
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
