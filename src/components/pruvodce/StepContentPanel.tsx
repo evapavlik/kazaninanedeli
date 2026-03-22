@@ -11,7 +11,9 @@ import StepContext from "./StepContext";
 import SubStepNav from "./SubStepNav";
 import UnifiedFlow from "./UnifiedFlow";
 import PreviousStepOutputs from "./PreviousStepOutputs";
+import BuildingBlocks from "./BuildingBlocks";
 import Notepad from "./Notepad";
+import { useSermonArtifacts } from "@/hooks/useSermonArtifacts";
 
 // Tool components
 import NarrativeTypeIdentifier from "@/components/tools/NarrativeTypeIdentifier";
@@ -56,6 +58,9 @@ export default function StepContentPanel({
 }: StepContentPanelProps) {
   const [textPanelOpen, setTextPanelOpen] = useState(false);
   const [activeSubStep, setActiveSubStep] = useState(0);
+
+  // Connected workflow — sermon artifacts
+  const { artifacts, updateField, getStepContext } = useSermonArtifacts();
 
   // Drawer state for guide panel
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -168,6 +173,8 @@ export default function StepContentPanel({
 
         {/* Desktop: always visible */}
         <div className="hidden lg:block">
+          {/* Building blocks from previous steps */}
+          <BuildingBlocksForStep slug={currentSub.slug} getStepContext={getStepContext} />
           <BibleTextPanel currentSlug={subSlug} />
         </div>
 
@@ -327,6 +334,8 @@ export default function StepContentPanel({
             items={currentSub.flow}
             toolHelpers={flowToolHelpers}
             onCountChange={handleFlowCountChange}
+            artifacts={artifacts}
+            onArtifactChange={(field, value) => updateField(field as keyof typeof artifacts, value)}
           />
 
           {/* Previous step outputs */}
@@ -511,5 +520,33 @@ function MobileGuide({
         )}
       </nav>
     </>
+  );
+}
+
+/** Renders BuildingBlocks for a specific sub-step */
+function BuildingBlocksForStep({
+  slug,
+  getStepContext,
+}: {
+  slug: string;
+  getStepContext: ReturnType<typeof import("@/hooks/useSermonArtifacts").useSermonArtifacts>["getStepContext"];
+}) {
+  const context = getStepContext(slug);
+
+  const EMPTY_HINTS: Record<string, string> = {
+    kontext: `Vra\u0165te se ke \u010Dten\u00ED a zaznamenejte sv\u016Fj celkov\u00FD dojem \u2014 pom\u016F\u017Ee v\u00E1m p\u0159i v\u00FDkladu.`,
+    vyklad: `Nejd\u0159\u00EDve si text p\u0159e\u010Dt\u011Bte a zasad\u0165te do kontextu \u2014 va\u0161e pozn\u00E1mky se zde zobraz\u00ED.`,
+    aktualizace: `Formulujte nejd\u0159\u00EDve centr\u00E1ln\u00ED my\u0161lenku textu \u2014 bude z\u00E1kladem pro aktualizaci.`,
+    stavba: `Nejd\u0159\u00EDve propojte text s poslucha\u010Di \u2014 va\u0161e poznatky se zobraz\u00ED jako stavebn\u00ED materi\u00E1l.`,
+    prednes: `Dokon\u010Dete nejd\u0159\u00EDve osnovu k\u00E1z\u00E1n\u00ED \u2014 pak se p\u0159iprav\u00EDte na p\u0159ednes.`,
+  };
+
+  if (context.items.length === 0 && !EMPTY_HINTS[slug]) return null;
+
+  return (
+    <BuildingBlocks
+      items={context.items as { label: string; value: string; highlight?: boolean }[]}
+      emptyHint={context.items.length === 0 ? EMPTY_HINTS[slug] : undefined}
+    />
   );
 }
