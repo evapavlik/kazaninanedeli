@@ -16,9 +16,16 @@ export interface ChapterHeadings {
   sections: SectionHeading[];
 }
 
+export interface BookPart {
+  title: string;
+  chapters: string;
+  description: string;
+}
+
 export interface BookHeadings {
   bookId: string;
   bookName: string;
+  bookStructure?: BookPart[];
   chapters: ChapterHeadings[];
 }
 
@@ -28,6 +35,13 @@ const HEADINGS_BY_BOOK_NUMBER: Record<number, BookHeadings> = {
   41: {
     bookId: "mark",
     bookName: "Marek",
+    bookStructure: [
+      { title: `P\u0159\u00EDprava a po\u010D\u00E1tek p\u016Fsoben\u00ED`, chapters: "1\u20133", description: `Jan K\u0159titel, k\u0159est, povol\u00E1n\u00ED u\u010Dedn\u00EDk\u016F, prvn\u00ED uzdravov\u00E1n\u00ED` },
+      { title: `Slu\u017Eba v Galileji`, chapters: "4\u20139", description: `Podobenstv\u00ED, z\u00E1zraky, nasycen\u00ED, Petrovo vyzn\u00E1n\u00ED, prom\u011Bn\u011Bn\u00ED` },
+      { title: `Cesta do Jeruzal\u00E9ma`, chapters: "10", description: `U\u010Den\u00ED o man\u017Eelstv\u00ED, bohatstv\u00ED, slu\u017Eb\u011B; t\u0159et\u00ED p\u0159edpov\u011B\u010F utrpen\u00ED` },
+      { title: `P\u016Fsoben\u00ED v Jeruzal\u00E9m\u011B`, chapters: "11\u201313", description: `Vjezd, o\u010Di\u0161t\u011Bn\u00ED chr\u00E1mu, spory, eschatologick\u00E1 \u0159e\u010D` },
+      { title: `Pa\u0161ije a vzk\u0159\u00ED\u0161en\u00ED`, chapters: "14\u201316", description: `Posledn\u00ED ve\u010De\u0159e, Getsemane, soudy, uk\u0159i\u017Eov\u00E1n\u00ED, pr\u00E1zdn\u00FD hrob` },
+    ],
     chapters: [
       {
         chapter: 1,
@@ -207,6 +221,12 @@ const HEADINGS_BY_BOOK_NUMBER: Record<number, BookHeadings> = {
   43: {
     bookId: "john",
     bookName: "Jan",
+    bookStructure: [
+      { title: `Prolog`, chapters: "1,1\u201318", description: `Hymnus o Slovu (Logos), sv\u011Bdectv\u00ED Jana K\u0159titele` },
+      { title: `Kniha znamen\u00ED`, chapters: "1\u201312", description: `Sedm znamen\u00ED (z\u00E1zrak\u016F), \u0159e\u010Di o sob\u011B (\u201EJ\u00E1 jsem\u201C), r\u016Fst konfliktu` },
+      { title: `Kniha sl\u00E1vy`, chapters: "13\u201320", description: `\u0158e\u010Di na rozlou\u010Denou, pa\u0161ije, vzk\u0159\u00ED\u0161en\u00ED, setk\u00E1n\u00ED s Magd\u00E9nou a u\u010Dedn\u00EDky` },
+      { title: `Doslov`, chapters: "21", description: `Setk\u00E1n\u00ED u jezera, Petr\u016Fv \u00FAkol, mil\u00FD u\u010Dedn\u00EDk` },
+    ],
     chapters: [
       {
         chapter: 1,
@@ -378,6 +398,11 @@ const HEADINGS_BY_BOOK_NUMBER: Record<number, BookHeadings> = {
   26: {
     bookId: "ezekiel",
     bookName: "Ezechiel",
+    bookStructure: [
+      { title: `Povol\u00E1n\u00ED a soudy nad Izraelem`, chapters: "1\u201324", description: `Vidn\u00ED Bo\u017E\u00ED sl\u00E1vy, symbolick\u00E1 jedn\u00E1n\u00ED, proroctv\u00ED soudu nad Jeruzal\u00E9mem` },
+      { title: `Proroctv\u00ED proti n\u00E1rod\u016Fm`, chapters: "25\u201332", description: `Soudy nad Am\u00F3nem, Mo\u00E1bem, Edomem, Pelištejci, T\u00FDrem, Egyptem` },
+      { title: `Obnova a nad\u011Bje`, chapters: "33\u201348", description: `Str\u00E1\u017Ece, dobr\u00FD past\u00FD\u0159, such\u00E9 kosti (37), nov\u00FD chr\u00E1m, nov\u00E1 zem\u011B` },
+    ],
     chapters: [
       {
         chapter: 1,
@@ -707,6 +732,14 @@ const HEADINGS_BY_BOOK_NUMBER: Record<number, BookHeadings> = {
   45: {
     bookId: "romans",
     bookName: "\u0158\u00EDman\u016Fm",
+    bookStructure: [
+      { title: `\u00DAvod a t\u00E9ma`, chapters: "1,1\u201317", description: `Pozdrav, evangelium jako Bo\u017E\u00ED moc ke sp\u00E1se` },
+      { title: `Bo\u017E\u00ED hn\u011Bv a ospravedln\u011Bn\u00ED`, chapters: "1\u20134", description: `V\u0161ichni zh\u0159e\u0161ili, ospravedln\u011Bn\u00ED v\u00EDrou, p\u0159\u00EDklad Abrahama` },
+      { title: `Nov\u00FD \u017Eivot v Kristu`, chapters: "5\u20138", description: `Sm\u00ED\u0159en\u00ED, k\u0159est, svoboda od Z\u00E1kona, \u017Eivot v Duchu` },
+      { title: `Izrael a Bo\u017E\u00ED pl\u00E1n`, chapters: "9\u201311", description: `Vyvolen\u00ED, zatvrzen\u00ED, olivov\u00FD strom, budouc\u00ED z\u00E1chrana` },
+      { title: `Praktick\u00FD \u017Eivot v\u00EDry`, chapters: "12\u201315", description: `Etick\u00E9 napomenut\u00ED, l\u00E1ska, autorita, slab\u00ED a siln\u00ED` },
+      { title: `Z\u00E1v\u011Br a pozdravy`, chapters: "16", description: `Pozdravy, varov\u00E1n\u00ED, doxologie` },
+    ],
     chapters: [
       {
         chapter: 1,

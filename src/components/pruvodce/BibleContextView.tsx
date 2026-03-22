@@ -12,6 +12,7 @@ import {
   getBookHeadings,
   type SectionHeading,
   type ChapterHeadings,
+  type BookPart,
 } from "@/data/chapter-headings";
 
 interface BibleContextViewProps {
@@ -55,13 +56,16 @@ export default function BibleContextView({ reference }: BibleContextViewProps) {
     (ch) => ch.chapter >= chapter - 1 && ch.chapter <= chapter + 1
   );
 
+  // Book structure: which part contains the current chapter
+  const bookStructure = bookHeadings.bookStructure || [];
+
   return (
     <div className="rounded-lg border border-sage/20 bg-sage-pale/30 p-4">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sage/70">
-            {`Obsah knihy`}
+            {`Struktura knihy`}
           </p>
           <p className="mt-0.5 font-cormorant text-[16px] font-semibold text-text">
             {bookHeadings.bookName}
@@ -84,8 +88,61 @@ export default function BibleContextView({ reference }: BibleContextViewProps) {
         </div>
       </div>
 
-      {/* Chapter TOC */}
+      {/* Book structure overview */}
+      {bookStructure.length > 0 && (
+        <div className="mb-4 space-y-1.5">
+          {bookStructure.map((part, i) => {
+            // Check if current chapter falls within this part's range
+            const rangeMatch = part.chapters.match(/^(\d+)/);
+            const rangeEndMatch = part.chapters.match(/(\d+)$/);
+            const partStart = rangeMatch ? parseInt(rangeMatch[1]) : 0;
+            const partEnd = rangeEndMatch ? parseInt(rangeEndMatch[1]) : partStart;
+            const isActivePart = chapter >= partStart && chapter <= partEnd;
+
+            return (
+              <div
+                key={i}
+                className={`rounded-lg px-3 py-2 transition-all ${
+                  isActivePart
+                    ? "border border-brick/20 bg-white/80"
+                    : "bg-white/30"
+                }`}
+              >
+                <div className="flex items-start gap-2">
+                  <span className={`mt-0.5 shrink-0 text-[10px] font-bold ${
+                    isActivePart ? "text-brick" : "text-text-light/50"
+                  }`}>
+                    {part.chapters}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p className={`text-[13px] font-medium leading-snug ${
+                      isActivePart ? "text-text" : "text-text-muted"
+                    }`}>
+                      {part.title}
+                      {isActivePart && (
+                        <span className="ml-1.5 inline-block rounded bg-brick/10 px-1.5 py-0.5 align-middle text-[9px] font-bold uppercase tracking-wider text-brick">
+                          {`v\u00E1\u0161 text`}
+                        </span>
+                      )}
+                    </p>
+                    <p className={`text-[11px] leading-relaxed ${
+                      isActivePart ? "text-text-muted" : "text-text-light/60"
+                    }`}>
+                      {part.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Surrounding chapters detail */}
       <div className="space-y-3">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-sage/50">
+          {`Okol\u00ED va\u0161\u00ED perikopy`}
+        </p>
         {chaptersToShow.map((ch) => (
           <ChapterTOC
             key={ch.chapter}
