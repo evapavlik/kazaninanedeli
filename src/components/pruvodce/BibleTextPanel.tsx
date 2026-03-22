@@ -11,6 +11,7 @@ import TranslationCompare from "./TranslationCompare";
 import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
 import CentralIdeaField from "./CentralIdeaField";
 import LiturgicalCalendar from "@/components/tools/LiturgicalCalendar";
+import { getCommentary } from "@/data/commentary-notes";
 import { parseReferenceForApi, getBibleHubCommentaryUrl } from "@/lib/getbible";
 
 interface BibleTextPanelProps {
@@ -406,8 +407,138 @@ function ToolBubbles({
       )}
       {openTool === "commentary" && (
         <div className="rounded-xl border border-border bg-white p-4">
-          <CommentaryLink reference={reference} />
+          <CommentaryPanel reference={reference} />
         </div>
+      )}
+    </div>
+  );
+}
+
+/** Commentary panel — shows exegetical notes + BibleHub link */
+function CommentaryPanel({ reference }: { reference: string }) {
+  const parsed = parseReferenceForApi(reference);
+  const commentary = parsed ? getCommentary(parsed.bookNumber, parsed.chapter) : null;
+  const commentaryUrl = parsed ? getBibleHubCommentaryUrl(parsed.bookNumber, parsed.chapter) : null;
+
+  if (!commentary && !commentaryUrl) {
+    return (
+      <p className="text-sm italic text-text-muted">
+        {`Koment\u00E1\u0159e k tomuto textu zat\u00EDm nejsou k dispozici.`}
+      </p>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      {commentary && (
+        <>
+          {/* Title + context */}
+          <div>
+            <h3 className="font-lora text-base font-bold text-text">
+              {commentary.title}
+            </h3>
+            <p className="mt-1 text-[13px] leading-relaxed text-text-muted">
+              {commentary.context}
+            </p>
+          </div>
+
+          {/* Key words */}
+          <div>
+            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+              {`Kl\u00ED\u010Dov\u00E1 slova`}
+            </p>
+            <div className="space-y-2">
+              {commentary.keyWords.map((kw, i) => (
+                <div key={i} className="rounded-lg bg-sage-pale/30 px-3 py-2">
+                  <p className="text-[13px] font-semibold text-text">{kw.word}</p>
+                  <p className="mt-0.5 text-[12px] leading-relaxed text-text-muted">{kw.explanation}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Structure */}
+          <div>
+            <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+              {`Struktura textu`}
+            </p>
+            <p className="text-[13px] leading-relaxed text-text-muted">{commentary.structure}</p>
+          </div>
+
+          {/* Verse notes */}
+          <div>
+            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+              {`Pozn\u00E1mky k ver\u0161\u016Fm`}
+            </p>
+            <div className="space-y-2">
+              {commentary.verseNotes.map((vn) => (
+                <div key={vn.verse} className="flex gap-2">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brick-pale text-[10px] font-bold text-brick">
+                    {vn.verse}
+                  </span>
+                  <p className="text-[12px] leading-relaxed text-text-muted">{vn.note}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Theological themes */}
+          <div>
+            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+              {`Teologick\u00E1 t\u00E9mata`}
+            </p>
+            <ul className="space-y-1">
+              {commentary.theologicalThemes.map((theme, i) => (
+                <li key={i} className="flex items-start gap-2 text-[12px] leading-relaxed text-text-muted">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brick/40" />
+                  {theme}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Application hints */}
+          <div className="rounded-lg border border-brick/10 bg-brick-pale/30 px-4 py-3">
+            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-brick/70">
+              {`N\u00E1m\u011Bty pro k\u00E1z\u00E1n\u00ED`}
+            </p>
+            <ul className="space-y-1.5">
+              {commentary.applicationHints.map((hint, i) => (
+                <li key={i} className="text-[12px] leading-relaxed text-text">
+                  {`\u2192 ${hint}`}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      )}
+
+      {/* BibleHub link — always show as additional resource */}
+      {commentaryUrl && (
+        <a
+          href={commentaryUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 rounded-lg border border-sage/20 bg-white/70 px-3 py-2.5 transition-all hover:border-sage/40 hover:bg-white"
+        >
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-sage/10">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-sage">
+              <path d="M4 3h12v14H4z" />
+              <path d="M7 7h6M7 10h6M7 13h4" />
+            </svg>
+          </span>
+          <div className="flex-1">
+            <p className="text-[12px] font-semibold text-text">
+              {`BibleHub Commentaries`}
+            </p>
+            <p className="text-[10px] text-text-muted">
+              {`Dal\u0161\u00ED v\u00FDkladov\u00E9 koment\u00E1\u0159e (anglicky)`}
+            </p>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 text-sage/50">
+            <path d="M5 15L15 5M15 5H8M15 5v7" />
+          </svg>
+        </a>
       )}
     </div>
   );
