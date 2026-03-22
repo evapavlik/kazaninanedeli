@@ -617,7 +617,7 @@ function CommentaryPanel({ reference }: { reference: string }) {
 function cleanOcrText(raw: string): string {
   return raw
     // Join words split across lines (word fragment + newline + continuation)
-    .replace(/([a-z\u00E1\u00E9\u00ED\u00F3\u00FA\u00FD\u010D\u010F\u011B\u0148\u0159\u0161\u0165\u016F\u017E])\n([a-z\u00E1\u00E9\u00ED\u00F3\u00FA\u00FD\u010D\u010F\u011B\u0148\u0159\u0161\u0165\u016F\u017E])/gi, "$1$2")
+    .replace(new RegExp("([a-z\u00E1\u00E9\u00ED\u00F3\u00FA\u00FD\u010D\u010F\u011B\u0148\u0159\u0161\u0165\u016F\u017E])\\n([a-z\u00E1\u00E9\u00ED\u00F3\u00FA\u00FD\u010D\u010F\u011B\u0148\u0159\u0161\u0165\u016F\u017E])", "gi"), "$1$2")
     // Collapse remaining single newlines into spaces (keep double newlines as paragraphs)
     .replace(/([^\n])\n([^\n])/g, "$1 $2")
     // Clean up multiple spaces
