@@ -3,7 +3,7 @@
  * Fetches Bible chapters in Czech translations (CEP, BKR)
  */
 
-export type BibleTranslation = "cep" | "bkr";
+export type BibleTranslation = "cep" | "bkr" | "textusreceptus";
 
 export interface BibleVerse {
   chapter: number;
@@ -138,6 +138,7 @@ export function getBibleHubTextUrl(bookNumber: number, chapter: number): string 
 export const TRANSLATION_LABELS: Record<BibleTranslation, string> = {
   cep: "\u010CEP",
   bkr: "Kralick\u00E1",
+  textusreceptus: "\u0158ecky (TR)",
 };
 
 /**
