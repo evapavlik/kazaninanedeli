@@ -47,7 +47,7 @@ export default function TranslationCompare({
 
     try {
       const isNT = !isOldTestament(parsed.bookNumber);
-      const fetches: Promise<ReturnType<typeof fetchChapter>>[] = [
+      const fetches: Promise<Awaited<ReturnType<typeof fetchChapter>>>[] = [
         fetchChapter(parsed.bookNumber, parsed.chapter, "cep"),
         fetchChapter(parsed.bookNumber, parsed.chapter, "bkr"),
       ];
