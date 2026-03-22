@@ -56,24 +56,20 @@ export default function StepContentPanel({
 }: StepContentPanelProps) {
   const [textPanelOpen, setTextPanelOpen] = useState(false);
   const [activeSubStep, setActiveSubStep] = useState(0);
-  const [focusMode, setFocusMode] = useState(false);
 
-  // Auto-minimize: guide shrinks when user focuses on text
-  const [autoMinimized, setAutoMinimized] = useState(false);
-  const minimizeTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  // Drawer state for guide panel
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const handleTextEnter = useCallback(() => {
-    minimizeTimerRef.current = setTimeout(() => setAutoMinimized(true), 400);
-  }, []);
+  // Toast: show tip when entering a new sub-step
+  const [showToast, setShowToast] = useState(true);
+  const prevSubStepRef = useRef(0);
 
-  const handleTextLeave = useCallback(() => {
-    if (minimizeTimerRef.current) clearTimeout(minimizeTimerRef.current);
-  }, []);
-
-  const handleGuideEnter = useCallback(() => {
-    if (minimizeTimerRef.current) clearTimeout(minimizeTimerRef.current);
-    setAutoMinimized(false);
-  }, []);
+  useEffect(() => {
+    if (activeSubStep !== prevSubStepRef.current) {
+      prevSubStepRef.current = activeSubStep;
+      setShowToast(true);
+    }
+  }, [activeSubStep]);
 
   // Track which sub-steps are completed — persist to localStorage
   const [completedSubStepsArr, setCompletedSubStepsArr] = useLocalStorage<number[]>(
@@ -88,10 +84,7 @@ export default function StepContentPanel({
   const currentSub: SubStep = phase.subSteps[activeSubStep];
   const subSlug = currentSub.slug;
 
-  // Focus mode: for text-heavy sub-steps
-  const hasFocusMode = subSlug === "cteni" || subSlug === "vyklad";
-
-  // Tool helpers mapped to flow[] indices (no longer split by type)
+  // Tool helpers mapped to flow[] indices
   const flowToolHelpers: FlowToolHelper[] = useMemo(() => {
     const mappings = checklistToolMap[subSlug] || [];
     return mappings.map((m) => ({
@@ -125,7 +118,6 @@ export default function StepContentPanel({
     if (checksDone && activeSubStep < phase.subSteps.length - 1) {
       const nextIdx = activeSubStep + 1;
       if (!completedSubSteps.has(nextIdx)) {
-        // Small delay for UX
         const timer = setTimeout(() => setActiveSubStep(nextIdx), 800);
         return () => clearTimeout(timer);
       }
@@ -143,23 +135,13 @@ export default function StepContentPanel({
   // Sub-step navigation
   const handleSubStepSelect = (index: number) => {
     setActiveSubStep(index);
-    setFocusMode(false);
+    setDrawerOpen(false);
   };
 
-  const isMinimized = focusMode || autoMinimized;
-
   return (
-    <div className={`grid grid-cols-1 gap-6 transition-all duration-500 ease-in-out ${
-      isMinimized
-        ? "lg:grid-cols-[minmax(0,1fr)_48px]"
-        : "lg:grid-cols-[minmax(0,2fr)_minmax(300px,1fr)]"
-    }`}>
-      {/* LEFT PANEL: Clean text + annotations */}
-      <div
-        className="lg:sticky lg:top-[84px] lg:self-start lg:max-h-[calc(100vh-100px)] lg:overflow-y-auto"
-        onMouseEnter={handleTextEnter}
-        onMouseLeave={handleTextLeave}
-      >
+    <div className="relative">
+      {/* MAIN: Full-width text */}
+      <div className="mx-auto max-w-4xl">
         {/* Mobile toggle */}
         <div className="lg:hidden mb-4">
           <button
@@ -179,172 +161,355 @@ export default function StepContentPanel({
           </button>
           {textPanelOpen && (
             <div className="mt-2">
-              <BibleTextPanel
-                currentSlug={subSlug}
-                focusMode={focusMode}
-                onFocusToggle={hasFocusMode ? () => setFocusMode(!focusMode) : undefined}
-              />
+              <BibleTextPanel currentSlug={subSlug} />
             </div>
           )}
         </div>
 
         {/* Desktop: always visible */}
         <div className="hidden lg:block">
-          <BibleTextPanel
-            currentSlug={subSlug}
-            focusMode={focusMode}
-            onFocusToggle={hasFocusMode ? () => setFocusMode(!focusMode) : undefined}
+          <BibleTextPanel currentSlug={subSlug} />
+        </div>
+
+        {/* Mobile: show guide inline below text */}
+        <div className="lg:hidden mt-6">
+          <MobileGuide
+            phase={phase}
+            currentSub={currentSub}
+            subSlug={subSlug}
+            activeSubStep={activeSubStep}
+            completedSubSteps={completedSubSteps}
+            flowToolHelpers={flowToolHelpers}
+            notepadHasContent={notepadHasContent}
+            onSubStepSelect={handleSubStepSelect}
+            onFlowCountChange={handleFlowCountChange}
+            onNotepadContent={handleNotepadContent}
+            prevPhase={prevPhase}
+            nextPhase={nextPhase}
           />
         </div>
       </div>
 
-      {/* RIGHT PANEL: Guide — sticky, auto-minimizes */}
-      <div
-        className="lg:sticky lg:top-[84px] lg:self-start lg:max-h-[calc(100vh-100px)] lg:overflow-y-auto"
-        onMouseEnter={handleGuideEnter}
-      >
-        {/* Minimized sidebar */}
-        {isMinimized && (
-          <div className="hidden lg:flex flex-col items-center gap-3 rounded-xl border border-border/50 bg-cream py-4">
+      {/* FLOATING TOAST: tip when entering a sub-step */}
+      {showToast && (
+        <div className="hidden lg:block fixed top-24 right-6 z-40 max-w-sm animate-in slide-in-from-right duration-300">
+          <div className="rounded-xl border border-sage/20 bg-white shadow-lg p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start gap-2.5">
+                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-sage-pale text-sm">
+                  {currentSub.icon}
+                </span>
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-sage">
+                    {currentSub.title}
+                  </p>
+                  <p className="mt-1 text-[13px] leading-relaxed text-text-muted">
+                    {currentSub.tip}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowToast(false)}
+                className="shrink-0 text-text-light hover:text-text"
+              >
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 4l8 8M12 4l-8 8" />
+                </svg>
+              </button>
+            </div>
             <button
-              onClick={() => { setFocusMode(false); setAutoMinimized(false); }}
-              className="flex h-9 w-9 items-center justify-center rounded-lg bg-brick/10 text-brick transition-colors hover:bg-brick hover:text-white"
-              title={`Zobrazit pr\u016Fvodce`}
+              onClick={() => { setShowToast(false); setDrawerOpen(true); }}
+              className="mt-3 w-full rounded-lg bg-brick/10 px-3 py-1.5 text-[12px] font-medium text-brick transition-colors hover:bg-brick/20"
             >
-              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M14 3l-5 5 5 5" />
+              {`Otev\u0159\u00EDt pr\u016Fvodce \u2192`}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* FLOATING BUTTON: open guide drawer (desktop) */}
+      {!drawerOpen && !showToast && (
+        <button
+          onClick={() => setDrawerOpen(true)}
+          className="hidden lg:flex fixed top-24 right-6 z-40 items-center gap-2 rounded-xl border border-border bg-white px-4 py-3 shadow-md transition-all hover:shadow-lg hover:border-brick/30"
+        >
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brick-pale text-sm">
+            {currentSub.icon}
+          </span>
+          <div className="text-left">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-brick">
+              {`Pr\u016Fvodce`}
+            </p>
+            <p className="text-[12px] font-medium text-text">
+              {currentSub.title}
+            </p>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="text-text-light ml-1">
+            <path d="M14 3l-5 5 5 5" />
+          </svg>
+        </button>
+      )}
+
+      {/* DRAWER OVERLAY */}
+      {drawerOpen && (
+        <div
+          className="hidden lg:block fixed inset-0 z-50 bg-black/10"
+          onClick={() => setDrawerOpen(false)}
+        />
+      )}
+
+      {/* DRAWER: Guide panel slides from right */}
+      <div
+        className={`hidden lg:block fixed top-0 right-0 z-50 h-full w-[420px] transform transition-transform duration-300 ease-in-out ${
+          drawerOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="h-full overflow-y-auto border-l border-border bg-white px-6 py-6 shadow-xl">
+          {/* Close button */}
+          <div className="mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brick-pale text-base">
+                {phase.icon}
+              </span>
+              <div>
+                <p className="font-cormorant text-[10px] font-semibold uppercase tracking-[0.12em] text-brick">
+                  {`F\u00E1ze ${phase.number} ze 4`}
+                </p>
+                <h1 className="font-lora text-base font-bold text-text">
+                  {phase.title}
+                </h1>
+              </div>
+            </div>
+            <button
+              onClick={() => setDrawerOpen(false)}
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-text-light transition-colors hover:bg-cream hover:text-text"
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 4l8 8M12 4l-8 8" />
               </svg>
             </button>
           </div>
-        )}
 
-        {/* Full right panel content */}
-        <div className={isMinimized ? "hidden" : ""}>
-        {/* 1. Phase header */}
-        <div className="mb-5">
-          <div className="mb-2 flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brick-pale text-xl">
-              {phase.icon}
-            </span>
-            <div>
-              <div className="flex items-center gap-2">
-                <p className="font-cormorant text-[11px] font-semibold uppercase tracking-[0.12em] text-brick">
-                  {`F\u00E1ze ${phase.number} ze 4`}
-                </p>
-                <span className="flex items-center gap-1 rounded-full bg-cream px-2 py-0.5 text-[10px] text-text-light">
-                  <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-text-light/70">
-                    <circle cx="8" cy="8" r="6.5" />
-                    <path d="M8 4.5V8l2.5 1.5" />
-                  </svg>
-                  {`~${phase.estimatedMinutes} min`}
-                </span>
-              </div>
-              <h1 className="font-lora text-lg font-bold text-text sm:text-xl">
-                {phase.title}
-              </h1>
-            </div>
-          </div>
-        </div>
-
-        {/* 2. Sub-step navigation */}
-        <SubStepNav
-          subSteps={phase.subSteps}
-          activeIndex={activeSubStep}
-          completedIndices={completedSubSteps}
-          onSelect={handleSubStepSelect}
-        />
-
-        {/* 3. Sub-step title (when multi-step) */}
-        {phase.subSteps.length > 1 && (
-          <div className="mb-3 flex items-center gap-2">
-            <span className="text-base">{currentSub.icon}</span>
-            <div>
-              <h2 className="font-lora text-base font-bold text-text">
-                {currentSub.title}
-              </h2>
-              <p className="text-xs text-text-muted">
-                {`~${currentSub.estimatedMinutes} min`}
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* 4. Description */}
-        <p className="mb-4 text-[13px] font-light leading-[1.8] text-text-muted">
-          {currentSub.description}
-        </p>
-
-        {/* 5. Unified flow (check + reflect + tools) */}
-        <UnifiedFlow
-          slug={subSlug}
-          items={currentSub.flow}
-          toolHelpers={flowToolHelpers}
-          onCountChange={handleFlowCountChange}
-        />
-
-        {/* 6. Previous step outputs */}
-        <PreviousStepOutputs subStepSlug={subSlug} />
-
-        {/* 7. Theory (collapsed) */}
-        <div className="mt-3">
-          <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} />
-        </div>
-
-        {/* 8. Notepad */}
-        <div className="mt-3">
-          <Notepad
-            slug={subSlug}
-            isOpen={false}
-            onToggle={() => {}}
-            onHasContentChange={handleNotepadContent}
+          {/* Sub-step navigation */}
+          <SubStepNav
+            subSteps={phase.subSteps}
+            activeIndex={activeSubStep}
+            completedIndices={completedSubSteps}
+            onSelect={handleSubStepSelect}
           />
-        </div>
 
-        {/* 9. Navigation */}
-        <nav className="mt-6 flex items-center justify-between border-t border-border pt-6">
-          {prevPhase ? (
-            <Link
-              href={`/pruvodce/${prevPhase.slug}`}
-              className="flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-text-muted no-underline transition-all hover:bg-cream hover:text-text"
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M10 3L5 8l5 5" />
-              </svg>
-              {prevPhase.title}
-            </Link>
-          ) : (
-            <Link
-              href="/"
-              className="flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-text-muted no-underline transition-all hover:bg-cream hover:text-text"
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M10 3L5 8l5 5" />
-              </svg>
-              {`\u00DAvod`}
-            </Link>
+          {/* Sub-step title */}
+          {phase.subSteps.length > 1 && (
+            <div className="mb-3 flex items-center gap-2">
+              <span className="text-base">{currentSub.icon}</span>
+              <div>
+                <h2 className="font-lora text-base font-bold text-text">
+                  {currentSub.title}
+                </h2>
+                <p className="text-xs text-text-muted">
+                  {`~${currentSub.estimatedMinutes} min`}
+                </p>
+              </div>
+            </div>
           )}
 
-          {nextPhase ? (
-            <Link
-              href={`/pruvodce/${nextPhase.slug}`}
-              className="flex items-center gap-2 rounded-md bg-brick px-6 py-2.5 text-sm font-semibold text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-brick-light"
-            >
-              {nextPhase.title}
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M6 3l5 5-5 5" />
-              </svg>
-            </Link>
-          ) : (
-            <Link
-              href="/"
-              className="flex items-center gap-2 rounded-md bg-brick px-6 py-2.5 text-sm font-semibold text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-brick-light"
-            >
-              Hotovo!
-            </Link>
-          )}
-        </nav>
+          {/* Theory — at the top, auto-open */}
+          <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} />
+
+          {/* Description */}
+          <p className="mb-4 text-[13px] font-light leading-[1.8] text-text-muted">
+            {currentSub.description}
+          </p>
+
+          {/* Unified flow */}
+          <UnifiedFlow
+            slug={subSlug}
+            items={currentSub.flow}
+            toolHelpers={flowToolHelpers}
+            onCountChange={handleFlowCountChange}
+          />
+
+          {/* Previous step outputs */}
+          <PreviousStepOutputs subStepSlug={subSlug} />
+
+          {/* Notepad */}
+          <div className="mt-3">
+            <Notepad
+              slug={subSlug}
+              isOpen={false}
+              onToggle={() => {}}
+              onHasContentChange={handleNotepadContent}
+            />
+          </div>
+
+          {/* Navigation */}
+          <nav className="mt-6 flex items-center justify-between border-t border-border pt-6">
+            {prevPhase ? (
+              <Link
+                href={`/pruvodce/${prevPhase.slug}`}
+                className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-text-muted no-underline transition-all hover:bg-cream hover:text-text"
+              >
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M10 3L5 8l5 5" />
+                </svg>
+                {prevPhase.title}
+              </Link>
+            ) : (
+              <Link
+                href="/"
+                className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-text-muted no-underline transition-all hover:bg-cream hover:text-text"
+              >
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M10 3L5 8l5 5" />
+                </svg>
+                {`\u00DAvod`}
+              </Link>
+            )}
+
+            {nextPhase ? (
+              <Link
+                href={`/pruvodce/${nextPhase.slug}`}
+                className="flex items-center gap-2 rounded-md bg-brick px-5 py-2 text-sm font-semibold text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-brick-light"
+              >
+                {nextPhase.title}
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 3l5 5-5 5" />
+                </svg>
+              </Link>
+            ) : (
+              <Link
+                href="/"
+                className="flex items-center gap-2 rounded-md bg-brick px-5 py-2 text-sm font-semibold text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-brick-light"
+              >
+                Hotovo!
+              </Link>
+            )}
+          </nav>
         </div>
       </div>
     </div>
+  );
+}
+
+/** Mobile: guide content inline (no drawer needed) */
+function MobileGuide({
+  phase,
+  currentSub,
+  subSlug,
+  activeSubStep,
+  completedSubSteps,
+  flowToolHelpers,
+  notepadHasContent,
+  onSubStepSelect,
+  onFlowCountChange,
+  onNotepadContent,
+  prevPhase,
+  nextPhase,
+}: {
+  phase: Phase;
+  currentSub: SubStep;
+  subSlug: string;
+  activeSubStep: number;
+  completedSubSteps: Set<number>;
+  flowToolHelpers: FlowToolHelper[];
+  notepadHasContent: boolean;
+  onSubStepSelect: (index: number) => void;
+  onFlowCountChange: (completed: number, total: number) => void;
+  onNotepadContent: (hasContent: boolean) => void;
+  prevPhase: { slug: string; title: string } | null;
+  nextPhase: { slug: string; title: string } | null;
+}) {
+  return (
+    <>
+      <div className="mb-4">
+        <div className="mb-2 flex items-center gap-3">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brick-pale text-base">
+            {phase.icon}
+          </span>
+          <div>
+            <p className="font-cormorant text-[10px] font-semibold uppercase tracking-[0.12em] text-brick">
+              {`F\u00E1ze ${phase.number} ze 4`}
+            </p>
+            <h1 className="font-lora text-base font-bold text-text">
+              {phase.title}
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      <SubStepNav
+        subSteps={phase.subSteps}
+        activeIndex={activeSubStep}
+        completedIndices={completedSubSteps}
+        onSelect={onSubStepSelect}
+      />
+
+      <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} />
+
+      <p className="mb-4 text-[13px] font-light leading-[1.8] text-text-muted">
+        {currentSub.description}
+      </p>
+
+      <UnifiedFlow
+        slug={subSlug}
+        items={currentSub.flow}
+        toolHelpers={flowToolHelpers}
+        onCountChange={onFlowCountChange}
+      />
+
+      <PreviousStepOutputs subStepSlug={subSlug} />
+
+      <div className="mt-3">
+        <Notepad
+          slug={subSlug}
+          isOpen={false}
+          onToggle={() => {}}
+          onHasContentChange={onNotepadContent}
+        />
+      </div>
+
+      <nav className="mt-6 flex items-center justify-between border-t border-border pt-6">
+        {prevPhase ? (
+          <Link
+            href={`/pruvodce/${prevPhase.slug}`}
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-text-muted no-underline transition-all hover:bg-cream hover:text-text"
+          >
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M10 3L5 8l5 5" />
+            </svg>
+            {prevPhase.title}
+          </Link>
+        ) : (
+          <Link
+            href="/"
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-text-muted no-underline transition-all hover:bg-cream hover:text-text"
+          >
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M10 3L5 8l5 5" />
+            </svg>
+            {`\u00DAvod`}
+          </Link>
+        )}
+
+        {nextPhase ? (
+          <Link
+            href={`/pruvodce/${nextPhase.slug}`}
+            className="flex items-center gap-2 rounded-md bg-brick px-5 py-2 text-sm font-semibold text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-brick-light"
+          >
+            {nextPhase.title}
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M6 3l5 5-5 5" />
+            </svg>
+          </Link>
+        ) : (
+          <Link
+            href="/"
+            className="flex items-center gap-2 rounded-md bg-brick px-5 py-2 text-sm font-semibold text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-brick-light"
+          >
+            Hotovo!
+          </Link>
+        )}
+      </nav>
+    </>
   );
 }
