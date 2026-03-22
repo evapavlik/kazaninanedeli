@@ -12,6 +12,7 @@ import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
 import CentralIdeaField from "./CentralIdeaField";
 import LiturgicalCalendar from "@/components/tools/LiturgicalCalendar";
 import { getCommentary } from "@/data/commentary-notes";
+import { findPostily, type PostilaMatch } from "@/lib/supabase-cteni";
 import { parseReferenceForApi, getBibleHubCommentaryUrl } from "@/lib/getbible";
 
 interface BibleTextPanelProps {
@@ -414,13 +415,27 @@ function ToolBubbles({
   );
 }
 
-/** Commentary panel — shows exegetical notes + BibleHub link */
+/** Commentary panel — shows exegetical notes + Farský postily + BibleHub link */
 function CommentaryPanel({ reference }: { reference: string }) {
   const parsed = parseReferenceForApi(reference);
   const commentary = parsed ? getCommentary(parsed.bookNumber, parsed.chapter) : null;
   const commentaryUrl = parsed ? getBibleHubCommentaryUrl(parsed.bookNumber, parsed.chapter) : null;
 
-  if (!commentary && !commentaryUrl) {
+  // Fetch Farský postily from Supabase
+  const [postily, setPostily] = useState<PostilaMatch[]>([]);
+  const [postilyLoading, setPostilyLoading] = useState(false);
+  const [expandedPostila, setExpandedPostila] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!reference) return;
+    setPostilyLoading(true);
+    findPostily(reference)
+      .then((matches) => setPostily(matches))
+      .catch(() => setPostily([]))
+      .finally(() => setPostilyLoading(false));
+  }, [reference]);
+
+  if (!commentary && !commentaryUrl && postily.length === 0 && !postilyLoading) {
     return (
       <p className="text-sm italic text-text-muted">
         {`Koment\u00E1\u0159e k tomuto textu zat\u00EDm nejsou k dispozici.`}
@@ -511,6 +526,76 @@ function CommentaryPanel({ reference }: { reference: string }) {
             </ul>
           </div>
         </>
+      )}
+
+      {/* Farský postily from Supabase */}
+      {postilyLoading && (
+        <div className="flex items-center gap-2 text-[12px] text-text-light">
+          <span className="animate-pulse">{"\u2615"}</span>
+          {`Hled\u00E1m postily Karla Farsk\u00E9ho...`}
+        </div>
+      )}
+      {postily.length > 0 && (
+        <div>
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-brick/70">
+            {`Postily Karla Farsk\u00E9ho`}
+          </p>
+          <div className="space-y-2">
+            {postily.map((p) => (
+              <div key={p.id} className="rounded-lg border border-brick/10 bg-brick-pale/20">
+                <button
+                  onClick={() => setExpandedPostila(expandedPostila === p.id ? null : p.id)}
+                  className="flex w-full items-center justify-between px-3 py-2.5 text-left"
+                >
+                  <div className="flex-1">
+                    <p className="text-[13px] font-semibold text-text">
+                      {p.title}
+                    </p>
+                    <p className="mt-0.5 text-[10px] text-text-light">
+                      {p.biblical_references.join(", ")}
+                      {p.liturgical_context ? ` \u2014 ${p.liturgical_context}` : ""}
+                    </p>
+                  </div>
+                  <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2"
+                    className={`shrink-0 text-brick/50 transition-transform ${expandedPostila === p.id ? "rotate-180" : ""}`}>
+                    <path d="M5 8l5 5 5-5" />
+                  </svg>
+                </button>
+                {expandedPostila === p.id && (
+                  <div className="border-t border-brick/10 px-3 py-3">
+                    {p.biblical_text && (
+                      <div className="mb-3 rounded-md bg-white/60 px-3 py-2">
+                        <p className="text-[10px] font-semibold uppercase tracking-wider text-sage/70 mb-1">
+                          {`Biblick\u00FD text`}
+                        </p>
+                        <p className="text-[12px] italic leading-relaxed text-text-muted">
+                          {p.biblical_text}
+                        </p>
+                      </div>
+                    )}
+                    <div className="text-[12px] leading-relaxed text-text-muted whitespace-pre-line">
+                      {p.content.length > 800 ? (
+                        <>
+                          {p.content.slice(0, 800)}{"..."}
+                          <a
+                            href="https://cteninanedeli.vercel.app"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="ml-1 text-brick underline decoration-brick/30 hover:decoration-brick"
+                          >
+                            {`\u010D\u00EDst cel\u00E9`}
+                          </a>
+                        </>
+                      ) : (
+                        p.content
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
       )}
 
       {/* BibleHub link — always show as additional resource */}
