@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import {
   parseReferenceForApi,
   fetchChapter,
+  isOldTestament,
   type BibleTranslation,
   type BibleVerse,
   TRANSLATION_LABELS,
@@ -17,7 +18,7 @@ type FetchState =
   | { status: "idle" }
   | { status: "loading" }
   | { status: "error"; message: string }
-  | { status: "success"; cep: BibleVerse[]; bkr: BibleVerse[] };
+  | { status: "success"; cep: BibleVerse[]; bkr: BibleVerse[]; greek: BibleVerse[] | null };
 
 export default function TranslationCompare({
   reference,
@@ -45,13 +46,21 @@ export default function TranslationCompare({
     setState({ status: "loading" });
 
     try {
-      const [cepChapter, bkrChapter] = await Promise.all([
+      const isNT = !isOldTestament(parsed.bookNumber);
+      const fetches: Promise<ReturnType<typeof fetchChapter>>[] = [
         fetchChapter(parsed.bookNumber, parsed.chapter, "cep"),
         fetchChapter(parsed.bookNumber, parsed.chapter, "bkr"),
-      ]);
+      ];
+      if (isNT) {
+        fetches.push(fetchChapter(parsed.bookNumber, parsed.chapter, "textusreceptus"));
+      }
+
+      const results = await Promise.all(fetches);
 
       // Check if this request was aborted while fetching
       if (abortRef.current?.signal.aborted) return;
+
+      const [cepChapter, bkrChapter, greekChapter] = results;
 
       if (!cepChapter && !bkrChapter) {
         setState({
@@ -73,6 +82,7 @@ export default function TranslationCompare({
         status: "success",
         cep: cepChapter ? filterVerses(cepChapter.verses) : [],
         bkr: bkrChapter ? filterVerses(bkrChapter.verses) : [],
+        greek: greekChapter ? filterVerses(greekChapter.verses) : null,
       });
     } catch {
       if (abortRef.current?.signal.aborted) return;
@@ -193,9 +203,9 @@ export default function TranslationCompare({
             </div>
           )}
 
-          {/* Success state — two columns */}
+          {/* Success state — columns */}
           {state.status === "success" && (
-            <div className="grid gap-4 lg:grid-cols-2">
+            <div className={`grid gap-4 ${state.greek ? "lg:grid-cols-3" : "lg:grid-cols-2"}`}>
               <TranslationColumn
                 translation="cep"
                 verses={state.cep}
@@ -204,6 +214,13 @@ export default function TranslationCompare({
                 translation="bkr"
                 verses={state.bkr}
               />
+              {state.greek && (
+                <TranslationColumn
+                  translation="textusreceptus"
+                  verses={state.greek}
+                  isGreek
+                />
+              )}
             </div>
           )}
         </div>
@@ -215,9 +232,11 @@ export default function TranslationCompare({
 function TranslationColumn({
   translation,
   verses,
+  isGreek,
 }: {
   translation: BibleTranslation;
   verses: BibleVerse[];
+  isGreek?: boolean;
 }) {
   if (verses.length === 0) {
     return (
@@ -237,7 +256,7 @@ function TranslationColumn({
       <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage/70">
         {TRANSLATION_LABELS[translation]}
       </p>
-      <div className="font-literata text-[15px] leading-[1.9] text-text">
+      <div className={`text-[15px] leading-[1.9] text-text ${isGreek ? "font-serif" : "font-literata"}`}>
         {verses.map((v) => (
           <span key={v.verse}>
             <sup className="mr-0.5 text-[10px] font-semibold text-text-light/60">
