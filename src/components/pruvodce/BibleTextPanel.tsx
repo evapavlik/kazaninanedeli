@@ -10,6 +10,7 @@ import BibleContextView from "./BibleContextView";
 import TranslationCompare from "./TranslationCompare";
 import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
 import CentralIdeaField from "./CentralIdeaField";
+import LiturgicalCalendar from "@/components/tools/LiturgicalCalendar";
 import { parseReferenceForApi, getBibleHubCommentaryUrl } from "@/lib/getbible";
 
 interface BibleTextPanelProps {
@@ -87,6 +88,10 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle }
     setSavedText(text);
     setEditing(false);
   };
+
+  // Tool bubbles: which tool is open on the workspace
+  const [openTool, setOpenTool] = useState<string | null>(null);
+  const toggleTool = (key: string) => setOpenTool((prev) => (prev === key ? null : key));
 
   const hasText = localText.trim().length > 0;
   const isFirstStep = currentSlug === "modlitba";
@@ -251,70 +256,16 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle }
                 </div>
               )}
 
-              {/* Focus mode toggle — for text-heavy steps */}
-              {(isReadingStep || isExegesisStep) && localRef && onFocusToggle && (
-                <div className="mt-3 hidden lg:flex lg:justify-end">
-                  <button
-                    onClick={onFocusToggle}
-                    className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[11px] font-medium transition-all ${
-                      focusMode
-                        ? "bg-brick text-white hover:bg-brick-light"
-                        : "border border-sage/30 bg-sage-pale/50 text-sage hover:border-sage/50"
-                    }`}
-                  >
-                    {focusMode ? (
-                      <>
-                        <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
-                          <rect x="2" y="3" width="7" height="14" rx="1" />
-                          <rect x="11" y="3" width="7" height="14" rx="1" />
-                        </svg>
-                        {`Zp\u011Bt k \u00FAkol\u016Fm`}
-                      </>
-                    ) : (
-                      <>
-                        <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
-                          <rect x="1" y="3" width="18" height="14" rx="1" />
-                          <line x1="5" y1="7" x2="15" y2="7" />
-                          <line x1="5" y1="10" x2="15" y2="10" />
-                          <line x1="5" y1="13" x2="12" y2="13" />
-                        </svg>
-                        {`Soust\u0159edit se na text`}
-                      </>
-                    )}
-                  </button>
-                </div>
-              )}
-
-              {/* Step 2 (čtení): translation comparison */}
-              {isReadingStep && localRef && (
-                <TranslationCompare reference={localRef} />
-              )}
-
-              {/* Step 4 (výklad): exegesis tools — ordered to match checklist */}
-              {isExegesisStep && localRef && (
-                <div className="mt-4 space-y-4">
-                  {/* Matches checklist step 1: "klíčová slova → význam v původním kontextu" */}
-                  <OriginalLanguagesPanel reference={localRef} />
-                  {/* Matches checklist step 3: "centrální myšlenku jednou větou" */}
-                  <CentralIdeaField />
-                  {/* Matches checklist step 4: "porovnejte různé překlady" */}
-                  <div>
-                    <div className="mb-1 flex items-center gap-2">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-md bg-brick/10 text-[11px] font-bold text-brick">
-                        {`4`}
-                      </span>
-                    </div>
-                    <TranslationCompare reference={localRef} />
-                  </div>
-                  {/* Matches checklist step 5: "nahlédněte do komentáře" */}
-                  <CommentaryLink reference={localRef} />
-                </div>
-              )}
             </div>
 
-          {/* Context step: show Bible context TOC below text */}
-          {isContextStep && localRef && (
-            <BibleContextView reference={localRef} />
+          {/* Tool bubbles — clickable chips, specific per sub-step */}
+          {localRef && !isFirstStep && (
+            <ToolBubbles
+              slug={currentSlug}
+              reference={localRef}
+              openTool={openTool}
+              onToggle={toggleTool}
+            />
           )}
         </>
       ) : (
@@ -349,6 +300,118 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle }
 }
 
 
+
+/** Tool configuration per sub-step */
+interface ToolBubble {
+  key: string;
+  icon: string;
+  label: string;
+}
+
+const TOOLS_BY_STEP: Record<string, ToolBubble[]> = {
+  cteni: [
+    { key: "translations", icon: "\uD83D\uDD04", label: `Jak to \u010Dtou jin\u00ED?` },
+  ],
+  kontext: [
+    { key: "bookContext", icon: "\uD83D\uDCD6", label: `Co je kolem textu?` },
+    { key: "liturgy", icon: "\uD83D\uDCC5", label: `Pro\u010D zrovna dnes?` },
+  ],
+  vyklad: [
+    { key: "originals", icon: "\u03B1", label: `Co \u0159\u00EDk\u00E1 origin\u00E1l?` },
+    { key: "centralIdea", icon: "\uD83D\uDCA1", label: `Hlavn\u00ED my\u0161lenka` },
+    { key: "translations", icon: "\uD83D\uDD04", label: `Jak to \u010Dtou jin\u00ED?` },
+    { key: "commentary", icon: "\uD83D\uDCD6", label: `Co \u0159\u00EDkaj\u00ED odborn\u00EDci?` },
+  ],
+};
+
+function ToolBubbles({
+  slug,
+  reference,
+  openTool,
+  onToggle,
+}: {
+  slug: string;
+  reference: string;
+  openTool: string | null;
+  onToggle: (key: string) => void;
+}) {
+  const tools = TOOLS_BY_STEP[slug] || [];
+  const [animated, setAnimated] = useState(false);
+
+  // Trigger bounce animation on mount
+  useEffect(() => {
+    const timer = setTimeout(() => setAnimated(true), 300);
+    return () => clearTimeout(timer);
+  }, [slug]);
+
+  if (tools.length === 0) return null;
+
+  return (
+    <div className="mt-4">
+      {/* Bubble chips with staggered bounce */}
+      <div className="flex flex-wrap gap-2 mb-3">
+        {tools.map((tool, i) => (
+          <button
+            key={tool.key}
+            onClick={() => onToggle(tool.key)}
+            className={`flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[12px] font-medium transition-all ${
+              openTool === tool.key
+                ? "bg-brick text-white shadow-sm scale-105"
+                : "border border-border bg-white text-text-muted hover:border-brick/30 hover:text-brick hover:shadow-sm hover:-translate-y-0.5"
+            }`}
+            style={{
+              animation: animated && openTool !== tool.key
+                ? `bubble-bounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 0.1}s both`
+                : undefined,
+            }}
+          >
+            <span className="text-base">{tool.icon}</span>
+            <span>{tool.label}</span>
+          </button>
+        ))}
+      </div>
+      <style>{`
+        @keyframes bubble-bounce {
+          0% { opacity: 0; transform: scale(0.3) translateY(10px); }
+          50% { transform: scale(1.08) translateY(-3px); }
+          100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+      `}</style>
+
+      {/* Expanded tool content */}
+      {openTool === "translations" && (
+        <div className="rounded-xl border border-border bg-white p-4">
+          <TranslationCompare reference={reference} />
+        </div>
+      )}
+      {openTool === "bookContext" && (
+        <div className="rounded-xl border border-border bg-white p-4">
+          <BibleContextView reference={reference} />
+        </div>
+      )}
+      {openTool === "liturgy" && (
+        <div className="rounded-xl border border-border bg-white p-4">
+          <LiturgicalCalendar />
+        </div>
+      )}
+      {openTool === "originals" && (
+        <div className="rounded-xl border border-border bg-white p-4">
+          <OriginalLanguagesPanel reference={reference} />
+        </div>
+      )}
+      {openTool === "centralIdea" && (
+        <div className="rounded-xl border border-border bg-white p-4">
+          <CentralIdeaField />
+        </div>
+      )}
+      {openTool === "commentary" && (
+        <div className="rounded-xl border border-border bg-white p-4">
+          <CommentaryLink reference={reference} />
+        </div>
+      )}
+    </div>
+  );
+}
 
 /** Pericope text shown above context view in step 3 — clearly marked as sermon text */
 function PericopeCard({ refText, text }: { refText: string; text: string }) {
