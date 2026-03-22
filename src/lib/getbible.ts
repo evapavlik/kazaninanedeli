@@ -3,7 +3,7 @@
  * Fetches Bible chapters in Czech translations (CEP, BKR)
  */
 
-export type BibleTranslation = "cep" | "bkr" | "textusreceptus";
+export type BibleTranslation = "cep" | "bkr" | "csp" | "textusreceptus";
 
 export interface BibleVerse {
   chapter: number;
@@ -137,6 +137,7 @@ export function getBibleHubTextUrl(bookNumber: number, chapter: number): string 
 /** Translation labels */
 export const TRANSLATION_LABELS: Record<BibleTranslation, string> = {
   cep: "\u010CEP",
+  csp: "\u010CSP",
   bkr: "Kralick\u00E1",
   textusreceptus: "\u0158ecky (TR)",
 };
@@ -254,4 +255,38 @@ export async function fetchContext(
   ]);
 
   return { prev, current, next };
+}
+
+/**
+ * Fetch a chapter from Bolls.life API (used for \u010CSP).
+ * Returns BibleChapter in the same format as getBible.net data.
+ * HTML tags in text are stripped.
+ */
+export async function fetchChapterBolls(
+  bookNumber: number,
+  chapter: number,
+): Promise<BibleChapter | null> {
+  const maxChapters = getChapterCount(bookNumber);
+  if (chapter < 1 || chapter > maxChapters) return null;
+
+  try {
+    const url = `https://bolls.life/get-text/CSP09/${bookNumber}/${chapter}/`;
+    const response = await fetch(url);
+
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const verses: BibleVerse[] = (data as any[]).map((v: any) => ({
+      chapter: chapter,
+      verse: v.verse as number,
+      name: `${bookNumber} ${chapter}:${v.verse}`,
+      // Strip HTML tags (sup, i, etc.) from Bolls response
+      text: (v.text as string).replace(/<[^>]*>/g, "").replace(/\[\d+\]/g, "").trim(),
+    }));
+
+    return { bookNumber, chapter, verses, translation: "csp" };
+  } catch {
+    return null;
+  }
 }
