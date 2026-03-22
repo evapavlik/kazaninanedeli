@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import {
   parseReferenceForApi,
   fetchChapter,
+  fetchChapterBolls,
   isOldTestament,
   type BibleTranslation,
   type BibleVerse,
@@ -18,7 +19,7 @@ type FetchState =
   | { status: "idle" }
   | { status: "loading" }
   | { status: "error"; message: string }
-  | { status: "success"; cep: BibleVerse[]; bkr: BibleVerse[]; greek: BibleVerse[] | null };
+  | { status: "success"; cep: BibleVerse[]; csp: BibleVerse[]; bkr: BibleVerse[]; greek: BibleVerse[] | null };
 
 export default function TranslationCompare({
   reference,
@@ -49,6 +50,7 @@ export default function TranslationCompare({
       const isNT = !isOldTestament(parsed.bookNumber);
       const fetches: Promise<Awaited<ReturnType<typeof fetchChapter>>>[] = [
         fetchChapter(parsed.bookNumber, parsed.chapter, "cep"),
+        fetchChapterBolls(parsed.bookNumber, parsed.chapter),
         fetchChapter(parsed.bookNumber, parsed.chapter, "bkr"),
       ];
       if (isNT) {
@@ -60,9 +62,9 @@ export default function TranslationCompare({
       // Check if this request was aborted while fetching
       if (abortRef.current?.signal.aborted) return;
 
-      const [cepChapter, bkrChapter, greekChapter] = results;
+      const [cepChapter, cspChapter, bkrChapter, greekChapter] = results;
 
-      if (!cepChapter && !bkrChapter) {
+      if (!cepChapter && !cspChapter && !bkrChapter) {
         setState({
           status: "error",
           message: `Kapitolu se nepoda\u0159ilo na\u010D\u00EDst. Zkontrolujte odkaz a p\u0159ipojen\u00ED k internetu.`,
@@ -81,6 +83,7 @@ export default function TranslationCompare({
       setState({
         status: "success",
         cep: cepChapter ? filterVerses(cepChapter.verses) : [],
+        csp: cspChapter ? filterVerses(cspChapter.verses) : [],
         bkr: bkrChapter ? filterVerses(bkrChapter.verses) : [],
         greek: greekChapter ? filterVerses(greekChapter.verses) : null,
       });
@@ -205,22 +208,33 @@ export default function TranslationCompare({
 
           {/* Success state — columns */}
           {state.status === "success" && (
-            <div className={`grid gap-4 ${state.greek ? "lg:grid-cols-3" : "lg:grid-cols-2"}`}>
-              <TranslationColumn
-                translation="cep"
-                verses={state.cep}
-              />
-              <TranslationColumn
-                translation="bkr"
-                verses={state.bkr}
-              />
-              {state.greek && (
+            <div>
+              {/* Translation columns — responsive grid */}
+              <div className={`grid gap-4 ${
+                state.greek
+                  ? "lg:grid-cols-4 md:grid-cols-2"
+                  : "lg:grid-cols-3 md:grid-cols-2"
+              }`}>
                 <TranslationColumn
-                  translation="textusreceptus"
-                  verses={state.greek}
-                  isGreek
+                  translation="cep"
+                  verses={state.cep}
                 />
-              )}
+                <TranslationColumn
+                  translation="csp"
+                  verses={state.csp}
+                />
+                <TranslationColumn
+                  translation="bkr"
+                  verses={state.bkr}
+                />
+                {state.greek && (
+                  <TranslationColumn
+                    translation="textusreceptus"
+                    verses={state.greek}
+                    isGreek
+                  />
+                )}
+              </div>
             </div>
           )}
         </div>
