@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { FlowItem } from "@/types";
+import type { SermonArtifacts } from "@/hooks/useSermonArtifacts";
 
 export interface FlowToolHelper {
   itemIndex: number;
@@ -16,6 +17,9 @@ interface UnifiedFlowProps {
   items: FlowItem[];
   toolHelpers?: FlowToolHelper[];
   onCountChange?: (completed: number, total: number) => void;
+  /** Sermon artifacts for connected workflow */
+  artifacts?: SermonArtifacts;
+  onArtifactChange?: (field: string, value: string) => void;
 }
 
 export default function UnifiedFlow({
@@ -23,6 +27,8 @@ export default function UnifiedFlow({
   items,
   toolHelpers = [],
   onCountChange,
+  artifacts,
+  onArtifactChange,
 }: UnifiedFlowProps) {
   const [checked, setChecked] = useLocalStorage<boolean[]>(
     `kazani-flow-${slug}`,
@@ -59,13 +65,32 @@ export default function UnifiedFlow({
     [setReflections]
   );
 
+  const handleArtifact = useCallback(
+    (field: string, value: string) => {
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+      saveTimeoutRef.current = setTimeout(() => {
+        onArtifactChange?.(field, value);
+      }, 400);
+    },
+    [onArtifactChange]
+  );
+
   const completeReflect = useCallback(
     (index: number) => {
-      // Flush any pending save
       if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
       setChecked((prev) => prev.map((v, i) => (i === index ? true : v)));
     },
     [setChecked]
+  );
+
+  const completeArtifact = useCallback(
+    (index: number, field: string, value: string) => {
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+      // Save the artifact value immediately
+      onArtifactChange?.(field, value);
+      setChecked((prev) => prev.map((v, i) => (i === index ? true : v)));
+    },
+    [setChecked, onArtifactChange]
   );
 
   useEffect(() => {
@@ -94,13 +119,22 @@ export default function UnifiedFlow({
           ))}
         </div>
 
-        {/* All items — visible, scrollable */}
+        {/* All items */}
         <ol className="space-y-1.5">
           {items.map((item, i) => {
             const helper = getHelper(i);
             const isToolOpen = openToolIndex === i;
             const isDone = checked[i];
             const isReflect = item.type === "reflect";
+            const isArtifact = item.type === "artifact";
+            const isInput = isReflect || isArtifact;
+
+            // Get current value for artifact fields
+            const artifactField = isArtifact ? (item as { field: string }).field : null;
+            const artifactPlaceholder = isArtifact ? (item as { placeholder?: string }).placeholder : null;
+            const artifactValue = artifactField && artifacts
+              ? (artifacts as unknown as Record<string, string>)[artifactField] || ""
+              : reflections[i] || "";
 
             return (
               <li
@@ -108,13 +142,15 @@ export default function UnifiedFlow({
                 className={`rounded-lg transition-all duration-200 ${
                   isDone ? "opacity-60" : ""
                 } ${
-                  isReflect
-                    ? "border border-sage/10 bg-sage-pale/20 p-2.5"
+                  isInput
+                    ? isArtifact
+                      ? "border border-brick/10 bg-brick-pale/20 p-2.5"
+                      : "border border-sage/10 bg-sage-pale/20 p-2.5"
                     : "p-2.5"
                 }`}
               >
                 {/* Check item */}
-                {!isReflect && (
+                {!isInput && (
                   <button
                     onClick={() => toggle(i)}
                     className="flex w-full gap-2.5 text-left group items-start"
@@ -153,37 +189,23 @@ export default function UnifiedFlow({
                   </button>
                 )}
 
-                {/* Reflect item */}
+                {/* Reflect item (legacy) */}
                 {isReflect && (
                   <div>
                     <div className="flex items-start gap-2">
                       <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-sage-pale text-sage text-xs">
                         {isDone ? (
-                          <svg
-                            width="12"
-                            height="12"
-                            viewBox="0 0 14 14"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
+                          <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M3 7l3 3 5-6" />
                           </svg>
                         ) : (
                           <span>{"\u270F\uFE0F"}</span>
                         )}
                       </span>
-                      <span
-                        className={`text-[13px] leading-relaxed ${
-                          isDone ? "text-text-muted" : "text-text"
-                        }`}
-                      >
+                      <span className={`text-[13px] leading-relaxed ${isDone ? "text-text-muted" : "text-text"}`}>
                         {item.text}
                       </span>
                     </div>
-                    {/* Textarea — always visible for reflect items */}
                     <div className="ml-7 mt-1.5">
                       <textarea
                         defaultValue={reflections[i] || ""}
@@ -194,10 +216,7 @@ export default function UnifiedFlow({
                       />
                       {!isDone && (
                         <div className="mt-1 flex justify-end">
-                          <button
-                            onClick={() => completeReflect(i)}
-                            className="rounded-md bg-sage/70 px-2.5 py-0.5 text-[11px] font-medium text-white transition-colors hover:bg-sage"
-                          >
+                          <button onClick={() => completeReflect(i)} className="rounded-md bg-sage/70 px-2.5 py-0.5 text-[11px] font-medium text-white transition-colors hover:bg-sage">
                             {`Hotovo \u2192`}
                           </button>
                         </div>
@@ -206,8 +225,32 @@ export default function UnifiedFlow({
                   </div>
                 )}
 
+                {/* Artifact item — connected to sermon artifacts */}
+                {isArtifact && (
+                  <ArtifactInput
+                    text={item.text}
+                    value={artifactValue}
+                    placeholder={artifactPlaceholder || `Va\u0161e odpov\u011B\u010F\u2026`}
+                    isDone={isDone}
+                    onChange={(value) => {
+                      if (artifactField) {
+                        handleArtifact(artifactField, value);
+                      } else {
+                        handleReflection(i, value);
+                      }
+                    }}
+                    onComplete={(value) => {
+                      if (artifactField) {
+                        completeArtifact(i, artifactField, value);
+                      } else {
+                        completeReflect(i);
+                      }
+                    }}
+                  />
+                )}
+
                 {/* Tool helper — for check items with tools */}
-                {helper && !isReflect && (
+                {helper && !isInput && (
                   <div className="ml-7 mt-1.5">
                     <button
                       onClick={() => setOpenToolIndex(isToolOpen ? null : i)}
@@ -219,15 +262,7 @@ export default function UnifiedFlow({
                     >
                       <span>{helper.icon}</span>
                       <span>{helper.label}</span>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        className={`transition-transform ${isToolOpen ? "rotate-180" : ""}`}
-                      >
+                      <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className={`transition-transform ${isToolOpen ? "rotate-180" : ""}`}>
                         <path d="M4 6l4 4 4-4" />
                       </svg>
                     </button>
@@ -245,5 +280,79 @@ export default function UnifiedFlow({
         </ol>
       </div>
     </section>
+  );
+}
+
+/** Artifact input field — saves to sermon artifacts store */
+function ArtifactInput({
+  text,
+  value,
+  placeholder,
+  isDone,
+  onChange,
+  onComplete,
+}: {
+  text: string;
+  value: string;
+  placeholder: string;
+  isDone: boolean;
+  onChange: (value: string) => void;
+  onComplete: (value: string) => void;
+}) {
+  const [localValue, setLocalValue] = useState(value);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Sync when external value changes
+  useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setLocalValue(e.target.value);
+    onChange(e.target.value);
+  };
+
+  return (
+    <div>
+      <div className="flex items-start gap-2">
+        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brick-pale text-brick text-xs">
+          {isDone ? (
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 7l3 3 5-6" />
+            </svg>
+          ) : (
+            <span>{"\uD83D\uDCDD"}</span>
+          )}
+        </span>
+        <span className={`text-[13px] leading-relaxed font-medium ${isDone ? "text-text-muted" : "text-text"}`}>
+          {text}
+        </span>
+      </div>
+      <div className="ml-7 mt-1.5">
+        <textarea
+          ref={textareaRef}
+          value={localValue}
+          onChange={handleChange}
+          placeholder={placeholder}
+          rows={text.includes("Osnova") ? 4 : 2}
+          className="w-full rounded-md border border-brick/15 bg-white px-2.5 py-1.5 text-[12px] leading-relaxed text-text placeholder:text-text-light/40 focus:border-brick/30 focus:outline-none focus:ring-1 focus:ring-brick/10 resize-y"
+        />
+        {!isDone && (
+          <div className="mt-1 flex justify-end">
+            <button
+              onClick={() => onComplete(localValue)}
+              disabled={!localValue.trim()}
+              className={`rounded-md px-2.5 py-0.5 text-[11px] font-medium transition-colors ${
+                localValue.trim()
+                  ? "bg-brick px-2.5 py-0.5 text-white hover:bg-brick/90"
+                  : "bg-border/50 text-text-light cursor-not-allowed"
+              }`}
+            >
+              {`Hotovo \u2192`}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
