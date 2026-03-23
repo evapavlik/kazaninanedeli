@@ -243,6 +243,16 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
         </div>
       )}
 
+      {/* Tool bubbles — sticky toolbar above text */}
+      {hasText && !editing && localRef && !isFirstStep && (
+        <div className="sticky top-[68px] z-10 -mx-4 mb-4 border-b border-border/30 bg-cream/95 px-4 py-2 backdrop-blur-sm">
+          <ToolBubbles
+            openTool={openTool}
+            onToggle={toggleTool}
+          />
+        </div>
+      )}
+
       {/* Text display or textarea */}
       {hasText && !editing ? (
         <>
@@ -269,13 +279,9 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
 
             </div>
 
-          {/* Tool bubbles — numbered, always visible */}
+          {/* Expanded tool content — below text */}
           {localRef && !isFirstStep && (
-            <ToolBubbles
-              reference={localRef}
-              openTool={openTool}
-              onToggle={toggleTool}
-            />
+            <ToolContent openTool={openTool} reference={localRef} />
           )}
         </>
       ) : (
@@ -327,12 +333,11 @@ const ALL_TOOLS: ToolBubble[] = [
   { key: "commentary", icon: "\uD83D\uDCDA", label: `V\u00FDkladov\u00E9 koment\u00E1\u0159e`, number: 5 },
 ];
 
+/** Sticky toolbar chips — no expanded content here */
 function ToolBubbles({
-  reference,
   openTool,
   onToggle,
 }: {
-  reference: string;
   openTool: string | null;
   onToggle: (key: string) => void;
 }) {
@@ -344,17 +349,16 @@ function ToolBubbles({
   }, []);
 
   return (
-    <div className="mt-4">
-      {/* Numbered tool chips */}
-      <div className="flex flex-wrap gap-2 mb-3">
+    <>
+      <div className="flex flex-wrap gap-2">
         {ALL_TOOLS.map((tool, i) => (
           <button
             key={tool.key}
             onClick={() => onToggle(tool.key)}
-            className={`group flex items-center gap-1.5 rounded-full px-3 py-2 text-[12px] font-medium transition-all ${
+            className={`group flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-medium transition-all ${
               openTool === tool.key
-                ? "bg-brick text-white shadow-sm scale-105"
-                : "border border-border bg-white text-text-muted hover:border-brick/30 hover:text-brick hover:shadow-sm hover:-translate-y-0.5"
+                ? "bg-brick text-white shadow-sm"
+                : "border border-border bg-white text-text-muted hover:border-brick/30 hover:text-brick hover:shadow-sm"
             }`}
             style={{
               animation: animated && openTool !== tool.key
@@ -362,14 +366,14 @@ function ToolBubbles({
                 : undefined,
             }}
           >
-            <span className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold ${
+            <span className={`flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-bold ${
               openTool === tool.key
                 ? "bg-white/20 text-white"
                 : "bg-brick-pale text-brick group-hover:bg-brick/10"
             }`}>
               {tool.number}
             </span>
-            <span className="text-base">{tool.icon}</span>
+            <span>{tool.icon}</span>
             <span>{tool.label}</span>
           </button>
         ))}
@@ -381,33 +385,21 @@ function ToolBubbles({
           100% { opacity: 1; transform: scale(1) translateY(0); }
         }
       `}</style>
+    </>
+  );
+}
 
-      {/* Expanded tool content */}
-      {openTool === "translations" && (
-        <div className="rounded-xl border border-border bg-white p-4">
-          <TranslationCompare reference={reference} />
-        </div>
-      )}
-      {openTool === "bookContext" && (
-        <div className="rounded-xl border border-border bg-white p-4">
-          <BibleContextView reference={reference} />
-        </div>
-      )}
-      {openTool === "liturgy" && (
-        <div className="rounded-xl border border-border bg-white p-4">
-          <LiturgicalCalendar />
-        </div>
-      )}
-      {openTool === "originals" && (
-        <div className="rounded-xl border border-border bg-white p-4">
-          <OriginalLanguagesPanel reference={reference} />
-        </div>
-      )}
-      {openTool === "commentary" && (
-        <div className="rounded-xl border border-border bg-white p-4">
-          <CommentaryPanel reference={reference} />
-        </div>
-      )}
+/** Expanded tool content — rendered separately below text */
+function ToolContent({ openTool, reference }: { openTool: string | null; reference: string }) {
+  if (!openTool) return null;
+
+  return (
+    <div className="mt-4 rounded-xl border border-border bg-white p-4">
+      {openTool === "translations" && <TranslationCompare reference={reference} />}
+      {openTool === "bookContext" && <BibleContextView reference={reference} />}
+      {openTool === "liturgy" && <LiturgicalCalendar />}
+      {openTool === "originals" && <OriginalLanguagesPanel reference={reference} />}
+      {openTool === "commentary" && <CommentaryPanel reference={reference} />}
     </div>
   );
 }
