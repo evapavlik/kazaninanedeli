@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GuideBar Prototyp — Kázání na neděli</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Lora:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --brick: #9b4a3c;
+    --brick-light: #b05a4a;
+    --brick-pale: #f0e0dc;
+    --sage: #6b8f71;
+    --sage-pale: #e8f0e9;
+    --cream: #faf7f4;
+    --text: #2d2a26;
+    --text-muted: #6b6560;
+    --text-light: #9b9590;
+    --border: #e5e0db;
+    --white: #ffffff;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    height: 68px;
+    background: rgba(255,255,255,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+  }
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 700; color: var(--brick);
+  }
+  .header nav { display: flex; gap: 24px; }
+  .header nav a {
+    font-size: 13px; color: var(--text-muted); text-decoration: none;
+    font-weight: 500;
+  }
+
+  /* MAIN CONTENT */
+  .main {
+    max-width: 56rem; margin: 0 auto;
+    padding: 92px 24px 160px;
+  }
+
+  /* Progress dots */
+  .progress-bar {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0; margin-bottom: 32px;
+  }
+  .progress-dot {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 600;
+    border: 2px solid var(--border); background: var(--white); color: var(--text-light);
+  }
+  .progress-dot.active { background: var(--brick); color: white; border-color: var(--brick); }
+  .progress-dot.done { background: var(--brick-pale); color: var(--brick); border-color: var(--brick-pale); }
+  .progress-line { width: 40px; height: 2px; background: var(--border); }
+  .progress-line.done { background: var(--brick); }
+
+  /* Onboarding hint — shown only on first visit */
+  .onboarding-hint {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px; margin-bottom: 20px;
+    border-radius: 10px;
+    background: var(--brick-pale);
+    border: 1px solid rgba(155,74,60,0.15);
+    font-size: 13px; color: var(--brick);
+    animation: hintFadeIn 0.5s 1s both;
+  }
+  .onboarding-hint .hint-icon { font-size: 16px; flex-shrink: 0; }
+  .onboarding-hint .hint-close {
+    margin-left: auto; background: none; border: none;
+    color: var(--brick); cursor: pointer; font-size: 16px;
+    opacity: 0.5; padding: 4px;
+  }
+  .onboarding-hint .hint-close:hover { opacity: 1; }
+  @keyframes hintFadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Bible text card */
+  .bible-card {
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px 28px;
+  }
+  .bible-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--text-light); margin-bottom: 8px;
+  }
+  .bible-ref {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--brick); margin-bottom: 16px;
+  }
+  .bible-text {
+    font-family: 'Lora', serif;
+    font-size: 18px; line-height: 2.0;
+    text-align: justify; hyphens: auto;
+    color: var(--text);
+  }
+  .bible-text .keyword {
+    background: var(--brick-pale); border-radius: 3px;
+    padding: 1px 4px; cursor: pointer;
+  }
+  .bible-text .actor {
+    background: var(--sage-pale); border-radius: 3px;
+    padding: 1px 4px; font-style: italic; cursor: pointer;
+  }
+
+  /* Margin notes */
+  .text-with-margin {
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    gap: 16px;
+  }
+  .margin-notes {
+    padding-top: 8px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .margin-note {
+    font-size: 12px; line-height: 1.5;
+    padding: 8px 12px; border-radius: 8px;
+    border-left: 3px solid;
+  }
+  .margin-note.keyword { background: #faf0ee; border-color: var(--brick); }
+  .margin-note.actor { background: #f0f5f0; border-color: var(--sage); }
+  .margin-note .note-word { font-weight: 600; font-size: 11px; }
+  .margin-note .note-cat { font-size: 10px; color: var(--text-light); }
+
+  /* Translation Compare (inline below text) */
+  .translation-section {
+    margin-top: 24px;
+    border: 1px solid rgba(107,143,113,0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.4s;
+  }
+  .translation-section.highlight {
+    box-shadow: 0 0 0 3px rgba(155,74,60,0.25);
+  }
+  .translation-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px;
+    background: rgba(232,240,233,0.3);
+    border-bottom: 1px solid rgba(107,143,113,0.15);
+    cursor: pointer;
+  }
+  .translation-header span {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(107,143,113,0.7);
+  }
+  .translation-columns {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px; background: rgba(107,143,113,0.1);
+  }
+  .translation-col {
+    background: rgba(232,240,233,0.2);
+    padding: 16px;
+  }
+  .translation-col h4 {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--sage);
+    margin-bottom: 12px;
+  }
+  .translation-col p {
+    font-size: 14px; line-height: 1.8; color: var(--text);
+  }
+  .translation-col.rtl p {
+    direction: rtl; font-size: 16px; line-height: 2.0;
+  }
+
+  /* ============================
+     GUIDE BAR
+     ============================ */
+
+  .guide-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 40;
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -2px 16px rgba(0,0,0,0.06);
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.6s;
+    max-height: 72px;
+    overflow: hidden;
+  }
+  .guide-bar.expanded {
+    max-height: 70vh;
+    overflow-y: auto;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    box-shadow: 0 -4px 30px rgba(0,0,0,0.1);
+  }
+
+  /* Pulse animation on first load */
+  @keyframes barPulse {
+    0% { border-top-color: var(--border); box-shadow: 0 -2px 16px rgba(0,0,0,0.06); }
+    40% { border-top-color: var(--brick); box-shadow: 0 -2px 20px rgba(155,74,60,0.15); }
+    100% { border-top-color: var(--border); box-shadow: 0 -2px 16px rgba(0,0,0,0.06); }
+  }
+  .guide-bar.pulse {
+    animation: barPulse 1.5s ease-in-out 2;
+  }
+
+  /* Collapsed bar */
+  .guide-collapsed {
+    height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+    max-width: 56rem; margin: 0 auto;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .guide-collapsed:hover { background: rgba(250,247,244,0.5); }
+
+  .guide-left {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .guide-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--brick-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .guide-phase-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--brick);
+  }
+  .guide-step-title {
+    font-family: 'Lora', serif;
+    font-size: 15px; font-weight: 700; color: var(--text);
+  }
+  /* Collapsed tip text */
+  .guide-tip {
+    font-size: 12px; color: var(--text-light); font-weight: 400;
+    margin-top: 1px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 280px;
+  }
+
+  .guide-center {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .guide-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+  .guide-dot.done { background: var(--brick); }
+  .guide-dot.active { background: var(--brick-pale); border: 2px solid var(--brick); }
+
+  .guide-right {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .guide-time {
+    font-size: 12px; color: var(--text-light);
+  }
+  .guide-expand-btn {
+    width: 32px; height: 32px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s;
+    color: var(--text-light);
+  }
+  .guide-expand-btn:hover { border-color: var(--brick); color: var(--brick); }
+  .guide-bar.expanded .guide-expand-btn { transform: rotate(180deg); }
+
+  /* Expanded content */
+  .guide-content {
+    max-width: 56rem; margin: 0 auto;
+    padding: 0 24px 24px;
+    opacity: 0;
+    transition: opacity 0.2s 0.15s;
+  }
+  .guide-bar.expanded .guide-content { opacity: 1; }
+
+  /* SubStep pills */
+  .substep-nav {
+    display: flex; gap: 8px; margin-bottom: 16px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--border);
+  }
+  .substep-pill {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 13px; font-weight: 500;
+    border: 1px solid var(--border); background: var(--white);
+    color: var(--text-muted); cursor: pointer;
+    transition: all 0.2s;
+  }
+  .substep-pill:hover { border-color: var(--brick); color: var(--brick); }
+  .substep-pill.active {
+    background: var(--brick); color: white; border-color: var(--brick);
+  }
+  .substep-num {
+    width: 20px; height: 20px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    background: rgba(255,255,255,0.3);
+  }
+
+  /* Theory box */
+  .theory-box {
+    margin-bottom: 12px;
+    border: 1px solid rgba(107,143,113,0.2);
+    border-radius: 10px; overflow: hidden;
+  }
+  .theory-toggle {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px; background: rgba(232,240,233,0.3);
+    cursor: pointer; width: 100%;
+    border: none; font-family: inherit;
+    text-align: left;
+  }
+  .theory-icon { font-size: 14px; }
+  .theory-label { font-size: 11px; color: var(--sage); font-weight: 500; }
+  .theory-title { font-family: 'Lora', serif; font-size: 14px; font-weight: 700; }
+
+  /* Flow items */
+  .flow-list { display: flex; flex-direction: column; gap: 4px; }
+  .flow-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 12px; border-radius: 10px;
+    transition: background 0.15s;
+  }
+  .flow-item:hover { background: rgba(250,247,244,0.8); }
+  .flow-check {
+    width: 20px; height: 20px; border-radius: 6px;
+    border: 2px solid var(--border); background: var(--white);
+    cursor: pointer; flex-shrink: 0; margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .flow-check.done {
+    background: var(--brick); border-color: var(--brick);
+    color: white; font-size: 12px;
+  }
+  .flow-label { font-size: 14px; line-height: 1.5; color: var(--text); }
+  .flow-reflect {
+    margin-left: 30px; margin-top: 4px; margin-bottom: 4px;
+    padding: 10px 14px;
+    background: rgba(155,74,60,0.04);
+    border-radius: 10px; border: 1px solid rgba(155,74,60,0.1);
+  }
+  .flow-reflect-label {
+    font-size: 13px; font-weight: 500; color: var(--text);
+    margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
+  }
+  .flow-reflect textarea {
+    width: 100%; border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 12px;
+    font-family: inherit; font-size: 13px; resize: none;
+    background: var(--white); color: var(--text);
+    line-height: 1.6;
+  }
+  .flow-reflect textarea:focus {
+    outline: none; border-color: rgba(155,74,60,0.3);
+    box-shadow: 0 0 0 3px rgba(155,74,60,0.08);
+  }
+
+  /* Tool helper button (inside flow) */
+  .tool-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: 30px; margin-top: 4px;
+    padding: 6px 14px; border-radius: 8px;
+    font-size: 12px; font-weight: 600;
+    background: var(--brick-pale);
+    color: var(--brick); border: none;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .tool-btn:hover { background: var(--brick); color: white; }
+
+  /* Tool view (replaces guide content) */
+  .tool-view {
+    max-width: 56rem; margin: 0 auto;
+    padding: 0 24px 24px;
+  }
+  .tool-back {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 500; color: var(--brick);
+    background: none; border: none; cursor: pointer;
+    padding: 4px 0; margin-bottom: 8px;
+    font-family: inherit;
+  }
+  .tool-back:hover { text-decoration: underline; }
+  /* Breadcrumb: shows where you came from */
+  .tool-breadcrumb {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--text-light);
+    margin-bottom: 12px;
+  }
+  .tool-breadcrumb .bc-step { color: var(--brick); font-weight: 600; }
+  .tool-breadcrumb .bc-sep { color: var(--border); }
+  .tool-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--brick);
+    margin-bottom: 16px;
+  }
+
+  /* Phase navigation */
+  .phase-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .phase-nav a {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    color: var(--text-muted); padding: 8px 12px; border-radius: 8px;
+  }
+  .phase-nav a:hover { background: var(--cream); color: var(--text); }
+  .phase-nav a.next {
+    background: var(--brick); color: white;
+    font-weight: 600; padding: 8px 20px;
+  }
+  .phase-nav a.next:hover { background: var(--brick-light); }
+
+  /* Scrim */
+  .scrim {
+    position: fixed; inset: 0; z-index: 35;
+    background: rgba(0,0,0,0.06);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .scrim.visible { opacity: 1; pointer-events: auto; }
+
+  /* Hidden */
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <h1>Kázání na neděli</h1>
+  <nav>
+    <a href="#">Průvodce</a>
+    <a href="#">Kázání</a>
+    <a href="#">Metodika</a>
+    <a href="#">Slovník</a>
+    <a href="#">Zdroje</a>
+  </nav>
+</header>
+
+<!-- SCRIM -->
+<div class="scrim" id="scrim" onclick="toggleGuide()"></div>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+  <!-- Progress -->
+  <div class="progress-bar">
+    <div class="progress-dot done">1</div>
+    <div class="progress-line done"></div>
+    <div class="progress-dot active">2</div>
+    <div class="progress-line"></div>
+    <div class="progress-dot">3</div>
+    <div class="progress-line"></div>
+    <div class="progress-dot">4</div>
+  </div>
+
+  <!-- Onboarding hint (first visit only) -->
+  <div class="onboarding-hint" id="onboardingHint">
+    <span class="hint-icon">👇</span>
+    <span>Průvodce přípravou najdete v liště dole. Provede vás krok za krokem.</span>
+    <button class="hint-close" onclick="dismissHint()" title="Zavřít">✕</button>
+  </div>
+
+  <!-- Bible text card -->
+  <div class="bible-card">
+    <p class="bible-label">Biblický text</p>
+    <p class="bible-ref">Ez 37,12–14</p>
+
+    <div class="text-with-margin">
+      <div class="bible-text">
+        Toto praví Panovník Hospodin: Hle, já otevřu vaše <span class="keyword">hroby</span> a vyvedu vás z vašich hrobů, <span class="actor">můj lide</span>, a přivedu vás do izraelské země. I poznáte, že já jsem Hospodin, až otevřu vaše hroby a vyvedu vás z hrobů, můj lide. Vložím do vás svého <span class="keyword">ducha</span> a oživnete. Dám vám odpočinutí ve vaší zemi. I poznáte, že já Hospodin jsem to vyhlásil i vykonal, je výrok Hospodinův.
+      </div>
+      <div class="margin-notes">
+        <div class="margin-note keyword">
+          <div class="note-word">„hroby"</div>
+          <div class="note-cat">Metafora pro exil</div>
+        </div>
+        <div class="margin-note actor">
+          <div class="note-word">„můj lide"</div>
+          <div class="note-cat">Trojnásobné oslovení</div>
+        </div>
+        <div class="margin-note keyword">
+          <div class="note-word">„ducha"</div>
+          <div class="note-cat">rúach</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Translation Compare (inline below text) -->
+  <div class="translation-section" id="translations">
+    <div class="translation-header">
+      <span>📖 Porovnání překladů</span>
+      <span style="color: var(--sage); font-size: 12px;">▼</span>
+    </div>
+    <div class="translation-columns">
+      <div class="translation-col rtl">
+        <h4>Hebrejsky (WLC)</h4>
+        <p>הִנֵּ֣ה אֲנִ֗י פֹתֵ֙חַ֙ אֶת־קִבְר֣וֹתֵיכֶ֔ם וְהַעֲלֵיתִ֥י אֶתְכֶ֛ם מִקִּבְר֖וֹתֵיכֶ֑ם עַמִּ֕י</p>
+      </div>
+      <div class="translation-col">
+        <h4>ČSP</h4>
+        <p>Proto prorokuj a řekni jim: Toto praví Panovník Hospodin: Hle, já otevřu vaše hroby a vyvedu vás z vašich hrobů, můj lide. Přivedu vás na izraelskou půdu.</p>
+      </div>
+      <div class="translation-col">
+        <h4>Kralická</h4>
+        <p>Protož prorokuj a rci jim: Takto praví Panovník Hospodin: Aj, já otevru hroby vaše, a vyvedu vás z hrobů vašich, lide můj, a uvedu vás do země Izraelské.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- GUIDE BAR -->
+<div class="guide-bar pulse" id="guideBar">
+  <!-- Collapsed state -->
+  <div class="guide-collapsed" onclick="toggleGuide()">
+    <div class="guide-left">
+      <div class="guide-icon">👁</div>
+      <div>
+        <div class="guide-phase-label">Fáze 2 ze 4</div>
+        <div class="guide-step-title">Čtení a pozorování textu</div>
+        <div class="guide-tip">Označujte klíčová slova a motivy v textu</div>
+      </div>
+    </div>
+    <div class="guide-center">
+      <div class="guide-dot done"></div>
+      <div class="guide-dot done"></div>
+      <div class="guide-dot active"></div>
+      <div class="guide-dot"></div>
+    </div>
+    <div class="guide-right">
+      <span class="guide-time">~20 min</span>
+      <button class="guide-expand-btn" onclick="event.stopPropagation(); toggleGuide();">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 10l4-4 4 4"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Expanded — GUIDE VIEW -->
+  <div class="guide-content" id="guideView">
+    <!-- SubStep navigation -->
+    <div class="substep-nav">
+      <button class="substep-pill active">
+        <span class="substep-num">1</span>
+        Čtení a pozorování textu
+      </button>
+      <button class="substep-pill">
+        <span class="substep-num">2</span>
+        Zasazení do kontextu
+      </button>
+      <button class="substep-pill">
+        <span class="substep-num">3</span>
+        Výklad textu
+      </button>
+    </div>
+
+    <!-- Theory (collapsible) -->
+    <div class="theory-box">
+      <button class="theory-toggle">
+        <span class="theory-icon">📚</span>
+        <span>
+          <span class="theory-label">Teoretické pozadí</span><br>
+          <span class="theory-title">Text jako kódovací systém</span>
+        </span>
+      </button>
+    </div>
+
+    <!-- Flow items -->
+    <div class="flow-list">
+      <div class="flow-item">
+        <div class="flow-check done">✓</div>
+        <span class="flow-label">První čtení: přečtěte text pomalu a nahlas.</span>
+      </div>
+
+      <div class="flow-reflect">
+        <div class="flow-reflect-label">📝 Jaký je váš celkový dojem z textu?</div>
+        <textarea rows="2" style="background: var(--cream);">Text působí nadějně, překvapil mě kontrast hrobů a oživení.</textarea>
+      </div>
+
+      <div class="flow-item">
+        <div class="flow-check"></div>
+        <span class="flow-label">Druhé čtení: označujte klíčová slova a opakující se motivy v textu.</span>
+      </div>
+      <button class="tool-btn" onclick="scrollToTranslations()">
+        🔄 Porovnat překlady ↓
+      </button>
+
+      <div class="flow-item">
+        <div class="flow-check"></div>
+        <span class="flow-label">Třetí čtení: všímejte si struktury — kde je zlom, kdo jedná, kde je napětí.</span>
+      </div>
+      <button class="tool-btn" onclick="openTool('bookContext')">
+        📖 Kontext knihy →
+      </button>
+    </div>
+
+    <!-- Navigation -->
+    <div class="phase-nav">
+      <a href="#">← Příprava srdce</a>
+      <a href="#" class="next">Tvorba kázání →</a>
+    </div>
+  </div>
+
+  <!-- Expanded — TOOL VIEW -->
+  <div class="tool-view hidden" id="toolView">
+    <button class="tool-back" onclick="closeTool()">← Zpět k průvodci</button>
+    <div class="tool-breadcrumb">
+      <span class="bc-step">Krok 3 z 4</span>
+      <span class="bc-sep">›</span>
+      <span id="toolBreadcrumbName">Kontext knihy</span>
+    </div>
+    <div class="tool-title" id="toolTitle">Kontext knihy</div>
+    <div id="toolContent">
+      <div style="border: 1px solid var(--border); border-radius: 12px; padding: 20px; background: var(--white);">
+        <h3 style="font-family: 'Lora', serif; font-size: 16px; font-weight: 700; margin-bottom: 12px;">Ezechiel</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 13px; color: var(--text-muted); line-height: 1.7;">
+          <div>
+            <strong style="color: var(--text); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;">Autor</strong><br>
+            Prorok Ezechiel, kněz z Jeruzaléma, odvedený do Babylonu 597 př. Kr.
+          </div>
+          <div>
+            <strong style="color: var(--text); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;">Doba</strong><br>
+            593–571 př. Kr., babylonský exil
+          </div>
+          <div>
+            <strong style="color: var(--text); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;">Kontext</strong><br>
+            Kapitoly 33–48: Zaslíbení obnovy po soudu. Údolí suchých kostí = vize národní obnovy.
+          </div>
+          <div>
+            <strong style="color: var(--text); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;">Vaše perikopa</strong><br>
+            Ez 37,12–14 patří do závěru vize suchých kostí (37,1–14). Boží slib: otevřu hroby, vložím ducha.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const guideBar = document.getElementById('guideBar');
+  const guideView = document.getElementById('guideView');
+  const toolView = document.getElementById('toolView');
+  const scrim = document.getElementById('scrim');
+  let firstVisit = true;
+
+  // Auto-expand on first visit after 2 seconds
+  setTimeout(() => {
+    if (firstVisit) {
+      guideBar.classList.add('expanded');
+      scrim.classList.add('visible');
+      guideBar.classList.remove('pulse');
+      firstVisit = false;
+    }
+  }, 2000);
+
+  function toggleGuide() {
+    const isExpanded = guideBar.classList.contains('expanded');
+    guideBar.classList.remove('pulse');
+    if (isExpanded) {
+      guideBar.classList.remove('expanded');
+      scrim.classList.remove('visible');
+      closeTool();
+    } else {
+      guideBar.classList.add('expanded');
+      scrim.classList.add('visible');
+    }
+  }
+
+  function scrollToTranslations() {
+    guideBar.classList.remove('expanded');
+    scrim.classList.remove('visible');
+
+    const el = document.getElementById('translations');
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Highlight
+    el.classList.add('highlight');
+    setTimeout(() => el.classList.remove('highlight'), 2500);
+  }
+
+  function openTool(toolKey) {
+    guideView.classList.add('hidden');
+    toolView.classList.remove('hidden');
+
+    const name =
+      toolKey === 'bookContext' ? 'Kontext knihy' :
+      toolKey === 'originals' ? 'Původní jazyky' :
+      toolKey === 'liturgy' ? 'Liturgický kalendář' :
+      toolKey === 'commentary' ? 'Komentáře' : 'Nástroj';
+
+    document.getElementById('toolTitle').textContent = name;
+    document.getElementById('toolBreadcrumbName').textContent = name;
+  }
+
+  function closeTool() {
+    toolView.classList.add('hidden');
+    guideView.classList.remove('hidden');
+  }
+
+  function dismissHint() {
+    const hint = document.getElementById('onboardingHint');
+    hint.style.opacity = '0';
+    hint.style.transform = 'translateY(-8px)';
+    hint.style.transition = 'all 0.3s';
+    setTimeout(() => hint.remove(), 300);
+  }
+
+  // Toggle check items
+  document.querySelectorAll('.flow-check:not(.done)').forEach(check => {
+    check.addEventListener('click', (e) => {
+      e.stopPropagation();
+      check.classList.toggle('done');
+      check.textContent = check.classList.contains('done') ? '✓' : '';
+
+      // Update progress dots
+      const doneCount = document.querySelectorAll('.flow-check.done').length;
+      const dots = document.querySelectorAll('.guide-dot');
+      dots.forEach((dot, i) => {
+        dot.classList.remove('done', 'active');
+        if (i < doneCount) dot.classList.add('done');
+        else if (i === doneCount) dot.classList.add('active');
+      });
+    });
+  });
+</script>
+</body>
+</html>

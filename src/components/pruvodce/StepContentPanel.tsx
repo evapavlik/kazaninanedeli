@@ -1,30 +1,31 @@
 "use client";
 
 import { useState, useCallback, useEffect, useMemo, useRef } from "react";
-import Link from "next/link";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Phase, SubStep } from "@/types";
 import { checklistToolMap } from "@/data/checklist-tool-map";
 import type { FlowToolHelper } from "./UnifiedFlow";
 import BibleTextPanel from "./BibleTextPanel";
-import StepContext from "./StepContext";
-import SubStepNav from "./SubStepNav";
-import UnifiedFlow from "./UnifiedFlow";
-import PreviousStepOutputs from "./PreviousStepOutputs";
 import BuildingBlocks from "./BuildingBlocks";
-import Notepad from "./Notepad";
-import { useSermonArtifacts } from "@/hooks/useSermonArtifacts";
 import TranslationCompare from "./TranslationCompare";
-import BibleContextView from "./BibleContextView";
-import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
+import GuideBar from "./GuideBar";
+import { useSermonArtifacts } from "@/hooks/useSermonArtifacts";
 
-// Tool components
+// Tool components (for inline flow helpers)
 import NarrativeTypeIdentifier from "@/components/tools/NarrativeTypeIdentifier";
 import BibleBookContext from "@/components/tools/BibleBookContext";
 import LiturgicalCalendar from "@/components/tools/LiturgicalCalendar";
 import RoleIdentifier from "@/components/tools/RoleIdentifier";
 import FCFHelper from "@/components/tools/FCFHelper";
 import OutlineBuilder from "@/components/tools/OutlineBuilder";
+
+// Mobile-only imports
+import Link from "next/link";
+import StepContext from "./StepContext";
+import SubStepNav from "./SubStepNav";
+import UnifiedFlow from "./UnifiedFlow";
+import PreviousStepOutputs from "./PreviousStepOutputs";
+import Notepad from "./Notepad";
 
 interface StepContentPanelProps {
   phase: Phase;
@@ -65,37 +66,12 @@ export default function StepContentPanel({
   // Connected workflow — sermon artifacts
   const { artifacts, updateField, getStepContext } = useSermonArtifacts();
 
-  // Drawer state for guide panel
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
-  // Tool opener — lets drawer open tools on workspace
-  const [toolOpener, setToolOpener] = useState<((key: string) => void) | null>(null);
-  const handleToolOpenerReady = useCallback((opener: (key: string) => void) => {
-    setToolOpener(() => opener);
-  }, []);
-
-  // Right sidebar tool panel
-  const [activeSidebarTool, setActiveSidebarTool] = useState<string | null>(null);
-  const toggleSidebarTool = useCallback((key: string) => {
-    setActiveSidebarTool((prev) => (prev === key ? null : key));
-  }, []);
   const isTextPhase = phase.slug === "text";
   const savedRef = typeof window !== "undefined"
     ? JSON.parse(localStorage.getItem("kazani-bible-ref") || '""')
     : "";
 
-  // Toast: show tip when entering a new sub-step
-  const [showToast, setShowToast] = useState(true);
-  const prevSubStepRef = useRef(0);
-
-  useEffect(() => {
-    if (activeSubStep !== prevSubStepRef.current) {
-      prevSubStepRef.current = activeSubStep;
-      setShowToast(true);
-    }
-  }, [activeSubStep]);
-
-  // Track which sub-steps are completed — persist to localStorage
+  // Track which sub-steps are completed
   const [completedSubStepsArr, setCompletedSubStepsArr] = useLocalStorage<number[]>(
     `kazani-completed-substeps-${phase.slug}`,
     []
@@ -121,13 +97,13 @@ export default function StepContentPanel({
     }));
   }, [subSlug]);
 
-  // Progress tracking — only check items count for sub-step completion
+  // Progress tracking
   const [checkCount, setCheckCount] = useState({ completed: 0, total: 0 });
   const [notepadHasContent, setNotepadHasContent] = useState(false);
 
   const checksDone = checkCount.total > 0 && checkCount.completed === checkCount.total;
 
-  // Mark sub-step as complete when all check items are done
+  // Mark sub-step as complete
   useEffect(() => {
     if (checksDone) {
       setCompletedSubSteps((prev) => {
@@ -139,7 +115,7 @@ export default function StepContentPanel({
     }
   }, [checksDone, activeSubStep]);
 
-  // Auto-advance to next sub-step when complete
+  // Auto-advance to next sub-step
   useEffect(() => {
     if (checksDone && activeSubStep < phase.subSteps.length - 1) {
       const nextIdx = activeSubStep + 1;
@@ -158,16 +134,27 @@ export default function StepContentPanel({
     setNotepadHasContent(hasContent);
   }, []);
 
-  // Sub-step navigation
   const handleSubStepSelect = (index: number) => {
     setActiveSubStep(index);
-    setDrawerOpen(false);
   };
+
+  // Ref for scrolling to translations
+  const translationsRef = useRef<HTMLDivElement>(null);
+  const handleScrollToTranslations = useCallback(() => {
+    translationsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    // Brief highlight
+    if (translationsRef.current) {
+      translationsRef.current.style.boxShadow = "0 0 0 3px rgba(155,74,60,0.25)";
+      setTimeout(() => {
+        if (translationsRef.current) translationsRef.current.style.boxShadow = "none";
+      }, 2500);
+    }
+  }, []);
 
   return (
     <div className="relative">
       {/* MAIN: Full-width text */}
-      <div className="mx-auto max-w-4xl">
+      <div className="mx-auto max-w-4xl pb-[100px]">
         {/* Mobile toggle */}
         <div className="lg:hidden mb-4">
           <button
@@ -187,32 +174,24 @@ export default function StepContentPanel({
           </button>
           {textPanelOpen && (
             <div className="mt-2">
-              <BibleTextPanel currentSlug={subSlug} onToolOpenerReady={handleToolOpenerReady} />
+              <BibleTextPanel currentSlug={subSlug} />
             </div>
           )}
         </div>
 
         {/* Desktop: text always full width */}
         <div className="hidden lg:block">
+          <OnboardingHint />
           <BuildingBlocksForStep slug={currentSub.slug} getStepContext={getStepContext} />
-          <BibleTextPanel currentSlug={subSlug} onToolOpenerReady={handleToolOpenerReady} />
+          <BibleTextPanel currentSlug={subSlug} />
 
-          {/* Translation compare — below text, own section */}
+          {/* Translation compare — inline below text */}
           {isTextPhase && savedRef && (
-            <div className="mt-6">
+            <div className="mt-6 transition-shadow duration-400" ref={translationsRef}>
               <TranslationCompare reference={savedRef} />
             </div>
           )}
         </div>
-
-        {/* Tool sidebar overlay — fixed bubbles + overlay panel */}
-        {isTextPhase && (
-          <ToolSidebar
-            openTool={activeSidebarTool}
-            onToggle={toggleSidebarTool}
-            reference={savedRef}
-          />
-        )}
 
         {/* Mobile: show guide inline below text */}
         <div className="lg:hidden mt-6">
@@ -227,299 +206,60 @@ export default function StepContentPanel({
             onSubStepSelect={handleSubStepSelect}
             onFlowCountChange={handleFlowCountChange}
             onNotepadContent={handleNotepadContent}
-            onOpenTool={toolOpener || undefined}
             prevPhase={prevPhase}
             nextPhase={nextPhase}
           />
         </div>
       </div>
 
-      {/* FLOATING TOAST: tip when entering a sub-step */}
-      {showToast && (
-        <div className="hidden lg:block fixed top-24 right-6 z-40 max-w-sm animate-in slide-in-from-right duration-300">
-          <div className="rounded-xl border border-sage/20 bg-white shadow-lg p-4">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex items-start gap-2.5">
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-sage-pale text-sm">
-                  {currentSub.icon}
-                </span>
-                <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-sage">
-                    {currentSub.title}
-                  </p>
-                  <p className="mt-1 text-[13px] leading-relaxed text-text-muted">
-                    {currentSub.tip}
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => setShowToast(false)}
-                className="shrink-0 text-text-light hover:text-text"
-              >
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M4 4l8 8M12 4l-8 8" />
-                </svg>
-              </button>
-            </div>
-            <button
-              onClick={() => { setShowToast(false); setDrawerOpen(true); }}
-              className="mt-3 w-full rounded-lg bg-brick/10 px-3 py-1.5 text-[12px] font-medium text-brick transition-colors hover:bg-brick/20"
-            >
-              {`Otev\u0159\u00EDt pr\u016Fvodce \u2192`}
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* FLOATING BUTTON: open guide drawer (desktop) */}
-      {!drawerOpen && !showToast && (
-        <button
-          onClick={() => setDrawerOpen(true)}
-          className="hidden lg:flex fixed top-24 right-6 z-40 items-center gap-2 rounded-xl border border-border bg-white px-4 py-3 shadow-md transition-all hover:shadow-lg hover:border-brick/30"
-        >
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brick-pale text-sm">
-            {currentSub.icon}
-          </span>
-          <div className="text-left">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-brick">
-              {`Pr\u016Fvodce`}
-            </p>
-            <p className="text-[12px] font-medium text-text">
-              {currentSub.title}
-            </p>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="text-text-light ml-1">
-            <path d="M14 3l-5 5 5 5" />
-          </svg>
-        </button>
-      )}
-
-      {/* DRAWER OVERLAY */}
-      {drawerOpen && (
-        <div
-          className="hidden lg:block fixed inset-0 z-50 bg-black/10"
-          onClick={() => setDrawerOpen(false)}
-        />
-      )}
-
-      {/* DRAWER: Guide panel slides from right */}
-      <div
-        className={`hidden lg:block fixed top-0 right-0 z-50 h-full w-[420px] transform transition-transform duration-300 ease-in-out ${
-          drawerOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="h-full overflow-y-auto border-l border-border bg-white px-6 py-6 shadow-xl">
-          {/* Close button */}
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brick-pale text-base">
-                {phase.icon}
-              </span>
-              <div>
-                <p className="font-cormorant text-[10px] font-semibold uppercase tracking-[0.12em] text-brick">
-                  {`F\u00E1ze ${phase.number} ze 4`}
-                </p>
-                <h1 className="font-lora text-base font-bold text-text">
-                  {phase.title}
-                </h1>
-              </div>
-            </div>
-            <button
-              onClick={() => setDrawerOpen(false)}
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-text-light transition-colors hover:bg-cream hover:text-text"
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M4 4l8 8M12 4l-8 8" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Sub-step navigation */}
-          <SubStepNav
-            subSteps={phase.subSteps}
-            activeIndex={activeSubStep}
-            completedIndices={completedSubSteps}
-            onSelect={handleSubStepSelect}
-          />
-
-          {/* Sub-step title */}
-          {phase.subSteps.length > 1 && (
-            <div className="mb-3 flex items-center gap-2">
-              <span className="text-base">{currentSub.icon}</span>
-              <div>
-                <h2 className="font-lora text-base font-bold text-text">
-                  {currentSub.title}
-                </h2>
-                <p className="text-xs text-text-muted">
-                  {`~${currentSub.estimatedMinutes} min`}
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* Theory — at the top, auto-open */}
-          <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} />
-
-          {/* Description */}
-          <p className="mb-4 text-[13px] font-light leading-[1.8] text-text-muted">
-            {currentSub.description}
-          </p>
-
-          {/* Unified flow */}
-          <UnifiedFlow
-            slug={subSlug}
-            items={currentSub.flow}
-            toolHelpers={flowToolHelpers}
-            onCountChange={handleFlowCountChange}
-            artifacts={artifacts}
-            onArtifactChange={(field, value) => updateField(field as keyof typeof artifacts, value)}
-            onOpenTool={isTextPhase ? (key: string) => setActiveSidebarTool(key) : toolOpener || undefined}
-          />
-
-          {/* Previous step outputs */}
-          <PreviousStepOutputs subStepSlug={subSlug} />
-
-          {/* Notepad */}
-          <div className="mt-3">
-            <Notepad
-              slug={subSlug}
-              isOpen={false}
-              onToggle={() => {}}
-              onHasContentChange={handleNotepadContent}
-            />
-          </div>
-
-          {/* Navigation */}
-          <nav className="mt-6 flex items-center justify-between border-t border-border pt-6">
-            {prevPhase ? (
-              <Link
-                href={`/pruvodce/${prevPhase.slug}`}
-                className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-text-muted no-underline transition-all hover:bg-cream hover:text-text"
-              >
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M10 3L5 8l5 5" />
-                </svg>
-                {prevPhase.title}
-              </Link>
-            ) : (
-              <Link
-                href="/"
-                className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-text-muted no-underline transition-all hover:bg-cream hover:text-text"
-              >
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M10 3L5 8l5 5" />
-                </svg>
-                {`\u00DAvod`}
-              </Link>
-            )}
-
-            {nextPhase ? (
-              <Link
-                href={`/pruvodce/${nextPhase.slug}`}
-                className="flex items-center gap-2 rounded-md bg-brick px-5 py-2 text-sm font-semibold text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-brick-light"
-              >
-                {nextPhase.title}
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M6 3l5 5-5 5" />
-                </svg>
-              </Link>
-            ) : (
-              <Link
-                href="/"
-                className="flex items-center gap-2 rounded-md bg-brick px-5 py-2 text-sm font-semibold text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-brick-light"
-              >
-                Hotovo!
-              </Link>
-            )}
-          </nav>
-        </div>
-      </div>
+      {/* GUIDE BAR — fixed bottom, desktop only */}
+      <GuideBar
+        phase={phase}
+        currentSub={currentSub}
+        subSlug={subSlug}
+        activeSubStep={activeSubStep}
+        completedSubSteps={completedSubSteps}
+        onSubStepSelect={handleSubStepSelect}
+        flowToolHelpers={flowToolHelpers}
+        onFlowCountChange={handleFlowCountChange}
+        onNotepadContent={handleNotepadContent}
+        artifacts={artifacts}
+        onArtifactChange={(field, value) => updateField(field as keyof typeof artifacts, value)}
+        prevPhase={prevPhase}
+        nextPhase={nextPhase}
+        reference={savedRef}
+        checkCount={checkCount}
+        onScrollToTranslations={isTextPhase ? handleScrollToTranslations : undefined}
+      />
     </div>
   );
 }
 
-/** Right sidebar: fixed icon strip + overlay tool panel */
-const SIDEBAR_TOOLS = [
-  { key: "bookContext", icon: "\uD83D\uDCD6", label: `Kontext knihy`, number: 1 },
-  { key: "liturgy", icon: "\uD83D\uDCC5", label: `Kalend\u00E1\u0159`, number: 2 },
-  { key: "originals", icon: "\u03B1", label: `Origin\u00E1l`, number: 3 },
-  { key: "commentary", icon: "\uD83D\uDCDA", label: `Koment\u00E1\u0159e`, number: 4 },
-];
+/** Onboarding hint — shown once on first visit */
+function OnboardingHint() {
+  const [visible, setVisible] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return !localStorage.getItem("kazani-onboarding-seen");
+  });
 
-function ToolSidebar({
-  openTool,
-  onToggle,
-  reference,
-}: {
-  openTool: string | null;
-  onToggle: (key: string) => void;
-  reference: string;
-}) {
+  if (!visible) return null;
+
+  const dismiss = () => {
+    localStorage.setItem("kazani-onboarding-seen", "1");
+    setVisible(false);
+  };
+
   return (
-    <>
-      {/* Dismiss overlay — click outside to close panel */}
-      {openTool && (
-        <div
-          className="hidden lg:block fixed inset-0 z-30"
-          onClick={() => onToggle(openTool)}
-        />
-      )}
-
-      {/* Fixed icon strip — right edge, vertically centered */}
-      <div className="hidden lg:flex fixed right-3 top-1/2 -translate-y-1/2 z-30 flex-col gap-1 rounded-xl border border-border bg-white/90 p-1.5 shadow-md backdrop-blur-sm">
-        {SIDEBAR_TOOLS.map((tool) => {
-          const isActive = openTool === tool.key;
-          return (
-            <button
-              key={tool.key}
-              onClick={() => onToggle(tool.key)}
-              className={`group relative flex h-9 w-9 items-center justify-center rounded-lg transition-all ${
-                isActive
-                  ? "bg-brick text-white shadow-sm"
-                  : "text-text-light hover:bg-brick-pale hover:text-brick"
-              }`}
-              title={tool.label}
-            >
-              <span className="text-[15px]">{tool.icon}</span>
-              <span className={`absolute -top-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full text-[8px] font-bold ${
-                isActive
-                  ? "bg-white text-brick"
-                  : "bg-brick-pale text-brick/60"
-              }`}>
-                {tool.number}
-              </span>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Overlay tool panel — slides in from right, over text */}
-      {openTool && (
-        <div className="hidden lg:block fixed right-14 top-[100px] z-40 w-[400px] max-h-[calc(100vh-140px)] overflow-y-auto rounded-xl border border-border bg-white p-5 shadow-xl animate-in slide-in-from-right-4 duration-200">
-          <div className="mb-3 flex items-center justify-between">
-            <h3 className="text-[12px] font-semibold uppercase tracking-[0.1em] text-brick">
-              {SIDEBAR_TOOLS.find((t) => t.key === openTool)?.label}
-            </h3>
-            <button
-              onClick={() => onToggle(openTool)}
-              className="flex h-6 w-6 items-center justify-center rounded text-text-light hover:bg-cream hover:text-text"
-            >
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M4 4l8 8M12 4l-8 8" />
-              </svg>
-            </button>
-          </div>
-          {openTool === "bookContext" && <BibleContextView reference={reference} />}
-          {openTool === "liturgy" && <LiturgicalCalendar />}
-          {openTool === "originals" && <OriginalLanguagesPanel reference={reference} />}
-          {openTool === "commentary" && reference && (
-            <div className="text-sm text-text-muted italic">
-              {`Otev\u0159ete v bublince na pracovn\u00ED plo\u0161e`}
-            </div>
-          )}
-        </div>
-      )}
-    </>
+    <div className="mb-5 flex items-center gap-2.5 rounded-[10px] border border-brick/15 bg-brick-pale px-4 py-2.5 text-[13px] text-brick animate-in fade-in slide-in-from-top-1 duration-500 delay-1000 fill-mode-both">
+      <span className="shrink-0 text-base">{"\uD83D\uDC47"}</span>
+      <span>{`Pr\u016Fvodce p\u0159\u00EDpravou najdete v li\u0161t\u011B dole. Provede v\u00E1s krok za krokem.`}</span>
+      <button
+        onClick={dismiss}
+        className="ml-auto shrink-0 px-1 text-brick/50 transition-opacity hover:text-brick"
+      >
+        {"\u2715"}
+      </button>
+    </div>
   );
 }
 
@@ -535,7 +275,6 @@ function MobileGuide({
   onSubStepSelect,
   onFlowCountChange,
   onNotepadContent,
-  onOpenTool,
   prevPhase,
   nextPhase,
 }: {
@@ -549,7 +288,6 @@ function MobileGuide({
   onSubStepSelect: (index: number) => void;
   onFlowCountChange: (completed: number, total: number) => void;
   onNotepadContent: (hasContent: boolean) => void;
-  onOpenTool?: (key: string) => void;
   prevPhase: { slug: string; title: string } | null;
   nextPhase: { slug: string; title: string } | null;
 }) {
@@ -589,7 +327,6 @@ function MobileGuide({
         items={currentSub.flow}
         toolHelpers={flowToolHelpers}
         onCountChange={onFlowCountChange}
-        onOpenTool={onOpenTool}
       />
 
       <PreviousStepOutputs subStepSlug={subSlug} />
