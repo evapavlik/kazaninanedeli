@@ -65,6 +65,12 @@ export default function StepContentPanel({
   // Drawer state for guide panel
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // Tool opener — lets drawer open tools on workspace
+  const [toolOpener, setToolOpener] = useState<((key: string) => void) | null>(null);
+  const handleToolOpenerReady = useCallback((opener: (key: string) => void) => {
+    setToolOpener(() => opener);
+  }, []);
+
   // Toast: show tip when entering a new sub-step
   const [showToast, setShowToast] = useState(true);
   const prevSubStepRef = useRef(0);
@@ -96,7 +102,9 @@ export default function StepContentPanel({
       itemIndex: m.itemIndex,
       label: m.label,
       icon: m.icon,
-      component: resolveToolComponent(m.componentKey, subSlug),
+      ...(m.openToolKey
+        ? { openToolKey: m.openToolKey, openToolNumber: m.openToolNumber }
+        : { component: resolveToolComponent(m.componentKey || "", subSlug) }),
     }));
   }, [subSlug]);
 
@@ -166,7 +174,7 @@ export default function StepContentPanel({
           </button>
           {textPanelOpen && (
             <div className="mt-2">
-              <BibleTextPanel currentSlug={subSlug} />
+              <BibleTextPanel currentSlug={subSlug} onToolOpenerReady={handleToolOpenerReady} />
             </div>
           )}
         </div>
@@ -175,7 +183,7 @@ export default function StepContentPanel({
         <div className="hidden lg:block">
           {/* Building blocks from previous steps */}
           <BuildingBlocksForStep slug={currentSub.slug} getStepContext={getStepContext} />
-          <BibleTextPanel currentSlug={subSlug} />
+          <BibleTextPanel currentSlug={subSlug} onToolOpenerReady={handleToolOpenerReady} />
         </div>
 
         {/* Mobile: show guide inline below text */}
@@ -191,6 +199,7 @@ export default function StepContentPanel({
             onSubStepSelect={handleSubStepSelect}
             onFlowCountChange={handleFlowCountChange}
             onNotepadContent={handleNotepadContent}
+            onOpenTool={toolOpener || undefined}
             prevPhase={prevPhase}
             nextPhase={nextPhase}
           />
@@ -336,6 +345,7 @@ export default function StepContentPanel({
             onCountChange={handleFlowCountChange}
             artifacts={artifacts}
             onArtifactChange={(field, value) => updateField(field as keyof typeof artifacts, value)}
+            onOpenTool={toolOpener || undefined}
           />
 
           {/* Previous step outputs */}
@@ -412,6 +422,7 @@ function MobileGuide({
   onSubStepSelect,
   onFlowCountChange,
   onNotepadContent,
+  onOpenTool,
   prevPhase,
   nextPhase,
 }: {
@@ -425,6 +436,7 @@ function MobileGuide({
   onSubStepSelect: (index: number) => void;
   onFlowCountChange: (completed: number, total: number) => void;
   onNotepadContent: (hasContent: boolean) => void;
+  onOpenTool?: (key: string) => void;
   prevPhase: { slug: string; title: string } | null;
   nextPhase: { slug: string; title: string } | null;
 }) {
@@ -464,6 +476,7 @@ function MobileGuide({
         items={currentSub.flow}
         toolHelpers={flowToolHelpers}
         onCountChange={onFlowCountChange}
+        onOpenTool={onOpenTool}
       />
 
       <PreviousStepOutputs subStepSlug={subSlug} />

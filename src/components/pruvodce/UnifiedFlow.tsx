@@ -9,7 +9,10 @@ export interface FlowToolHelper {
   itemIndex: number;
   label: string;
   icon: string;
-  component: React.ReactNode;
+  component?: React.ReactNode;
+  /** Instead of inline component, open a tool bubble on the workspace */
+  openToolKey?: string;
+  openToolNumber?: number;
 }
 
 interface UnifiedFlowProps {
@@ -20,6 +23,8 @@ interface UnifiedFlowProps {
   /** Sermon artifacts for connected workflow */
   artifacts?: SermonArtifacts;
   onArtifactChange?: (field: string, value: string) => void;
+  /** Open a tool on the workspace */
+  onOpenTool?: (key: string) => void;
 }
 
 export default function UnifiedFlow({
@@ -28,6 +33,7 @@ export default function UnifiedFlow({
   toolHelpers = [],
   onCountChange,
   artifacts,
+  onOpenTool,
   onArtifactChange,
 }: UnifiedFlowProps) {
   const [checked, setChecked] = useLocalStorage<boolean[]>(
@@ -249,28 +255,45 @@ export default function UnifiedFlow({
                   />
                 )}
 
-                {/* Tool helper — for check items with tools */}
+                {/* Tool helper — link to workspace bubble or inline expand */}
                 {helper && !isInput && (
                   <div className="ml-7 mt-1.5">
-                    <button
-                      onClick={() => setOpenToolIndex(isToolOpen ? null : i)}
-                      className={`flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[11px] font-medium transition-all ${
-                        isToolOpen
-                          ? "bg-brick/10 text-brick"
-                          : "text-text-light hover:bg-brick-pale hover:text-brick"
-                      }`}
-                    >
-                      <span>{helper.icon}</span>
-                      <span>{helper.label}</span>
-                      <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className={`transition-transform ${isToolOpen ? "rotate-180" : ""}`}>
-                        <path d="M4 6l4 4 4-4" />
-                      </svg>
-                    </button>
+                    {helper.openToolKey ? (
+                      <button
+                        onClick={() => onOpenTool?.(helper.openToolKey!)}
+                        className="flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[11px] font-medium text-text-light hover:bg-brick-pale hover:text-brick transition-all"
+                      >
+                        <span className="flex h-4 w-4 items-center justify-center rounded-full bg-brick-pale text-[9px] font-bold text-brick">
+                          {helper.openToolNumber || ""}
+                        </span>
+                        <span>{helper.label}</span>
+                        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-brick/50">
+                          <path d="M5 3l6 5-6 5" />
+                        </svg>
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => setOpenToolIndex(isToolOpen ? null : i)}
+                          className={`flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[11px] font-medium transition-all ${
+                            isToolOpen
+                              ? "bg-brick/10 text-brick"
+                              : "text-text-light hover:bg-brick-pale hover:text-brick"
+                          }`}
+                        >
+                          <span>{helper.icon}</span>
+                          <span>{helper.label}</span>
+                          <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className={`transition-transform ${isToolOpen ? "rotate-180" : ""}`}>
+                            <path d="M4 6l4 4 4-4" />
+                          </svg>
+                        </button>
 
-                    {isToolOpen && (
-                      <div className="mt-2 rounded-lg border border-brick/10 bg-brick-pale/30 p-3">
-                        {helper.component}
-                      </div>
+                        {isToolOpen && (
+                          <div className="mt-2 rounded-lg border border-brick/10 bg-brick-pale/30 p-3">
+                            {helper.component}
+                          </div>
+                        )}
+                      </>
                     )}
                   </div>
                 )}

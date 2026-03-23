@@ -7,7 +7,10 @@ export interface ToolMapping {
   itemIndex: number;
   label: string;
   icon: string;
-  componentKey: string;
+  componentKey?: string;
+  /** Open a tool bubble on the workspace instead of inline component */
+  openToolKey?: string;
+  openToolNumber?: number;
 }
 
 export const checklistToolMap: Record<string, ToolMapping[]> = {
@@ -18,22 +21,53 @@ export const checklistToolMap: Record<string, ToolMapping[]> = {
       icon: "\uD83D\uDD0D",
       componentKey: "NarrativeTypeIdentifier",
     },
+    {
+      itemIndex: 2,
+      label: `Porovnat p\u0159eklady`,
+      icon: "\uD83D\uDD04",
+      openToolKey: "translations",
+      openToolNumber: 1,
+    },
   ],
   kontext: [
     {
-      itemIndex: 2,
+      itemIndex: 0,
       label: `Kontext knihy`,
       icon: "\uD83D\uDCD6",
-      componentKey: "BibleBookContext",
+      openToolKey: "bookContext",
+      openToolNumber: 2,
     },
     {
-      itemIndex: 6,
+      itemIndex: 4,
       label: `Liturgick\u00FD kalend\u00E1\u0159`,
       icon: "\uD83D\uDCC5",
-      componentKey: "LiturgicalCalendar",
+      openToolKey: "liturgy",
+      openToolNumber: 3,
     },
   ],
-  vyklad: [],
+  vyklad: [
+    {
+      itemIndex: 0,
+      label: `P\u016Fvodn\u00ED jazyky`,
+      icon: "\u03B1",
+      openToolKey: "originals",
+      openToolNumber: 4,
+    },
+    {
+      itemIndex: 1,
+      label: `Porovnat p\u0159eklady`,
+      icon: "\uD83D\uDD04",
+      openToolKey: "translations",
+      openToolNumber: 1,
+    },
+    {
+      itemIndex: 2,
+      label: `V\u00FDkladov\u00E9 koment\u00E1\u0159e`,
+      icon: "\uD83D\uDCDA",
+      openToolKey: "commentary",
+      openToolNumber: 5,
+    },
+  ],
   aktualizace: [
     {
       itemIndex: 0,
