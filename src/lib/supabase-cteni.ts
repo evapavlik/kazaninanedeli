@@ -71,6 +71,43 @@ function expandRefs(reference: string): string[] {
 /**
  * Find Farsk\u00FD postily matching a biblical reference.
  */
+/**
+ * Commentary from Supabase DB
+ */
+export interface DbCommentary {
+  book_chapter: string;
+  reference: string;
+  title: string;
+  context: string;
+  key_words: { word: string; explanation: string }[];
+  structure: string;
+  theological_themes: string[];
+  application_hints: string[];
+  verse_notes: { verse: number; note: string }[];
+}
+
+export async function fetchCommentary(
+  bookNumber: number,
+  chapter: number
+): Promise<DbCommentary | null> {
+  const key = `${bookNumber}:${chapter}`;
+
+  const { data, error } = await supabaseCteni
+    .from("commentary")
+    .select("*")
+    .eq("book_chapter", key)
+    .limit(1);
+
+  if (error || !data || data.length === 0) {
+    return null;
+  }
+
+  return data[0] as DbCommentary;
+}
+
+/**
+ * Find Farsk\u00FD postily matching a biblical reference.
+ */
 export async function findPostily(
   reference: string
 ): Promise<PostilaMatch[]> {
