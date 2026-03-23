@@ -243,16 +243,6 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
         </div>
       )}
 
-      {/* Tool bubbles — sticky toolbar above text */}
-      {hasText && !editing && localRef && !isFirstStep && (
-        <div className="sticky top-[68px] z-10 -mx-4 mb-4 border-b border-border/30 bg-cream/95 px-4 py-2 backdrop-blur-sm">
-          <ToolBubbles
-            openTool={openTool}
-            onToggle={toggleTool}
-          />
-        </div>
-      )}
-
       {/* Text display or textarea */}
       {hasText && !editing ? (
         <>
@@ -279,10 +269,6 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
 
             </div>
 
-          {/* Expanded tool content — below text */}
-          {localRef && !isFirstStep && (
-            <ToolContent openTool={openTool} reference={localRef} />
-          )}
         </>
       ) : (
         <div>
@@ -333,7 +319,7 @@ const ALL_TOOLS: ToolBubble[] = [
   { key: "commentary", icon: "\uD83D\uDCDA", label: `V\u00FDkladov\u00E9 koment\u00E1\u0159e`, number: 5 },
 ];
 
-/** Sticky toolbar chips — no expanded content here */
+/** Sticky toolbar — minimal, integrated with text aesthetic */
 function ToolBubbles({
   openTool,
   onToggle,
@@ -350,39 +336,47 @@ function ToolBubbles({
 
   return (
     <>
-      <div className="flex flex-wrap gap-2">
-        {ALL_TOOLS.map((tool, i) => (
-          <button
-            key={tool.key}
-            onClick={() => onToggle(tool.key)}
-            className={`group flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-medium transition-all ${
-              openTool === tool.key
-                ? "bg-brick text-white shadow-sm"
-                : "border border-border bg-white text-text-muted hover:border-brick/30 hover:text-brick hover:shadow-sm"
-            }`}
-            style={{
-              animation: animated && openTool !== tool.key
-                ? `bubble-bounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 0.08}s both`
-                : undefined,
-            }}
-          >
-            <span className={`flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-bold ${
-              openTool === tool.key
-                ? "bg-white/20 text-white"
-                : "bg-brick-pale text-brick group-hover:bg-brick/10"
-            }`}>
-              {tool.number}
-            </span>
-            <span>{tool.icon}</span>
-            <span>{tool.label}</span>
-          </button>
-        ))}
+      <div className="flex items-center gap-1">
+        {ALL_TOOLS.map((tool, i) => {
+          const isActive = openTool === tool.key;
+          return (
+            <button
+              key={tool.key}
+              onClick={() => onToggle(tool.key)}
+              className={`group relative flex items-center gap-1 rounded-md px-2 py-1 text-[11px] transition-all ${
+                isActive
+                  ? "bg-brick/10 text-brick"
+                  : "text-text-light hover:bg-brick-pale/50 hover:text-brick"
+              }`}
+              style={{
+                animation: animated && !isActive
+                  ? `tool-fade 0.4s ease-out ${i * 0.06}s both`
+                  : undefined,
+              }}
+              title={tool.label}
+            >
+              <span className={`text-[9px] font-bold tabular-nums ${
+                isActive ? "text-brick" : "text-text-light/60 group-hover:text-brick/60"
+              }`}>
+                {tool.number}
+              </span>
+              <span className="text-[13px]">{tool.icon}</span>
+              <span className={`hidden sm:inline text-[11px] font-medium ${
+                isActive ? "text-brick" : ""
+              }`}>
+                {tool.label}
+              </span>
+              {isActive && (
+                <span className="absolute -bottom-[5px] left-1/2 h-[2px] w-4 -translate-x-1/2 rounded-full bg-brick" />
+              )}
+            </button>
+          );
+        })}
       </div>
       <style>{`
-        @keyframes bubble-bounce {
-          0% { opacity: 0; transform: scale(0.3) translateY(10px); }
-          50% { transform: scale(1.08) translateY(-3px); }
-          100% { opacity: 1; transform: scale(1) translateY(0); }
+        @keyframes tool-fade {
+          0% { opacity: 0; transform: translateY(-4px); }
+          100% { opacity: 1; transform: translateY(0); }
         }
       `}</style>
     </>

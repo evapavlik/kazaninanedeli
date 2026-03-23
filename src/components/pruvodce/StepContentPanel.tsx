@@ -14,6 +14,9 @@ import PreviousStepOutputs from "./PreviousStepOutputs";
 import BuildingBlocks from "./BuildingBlocks";
 import Notepad from "./Notepad";
 import { useSermonArtifacts } from "@/hooks/useSermonArtifacts";
+import TranslationCompare from "./TranslationCompare";
+import BibleContextView from "./BibleContextView";
+import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
 
 // Tool components
 import NarrativeTypeIdentifier from "@/components/tools/NarrativeTypeIdentifier";
@@ -70,6 +73,16 @@ export default function StepContentPanel({
   const handleToolOpenerReady = useCallback((opener: (key: string) => void) => {
     setToolOpener(() => opener);
   }, []);
+
+  // Right sidebar tool panel
+  const [activeSidebarTool, setActiveSidebarTool] = useState<string | null>(null);
+  const toggleSidebarTool = useCallback((key: string) => {
+    setActiveSidebarTool((prev) => (prev === key ? null : key));
+  }, []);
+  const isTextPhase = phase.slug === "text";
+  const savedRef = typeof window !== "undefined"
+    ? JSON.parse(localStorage.getItem("kazani-bible-ref") || '""')
+    : "";
 
   // Toast: show tip when entering a new sub-step
   const [showToast, setShowToast] = useState(true);
@@ -179,11 +192,22 @@ export default function StepContentPanel({
           )}
         </div>
 
-        {/* Desktop: always visible */}
-        <div className="hidden lg:block">
-          {/* Building blocks from previous steps */}
-          <BuildingBlocksForStep slug={currentSub.slug} getStepContext={getStepContext} />
-          <BibleTextPanel currentSlug={subSlug} onToolOpenerReady={handleToolOpenerReady} />
+        {/* Desktop: text + right tool sidebar */}
+        <div className="hidden lg:flex gap-0">
+          <div className="flex-1 min-w-0">
+            {/* Building blocks from previous steps */}
+            <BuildingBlocksForStep slug={currentSub.slug} getStepContext={getStepContext} />
+            <BibleTextPanel currentSlug={subSlug} onToolOpenerReady={handleToolOpenerReady} />
+          </div>
+
+          {/* Right tool sidebar — vertical icon strip */}
+          {isTextPhase && (
+            <ToolSidebar
+              openTool={activeSidebarTool}
+              onToggle={toggleSidebarTool}
+              reference={savedRef}
+            />
+          )}
         </div>
 
         {/* Mobile: show guide inline below text */}
@@ -405,6 +429,85 @@ export default function StepContentPanel({
             )}
           </nav>
         </div>
+      </div>
+    </div>
+  );
+}
+
+/** Right sidebar: vertical icon strip + expandable tool panel */
+const SIDEBAR_TOOLS = [
+  { key: "translations", icon: "\uD83D\uDD04", label: `Porovnat p\u0159eklady`, number: 1 },
+  { key: "bookContext", icon: "\uD83D\uDCD6", label: `Kontext knihy`, number: 2 },
+  { key: "liturgy", icon: "\uD83D\uDCC5", label: `Kalend\u00E1\u0159`, number: 3 },
+  { key: "originals", icon: "\u03B1", label: `Origin\u00E1l`, number: 4 },
+  { key: "commentary", icon: "\uD83D\uDCDA", label: `Koment\u00E1\u0159e`, number: 5 },
+];
+
+function ToolSidebar({
+  openTool,
+  onToggle,
+  reference,
+}: {
+  openTool: string | null;
+  onToggle: (key: string) => void;
+  reference: string;
+}) {
+  return (
+    <div className="flex sticky top-[84px] self-start ml-2">
+      {/* Expanded tool panel */}
+      {openTool && (
+        <div className="w-[380px] max-h-[calc(100vh-100px)] overflow-y-auto rounded-l-xl border border-r-0 border-border bg-white p-4 shadow-sm">
+          <div className="mb-3 flex items-center justify-between">
+            <h3 className="text-[12px] font-semibold uppercase tracking-[0.1em] text-brick">
+              {SIDEBAR_TOOLS.find((t) => t.key === openTool)?.label}
+            </h3>
+            <button
+              onClick={() => onToggle(openTool)}
+              className="flex h-6 w-6 items-center justify-center rounded text-text-light hover:bg-cream hover:text-text"
+            >
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 4l8 8M12 4l-8 8" />
+              </svg>
+            </button>
+          </div>
+          {openTool === "translations" && <TranslationCompare reference={reference} />}
+          {openTool === "bookContext" && <BibleContextView reference={reference} />}
+          {openTool === "liturgy" && <LiturgicalCalendar />}
+          {openTool === "originals" && <OriginalLanguagesPanel reference={reference} />}
+          {openTool === "commentary" && reference && (
+            <div className="text-sm text-text-muted italic">
+              {`Otev\u0159ete v bublince na pracovn\u00ED plo\u0161e`}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Vertical icon strip */}
+      <div className="flex flex-col gap-1 rounded-xl border border-border bg-white/80 p-1.5 shadow-sm backdrop-blur-sm">
+        {SIDEBAR_TOOLS.map((tool) => {
+          const isActive = openTool === tool.key;
+          return (
+            <button
+              key={tool.key}
+              onClick={() => onToggle(tool.key)}
+              className={`group relative flex h-9 w-9 items-center justify-center rounded-lg transition-all ${
+                isActive
+                  ? "bg-brick text-white shadow-sm"
+                  : "text-text-light hover:bg-brick-pale hover:text-brick"
+              }`}
+              title={tool.label}
+            >
+              <span className="text-[15px]">{tool.icon}</span>
+              <span className={`absolute -top-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full text-[8px] font-bold ${
+                isActive
+                  ? "bg-white text-brick"
+                  : "bg-brick-pale text-brick/60"
+              }`}>
+                {tool.number}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
