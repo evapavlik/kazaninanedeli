@@ -443,6 +443,7 @@ function CommentaryPanel({ reference }: { reference: string }) {
             theologicalThemes: dbData.theological_themes,
             applicationHints: dbData.application_hints,
             verseNotes: dbData.verse_notes,
+            cross_references: dbData.cross_references || [],
           });
         }
         // If DB returns nothing, keep local fallback (already set in useState)
