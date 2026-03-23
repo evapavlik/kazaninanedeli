@@ -20,9 +20,11 @@ interface BibleTextPanelProps {
   currentSlug: string;
   focusMode?: boolean;
   onFocusToggle?: () => void;
+  /** Expose tool opener to parent (drawer can open tools on workspace) */
+  onToolOpenerReady?: (opener: (key: string) => void) => void;
 }
 
-export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle }: BibleTextPanelProps) {
+export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, onToolOpenerReady }: BibleTextPanelProps) {
   const [savedText, setSavedText] = useLocalStorage<string>(
     "kazani-bible-text",
     ""
@@ -95,6 +97,12 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle }
   // Tool bubbles: which tool is open on the workspace
   const [openTool, setOpenTool] = useState<string | null>(null);
   const toggleTool = (key: string) => setOpenTool((prev) => (prev === key ? null : key));
+  const openToolDirect = useCallback((key: string) => setOpenTool(key), []);
+
+  // Expose tool opener to parent
+  useEffect(() => {
+    onToolOpenerReady?.(openToolDirect);
+  }, [onToolOpenerReady, openToolDirect]);
 
   const hasText = localText.trim().length > 0;
   const isFirstStep = currentSlug === "modlitba";
@@ -261,10 +269,9 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle }
 
             </div>
 
-          {/* Tool bubbles — clickable chips, specific per sub-step */}
+          {/* Tool bubbles — numbered, always visible */}
           {localRef && !isFirstStep && (
             <ToolBubbles
-              slug={currentSlug}
               reference={localRef}
               openTool={openTool}
               onToggle={toggleTool}
@@ -304,70 +311,64 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle }
 
 
 
-/** Tool configuration per sub-step */
+/** Unified tool list — numbered, always visible, follows Pokorn\u00FD's method */
 interface ToolBubble {
   key: string;
   icon: string;
   label: string;
+  number: number;
 }
 
-const TOOLS_BY_STEP: Record<string, ToolBubble[]> = {
-  cteni: [
-    { key: "translations", icon: "\uD83D\uDD04", label: `Porovnat p\u0159eklady` },
-  ],
-  kontext: [
-    { key: "bookContext", icon: "\uD83D\uDCD6", label: `Co je kolem textu?` },
-    { key: "liturgy", icon: "\uD83D\uDCC5", label: `Pro\u010D zrovna dnes?` },
-  ],
-  vyklad: [
-    { key: "originals", icon: "\u03B1", label: `Co \u0159\u00EDk\u00E1 origin\u00E1l?` },
-    { key: "centralIdea", icon: "\uD83D\uDCA1", label: `Hlavn\u00ED my\u0161lenka` },
-    { key: "translations", icon: "\uD83D\uDD04", label: `Porovnat p\u0159eklady` },
-    { key: "commentary", icon: "\uD83D\uDCD6", label: `Co \u0159\u00EDkaj\u00ED odborn\u00EDci?` },
-  ],
-};
+const ALL_TOOLS: ToolBubble[] = [
+  { key: "translations", icon: "\uD83D\uDD04", label: `Porovnat p\u0159eklady`, number: 1 },
+  { key: "bookContext", icon: "\uD83D\uDCD6", label: `Kontext knihy`, number: 2 },
+  { key: "liturgy", icon: "\uD83D\uDCC5", label: `Liturgick\u00FD kalend\u00E1\u0159`, number: 3 },
+  { key: "originals", icon: "\u03B1", label: `P\u016Fvodn\u00ED jazyky`, number: 4 },
+  { key: "commentary", icon: "\uD83D\uDCDA", label: `V\u00FDkladov\u00E9 koment\u00E1\u0159e`, number: 5 },
+];
 
 function ToolBubbles({
-  slug,
   reference,
   openTool,
   onToggle,
 }: {
-  slug: string;
   reference: string;
   openTool: string | null;
   onToggle: (key: string) => void;
 }) {
-  const tools = TOOLS_BY_STEP[slug] || [];
   const [animated, setAnimated] = useState(false);
 
-  // Trigger bounce animation on mount
   useEffect(() => {
     const timer = setTimeout(() => setAnimated(true), 300);
     return () => clearTimeout(timer);
-  }, [slug]);
-
-  if (tools.length === 0) return null;
+  }, []);
 
   return (
     <div className="mt-4">
-      {/* Bubble chips with staggered bounce */}
+      {/* Numbered tool chips */}
       <div className="flex flex-wrap gap-2 mb-3">
-        {tools.map((tool, i) => (
+        {ALL_TOOLS.map((tool, i) => (
           <button
             key={tool.key}
             onClick={() => onToggle(tool.key)}
-            className={`flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[12px] font-medium transition-all ${
+            className={`group flex items-center gap-1.5 rounded-full px-3 py-2 text-[12px] font-medium transition-all ${
               openTool === tool.key
                 ? "bg-brick text-white shadow-sm scale-105"
                 : "border border-border bg-white text-text-muted hover:border-brick/30 hover:text-brick hover:shadow-sm hover:-translate-y-0.5"
             }`}
             style={{
               animation: animated && openTool !== tool.key
-                ? `bubble-bounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 0.1}s both`
+                ? `bubble-bounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 0.08}s both`
                 : undefined,
             }}
           >
+            <span className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold ${
+              openTool === tool.key
+                ? "bg-white/20 text-white"
+                : "bg-brick-pale text-brick group-hover:bg-brick/10"
+            }`}>
+              {tool.number}
+            </span>
             <span className="text-base">{tool.icon}</span>
             <span>{tool.label}</span>
           </button>
@@ -400,11 +401,6 @@ function ToolBubbles({
       {openTool === "originals" && (
         <div className="rounded-xl border border-border bg-white p-4">
           <OriginalLanguagesPanel reference={reference} />
-        </div>
-      )}
-      {openTool === "centralIdea" && (
-        <div className="rounded-xl border border-border bg-white p-4">
-          <CentralIdeaField />
         </div>
       )}
       {openTool === "commentary" && (
