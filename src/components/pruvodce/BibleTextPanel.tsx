@@ -243,16 +243,6 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
         </div>
       )}
 
-      {/* Tool bubbles — sticky toolbar above text */}
-      {hasText && !editing && localRef && !isFirstStep && (
-        <div className="sticky top-[68px] z-10 -mx-4 mb-3 bg-cream/90 px-4 py-1.5 backdrop-blur-sm">
-          <ToolBubbles
-            openTool={openTool}
-            onToggle={toggleTool}
-          />
-        </div>
-      )}
-
       {/* Text display or textarea */}
       {hasText && !editing ? (
         <>
@@ -279,10 +269,6 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
 
             </div>
 
-          {/* Expanded tool content — below text */}
-          {localRef && !isFirstStep && (
-            <ToolContent openTool={openTool} reference={localRef} />
-          )}
         </>
       ) : (
         <div>
