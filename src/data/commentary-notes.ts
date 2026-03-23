@@ -10,6 +10,13 @@ export interface VerseNote {
   note: string;
 }
 
+export interface CrossReference {
+  reference: string;
+  text: string;
+  translation: string;
+  relevance: string;
+}
+
 export interface PericopeCommentary {
   reference: string;
   title: string;
@@ -18,6 +25,7 @@ export interface PericopeCommentary {
   structure: string;
   theologicalThemes: string[];
   applicationHints: string[];
+  cross_references?: CrossReference[];
   verseNotes: VerseNote[];
 }
 
