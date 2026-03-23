@@ -74,6 +74,13 @@ function expandRefs(reference: string): string[] {
 /**
  * Commentary from Supabase DB
  */
+export interface CrossReference {
+  reference: string;
+  text: string;
+  translation: string;
+  relevance: string;
+}
+
 export interface DbCommentary {
   book_chapter: string;
   reference: string;
@@ -84,6 +91,7 @@ export interface DbCommentary {
   theological_themes: string[];
   application_hints: string[];
   verse_notes: { verse: number; note: string }[];
+  cross_references: CrossReference[];
 }
 
 export async function fetchCommentary(
