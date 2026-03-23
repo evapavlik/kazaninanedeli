@@ -11,7 +11,8 @@ import TranslationCompare from "./TranslationCompare";
 import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
 import CentralIdeaField from "./CentralIdeaField";
 import LiturgicalCalendar from "@/components/tools/LiturgicalCalendar";
-import { getCommentary } from "@/data/commentary-notes";
+import { getCommentary, type PericopeCommentary } from "@/data/commentary-notes";
+import { fetchCommentary } from "@/lib/supabase-cteni";
 import { findPostily, type PostilaMatch } from "@/lib/supabase-cteni";
 import { parseReferenceForApi, getBibleHubCommentaryUrl } from "@/lib/getbible";
 
@@ -418,10 +419,42 @@ function ToolBubbles({
 /** Commentary panel — shows exegetical notes + Farský postily + BibleHub link */
 function CommentaryPanel({ reference }: { reference: string }) {
   const parsed = parseReferenceForApi(reference);
-  const commentary = parsed ? getCommentary(parsed.bookNumber, parsed.chapter) : null;
   const commentaryUrl = parsed ? getBibleHubCommentaryUrl(parsed.bookNumber, parsed.chapter) : null;
 
-  // Fetch Farský postily from Supabase
+  // Fetch commentary from DB, fallback to local
+  const [commentary, setCommentary] = useState<PericopeCommentary | null>(
+    parsed ? getCommentary(parsed.bookNumber, parsed.chapter) : null
+  );
+  const [commentaryLoading, setCommentaryLoading] = useState(false);
+
+  useEffect(() => {
+    if (!parsed) return;
+    setCommentaryLoading(true);
+    fetchCommentary(parsed.bookNumber, parsed.chapter)
+      .then((dbData) => {
+        if (dbData) {
+          // Map DB format to local format
+          setCommentary({
+            reference: dbData.reference,
+            title: dbData.title,
+            context: dbData.context,
+            keyWords: dbData.key_words,
+            structure: dbData.structure,
+            theologicalThemes: dbData.theological_themes,
+            applicationHints: dbData.application_hints,
+            verseNotes: dbData.verse_notes,
+          });
+        }
+        // If DB returns nothing, keep local fallback (already set in useState)
+      })
+      .catch(() => {
+        // Keep local fallback
+      })
+      .finally(() => setCommentaryLoading(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reference]);
+
+  // Fetch Farsk\u00FD postily from Supabase
   const [postily, setPostily] = useState<PostilaMatch[]>([]);
   const [postilyLoading, setPostilyLoading] = useState(false);
   const [expandedPostila, setExpandedPostila] = useState<string | null>(null);
@@ -435,7 +468,7 @@ function CommentaryPanel({ reference }: { reference: string }) {
       .finally(() => setPostilyLoading(false));
   }, [reference]);
 
-  if (!commentary && !commentaryUrl && postily.length === 0 && !postilyLoading) {
+  if (!commentary && !commentaryUrl && postily.length === 0 && !postilyLoading && !commentaryLoading) {
     return (
       <p className="text-sm italic text-text-muted">
         {`Koment\u00E1\u0159e k tomuto textu zat\u00EDm nejsou k dispozici.`}
