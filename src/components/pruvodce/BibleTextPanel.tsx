@@ -615,6 +615,31 @@ function CommentaryPanel({ reference }: { reference: string }) {
         </div>
       )}
 
+      {/* Cross references with inline Bible text */}
+      {commentary?.cross_references && commentary.cross_references.length > 0 && (
+        <div>
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+            {`K\u0159\u00ED\u017Eov\u00E9 reference`}
+          </p>
+          <div className="space-y-3">
+            {commentary.cross_references.map((ref, i) => (
+              <div key={i} className="rounded-lg border border-sage/15 bg-sage-pale/20 px-3 py-2.5">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="text-[10px] font-bold text-sage">{ref.reference}</span>
+                  <span className="text-[9px] text-text-light">({ref.translation})</span>
+                </div>
+                <p className="text-[12px] leading-relaxed text-text italic border-l-2 border-sage/30 pl-2.5">
+                  {ref.text}
+                </p>
+                <p className="mt-1.5 text-[11px] leading-relaxed text-text-muted">
+                  {`\u2192 ${ref.relevance}`}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* BibleHub link — always show as additional resource */}
       {commentaryUrl && (
         <a
