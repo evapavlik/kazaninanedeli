@@ -44,6 +44,13 @@ html {
   transform: translateY(0);
 }
 
+/* Guide bar pulse — draws attention on first load */
+@keyframes guideBarPulse {
+  0% { border-top-color: var(--color-border); box-shadow: 0 -2px 16px rgba(0,0,0,0.06); }
+  40% { border-top-color: var(--color-brick); box-shadow: 0 -2px 20px rgba(155,74,60,0.15); }
+  100% { border-top-color: var(--color-border); box-shadow: 0 -2px 16px rgba(0,0,0,0.06); }
+}
+
 /* Breathing circle idle animation */
 @keyframes breathe-idle {
   0%, 100% {
