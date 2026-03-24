@@ -40,6 +40,7 @@ export default async function PhasePage({ params }: PageProps) {
 
         {/* 2-panel layout */}
         <StepContentPanel
+          key={phase.slug}
           phase={phase}
           prevPhase={prevPhase ? { slug: prevPhase.slug, title: prevPhase.title } : null}
           nextPhase={nextPhase ? { slug: nextPhase.slug, title: nextPhase.title } : null}
