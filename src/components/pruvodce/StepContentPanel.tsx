@@ -81,7 +81,15 @@ export default function StepContentPanel({
     setCompletedSubStepsArr((prev) => [...updater(new Set(prev))]);
   }, [setCompletedSubStepsArr]);
 
-  const currentSub: SubStep = phase.subSteps[activeSubStep];
+  // Clamp activeSubStep to valid range when phase changes
+  useEffect(() => {
+    if (activeSubStep >= phase.subSteps.length) {
+      setActiveSubStep(0);
+    }
+  }, [phase.slug, activeSubStep, phase.subSteps.length]);
+
+  const safeIndex = Math.min(activeSubStep, phase.subSteps.length - 1);
+  const currentSub: SubStep = phase.subSteps[safeIndex];
   const subSlug = currentSub.slug;
 
   // Tool helpers mapped to flow[] indices
