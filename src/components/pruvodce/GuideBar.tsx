@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import type { Phase, SubStep } from "@/types";
 import type { FlowToolHelper } from "./UnifiedFlow";
@@ -100,15 +101,6 @@ export default function GuideBar({
   };
 
   const handleOpenTool = (key: string) => {
-    // Translations: scroll to inline section, collapse bar with pulse
-    if (key === "translations" && onScrollToTranslations) {
-      setExpanded(false);
-      setActiveToolView(null);
-      setShouldPulse(true);
-      setTimeout(() => setShouldPulse(false), 3000);
-      onScrollToTranslations();
-      return;
-    }
     setActiveToolView(key);
   };
 
@@ -117,7 +109,13 @@ export default function GuideBar({
     setActiveToolView(null);
   };
 
-  return (
+  // Portal: render directly in document.body to avoid parent CSS context issues
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
+  useEffect(() => {
+    setPortalTarget(document.body);
+  }, []);
+
+  const content = (
     <>
       {/* Scrim */}
       {expanded && (
@@ -326,4 +324,7 @@ export default function GuideBar({
       </div>
     </>
   );
+
+  if (!portalTarget) return null;
+  return createPortal(content, portalTarget);
 }
