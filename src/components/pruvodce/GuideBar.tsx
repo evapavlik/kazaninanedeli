@@ -13,6 +13,7 @@ import Notepad from "./Notepad";
 import BibleContextView from "./BibleContextView";
 import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
 import LiturgicalCalendar from "@/components/tools/LiturgicalCalendar";
+import TranslationCompare from "./TranslationCompare";
 
 interface GuideBarProps {
   phase: Phase;
@@ -34,6 +35,7 @@ interface GuideBarProps {
 }
 
 const TOOL_LABELS: Record<string, string> = {
+  translations: `Porovn\u00E1n\u00ED p\u0159eklad\u016F`,
   bookContext: "Kontext knihy",
   liturgy: `Liturgick\u00FD kalend\u00E1\u0159`,
   originals: `P\u016Fvodn\u00ED jazyky`,
@@ -98,10 +100,12 @@ export default function GuideBar({
   };
 
   const handleOpenTool = (key: string) => {
-    // Special case: translations scroll to inline section
+    // Translations: scroll to inline section, collapse bar with pulse
     if (key === "translations" && onScrollToTranslations) {
       setExpanded(false);
       setActiveToolView(null);
+      setShouldPulse(true);
+      setTimeout(() => setShouldPulse(false), 3000);
       onScrollToTranslations();
       return;
     }
@@ -215,6 +219,7 @@ export default function GuideBar({
                 {TOOL_LABELS[activeToolView] || activeToolView}
               </h3>
               <div className="rounded-xl border border-border bg-white p-4">
+                {activeToolView === "translations" && <TranslationCompare reference={reference} />}
                 {activeToolView === "bookContext" && <BibleContextView reference={reference} />}
                 {activeToolView === "liturgy" && <LiturgicalCalendar />}
                 {activeToolView === "originals" && <OriginalLanguagesPanel reference={reference} />}
