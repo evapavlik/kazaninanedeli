@@ -869,6 +869,124 @@ const HEADINGS_BY_BOOK_NUMBER: Record<number, BookHeadings> = {
       },
     ],
   },
+
+  // ==================== ISAIAH (23) ====================
+  23: {
+    bookId: "isaiah",
+    bookName: "Izaj\u00E1\u0161",
+    bookStructure: [
+      { title: "Proto-Izaj\u00E1\u0161", chapters: "1\u201339", description: "Soudy a zasl\u00EDben\u00ED pro Judu a Jeruzal\u00E9m, prorock\u00E1 vol\u00E1n\u00ED, mesi\u00E1\u0161sk\u00E1 zasl\u00EDben\u00ED" },
+      { title: "Historick\u00FD dodatek", chapters: "36\u201339", description: "Senacheribovo ta\u017Een\u00ED, Chizkij\u00E1\u0161ova nemoc" },
+      { title: "Deutero-Izaj\u00E1\u0161 (Kniha \u00FAt\u011Bchy)", chapters: "40\u201355", description: "Konec exilu, Hospodin\u016Fv slu\u017Eebn\u00EDk, nov\u00FD exodus, p\u00EDsn\u011B o slu\u017Eebn\u00EDku" },
+      { title: "Trito-Izaj\u00E1\u0161", chapters: "56\u201366", description: "Obnova Jeruzal\u00E9ma, spravedlnost, eschatologick\u00E9 vize" },
+    ],
+    chapters: [
+      {
+        chapter: 40,
+        sections: [
+          { title: "Pot\u011B\u0161te m\u016Fj lid", startVerse: 1, endVerse: 11 },
+          { title: "Nesrovnateln\u00FD B\u016Fh", startVerse: 12, endVerse: 26 },
+          { title: "S\u00EDla pro zemdlen\u00E9", startVerse: 27, endVerse: 31 },
+        ],
+      },
+      {
+        chapter: 42,
+        sections: [
+          { title: "Prvn\u00ED p\u00EDse\u0148 o Hospodinov\u011B slu\u017Eebn\u00EDku", startVerse: 1, endVerse: 9 },
+          { title: "Nov\u00E1 p\u00EDse\u0148 Hospodinu", startVerse: 10, endVerse: 17 },
+          { title: "Slep\u00FD a hluch\u00FD slu\u017Eebn\u00EDk", startVerse: 18, endVerse: 25 },
+        ],
+      },
+      {
+        chapter: 49,
+        sections: [
+          { title: "Druh\u00E1 p\u00EDse\u0148 o Hospodinov\u011B slu\u017Eebn\u00EDku", startVerse: 1, endVerse: 7 },
+          { title: "Obnova Izraele", startVerse: 8, endVerse: 13 },
+          { title: "Si\u00F3n nen\u00ED opu\u0161t\u011Bn", startVerse: 14, endVerse: 26 },
+        ],
+      },
+      {
+        chapter: 50,
+        sections: [
+          { title: "Hospodinova ruka nen\u00ED kr\u00E1tk\u00E1", startVerse: 1, endVerse: 3 },
+          { title: "T\u0159et\u00ED p\u00EDse\u0148 o Hospodinov\u011B slu\u017Eebn\u00EDku", startVerse: 4, endVerse: 9 },
+          { title: "V\u00FDzva k d\u016Fv\u011B\u0159e", startVerse: 10, endVerse: 11 },
+        ],
+      },
+      {
+        chapter: 52,
+        sections: [
+          { title: "Prob\u010F, oble\u010D se v s\u00EDlu", startVerse: 1, endVerse: 6 },
+          { title: "Posel radostn\u00E9 zpr\u00E1vy", startVerse: 7, endVerse: 12 },
+          { title: "\u010Ctvrt\u00E1 p\u00EDse\u0148 o Hospodinov\u011B slu\u017Eebn\u00EDku (za\u010D\u00E1tek)", startVerse: 13, endVerse: 15 },
+        ],
+      },
+      {
+        chapter: 53,
+        sections: [
+          { title: "Trp\u00EDc\u00ED slu\u017Eebn\u00EDk (pokra\u010Dov\u00E1n\u00ED)", startVerse: 1, endVerse: 6 },
+          { title: "Slu\u017Eebn\u00EDk\u016Fv \u00FAd\u011Bl", startVerse: 7, endVerse: 12 },
+        ],
+      },
+    ],
+  },
+
+  // ==================== MATTHEW (40) ====================
+  40: {
+    bookId: "matthew",
+    bookName: "Matou\u0161",
+    bookStructure: [
+      { title: "Po\u010D\u00E1tky", chapters: "1\u20132", description: "Rodokmen, narozen\u00ED, mudrcov\u00E9, \u00FAt\u011Bk do Egypta" },
+      { title: "P\u0159\u00EDprava a za\u010D\u00E1tek slu\u017Eby", chapters: "3\u20134", description: "Jan K\u0159titel, k\u0159est, poku\u0161en\u00ED, prvn\u00ED u\u010Dedn\u00EDci" },
+      { title: "K\u00E1z\u00E1n\u00ED na ho\u0159e", chapters: "5\u20137", description: "Blahoslavenstv\u00ED, etika kr\u00E1lovstv\u00ED, modlitba P\u00E1n\u011B" },
+      { title: "Z\u00E1zraky a posl\u00E1n\u00ED", chapters: "8\u201310", description: "Deset z\u00E1zrak\u016F, vyslan\u00ED dvan\u00E1cti" },
+      { title: "Odpov\u011Bdi a podobenstv\u00ED", chapters: "11\u201313", description: "Jan K\u0159titel, spory o sobotu, podobenstv\u00ED o kr\u00E1lovstv\u00ED" },
+      { title: "Formov\u00E1n\u00ED c\u00EDrkve", chapters: "14\u201318", description: "Nasycen\u00ED, Petrovo vyzn\u00E1n\u00ED, prom\u011Bn\u011Bn\u00ED, \u0159\u00E1d sboru" },
+      { title: "Cesta do Jeruzal\u00E9ma", chapters: "19\u201320", description: "U\u010Den\u00ED o man\u017Eelstv\u00ED, bohatstv\u00ED, d\u011Blnick\u00E9 podobenstv\u00ED" },
+      { title: "P\u016Fsoben\u00ED v Jeruzal\u00E9m\u011B", chapters: "21\u201325", description: "Vjezd, spory v chr\u00E1mu, eschatologick\u00E1 \u0159e\u010D, podobenstv\u00ED o soudu" },
+      { title: "Pa\u0161ije a vzk\u0159\u00ED\u0161en\u00ED", chapters: "26\u201328", description: "Posledn\u00ED ve\u010De\u0159e, Getsemane, soudy, uk\u0159i\u017Eov\u00E1n\u00ED, vzk\u0159\u00ED\u0161en\u00ED, vyslan\u00ED" },
+    ],
+    chapters: [
+      {
+        chapter: 21,
+        sections: [
+          { title: "Vjezd do Jeruzal\u00E9ma", startVerse: 1, endVerse: 11 },
+          { title: "O\u010Di\u0161t\u011Bn\u00ED chr\u00E1mu", startVerse: 12, endVerse: 17 },
+          { title: "Proklet\u00ED f\u00EDkovn\u00EDku", startVerse: 18, endVerse: 22 },
+          { title: "Spor o Je\u017E\u00ED\u0161ovu pravomoc", startVerse: 23, endVerse: 27 },
+          { title: "Podobenstv\u00ED o dvou synech", startVerse: 28, endVerse: 32 },
+          { title: "Podobenstv\u00ED o zl\u00FDch vina\u0159\u00EDch", startVerse: 33, endVerse: 46 },
+        ],
+      },
+      {
+        chapter: 26,
+        sections: [
+          { title: "Rada velekn\u011B\u017E\u00ED", startVerse: 1, endVerse: 5 },
+          { title: "Pomaz\u00E1n\u00ED v Betanii", startVerse: 6, endVerse: 13 },
+          { title: "Jid\u00E1\u0161ova zrada", startVerse: 14, endVerse: 16 },
+          { title: "Posledn\u00ED ve\u010De\u0159e", startVerse: 17, endVerse: 30 },
+          { title: "P\u0159edpov\u011B\u010F Petrova zap\u0159en\u00ED", startVerse: 31, endVerse: 35 },
+          { title: "Getsemane", startVerse: 36, endVerse: 46 },
+          { title: "Zat\u010Den\u00ED", startVerse: 47, endVerse: 56 },
+          { title: "P\u0159ed veleradou", startVerse: 57, endVerse: 68 },
+          { title: "Petrovo zap\u0159en\u00ED", startVerse: 69, endVerse: 75 },
+        ],
+      },
+      {
+        chapter: 27,
+        sections: [
+          { title: "Vyd\u00E1n\u00ED Pil\u00E1tovi", startVerse: 1, endVerse: 2 },
+          { title: "Jid\u00E1\u0161\u016Fv konec", startVerse: 3, endVerse: 10 },
+          { title: "Je\u017E\u00ED\u0161 p\u0159ed Pil\u00E1tem", startVerse: 11, endVerse: 26 },
+          { title: "V\u00FDsm\u011Bch vojak\u016F", startVerse: 27, endVerse: 31 },
+          { title: "Uk\u0159i\u017Eov\u00E1n\u00ED", startVerse: 32, endVerse: 44 },
+          { title: "Je\u017E\u00ED\u0161ova smrt", startVerse: 45, endVerse: 56 },
+          { title: "Poh\u0159eb", startVerse: 57, endVerse: 61 },
+          { title: "Str\u00E1\u017E u hrobu", startVerse: 62, endVerse: 66 },
+        ],
+      },
+    ],
+  },
 };
 
 /**
