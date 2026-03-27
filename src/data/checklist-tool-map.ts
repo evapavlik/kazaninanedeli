@@ -38,6 +38,13 @@ export const checklistToolMap: Record<string, ToolMapping[]> = {
       openToolNumber: 2,
     },
     {
+      itemIndex: 1,
+      label: `V\u00FDkladov\u00E9 koment\u00E1\u0159e`,
+      icon: "\uD83D\uDCDA",
+      openToolKey: "commentary",
+      openToolNumber: 5,
+    },
+    {
       itemIndex: 4,
       label: `Liturgick\u00FD kalend\u00E1\u0159`,
       icon: "\uD83D\uDCC5",

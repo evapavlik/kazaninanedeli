@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useSermonArtifacts } from "@/hooks/useSermonArtifacts";
 
 interface AnnotationStore {
   textHash: string;
@@ -18,16 +19,17 @@ interface PreviousStepOutputsProps {
 
 export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputsProps) {
   const [annotations] = useLocalStorage<AnnotationStore | null>("kazani-annotations", null);
-  const [centralIdea] = useLocalStorage<string>("kazani-central-idea", "");
   const [fcfData] = useLocalStorage<{ need?: string; intersection?: string } | null>(
     "kazani-fcf-aktualizace",
     null
   );
+  const { artifacts } = useSermonArtifacts();
 
   // Determine what to show based on current sub-step
   const showAnnotations = ["kontext", "vyklad"].includes(subStepSlug);
   const showCentralIdea = ["aktualizace", "stavba"].includes(subStepSlug);
   const showFCF = subStepSlug === "stavba";
+  const showPrednes = subStepSlug === "prednes";
 
   // Get keyword annotations
   const keywords = annotations?.annotations
@@ -38,10 +40,11 @@ export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputs
     ?.map((a) => a.selectedText) || [];
 
   const hasAnnotations = showAnnotations && (keywords.length > 0 || actors.length > 0);
-  const hasCentralIdea = showCentralIdea && centralIdea.trim().length > 0;
+  const hasCentralIdea = showCentralIdea && artifacts.centralIdea.trim().length > 0;
   const hasFCF = showFCF && fcfData && (fcfData.need || fcfData.intersection);
+  const hasPrednes = showPrednes && (artifacts.sermonThesis.trim().length > 0 || artifacts.outlinePoints.trim().length > 0);
 
-  if (!hasAnnotations && !hasCentralIdea && !hasFCF) return null;
+  if (!hasAnnotations && !hasCentralIdea && !hasFCF && !hasPrednes) return null;
 
   return (
     <div className="mb-4 rounded-lg border border-sage/15 bg-sage-pale/30 p-4">
@@ -94,7 +97,7 @@ export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputs
             {`Centr\u00E1ln\u00ED my\u0161lenka:`}
           </p>
           <p className="text-sm italic text-text">
-            {centralIdea}
+            {artifacts.centralIdea}
           </p>
         </div>
       )}
@@ -115,6 +118,31 @@ export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputs
                 {`Pr\u016Fse\u010D\u00EDk s poslucha\u010Di:`}
               </p>
               <p className="text-sm text-text">{fcfData.intersection}</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {hasPrednes && (
+        <div className="space-y-2">
+          {artifacts.sermonThesis.trim().length > 0 && (
+            <div>
+              <p className="mb-1 text-[11px] font-medium text-text-muted">
+                {`J\u00E1dro k\u00E1z\u00E1n\u00ED:`}
+              </p>
+              <p className="text-sm font-medium italic text-brick">
+                {artifacts.sermonThesis}
+              </p>
+            </div>
+          )}
+          {artifacts.outlinePoints.trim().length > 0 && (
+            <div>
+              <p className="mb-1 text-[11px] font-medium text-text-muted">
+                {`Osnova:`}
+              </p>
+              <p className="whitespace-pre-line text-sm text-text">
+                {artifacts.outlinePoints}
+              </p>
             </div>
           )}
         </div>
