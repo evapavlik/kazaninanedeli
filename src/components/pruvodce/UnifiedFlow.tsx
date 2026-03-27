@@ -256,7 +256,7 @@ export default function UnifiedFlow({
                 )}
 
                 {/* Tool helper — link to workspace bubble or inline expand */}
-                {helper && !isInput && (
+                {helper && (
                   <div className="ml-7 mt-1.5">
                     {helper.openToolKey ? (
                       <button
