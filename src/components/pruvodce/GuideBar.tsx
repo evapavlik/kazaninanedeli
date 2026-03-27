@@ -15,6 +15,7 @@ import BibleContextView from "./BibleContextView";
 import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
 import LiturgicalCalendar from "@/components/tools/LiturgicalCalendar";
 import TranslationCompare from "./TranslationCompare";
+import CommentaryPanel from "./CommentaryPanel";
 
 interface GuideBarProps {
   phase: Phase;
@@ -222,9 +223,7 @@ export default function GuideBar({
                 {activeToolView === "liturgy" && <LiturgicalCalendar />}
                 {activeToolView === "originals" && <OriginalLanguagesPanel reference={reference} />}
                 {activeToolView === "commentary" && reference && (
-                  <p className="text-sm italic text-text-muted">
-                    {`V\u00FDkladov\u00E9 koment\u00E1\u0159e pro tuto perikopy.`}
-                  </p>
+                  <CommentaryPanel reference={reference} />
                 )}
               </div>
             </>
