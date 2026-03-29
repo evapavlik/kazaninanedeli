@@ -265,9 +265,7 @@ export default function UnifiedFlow({
                         onClick={() => onOpenTool?.(helper.openToolKey!)}
                         className="flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[11px] font-medium text-text-light hover:bg-brick-pale hover:text-brick transition-all"
                       >
-                        <span className="flex h-4 w-4 items-center justify-center rounded-full bg-brick-pale text-[9px] font-bold text-brick">
-                          {helper.openToolNumber || ""}
-                        </span>
+                        <span className="text-[13px] leading-none">{helper.icon}</span>
                         <span>{helper.label}</span>
                         <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-brick/50">
                           <path d="M5 3l6 5-6 5" />
