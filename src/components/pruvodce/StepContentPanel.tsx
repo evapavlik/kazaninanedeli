@@ -163,7 +163,7 @@ export default function StepContentPanel({
   return (
     <div className="relative">
       {/* MAIN: Full-width text */}
-      <div className={`mx-auto pb-[100px] ${subSlug === "formulace" ? "max-w-6xl" : "max-w-4xl"}`}>
+      <div className="mx-auto max-w-6xl pb-[100px]">
         {/* Mobile toggle */}
         <div className="lg:hidden mb-4">
           <button
@@ -188,9 +188,9 @@ export default function StepContentPanel({
           )}
         </div>
 
-        {/* Desktop: text always visible, 2-col grid in formulace */}
+        {/* Desktop: 2-col grid throughout — main content + Moje kázání */}
         <div className="hidden lg:block">
-          <div className={subSlug === "formulace" ? "grid grid-cols-[1fr_268px] gap-4 items-start" : ""}>
+          <div className="grid grid-cols-[1fr_268px] gap-4 items-start">
             <div>
               <OnboardingHint />
               <BuildingBlocksForStep slug={currentSub.slug} getStepContext={getStepContext} />
@@ -204,10 +204,8 @@ export default function StepContentPanel({
               )}
             </div>
 
-            {/* Moje kázání — only in formulace */}
-            {subSlug === "formulace" && (
-              <SermonPanel artifacts={artifacts} />
-            )}
+            {/* Moje kázání — visible throughout all steps */}
+            <SermonPanel artifacts={artifacts} />
           </div>
         </div>
 
