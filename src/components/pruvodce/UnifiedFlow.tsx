@@ -138,6 +138,7 @@ export default function UnifiedFlow({
             // Get current value for artifact fields
             const artifactField = isArtifact ? (item as { field: string }).field : null;
             const artifactPlaceholder = isArtifact ? (item as { placeholder?: string }).placeholder : null;
+            const artifactRows = isArtifact ? (item as { rows?: number }).rows : undefined;
             const artifactValue = artifactField && artifacts
               ? (artifacts as unknown as Record<string, string>)[artifactField] || ""
               : reflections[i] || "";
@@ -238,6 +239,7 @@ export default function UnifiedFlow({
                     value={artifactValue}
                     placeholder={artifactPlaceholder || `Va\u0161e odpov\u011B\u010F\u2026`}
                     isDone={isDone}
+                    rows={artifactRows}
                     onChange={(value) => {
                       if (artifactField) {
                         handleArtifact(artifactField, value);
@@ -263,9 +265,7 @@ export default function UnifiedFlow({
                         onClick={() => onOpenTool?.(helper.openToolKey!)}
                         className="flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[11px] font-medium text-text-light hover:bg-brick-pale hover:text-brick transition-all"
                       >
-                        <span className="flex h-4 w-4 items-center justify-center rounded-full bg-brick-pale text-[9px] font-bold text-brick">
-                          {helper.openToolNumber || ""}
-                        </span>
+                        <span className="text-[13px] leading-none">{helper.icon}</span>
                         <span>{helper.label}</span>
                         <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-brick/50">
                           <path d="M5 3l6 5-6 5" />
@@ -312,6 +312,7 @@ function ArtifactInput({
   value,
   placeholder,
   isDone,
+  rows = 2,
   onChange,
   onComplete,
 }: {
@@ -319,6 +320,7 @@ function ArtifactInput({
   value: string;
   placeholder: string;
   isDone: boolean;
+  rows?: number;
   onChange: (value: string) => void;
   onComplete: (value: string) => void;
 }) {
@@ -357,7 +359,7 @@ function ArtifactInput({
           value={localValue}
           onChange={handleChange}
           placeholder={placeholder}
-          rows={text.includes("Osnova") ? 4 : 2}
+          rows={rows}
           className="w-full rounded-md border border-brick/15 bg-white px-2.5 py-1.5 text-[12px] leading-relaxed text-text placeholder:text-text-light/40 focus:border-brick/30 focus:outline-none focus:ring-1 focus:ring-brick/10 resize-y"
         />
         {!isDone && (

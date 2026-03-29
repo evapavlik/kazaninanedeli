@@ -36,6 +36,9 @@ export interface SermonArtifacts {
   outlinePoints: string; // Hlavn\u00ED body osnovy
   intro: string; // \u00DAvod k\u00E1z\u00E1n\u00ED
   conclusion: string; // Z\u00E1v\u011Br k\u00E1z\u00E1n\u00ED
+
+  // Phase 3 \u2014 Formulace
+  sermonText: string; // Cel\u00FD text k\u00E1z\u00E1n\u00ED
 }
 
 const EMPTY_ARTIFACTS: SermonArtifacts = {
@@ -54,6 +57,7 @@ const EMPTY_ARTIFACTS: SermonArtifacts = {
   outlinePoints: "",
   intro: "",
   conclusion: "",
+  sermonText: "",
 };
 
 const STORAGE_KEY = "kazani-artifacts";
@@ -153,6 +157,28 @@ export function useSermonArtifacts() {
               },
             ].filter((x): x is { label: string; value: string; highlight?: boolean } => !!x),
           };
+        case "formulace":
+          return {
+            items: [
+              artifacts.sermonThesis && {
+                label: `J\u00E1dro k\u00E1z\u00E1n\u00ED`,
+                value: artifacts.sermonThesis,
+                highlight: true,
+              },
+              artifacts.outlinePoints && {
+                label: `Osnova`,
+                value: artifacts.outlinePoints,
+              },
+              artifacts.intro && {
+                label: `\u00DAvod`,
+                value: artifacts.intro,
+              },
+              artifacts.conclusion && {
+                label: `Z\u00E1v\u011Br`,
+                value: artifacts.conclusion,
+              },
+            ].filter((x): x is { label: string; value: string; highlight?: boolean } => !!x),
+          };
         case "prednes":
           return {
             items: [
@@ -164,6 +190,14 @@ export function useSermonArtifacts() {
               artifacts.outlinePoints && {
                 label: `Osnova`,
                 value: artifacts.outlinePoints,
+              },
+              artifacts.intro && {
+                label: `\u00DAvod`,
+                value: artifacts.intro,
+              },
+              artifacts.conclusion && {
+                label: `Z\u00E1v\u011Br`,
+                value: artifacts.conclusion,
               },
             ].filter((x): x is { label: string; value: string; highlight?: boolean } => !!x),
           };
