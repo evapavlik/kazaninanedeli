@@ -169,7 +169,6 @@ export default function UnifiedFlow({
                       : "border border-sage/10 bg-sage-pale/20 p-2.5"
                     : "p-2.5"
                 }`}
-                style={justChecked === i ? { animation: 'checkBounce 0.9s ease-out' } : undefined}
               >
                 {/* Check item */}
                 {!isInput && (
@@ -183,6 +182,7 @@ export default function UnifiedFlow({
                           ? "border-brick bg-brick text-white"
                           : "border-brick/30 bg-white group-hover:border-brick/60"
                       }`}
+                      style={justChecked === i ? { animation: 'checkRipple 0.8s ease-out' } : undefined}
                     >
                       {isDone && (
                         <svg
@@ -195,7 +195,10 @@ export default function UnifiedFlow({
                           strokeLinecap="round"
                           strokeLinejoin="round"
                         >
-                          <path d="M3 7l3 3 5-6" />
+                          <path
+                            d="M3 7l3 3 5-6"
+                            style={{ strokeDasharray: 20, strokeDashoffset: 20, animation: 'drawCheck 0.4s ease-out forwards' }}
+                          />
                         </svg>
                       )}
                     </span>
