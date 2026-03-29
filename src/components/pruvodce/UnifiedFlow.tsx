@@ -64,7 +64,7 @@ export default function UnifiedFlow({
     setChecked((prev) => {
       if (!prev[index]) {
         setJustChecked(index);
-        setTimeout(() => setJustChecked(null), 400);
+        setTimeout(() => setJustChecked(null), 650);
       }
       return prev.map((v, i) => (i === index ? !v : v));
     });
@@ -182,7 +182,7 @@ export default function UnifiedFlow({
                           ? "border-brick bg-brick text-white"
                           : "border-brick/30 bg-white group-hover:border-brick/60"
                       }`}
-                      style={justChecked === i ? { animation: 'checkBounce 0.35s ease-out' } : undefined}
+                      style={justChecked === i ? { animation: 'checkBounce 0.6s cubic-bezier(0.4, 0, 0.2, 1)' } : undefined}
                     >
                       {isDone && (
                         <svg
