@@ -139,6 +139,11 @@ export default function UnifiedFlow({
             const artifactField = isArtifact ? (item as { field: string }).field : null;
             const artifactPlaceholder = isArtifact ? (item as { placeholder?: string }).placeholder : null;
             const artifactRows = isArtifact ? (item as { rows?: number }).rows : undefined;
+            const artifactContextField = isArtifact ? (item as { contextField?: string }).contextField : null;
+            const artifactContextLabel = isArtifact ? (item as { contextLabel?: string }).contextLabel : null;
+            const artifactContextValue = artifactContextField && artifacts
+              ? (artifacts as unknown as Record<string, string>)[artifactContextField] || ""
+              : "";
             const artifactValue = artifactField && artifacts
               ? (artifacts as unknown as Record<string, string>)[artifactField] || ""
               : reflections[i] || "";
@@ -233,6 +238,12 @@ export default function UnifiedFlow({
                 )}
 
                 {/* Artifact item — connected to sermon artifacts */}
+                {isArtifact && artifactContextField && artifactContextValue && (
+                  <div className="mb-2 rounded-md bg-cream px-3 py-2 text-[11px]">
+                    <span className="font-medium text-text-muted">{artifactContextLabel}:</span>
+                    <span className="ml-1 italic text-text">{artifactContextValue}</span>
+                  </div>
+                )}
                 {isArtifact && (
                   <ArtifactInput
                     text={item.text}

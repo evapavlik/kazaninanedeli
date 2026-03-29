@@ -120,11 +120,11 @@ export const phases: Phase[] = [
         subtitle: "Postavit most",
         icon: "\uD83C\uDF09",
         estimatedMinutes: 20,
-        description: `Nyn\u00ED stav\u00EDme most mezi starov\u011Bk\u00FDm textem a dne\u0161n\u00EDmi poslucha\u010Di. Pt\u00E1me se: co text \u0159\u00EDk\u00E1 n\u00E1m, dnes, v na\u0161\u00ED situaci? Porozum\u011Bn\u00ED textu se podle Ricoeura st\u00E1v\u00E1 sebeporozum\u011Bn\u00EDm \u2014 text n\u00E1m pom\u00E1h\u00E1 vid\u011Bt vlastn\u00ED \u017Eivot nov\u00FDma o\u010Dima.`,
+        description: `Nyn\u00ED hled\u00E1me, kde se setk\u00E1v\u00E1 sv\u011Bt textu se sv\u011Btem poslucha\u010D\u016F. Pt\u00E1me se: co text \u0159\u00EDk\u00E1 n\u00E1m, dnes, v na\u0161\u00ED situaci? Porozum\u011Bn\u00ED textu se podle Ricoeura st\u00E1v\u00E1 sebeporozum\u011Bn\u00EDm \u2014 text n\u00E1m pom\u00E1h\u00E1 vid\u011Bt vlastn\u00ED \u017Eivot nov\u00FDma o\u010Dima.`,
         theory: {
           concept: `Porozum\u011Bn\u00ED jako sebeporozum\u011Bn\u00ED`,
-          source: `Pokorn\u00FD, kap. 5 (V\u00FDklad); Chapell, Christ-Centered Preaching`,
-          explanation: `Paul Ricoeur uk\u00E1zal, \u017Ee porozum\u011Bn\u00ED textu nen\u00ED jen intelektu\u00E1ln\u00ED cvi\u010Den\u00ED \u2014 vede k sebeporozum\u011Bn\u00ED. Text je nep\u0159\u00EDmou v\u00FDzvou, abychom se k jeho cel\u00E9mu odli\u0161n\u00E9mu sv\u011Btu vyj\u00E1d\u0159ili a reagovali na n\u011Bj (Pokorn\u00FD). Bryan Chapell dopl\u0148uje praktick\u00FD n\u00E1stroj: FCF (Fallen Condition Focus) \u2014 hled\u00E1n\u00ED m\u00EDsta, kde se text dot\u00FDk\u00E1 lidsk\u00E9 zranitelnosti a pot\u0159eby.`,
+          source: `Pokorn\u00FD, kap. 5 (V\u00FDklad); Ricoeur, Hermeneutika a humanitn\u00ED v\u011Bdy`,
+          explanation: `Paul Ricoeur uk\u00E1zal, \u017Ee rozum\u011Bt textu neznamjen\u00E1 jen pochopit jeho obsah \u2014 znamen\u00E1 to b\u00FDt j\u00EDm oslov\u011Bn. Text je nep\u0159\u00EDmou v\u00FDzvou, kter\u00E1 otev\u00EDr\u00E1 nov\u00E9 mo\u017Enosti existence. Pokorn\u00FD to formuluje jako \u201Eodli\u0161n\u00FD sv\u011Bt textu\u201C: biblick\u00FD text poch\u00E1z\u00ED z jin\u00E9 doby, jin\u00E9 kultury, jin\u00E9ho horizontu \u2014 a pr\u00E1v\u011B tato cizost n\u00E1s m\u016F\u017Ee p\u0159ekvapit a prom\u011Bnit. Aktualizace proto nen\u00ED \u201Eaplikac\u00ED textu na dne\u0161ek\u201C, ale setk\u00E1n\u00EDm: kde se sv\u011Bt textu setk\u00E1 se sv\u011Btem poslucha\u010D\u016F?`,
         },
         flow: [
           { type: "artifact", text: `Co va\u0161i poslucha\u010Di pr\u00E1v\u011B pro\u017E\u00EDvaj\u00ED? Jak\u00E9 pot\u0159eby text oslovuje?`, field: "listenerSituation", placeholder: `Nap\u0159. mnoz\u00ED pro\u017E\u00EDvaj\u00ED nejistotu, ztr\u00E1tu bl\u00EDzk\u00FDch...` },
@@ -142,12 +142,12 @@ export const phases: Phase[] = [
         estimatedMinutes: 25,
         description: `M\u00E1te centr\u00E1ln\u00ED my\u0161lenku a v\u00EDte, k \u010Demu chcete poslucha\u010De v\u00E9st. Te\u010F d\u00E1te k\u00E1z\u00E1n\u00ED formu \u2014 osnovu, \u00FAvod a z\u00E1v\u011Br, ilustrace a konkr\u00E9tn\u00ED aplikace. K\u00E1z\u00E1n\u00ED m\u00E1 b\u00FDt srozumiteln\u00E9, p\u0159ehledn\u00E9 a zapamatovateln\u00E9.`,
         theory: {
-          concept: `Homiletick\u00E1 idea a struktura`,
-          source: `Robinson, Biblical Preaching; Richard, Preparing Expository Sermons`,
-          explanation: `Haddon Robinson rozli\u0161uje exegetickou ideu (co text \u0159\u00EDk\u00E1) a homiletickou ideu (jak to \u0159ekneme poslucha\u010D\u016Fm). Ramesh Richard navrhuje postup: centr\u00E1ln\u00ED my\u0161lenka \u2192 \u00FA\u010Del k\u00E1z\u00E1n\u00ED \u2192 osnova \u2192 ilustrace \u2192 aplikace. V anglik\u00E1nsk\u00E9 tradici se zd\u016Fraz\u0148uje zasazen\u00ED k\u00E1z\u00E1n\u00ED do liturgick\u00E9ho kontextu \u2014 kde v bohoslu\u017Eb\u011B zazn\u00ED, co mu p\u0159edch\u00E1z\u00ED a co n\u00E1sleduje.`,
+          concept: `Homiletick\u00E1 idea`,
+          source: `Pokorn\u00FD, kap. 6 (K\u00E1z\u00E1n\u00ED); Robinson, Biblical Preaching`,
+          explanation: `Pokorn\u00FD rozli\u0161uje porozum\u011Bn\u00ED textu (co text \u0159\u00EDk\u00E1 v p\u016Fvodn\u00ED situaci) a formulaci k\u00E9rygmatu (co kazatel \u0159ekne sv\u00FDm poslucha\u010D\u016Fm dnes). Robinson pojmenovav\u00E1 tuto hranici jako pohyb od exegetick\u00E9 ideje k homiletick\u00E9 ideji: nesta\u010D\u00ED text p\u0159elo\u017Eit do \u010De\u0161tiny \u2014 je t\u0159eba ho znovu ztv\u00E1rnit pro konkr\u00E9tn\u00ED situaci konkr\u00E9tn\u00EDch lid\u00ED. Thesis k\u00E1z\u00E1n\u00ED je v\u00FDsledkem tohoto p\u0159echodu: formulace toho, co B\u016Fh skrze tento text \u0159\u00EDk\u00E1 pr\u00E1v\u011B t\u011Bmto lidem.`,
         },
         flow: [
-          { type: "artifact", text: `Hlavn\u00ED my\u0161lenka k\u00E1z\u00E1n\u00ED jednou v\u011Btou:`, field: "sermonThesis", placeholder: `Nap\u0159. I kdy\u017E se c\u00EDt\u00EDme mrtv\u00ED, B\u016Fh n\u00E1s vol\u00E1 k nov\u00E9mu \u017Eivotu.` },
+          { type: "artifact", text: `Thesis k\u00E1z\u00E1n\u00ED \u2014 co budete k\u00E1zat? (jednou v\u011Btou)`, field: "sermonThesis", placeholder: `Nap\u0159. I kdy\u017E se c\u00EDt\u00EDme mrtv\u00ED, B\u016Fh n\u00E1s vol\u00E1 k nov\u00E9mu \u017Eivotu.`, contextField: "centralIdea", contextLabel: "Centr\u00E1ln\u00ED my\u0161lenka textu (z v\u00FDkladu)" },
           { type: "artifact", text: `Osnova \u2014 2\u20134 hlavn\u00ED body rozv\u00EDjej\u00EDc\u00ED my\u0161lenku:`, field: "outlinePoints", placeholder: `1. Situace beznad\u011Bje (v. 12)\n2. Bo\u017E\u00ED p\u0159\u00EDslib (v. 13)\n3. O\u017Eiven\u00ED Duchem (v. 14)`, rows: 4 },
           { type: "artifact", text: `\u00DAvod \u2014 jak vt\u00E1hnete poslucha\u010De?`, field: "intro", placeholder: `Nap\u0159. ot\u00E1zka, p\u0159\u00EDb\u011Bh, obraz...` },
           { type: "artifact", text: `Z\u00E1v\u011Br \u2014 jak shrnete a po\u0161lete d\u00E1l?`, field: "conclusion", placeholder: `Nap\u0159. v\u00FDzva, modlitba, obraz nad\u011Bje...` },
