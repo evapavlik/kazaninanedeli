@@ -160,6 +160,7 @@ export function useSermonArtifacts() {
         case "formulace":
           return {
             items: [
+              // Sermon structure (highlight)
               artifacts.sermonThesis && {
                 label: `J\u00E1dro k\u00E1z\u00E1n\u00ED`,
                 value: artifacts.sermonThesis,
@@ -176,6 +177,44 @@ export function useSermonArtifacts() {
               artifacts.conclusion && {
                 label: `Z\u00E1v\u011Br`,
                 value: artifacts.conclusion,
+              },
+              // Phase 3 — aktualizace
+              artifacts.listenerSituation && {
+                label: `Poslucha\u010Di`,
+                value: artifacts.listenerSituation,
+              },
+              artifacts.textListenerBridge && {
+                label: `Most text\u2013\u017Eivot`,
+                value: artifacts.textListenerBridge,
+              },
+              artifacts.illustrations && {
+                label: `Ilustrace`,
+                value: artifacts.illustrations,
+              },
+              artifacts.takeaway && {
+                label: `Co si odn\u00E9st`,
+                value: artifacts.takeaway,
+              },
+              // Phase 2 — porozum\u011Bn\u00ED textu
+              artifacts.centralIdea && {
+                label: `Centr\u00E1ln\u00ED my\u0161lenka`,
+                value: artifacts.centralIdea,
+              },
+              artifacts.author && {
+                label: `Autor a adres\u00E1t`,
+                value: artifacts.author,
+              },
+              artifacts.historicalContext && {
+                label: `Historick\u00E9 pozad\u00ED`,
+                value: artifacts.historicalContext,
+              },
+              artifacts.liturgicalConnection && {
+                label: `Liturgick\u00FD kontext`,
+                value: artifacts.liturgicalConnection,
+              },
+              artifacts.overallImpression && {
+                label: `Celkov\u00FD dojem`,
+                value: artifacts.overallImpression,
               },
             ].filter((x): x is { label: string; value: string; highlight?: boolean } => !!x),
           };

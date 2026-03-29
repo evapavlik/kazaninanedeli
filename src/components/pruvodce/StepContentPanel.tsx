@@ -9,6 +9,7 @@ import BibleTextPanel from "./BibleTextPanel";
 import BuildingBlocks from "./BuildingBlocks";
 import TranslationCompare from "./TranslationCompare";
 import GuideBar from "./GuideBar";
+import SermonPanel from "./SermonPanel";
 import { useSermonArtifacts } from "@/hooks/useSermonArtifacts";
 
 // Tool components (for inline flow helpers)
@@ -162,7 +163,7 @@ export default function StepContentPanel({
   return (
     <div className="relative">
       {/* MAIN: Full-width text */}
-      <div className="mx-auto max-w-4xl pb-[100px]">
+      <div className={`mx-auto pb-[100px] ${subSlug === "formulace" ? "max-w-6xl" : "max-w-4xl"}`}>
         {/* Mobile toggle */}
         <div className="lg:hidden mb-4">
           <button
@@ -187,18 +188,27 @@ export default function StepContentPanel({
           )}
         </div>
 
-        {/* Desktop: text always full width */}
+        {/* Desktop: text always visible, 2-col grid in formulace */}
         <div className="hidden lg:block">
-          <OnboardingHint />
-          <BuildingBlocksForStep slug={currentSub.slug} getStepContext={getStepContext} />
-          <BibleTextPanel currentSlug={subSlug} />
+          <div className={subSlug === "formulace" ? "grid grid-cols-[1fr_268px] gap-4 items-start" : ""}>
+            <div>
+              <OnboardingHint />
+              <BuildingBlocksForStep slug={currentSub.slug} getStepContext={getStepContext} />
+              <BibleTextPanel currentSlug={subSlug} />
 
-          {/* Translation compare — inline below text */}
-          {isTextPhase && savedRef && (
-            <div className="mt-6 transition-shadow duration-400" ref={translationsRef}>
-              <TranslationCompare reference={savedRef} />
+              {/* Translation compare — inline below text */}
+              {isTextPhase && savedRef && (
+                <div className="mt-6 transition-shadow duration-400" ref={translationsRef}>
+                  <TranslationCompare reference={savedRef} />
+                </div>
+              )}
             </div>
-          )}
+
+            {/* Moje kázání — only in formulace */}
+            {subSlug === "formulace" && (
+              <SermonPanel artifacts={artifacts} />
+            )}
+          </div>
         </div>
 
         {/* Mobile: show guide inline below text */}
