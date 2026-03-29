@@ -230,9 +230,9 @@ export default function GuideBar({
           ) : (
             /* ---- GUIDE VIEW ---- */
             <>
-              {/* Sub-step navigation */}
+              {/* Sub-step navigation — sticky so it stays visible when scrolling */}
               {phase.subSteps.length > 1 && (
-                <div className="mb-4 border-b border-border pb-3">
+                <div className="sticky top-0 z-10 bg-white -mx-6 px-6 mb-4 border-b border-border pb-3 pt-1">
                   <SubStepNav
                     subSteps={phase.subSteps}
                     activeIndex={activeSubStep}
