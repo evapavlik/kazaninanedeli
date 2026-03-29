@@ -197,7 +197,10 @@ export default function UnifiedFlow({
                         >
                           <path
                             d="M3 7l3 3 5-6"
-                            style={{ strokeDasharray: 20, strokeDashoffset: 20, animation: 'drawCheck 0.4s ease-out forwards' }}
+                            style={justChecked === i
+                              ? { strokeDasharray: 20, strokeDashoffset: 20, animation: 'drawCheck 0.4s ease-out forwards' }
+                              : { strokeDasharray: 20, strokeDashoffset: 0 }
+                            }
                           />
                         </svg>
                       )}
@@ -351,6 +354,7 @@ function ArtifactInput({
   const [localValue, setLocalValue] = useState(value);
   const [settled, setSettled] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const isDirty = localValue !== value;
 
   // Sync when external value changes
   useEffect(() => {
@@ -395,7 +399,7 @@ function ArtifactInput({
         />
         <div
           className={`mt-1.5 overflow-hidden transition-all duration-300 ${
-            isDone ? "max-h-0 opacity-0" : "max-h-10 opacity-100"
+            isDone && !isDirty ? "max-h-0 opacity-0" : "max-h-10 opacity-100"
           }`}
         >
           <button
