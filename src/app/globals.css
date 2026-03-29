@@ -81,3 +81,23 @@ html {
 .breathe-ring {
   animation: breathe-ring 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
+
+/* Step entry — gentle waft when entering a new substep */
+@keyframes stepEnter {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Check bounce — physical feel of completing a task */
+@keyframes checkBounce {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.3); }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+/* Artifact settle — sage glow on completing a written artifact */
+@keyframes artifactSettle {
+  0%   { box-shadow: 0 0 0 3px rgba(107, 143, 113, 0.45); }
+  100% { box-shadow: 0 0 0 0px rgba(107, 143, 113, 0); }
+}

@@ -57,8 +57,16 @@ export default function UnifiedFlow({
     onCountChange?.(checkedCheckCount, checkCount);
   }, [checkedCheckCount, checkCount, onCountChange]);
 
+  const [justChecked, setJustChecked] = useState<number | null>(null);
+
   const toggle = (index: number) => {
-    setChecked((prev) => prev.map((v, i) => (i === index ? !v : v)));
+    setChecked((prev) => {
+      if (!prev[index]) {
+        setJustChecked(index);
+        setTimeout(() => setJustChecked(null), 400);
+      }
+      return prev.map((v, i) => (i === index ? !v : v));
+    });
   };
 
   const handleReflection = useCallback(
@@ -168,11 +176,12 @@ export default function UnifiedFlow({
                     className="flex w-full gap-2.5 text-left group items-start"
                   >
                     <span
-                      className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-all duration-200 ${
+                      className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors duration-200 ${
                         isDone
                           ? "border-brick bg-brick text-white"
                           : "border-brick/30 bg-white group-hover:border-brick/60"
                       }`}
+                      style={justChecked === i ? { animation: 'checkBounce 0.35s ease-out' } : undefined}
                     >
                       {isDone && (
                         <svg
@@ -336,6 +345,7 @@ function ArtifactInput({
   onComplete: (value: string) => void;
 }) {
   const [localValue, setLocalValue] = useState(value);
+  const [settled, setSettled] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Sync when external value changes
@@ -348,8 +358,14 @@ function ArtifactInput({
     onChange(e.target.value);
   };
 
+  const handleComplete = () => {
+    onComplete(localValue);
+    setSettled(true);
+    setTimeout(() => setSettled(false), 1000);
+  };
+
   return (
-    <div>
+    <div style={settled ? { animation: 'artifactSettle 1s ease-out' } : undefined}>
       <div className="flex items-start gap-2">
         <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brick-pale text-brick text-xs">
           {isDone ? (
@@ -376,7 +392,7 @@ function ArtifactInput({
         {!isDone && (
           <div className="mt-1 flex justify-end">
             <button
-              onClick={() => onComplete(localValue)}
+              onClick={handleComplete}
               disabled={!localValue.trim()}
               className={`rounded-md px-2.5 py-0.5 text-[11px] font-medium transition-colors ${
                 localValue.trim()

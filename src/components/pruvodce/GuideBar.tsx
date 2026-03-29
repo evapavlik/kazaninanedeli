@@ -242,6 +242,9 @@ export default function GuideBar({
                 </div>
               )}
 
+              {/* Guide content — re-mounts on substep change, triggers entry animation */}
+              <div key={`step-${activeSubStep}`} style={{ animation: 'stepEnter 0.35s ease-out' }}>
+
               {/* Theory */}
               <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} />
 
@@ -272,6 +275,8 @@ export default function GuideBar({
                   onToggle={() => {}}
                   onHasContentChange={onNotepadContent}
                 />
+              </div>
+
               </div>
 
               {/* Navigation */}
