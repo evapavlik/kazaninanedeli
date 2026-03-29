@@ -1,7 +1,7 @@
 export type FlowItem =
   | { type: "check"; text: string }
   | { type: "reflect"; text: string }
-  | { type: "artifact"; text: string; field: string; placeholder?: string };
+  | { type: "artifact"; text: string; field: string; placeholder?: string; rows?: number };
 
 export interface SubStep {
   slug: string;
