@@ -169,7 +169,6 @@ export default function UnifiedFlow({
                       : "border border-sage/10 bg-sage-pale/20 p-2.5"
                     : "p-2.5"
                 }`}
-                style={justChecked === i ? { animation: 'checkBounce 0.9s ease-out' } : undefined}
               >
                 {/* Check item */}
                 {!isInput && (
@@ -183,6 +182,7 @@ export default function UnifiedFlow({
                           ? "border-brick bg-brick text-white"
                           : "border-brick/30 bg-white group-hover:border-brick/60"
                       }`}
+                      style={justChecked === i ? { animation: 'checkRipple 0.8s ease-out' } : undefined}
                     >
                       {isDone && (
                         <svg
@@ -195,7 +195,10 @@ export default function UnifiedFlow({
                           strokeLinecap="round"
                           strokeLinejoin="round"
                         >
-                          <path d="M3 7l3 3 5-6" />
+                          <path
+                            d="M3 7l3 3 5-6"
+                            style={{ strokeDasharray: 20, strokeDashoffset: 20, animation: 'drawCheck 0.4s ease-out forwards' }}
+                          />
                         </svg>
                       )}
                     </span>
@@ -390,21 +393,26 @@ function ArtifactInput({
           rows={rows}
           className="w-full rounded-md border border-brick/15 bg-white px-2.5 py-1.5 text-[12px] leading-relaxed text-text placeholder:text-text-light/40 focus:border-brick/30 focus:outline-none focus:ring-1 focus:ring-brick/10 resize-y"
         />
-        {!isDone && (
-          <div className="mt-1 flex justify-end">
-            <button
-              onClick={handleComplete}
-              disabled={!localValue.trim()}
-              className={`rounded-md px-2.5 py-0.5 text-[11px] font-medium transition-colors ${
-                localValue.trim()
-                  ? "bg-brick px-2.5 py-0.5 text-white hover:bg-brick/90"
-                  : "bg-border/50 text-text-light cursor-not-allowed"
-              }`}
-            >
-              {`Hotovo \u2192`}
-            </button>
-          </div>
-        )}
+        <div
+          className={`mt-1.5 overflow-hidden transition-all duration-300 ${
+            isDone ? "max-h-0 opacity-0" : "max-h-10 opacity-100"
+          }`}
+        >
+          <button
+            onClick={handleComplete}
+            disabled={!localValue.trim()}
+            className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium transition-all duration-200 ${
+              localValue.trim()
+                ? "bg-sage/15 text-sage hover:bg-sage/25 cursor-pointer"
+                : "text-text-light cursor-not-allowed"
+            }`}
+          >
+            <svg width="10" height="10" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 7l3 3 5-6" />
+            </svg>
+            Uložit
+          </button>
+        </div>
       </div>
     </div>
   );
