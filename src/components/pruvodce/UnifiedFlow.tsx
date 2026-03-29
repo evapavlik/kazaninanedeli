@@ -64,7 +64,7 @@ export default function UnifiedFlow({
     setChecked((prev) => {
       if (!prev[index]) {
         setJustChecked(index);
-        setTimeout(() => setJustChecked(null), 650);
+        setTimeout(() => setJustChecked(null), 950);
       }
       return prev.map((v, i) => (i === index ? !v : v));
     });
@@ -169,6 +169,7 @@ export default function UnifiedFlow({
                       : "border border-sage/10 bg-sage-pale/20 p-2.5"
                     : "p-2.5"
                 }`}
+                style={justChecked === i ? { animation: 'checkBounce 0.9s ease-out' } : undefined}
               >
                 {/* Check item */}
                 {!isInput && (
@@ -182,7 +183,6 @@ export default function UnifiedFlow({
                           ? "border-brick bg-brick text-white"
                           : "border-brick/30 bg-white group-hover:border-brick/60"
                       }`}
-                      style={justChecked === i ? { animation: 'checkBounce 0.6s cubic-bezier(0.4, 0, 0.2, 1)' } : undefined}
                     >
                       {isDone && (
                         <svg
