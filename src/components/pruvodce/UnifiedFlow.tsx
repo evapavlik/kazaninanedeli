@@ -54,8 +54,9 @@ export default function UnifiedFlow({
   ).length;
 
   useEffect(() => {
-    onCountChange?.(checkedCheckCount, checkCount);
-  }, [checkedCheckCount, checkCount, onCountChange]);
+    // Report all items (checks + artifacts) so substeps with only artifacts can complete
+    onCountChange?.(completedCount, items.length);
+  }, [completedCount, items.length, onCountChange]);
 
   const [justChecked, setJustChecked] = useState<number | null>(null);
 
