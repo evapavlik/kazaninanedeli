@@ -146,7 +146,7 @@ export default function GuideBar({
             </span>
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-brick">
-                {`F\u00E1ze ${phase.number} ze 4`}
+                {phase.title}
               </p>
               <p className="font-lora text-[15px] font-bold text-text">
                 {currentSub.title}
