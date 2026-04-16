@@ -1,0 +1,340 @@
+
+=== Scraping cycle A ===
+Fetching index: https://cyklus.ccsh.cz/a.html
+Fetching index: https://cyklus.ccsh.cz/a.html?start=20
+Fetching index: https://cyklus.ccsh.cz/a.html?start=40
+Fetching index: https://cyklus.ccsh.cz/a.html?start=60
+Fetching index: https://cyklus.ccsh.cz/a.html?start=80
+Found 90 pages for cycle A
+  Fetching: https://cyklus.ccsh.cz/a/10-a7.html
+  Fetching: https://cyklus.ccsh.cz/a/11-a8.html
+  Fetching: https://cyklus.ccsh.cz/a/12-a9.html
+  Fetching: https://cyklus.ccsh.cz/a/13-a10.html
+  Fetching: https://cyklus.ccsh.cz/a/14-a11.html
+  Fetching: https://cyklus.ccsh.cz/a/15-a12.html
+  Fetching: https://cyklus.ccsh.cz/a/16-a13.html
+  Fetching: https://cyklus.ccsh.cz/a/17-a14.html
+  Fetching: https://cyklus.ccsh.cz/a/18-a15.html
+  Fetching: https://cyklus.ccsh.cz/a/19-a16.html
+  Fetching: https://cyklus.ccsh.cz/a/20-a17.html
+  Fetching: https://cyklus.ccsh.cz/a/21-a18.html
+  Fetching: https://cyklus.ccsh.cz/a/22-a19.html
+  Fetching: https://cyklus.ccsh.cz/a/23-a20.html
+  Fetching: https://cyklus.ccsh.cz/a/24-a21.html
+  Fetching: https://cyklus.ccsh.cz/a/25-a22.html
+  Fetching: https://cyklus.ccsh.cz/a/26-a23.html
+  Fetching: https://cyklus.ccsh.cz/a/27-a24.html
+  Fetching: https://cyklus.ccsh.cz/a/278-a90.html
+  Fetching: https://cyklus.ccsh.cz/a/28-a25.html
+  Fetching: https://cyklus.ccsh.cz/a/29-a26.html
+  Fetching: https://cyklus.ccsh.cz/a/30-a27.html
+  Fetching: https://cyklus.ccsh.cz/a/31-a28.html
+  Fetching: https://cyklus.ccsh.cz/a/32-a29.html
+  Fetching: https://cyklus.ccsh.cz/a/33-a30.html
+  Fetching: https://cyklus.ccsh.cz/a/34-a31.html
+  Fetching: https://cyklus.ccsh.cz/a/35-a32.html
+  Fetching: https://cyklus.ccsh.cz/a/36-a33.html
+  Fetching: https://cyklus.ccsh.cz/a/37-a34.html
+  Fetching: https://cyklus.ccsh.cz/a/38-a35.html
+  Fetching: https://cyklus.ccsh.cz/a/39-a36.html
+  Fetching: https://cyklus.ccsh.cz/a/4-a1.html
+  Fetching: https://cyklus.ccsh.cz/a/40-a37.html
+  Fetching: https://cyklus.ccsh.cz/a/41-a38.html
+  Fetching: https://cyklus.ccsh.cz/a/42-a39.html
+  Fetching: https://cyklus.ccsh.cz/a/43-a40.html
+  Fetching: https://cyklus.ccsh.cz/a/45-a41.html
+  Fetching: https://cyklus.ccsh.cz/a/46-a42.html
+  Fetching: https://cyklus.ccsh.cz/a/47-a43.html
+  Fetching: https://cyklus.ccsh.cz/a/48-a44.html
+  Fetching: https://cyklus.ccsh.cz/a/49-a45.html
+  Fetching: https://cyklus.ccsh.cz/a/5-a2.html
+  Fetching: https://cyklus.ccsh.cz/a/50-a46.html
+  Fetching: https://cyklus.ccsh.cz/a/51-a47.html
+  Fetching: https://cyklus.ccsh.cz/a/52-a48.html
+  Fetching: https://cyklus.ccsh.cz/a/53-a49.html
+  Fetching: https://cyklus.ccsh.cz/a/54-a50.html
+  Fetching: https://cyklus.ccsh.cz/a/55-a51.html
+  Fetching: https://cyklus.ccsh.cz/a/56-a52.html
+  Fetching: https://cyklus.ccsh.cz/a/57-a53.html
+  Fetching: https://cyklus.ccsh.cz/a/58-a54.html
+  Fetching: https://cyklus.ccsh.cz/a/59-a55.html
+  Fetching: https://cyklus.ccsh.cz/a/6-a3.html
+  Fetching: https://cyklus.ccsh.cz/a/60-a56.html
+  Fetching: https://cyklus.ccsh.cz/a/61-a57.html
+  Fetching: https://cyklus.ccsh.cz/a/62-a58.html
+  Fetching: https://cyklus.ccsh.cz/a/63-a59.html
+  Fetching: https://cyklus.ccsh.cz/a/64-a60.html
+  Fetching: https://cyklus.ccsh.cz/a/65-a61.html
+  Fetching: https://cyklus.ccsh.cz/a/66-a62.html
+  Fetching: https://cyklus.ccsh.cz/a/67-a63.html
+  Fetching: https://cyklus.ccsh.cz/a/68-a64.html
+  Fetching: https://cyklus.ccsh.cz/a/69-a65.html
+  Fetching: https://cyklus.ccsh.cz/a/7-a4.html
+  Fetching: https://cyklus.ccsh.cz/a/70-a66.html
+  Fetching: https://cyklus.ccsh.cz/a/71-a67.html
+  Fetching: https://cyklus.ccsh.cz/a/72-a68.html
+  Fetching: https://cyklus.ccsh.cz/a/73-a69.html
+  Fetching: https://cyklus.ccsh.cz/a/74-a70.html
+  Fetching: https://cyklus.ccsh.cz/a/75-a71.html
+  Fetching: https://cyklus.ccsh.cz/a/76-a72.html
+  Fetching: https://cyklus.ccsh.cz/a/77-a73.html
+  Fetching: https://cyklus.ccsh.cz/a/78-a74.html
+  Fetching: https://cyklus.ccsh.cz/a/79-a75.html
+  Fetching: https://cyklus.ccsh.cz/a/8-a5.html
+  Fetching: https://cyklus.ccsh.cz/a/80-a76.html
+  Fetching: https://cyklus.ccsh.cz/a/81-a77.html
+  Fetching: https://cyklus.ccsh.cz/a/82-a78.html
+  Fetching: https://cyklus.ccsh.cz/a/83-a79.html
+  Fetching: https://cyklus.ccsh.cz/a/84-a80.html
+  Fetching: https://cyklus.ccsh.cz/a/85-a81.html
+  Fetching: https://cyklus.ccsh.cz/a/86-a82.html
+  Fetching: https://cyklus.ccsh.cz/a/87-a83.html
+  Fetching: https://cyklus.ccsh.cz/a/89-a84.html
+  Fetching: https://cyklus.ccsh.cz/a/9-a6.html
+  Fetching: https://cyklus.ccsh.cz/a/90-a85.html
+  Fetching: https://cyklus.ccsh.cz/a/91-a86.html
+  Fetching: https://cyklus.ccsh.cz/a/92-a87.html
+  Fetching: https://cyklus.ccsh.cz/a/93-a88.html
+  Fetching: https://cyklus.ccsh.cz/a/94-a89.html
+Cycle A: 90 entries scraped
+
+=== Scraping cycle B ===
+Fetching index: https://cyklus.ccsh.cz/b.html
+Fetching index: https://cyklus.ccsh.cz/b.html?start=20
+Fetching index: https://cyklus.ccsh.cz/b.html?start=40
+Fetching index: https://cyklus.ccsh.cz/b.html?start=60
+Fetching index: https://cyklus.ccsh.cz/b.html?start=80
+Found 90 pages for cycle B
+  Fetching: https://cyklus.ccsh.cz/b/100-b6.html
+  Fetching: https://cyklus.ccsh.cz/b/101-b7.html
+  Fetching: https://cyklus.ccsh.cz/b/102-b8.html
+  Fetching: https://cyklus.ccsh.cz/b/103-b9.html
+  Fetching: https://cyklus.ccsh.cz/b/104-b10.html
+  Fetching: https://cyklus.ccsh.cz/b/105-b11.html
+  Fetching: https://cyklus.ccsh.cz/b/106-b12.html
+  Fetching: https://cyklus.ccsh.cz/b/107-b13.html
+  Fetching: https://cyklus.ccsh.cz/b/108-b14.html
+  Fetching: https://cyklus.ccsh.cz/b/109-b15.html
+  Fetching: https://cyklus.ccsh.cz/b/110-b16.html
+  Fetching: https://cyklus.ccsh.cz/b/111-b17.html
+  Fetching: https://cyklus.ccsh.cz/b/112-b18.html
+  Fetching: https://cyklus.ccsh.cz/b/113-b19.html
+  Fetching: https://cyklus.ccsh.cz/b/114-b20.html
+  Fetching: https://cyklus.ccsh.cz/b/115-b21.html
+  Fetching: https://cyklus.ccsh.cz/b/116-b22.html
+  Fetching: https://cyklus.ccsh.cz/b/117-b23.html
+  Fetching: https://cyklus.ccsh.cz/b/118-b24.html
+  Fetching: https://cyklus.ccsh.cz/b/119-b25.html
+  Fetching: https://cyklus.ccsh.cz/b/120-b26.html
+  Fetching: https://cyklus.ccsh.cz/b/121-b27.html
+  Fetching: https://cyklus.ccsh.cz/b/122-b28.html
+  Fetching: https://cyklus.ccsh.cz/b/123-b29.html
+  Fetching: https://cyklus.ccsh.cz/b/124-b30.html
+  Fetching: https://cyklus.ccsh.cz/b/125-b31.html
+  Fetching: https://cyklus.ccsh.cz/b/126-b32.html
+  Fetching: https://cyklus.ccsh.cz/b/127-b33.html
+  Fetching: https://cyklus.ccsh.cz/b/128-b34.html
+  Fetching: https://cyklus.ccsh.cz/b/129-b35.html
+  Fetching: https://cyklus.ccsh.cz/b/130-b36.html
+  Fetching: https://cyklus.ccsh.cz/b/131-b37.html
+  Fetching: https://cyklus.ccsh.cz/b/132-b38.html
+  Fetching: https://cyklus.ccsh.cz/b/133-b39.html
+  Fetching: https://cyklus.ccsh.cz/b/134-b40.html
+  Fetching: https://cyklus.ccsh.cz/b/135-b41.html
+  Fetching: https://cyklus.ccsh.cz/b/136-b42.html
+  Fetching: https://cyklus.ccsh.cz/b/137-b43.html
+  Fetching: https://cyklus.ccsh.cz/b/138-b44.html
+  Fetching: https://cyklus.ccsh.cz/b/139-b45.html
+  Fetching: https://cyklus.ccsh.cz/b/140-b46.html
+  Fetching: https://cyklus.ccsh.cz/b/141-b47.html
+  Fetching: https://cyklus.ccsh.cz/b/142-b48.html
+  Fetching: https://cyklus.ccsh.cz/b/143-b49.html
+  Fetching: https://cyklus.ccsh.cz/b/144-b50.html
+  Fetching: https://cyklus.ccsh.cz/b/145-b51.html
+  Fetching: https://cyklus.ccsh.cz/b/146-b52.html
+  Fetching: https://cyklus.ccsh.cz/b/147-b53.html
+  Fetching: https://cyklus.ccsh.cz/b/148-b54.html
+  Fetching: https://cyklus.ccsh.cz/b/149-b55.html
+  Fetching: https://cyklus.ccsh.cz/b/150-b56.html
+  Fetching: https://cyklus.ccsh.cz/b/151-b57.html
+  Fetching: https://cyklus.ccsh.cz/b/152-b58.html
+  Fetching: https://cyklus.ccsh.cz/b/153-b59.html
+  Fetching: https://cyklus.ccsh.cz/b/154-b60.html
+  Fetching: https://cyklus.ccsh.cz/b/155-b61.html
+  Fetching: https://cyklus.ccsh.cz/b/156-b62.html
+  Fetching: https://cyklus.ccsh.cz/b/157-b63.html
+  Fetching: https://cyklus.ccsh.cz/b/158-b64.html
+  Fetching: https://cyklus.ccsh.cz/b/159-b65.html
+  Fetching: https://cyklus.ccsh.cz/b/160-b66.html
+  Fetching: https://cyklus.ccsh.cz/b/161-b67.html
+  Fetching: https://cyklus.ccsh.cz/b/162-b68.html
+  Fetching: https://cyklus.ccsh.cz/b/163-b69.html
+  Fetching: https://cyklus.ccsh.cz/b/164-b70.html
+  Fetching: https://cyklus.ccsh.cz/b/165-b71.html
+  Fetching: https://cyklus.ccsh.cz/b/166-b72.html
+  Fetching: https://cyklus.ccsh.cz/b/167-b73.html
+  Fetching: https://cyklus.ccsh.cz/b/168-b74.html
+  Fetching: https://cyklus.ccsh.cz/b/169-b75.html
+  Fetching: https://cyklus.ccsh.cz/b/170-b76.html
+  Fetching: https://cyklus.ccsh.cz/b/171-b77.html
+  Fetching: https://cyklus.ccsh.cz/b/172-b78.html
+  Fetching: https://cyklus.ccsh.cz/b/173-b79.html
+  Fetching: https://cyklus.ccsh.cz/b/174-b80.html
+  Fetching: https://cyklus.ccsh.cz/b/175-b81.html
+  Fetching: https://cyklus.ccsh.cz/b/176-b82.html
+  Fetching: https://cyklus.ccsh.cz/b/177-b83.html
+  Fetching: https://cyklus.ccsh.cz/b/178-b84.html
+  Fetching: https://cyklus.ccsh.cz/b/179-b85.html
+  Fetching: https://cyklus.ccsh.cz/b/180-b86.html
+  Fetching: https://cyklus.ccsh.cz/b/181-b87.html
+  Fetching: https://cyklus.ccsh.cz/b/182-b88.html
+  Fetching: https://cyklus.ccsh.cz/b/183-b89.html
+  Fetching: https://cyklus.ccsh.cz/b/277-b90.html
+  Fetching: https://cyklus.ccsh.cz/b/95-b1.html
+  Fetching: https://cyklus.ccsh.cz/b/96-b2.html
+  Fetching: https://cyklus.ccsh.cz/b/97-b3.html
+  Fetching: https://cyklus.ccsh.cz/b/98-b4.html
+  Fetching: https://cyklus.ccsh.cz/b/99-5b.html
+Cycle B: 90 entries scraped
+
+=== Scraping cycle C ===
+Fetching index: https://cyklus.ccsh.cz/c.html
+Fetching index: https://cyklus.ccsh.cz/c.html?start=20
+Fetching index: https://cyklus.ccsh.cz/c.html?start=40
+Fetching index: https://cyklus.ccsh.cz/c.html?start=60
+Fetching index: https://cyklus.ccsh.cz/c.html?start=80
+Found 90 pages for cycle C
+  Fetching: https://cyklus.ccsh.cz/c/184-c1.html
+  Fetching: https://cyklus.ccsh.cz/c/185-c2.html
+  Fetching: https://cyklus.ccsh.cz/c/186-c3.html
+  Fetching: https://cyklus.ccsh.cz/c/187-c4.html
+  Fetching: https://cyklus.ccsh.cz/c/188-c5.html
+  Fetching: https://cyklus.ccsh.cz/c/189-c6.html
+  Fetching: https://cyklus.ccsh.cz/c/190-c7.html
+  Fetching: https://cyklus.ccsh.cz/c/191-c8.html
+  Fetching: https://cyklus.ccsh.cz/c/192-c9.html
+  Fetching: https://cyklus.ccsh.cz/c/193-c10.html
+  Fetching: https://cyklus.ccsh.cz/c/194-c11.html
+  Fetching: https://cyklus.ccsh.cz/c/195-c12.html
+  Fetching: https://cyklus.ccsh.cz/c/196-c13.html
+  Fetching: https://cyklus.ccsh.cz/c/197-c14.html
+  Fetching: https://cyklus.ccsh.cz/c/198-c15.html
+  Fetching: https://cyklus.ccsh.cz/c/199-c16.html
+  Fetching: https://cyklus.ccsh.cz/c/200-c17.html
+  Fetching: https://cyklus.ccsh.cz/c/201-c18.html
+  Fetching: https://cyklus.ccsh.cz/c/202-c19.html
+  Fetching: https://cyklus.ccsh.cz/c/203-c20.html
+  Fetching: https://cyklus.ccsh.cz/c/204-c21.html
+  Fetching: https://cyklus.ccsh.cz/c/205-c22.html
+  Fetching: https://cyklus.ccsh.cz/c/206-c23.html
+  Fetching: https://cyklus.ccsh.cz/c/207-c24.html
+  Fetching: https://cyklus.ccsh.cz/c/208-c25.html
+  Fetching: https://cyklus.ccsh.cz/c/209-c26.html
+  Fetching: https://cyklus.ccsh.cz/c/210-c27.html
+  Fetching: https://cyklus.ccsh.cz/c/211-c28.html
+  Fetching: https://cyklus.ccsh.cz/c/212-c29.html
+  Fetching: https://cyklus.ccsh.cz/c/213-c30.html
+  Fetching: https://cyklus.ccsh.cz/c/214-c31.html
+  Fetching: https://cyklus.ccsh.cz/c/215-c32.html
+  Fetching: https://cyklus.ccsh.cz/c/216-c33.html
+  Fetching: https://cyklus.ccsh.cz/c/217-c34.html
+  Fetching: https://cyklus.ccsh.cz/c/218-c35.html
+  Fetching: https://cyklus.ccsh.cz/c/219-c36a.html
+  Fetching: https://cyklus.ccsh.cz/c/221-c37.html
+  Fetching: https://cyklus.ccsh.cz/c/222-c38.html
+  Fetching: https://cyklus.ccsh.cz/c/223-c39.html
+  Fetching: https://cyklus.ccsh.cz/c/224-c40.html
+  Fetching: https://cyklus.ccsh.cz/c/225-c41.html
+  Fetching: https://cyklus.ccsh.cz/c/226-c42.html
+  Fetching: https://cyklus.ccsh.cz/c/227-c43.html
+  Fetching: https://cyklus.ccsh.cz/c/228-c44.html
+  Fetching: https://cyklus.ccsh.cz/c/229-c45.html
+  Fetching: https://cyklus.ccsh.cz/c/230-c46.html
+  Fetching: https://cyklus.ccsh.cz/c/231-c47.html
+  Fetching: https://cyklus.ccsh.cz/c/232-c48.html
+  Fetching: https://cyklus.ccsh.cz/c/233-c49.html
+  Fetching: https://cyklus.ccsh.cz/c/234-c50.html
+  Fetching: https://cyklus.ccsh.cz/c/235-c51.html
+  Fetching: https://cyklus.ccsh.cz/c/236-c52.html
+  Fetching: https://cyklus.ccsh.cz/c/237-c53.html
+  Fetching: https://cyklus.ccsh.cz/c/238-c54.html
+  Fetching: https://cyklus.ccsh.cz/c/239-c55.html
+  Fetching: https://cyklus.ccsh.cz/c/240-c56.html
+  Fetching: https://cyklus.ccsh.cz/c/241-c57.html
+  Fetching: https://cyklus.ccsh.cz/c/242-c58.html
+  Fetching: https://cyklus.ccsh.cz/c/243-c59.html
+  Fetching: https://cyklus.ccsh.cz/c/244-c60.html
+  Fetching: https://cyklus.ccsh.cz/c/245-c61.html
+  Fetching: https://cyklus.ccsh.cz/c/246-c62.html
+  Fetching: https://cyklus.ccsh.cz/c/247-c63.html
+  Fetching: https://cyklus.ccsh.cz/c/248-c64.html
+  Fetching: https://cyklus.ccsh.cz/c/249-c65.html
+  Fetching: https://cyklus.ccsh.cz/c/250-c66.html
+  Fetching: https://cyklus.ccsh.cz/c/251-c67.html
+  Fetching: https://cyklus.ccsh.cz/c/252-c68.html
+  Fetching: https://cyklus.ccsh.cz/c/253-c69.html
+  Fetching: https://cyklus.ccsh.cz/c/254-c70.html
+  Fetching: https://cyklus.ccsh.cz/c/255-c71.html
+  Fetching: https://cyklus.ccsh.cz/c/256-c72.html
+  Fetching: https://cyklus.ccsh.cz/c/257-c73.html
+  Fetching: https://cyklus.ccsh.cz/c/258-c74.html
+  Fetching: https://cyklus.ccsh.cz/c/259-c75.html
+  Fetching: https://cyklus.ccsh.cz/c/260-c76.html
+  Fetching: https://cyklus.ccsh.cz/c/261-c77.html
+  Fetching: https://cyklus.ccsh.cz/c/262-c78.html
+  Fetching: https://cyklus.ccsh.cz/c/263-c79.html
+  Fetching: https://cyklus.ccsh.cz/c/264-c80.html
+  Fetching: https://cyklus.ccsh.cz/c/265-c81.html
+  Fetching: https://cyklus.ccsh.cz/c/266-c82.html
+  Fetching: https://cyklus.ccsh.cz/c/267-c83.html
+  Fetching: https://cyklus.ccsh.cz/c/268-c84.html
+  Fetching: https://cyklus.ccsh.cz/c/269-c85.html
+  Fetching: https://cyklus.ccsh.cz/c/270-c86.html
+  Fetching: https://cyklus.ccsh.cz/c/271-c87.html
+  Fetching: https://cyklus.ccsh.cz/c/272-c88.html
+  Fetching: https://cyklus.ccsh.cz/c/273-c89.html
+  Fetching: https://cyklus.ccsh.cz/c/276-c90.html
+Cycle C: 90 entries scraped
+
+=== SUMMARY ===
+Total entries: 270
+Entries with all 3 main readings: 233
+
+Entries missing readings:
+  a22 "Popeleční středa - začátek postu" — missing: first
+  a90 "Památka Jana Žižky a Božích bojovníků" — missing: first
+  a52 "Neděle po svatém Duchu (14. v mezidobí)" — missing: first
+  a69 "Neděle po svatém Duchu (31. v mezidobí)" — missing: first
+  a70 "Neděle po svatém Duchu (32. v mezidobí)" — missing: first
+  a71 "Neděle po svatém Duchu (33. v mezidobí)" — missing: first
+  a73 "Zrod Církve československé husitské – 8. ledna" — missing: first
+  a77 "Památka opata Prokopa" — missing: first
+  a81 "Památka knížete Václava" — missing: first
+  a85 "Památka zesnulých (Dušičky)" — missing: first
+  a87 "Památka prvomučedníka Štěpána" — missing: first
+  b21 "Poslední neděle po Zjevení - Proměnění Páně" — missing: gospel
+  b43 "Pondělí svatodušní" — missing: first
+  b44 "1. neděle po Svatém Duchu - Nejsvětější Trojice" — missing: first
+  b53 "Neděle po svatém Duchu (15. v mezidobí)" — missing: first
+  b66 "Neděle po svatém Duchu (28. v mezidobí)" — missing: first
+  b77 "Památka opata Prokopa" — missing: first
+  b81 "Památka knížete Václava" — missing: first
+  b82 "Díkůvzdání za úrodu" — missing: first
+  b90 "Památka Jana Žižky a Božích bojovníků" — missing: first
+  b5 "Štědrý den" — missing: first
+  c2 "2. neděle adventní" — missing: first
+  c3 "3. neděle adventní" — missing: first, psalm
+  c52 "Neděle po svatém Duchu (14. v mezidobí)" — missing: second
+  c60 "Neděle po svatém Duchu (22. v mezidobí)" — missing: first
+  c61 "Neděle po svatém Duchu (23. v mezidobí)" — missing: second
+  c63 "Neděle po svatém Duchu (25. v mezidobí)" — missing: first
+  c64 "Neděle po svatém Duchu (26. v mezidobí)" — missing: first, second
+  c65 "Neděle po svatém Duchu (27. v mezidobí)" — missing: first
+  c73 "Zrod Církve československé husitské – 8. ledna" — missing: first, psalm
+  c74 "Památka patriarchy Karla Farského – 12. června" — missing: first
+  c77 "Památka opata Prokopa" — missing: first
+  c79 "Památka Mistra Jana Husa" — missing: first
+  c81 "Památka knížete Václava" — missing: first, psalm
+  c84 "Památka mučedníků a svědků Páně (Všech svatých)" — missing: first
+  c89 "Díkůvzdání za boží ochranu a vedení" — missing: gospel
+  c90 "Památka Jana Žižky a Božích bojovníků" — missing: first

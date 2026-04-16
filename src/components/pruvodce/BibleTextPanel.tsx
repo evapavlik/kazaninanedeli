@@ -463,6 +463,22 @@ function CommentaryPanel({ reference }: { reference: string }) {
     <div className="space-y-4">
       {commentary && (
         <>
+          {/* AI-generated content warning */}
+          <div className="rounded-lg border border-amber-300/60 bg-amber-50/70 px-3 py-2.5">
+            <div className="flex gap-2">
+              <span className="shrink-0 text-amber-600" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="10" cy="10" r="8" />
+                  <path d="M10 6v4M10 13.5v.5" />
+                </svg>
+              </span>
+              <p className="text-[11px] leading-relaxed text-amber-900">
+                <span className="font-semibold">{`Pozn\u00E1mka: `}</span>
+                {`Tyto podn\u011Bty jsou AI-generovan\u00FD n\u00E1vrh, ne autoritativn\u00ED v\u00FDklad. Pracuj s nimi kriticky a ov\u011B\u0159 v odborn\u00E9 literatu\u0159e.`}
+              </p>
+            </div>
+          </div>
+
           {/* Title + context */}
           <div>
             <h3 className="font-lora text-base font-bold text-text">
