@@ -67,6 +67,7 @@ export default function GuideBar({
   const [hasAutoExpanded, setHasAutoExpanded] = useState(false);
   const [shouldPulse, setShouldPulse] = useState(true);
   const prevSubStepRef = useRef(activeSubStep);
+  const barRef = useRef<HTMLDivElement | null>(null);
 
   // Auto-expand on first visit
   useEffect(() => {
@@ -94,6 +95,11 @@ export default function GuideBar({
   const handleToggle = () => {
     setShouldPulse(false);
     if (expanded) {
+      // Reset scroll position before collapsing — otherwise the scrolled
+      // content stays offset inside the 72px collapsed bar, showing blank.
+      if (barRef.current) {
+        barRef.current.scrollTop = 0;
+      }
       setExpanded(false);
       setActiveToolView(null);
     } else {
@@ -128,6 +134,7 @@ export default function GuideBar({
 
       {/* Guide bar */}
       <div
+        ref={barRef}
         className={`hidden lg:block fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-border shadow-[0_-2px_16px_rgba(0,0,0,0.06)] transition-[max-height,border-radius,box-shadow] duration-350 ease-[cubic-bezier(0.4,0,0.2,1)] overflow-hidden ${
           expanded
             ? "max-h-[70vh] overflow-y-auto rounded-t-2xl shadow-[0_-4px_30px_rgba(0,0,0,0.1)]"
