@@ -73,6 +73,52 @@ const ABBREV_TO_BOOK_NUMBER: Record<string, number> = {
   "Juda": 65, "Zjeven\u00ED": 66,
 };
 
+/** Book number \u2192 standard Czech abbreviation (CČSH conventions: 1Pt, 1K, 1J, 1Sol, 1Tm) */
+const BOOK_NUMBER_TO_ABBREV: Record<number, string> = {
+  1: "Gn", 2: "Ex", 3: "Lv", 4: "Nu", 5: "Dt",
+  6: "Joz", 7: "Sd", 8: "Rt",
+  9: "1S", 10: "2S",
+  11: "1Kr\u00E1l", 12: "2Kr\u00E1l",
+  13: "1Pa", 14: "2Pa",
+  15: "Ezd", 16: "Neh", 17: "Est",
+  18: "Jb", 19: "\u017D", 20: "P\u0159", 21: "Kaz", 22: "P\u00EDs",
+  23: "Iz", 24: "Jr", 25: "Pl",
+  26: "Ez", 27: "Dan",
+  28: "Oz", 29: "Jl", 30: "Am", 31: "Abd",
+  32: "Jon", 33: "Mi", 34: "Na", 35: "Abk",
+  36: "Sf", 37: "Ag", 38: "Za", 39: "Mal",
+  40: "Mt", 41: "Mk", 42: "Lk", 43: "J",
+  44: "Sk", 45: "\u0158",
+  46: "1K", 47: "2K",
+  48: "Ga", 49: "Ef", 50: "Fp", 51: "Ko",
+  52: "1Te", 53: "2Te",
+  54: "1Tm", 55: "2Tm",
+  56: "Tt", 57: "Fm",
+  58: "\u017Dd", 59: "Jk",
+  60: "1Pt", 61: "2Pt",
+  62: "1J", 63: "2J", 64: "3J",
+  65: "Ju", 66: "Zj",
+};
+
+/**
+ * Format a Bible reference from structured data.
+ * E.g. (60, 1, 17, 23) → "1Pt 1,17-23"
+ *      (43, 3, 16, null) → "J 3,16"
+ */
+export function formatReference(
+  bookNumber: number,
+  chapter: number,
+  verseStart: number | null,
+  verseEnd: number | null
+): string {
+  const abbrev = BOOK_NUMBER_TO_ABBREV[bookNumber] ?? `#${bookNumber}`;
+  if (verseStart === null) return `${abbrev} ${chapter}`;
+  if (verseEnd === null || verseEnd === verseStart) {
+    return `${abbrev} ${chapter},${verseStart}`;
+  }
+  return `${abbrev} ${chapter},${verseStart}-${verseEnd}`;
+}
+
 /** Book number \u2192 total chapters (for bounds checking) */
 const BOOK_CHAPTER_COUNTS: Record<number, number> = {
   1: 50, 2: 40, 3: 27, 4: 36, 5: 34, 6: 24, 7: 21, 8: 4,

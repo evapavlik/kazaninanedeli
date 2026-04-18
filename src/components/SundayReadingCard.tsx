@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLectionaryReading } from "@/hooks/useLectionaryReading";
+import { formatReference } from "@/lib/getbible";
 
 export default function SundayReadingCard() {
   const { entry, season, loading, supabase } = useLectionaryReading();
@@ -22,7 +23,7 @@ export default function SundayReadingCard() {
   const references = readings
     ? [readings.first, readings.second, readings.gospel]
         .filter(Boolean)
-        .map((r) => r!.reference)
+        .map((r) => formatReference(r!.bookNumber, r!.chapter, r!.verseStart, r!.verseEnd))
         .join(" \u2022 ")
     : supabase?.readings.map((r) => r.reference).join(" \u2022 ");
 
