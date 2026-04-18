@@ -65,6 +65,18 @@ function expandRefs(reference: string): string[] {
     }
   }
 
+  // Normalize whitespace after commas — CZ articles sometimes store
+  // "Lk 24, 36b-48" (space after comma) vs lectionary "Lk 24,36b-48".
+  // Add both variants for every ref we have so far.
+  const withSpaceNormalized: string[] = [];
+  for (const r of refs) {
+    // Strip space after chapter:verse comma
+    withSpaceNormalized.push(r.replace(/,\s+/g, ","));
+    // Add space after chapter:verse comma (but not after verse-range dash)
+    withSpaceNormalized.push(r.replace(/(\d),(\d)/g, "$1, $2"));
+  }
+  refs.push(...withSpaceNormalized);
+
   return [...new Set(refs)];
 }
 
@@ -147,5 +159,58 @@ export async function findPostily(
         refs.includes(r)
       ) || refs[0];
     return { ...row, matched_ref: matchedRef } as PostilaMatch;
+  });
+}
+
+/**
+ * Matching k\u00E1z\u00E1n\u00ED z \u010Desk\u00E9ho z\u00E1pasu (modern\u00ED C\u010CSH kazan\u00ED, 2022\u20132026).
+ * Shares the same `expandRefs` logic as Farsk\u00FD postily \u2014 pouze p\u0159esn\u00E9 shody referenc\u00ED,
+ * \u017E\u00E1dn\u00FD fuzzy match, pouze normalizace mezer.
+ */
+export interface CzechZapasMatch {
+  id: string;
+  article_number: number;
+  title: string;
+  author: string | null;
+  biblical_references: string[];
+  biblical_refs_raw: string | null;
+  liturgical_context: string | null;
+  source_ref: string;
+  year: number;
+  issue_number: number | null;
+  content: string;
+  matched_ref: string;
+}
+
+export async function findCzechZapasArticles(
+  reference: string
+): Promise<CzechZapasMatch[]> {
+  const refs = expandRefs(reference);
+  const arrayLiteral = `{${refs.map((r) => `"${r}"`).join(",")}}`;
+
+  const { data, error } = await supabaseCteni
+    .from("czech_zapas_articles")
+    .select(
+      "id, article_number, title, author, biblical_references, biblical_refs_raw, liturgical_context, source_ref, year, issue_number, content"
+    )
+    .eq("is_active", true)
+    .eq("content_type", "kazani")
+    .filter("biblical_references", "ov", arrayLiteral);
+
+  if (error) {
+    console.error("Error querying czech_zapas_articles:", error.message);
+    return [];
+  }
+
+  if (!data || data.length === 0) {
+    return [];
+  }
+
+  return (data as any[]).map((row) => {
+    const matchedRef =
+      (row.biblical_references as string[]).find((r: string) =>
+        refs.includes(r)
+      ) || refs[0];
+    return { ...row, matched_ref: matchedRef } as CzechZapasMatch;
   });
 }

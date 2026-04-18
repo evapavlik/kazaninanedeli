@@ -45,6 +45,13 @@ export const checklistToolMap: Record<string, ToolMapping[]> = {
       openToolNumber: 5,
     },
     {
+      itemIndex: 1,
+      label: `K\u00E1z\u00E1n\u00ED jin\u00FDch`,
+      icon: "\uD83D\uDCDC",
+      openToolKey: "sermons",
+      openToolNumber: 6,
+    },
+    {
       itemIndex: 4,
       label: `Liturgick\u00FD kalend\u00E1\u0159`,
       icon: "\uD83D\uDCC5",
@@ -73,6 +80,13 @@ export const checklistToolMap: Record<string, ToolMapping[]> = {
       icon: "\uD83D\uDCDA",
       openToolKey: "commentary",
       openToolNumber: 5,
+    },
+    {
+      itemIndex: 2,
+      label: `K\u00E1z\u00E1n\u00ED jin\u00FDch`,
+      icon: "\uD83D\uDCDC",
+      openToolKey: "sermons",
+      openToolNumber: 6,
     },
   ],
   aktualizace: [
