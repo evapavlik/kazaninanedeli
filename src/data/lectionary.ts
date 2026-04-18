@@ -1405,11 +1405,11 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Sk 2,14",
+      reference: "Sk 2,14a.36-41",
       bookNumber: 44,
       chapter: 2,
       verseStart: 14,
-      verseEnd: null,
+      verseEnd: 41,
     },
       psalm: {
       label: "Žalm",
