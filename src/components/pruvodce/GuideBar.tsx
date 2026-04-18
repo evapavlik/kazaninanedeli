@@ -15,6 +15,7 @@ import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
 import LiturgicalCalendar from "@/components/tools/LiturgicalCalendar";
 import TranslationCompare from "./TranslationCompare";
 import CommentaryPanel from "./CommentaryPanel";
+import SermonInspirationPanel from "./SermonInspirationPanel";
 
 interface GuideBarProps {
   phase: Phase;
@@ -41,6 +42,7 @@ const TOOL_LABELS: Record<string, string> = {
   liturgy: `Liturgick\u00FD kalend\u00E1\u0159`,
   originals: `P\u016Fvodn\u00ED jazyky`,
   commentary: `Koment\u00E1\u0159e`,
+  sermons: `K\u00E1z\u00E1n\u00ED jin\u00FDch`,
 };
 
 export default function GuideBar({
@@ -230,6 +232,9 @@ export default function GuideBar({
                 {activeToolView === "originals" && <OriginalLanguagesPanel reference={reference} />}
                 {activeToolView === "commentary" && reference && (
                   <CommentaryPanel reference={reference} />
+                )}
+                {activeToolView === "sermons" && reference && (
+                  <SermonInspirationPanel reference={reference} />
                 )}
               </div>
             </>

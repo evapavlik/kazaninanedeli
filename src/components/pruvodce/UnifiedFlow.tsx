@@ -114,8 +114,8 @@ export default function UnifiedFlow({
     };
   }, []);
 
-  const getHelper = (index: number) =>
-    toolHelpers.find((h) => h.itemIndex === index);
+  const getHelpers = (index: number) =>
+    toolHelpers.filter((h) => h.itemIndex === index);
 
   if (items.length === 0) return null;
 
@@ -137,7 +137,7 @@ export default function UnifiedFlow({
         {/* All items */}
         <ol className="space-y-1.5">
           {items.map((item, i) => {
-            const helper = getHelper(i);
+            const helpers = getHelpers(i);
             const isToolOpen = openToolIndex === i;
             const isDone = checked[i];
             const isReflect = item.type === "reflect";
@@ -284,44 +284,48 @@ export default function UnifiedFlow({
                   />
                 )}
 
-                {/* Tool helper — link to workspace bubble or inline expand */}
-                {helper && (
-                  <div className="ml-7 mt-1.5">
-                    {helper.openToolKey ? (
-                      <button
-                        onClick={() => onOpenTool?.(helper.openToolKey!)}
-                        className="flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[11px] font-medium text-text-light hover:bg-brick-pale hover:text-brick transition-all"
-                      >
-                        <span className="text-[13px] leading-none">{helper.icon}</span>
-                        <span>{helper.label}</span>
-                        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-brick/50">
-                          <path d="M5 3l6 5-6 5" />
-                        </svg>
-                      </button>
-                    ) : (
-                      <>
-                        <button
-                          onClick={() => setOpenToolIndex(isToolOpen ? null : i)}
-                          className={`flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[11px] font-medium transition-all ${
-                            isToolOpen
-                              ? "bg-brick/10 text-brick"
-                              : "text-text-light hover:bg-brick-pale hover:text-brick"
-                          }`}
-                        >
-                          <span>{helper.icon}</span>
-                          <span>{helper.label}</span>
-                          <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className={`transition-transform ${isToolOpen ? "rotate-180" : ""}`}>
-                            <path d="M4 6l4 4 4-4" />
-                          </svg>
-                        </button>
+                {/* Tool helpers — one or more buttons (link to workspace bubble or inline expand) */}
+                {helpers.length > 0 && (
+                  <div className="ml-7 mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+                    {helpers.map((helper, hi) => (
+                      <div key={hi}>
+                        {helper.openToolKey ? (
+                          <button
+                            onClick={() => onOpenTool?.(helper.openToolKey!)}
+                            className="flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[11px] font-medium text-text-light hover:bg-brick-pale hover:text-brick transition-all"
+                          >
+                            <span className="text-[13px] leading-none">{helper.icon}</span>
+                            <span>{helper.label}</span>
+                            <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-brick/50">
+                              <path d="M5 3l6 5-6 5" />
+                            </svg>
+                          </button>
+                        ) : (
+                          <>
+                            <button
+                              onClick={() => setOpenToolIndex(isToolOpen ? null : i)}
+                              className={`flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[11px] font-medium transition-all ${
+                                isToolOpen
+                                  ? "bg-brick/10 text-brick"
+                                  : "text-text-light hover:bg-brick-pale hover:text-brick"
+                              }`}
+                            >
+                              <span>{helper.icon}</span>
+                              <span>{helper.label}</span>
+                              <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className={`transition-transform ${isToolOpen ? "rotate-180" : ""}`}>
+                                <path d="M4 6l4 4 4-4" />
+                              </svg>
+                            </button>
 
-                        {isToolOpen && (
-                          <div className="mt-2 rounded-lg border border-brick/10 bg-brick-pale/30 p-3">
-                            {helper.component}
-                          </div>
+                            {isToolOpen && (
+                              <div className="mt-2 rounded-lg border border-brick/10 bg-brick-pale/30 p-3">
+                                {helper.component}
+                              </div>
+                            )}
+                          </>
                         )}
-                      </>
-                    )}
+                      </div>
+                    ))}
                   </div>
                 )}
               </li>
