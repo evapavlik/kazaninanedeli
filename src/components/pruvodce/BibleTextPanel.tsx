@@ -454,15 +454,15 @@ function CommentaryPanel({ reference }: { reference: string }) {
       {commentary && (
         <>
           {/* AI-generated content warning */}
-          <div className="rounded-lg border border-amber-300/60 bg-amber-50/70 px-3 py-2.5">
-            <div className="flex gap-2">
-              <span className="shrink-0 text-amber-600" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
+          <div className="rounded-lg border border-amber-300/60 bg-amber-50/70 px-3.5 py-3">
+            <div className="flex gap-2.5">
+              <span className="shrink-0 text-amber-600 mt-0.5" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="10" cy="10" r="8" />
                   <path d="M10 6v4M10 13.5v.5" />
                 </svg>
               </span>
-              <p className="text-[11px] leading-relaxed text-amber-900">
+              <p className="text-[13px] leading-[1.65] text-amber-900">
                 <span className="font-semibold">{`Pozn\u00E1mka: `}</span>
                 {`Tyto podn\u011Bty jsou AI-generovan\u00FD n\u00E1vrh, ne autoritativn\u00ED v\u00FDklad. Pracuj s nimi kriticky a ov\u011B\u0159 v odborn\u00E9 literatu\u0159e.`}
               </p>
@@ -471,10 +471,10 @@ function CommentaryPanel({ reference }: { reference: string }) {
 
           {/* Title + context */}
           <div>
-            <h3 className="font-lora text-base font-bold text-text">
+            <h3 className="font-lora text-lg font-bold text-text">
               {commentary.title}
             </h3>
-            <p className="mt-1 text-[13px] leading-relaxed text-text-muted">
+            <p className="mt-2 text-[15px] leading-[1.75] text-text">
               {commentary.context}
             </p>
           </div>
@@ -484,11 +484,11 @@ function CommentaryPanel({ reference }: { reference: string }) {
             <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
               {`Kl\u00ED\u010Dov\u00E1 slova`}
             </p>
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {commentary.keyWords.map((kw, i) => (
-                <div key={i} className="rounded-lg bg-sage-pale/30 px-3 py-2">
-                  <p className="text-[13px] font-semibold text-text">{kw.word}</p>
-                  <p className="mt-0.5 text-[12px] leading-relaxed text-text-muted">{kw.explanation}</p>
+                <div key={i} className="rounded-lg bg-sage-pale/30 px-3.5 py-2.5">
+                  <p className="text-[15px] font-semibold text-text">{kw.word}</p>
+                  <p className="mt-1 text-[14px] leading-[1.7] text-text">{kw.explanation}</p>
                 </div>
               ))}
             </div>
@@ -496,10 +496,10 @@ function CommentaryPanel({ reference }: { reference: string }) {
 
           {/* Structure */}
           <div>
-            <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+            <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
               {`Struktura textu`}
             </p>
-            <p className="text-[13px] leading-relaxed text-text-muted">{commentary.structure}</p>
+            <p className="text-[15px] leading-[1.75] text-text">{commentary.structure}</p>
           </div>
 
           {/* Verse notes */}
@@ -507,13 +507,13 @@ function CommentaryPanel({ reference }: { reference: string }) {
             <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
               {`Pozn\u00E1mky k ver\u0161\u016Fm`}
             </p>
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {commentary.verseNotes.map((vn) => (
-                <div key={vn.verse} className="flex gap-2">
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brick-pale text-[10px] font-bold text-brick">
+                <div key={vn.verse} className="flex gap-2.5">
+                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brick-pale text-[11px] font-bold text-brick">
                     {vn.verse}
                   </span>
-                  <p className="text-[12px] leading-relaxed text-text-muted">{vn.note}</p>
+                  <p className="text-[14px] leading-[1.7] text-text">{vn.note}</p>
                 </div>
               ))}
             </div>
@@ -524,10 +524,10 @@ function CommentaryPanel({ reference }: { reference: string }) {
             <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
               {`Teologick\u00E1 t\u00E9mata`}
             </p>
-            <ul className="space-y-1">
+            <ul className="space-y-1.5">
               {commentary.theologicalThemes.map((theme, i) => (
-                <li key={i} className="flex items-start gap-2 text-[12px] leading-relaxed text-text-muted">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brick/40" />
+                <li key={i} className="flex items-start gap-2 text-[14px] leading-[1.7] text-text">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brick/40" />
                   {theme}
                 </li>
               ))}
@@ -535,13 +535,13 @@ function CommentaryPanel({ reference }: { reference: string }) {
           </div>
 
           {/* Application hints */}
-          <div className="rounded-lg border border-brick/10 bg-brick-pale/30 px-4 py-3">
+          <div className="rounded-lg border border-brick/10 bg-brick-pale/30 px-4 py-3.5">
             <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-brick/70">
               {`N\u00E1m\u011Bty pro k\u00E1z\u00E1n\u00ED`}
             </p>
-            <ul className="space-y-1.5">
+            <ul className="space-y-2">
               {commentary.applicationHints.map((hint, i) => (
-                <li key={i} className="text-[12px] leading-relaxed text-text">
+                <li key={i} className="text-[14px] leading-[1.7] text-text">
                   {`\u2192 ${hint}`}
                 </li>
               ))}
@@ -558,15 +558,15 @@ function CommentaryPanel({ reference }: { reference: string }) {
           </p>
           <div className="space-y-3">
             {commentary.cross_references.map((ref, i) => (
-              <div key={i} className="rounded-lg border border-sage/15 bg-sage-pale/20 px-3 py-2.5">
+              <div key={i} className="rounded-lg border border-sage/15 bg-sage-pale/20 px-3.5 py-3">
                 <div className="flex items-center gap-2 mb-1.5">
-                  <span className="text-[10px] font-bold text-sage">{ref.reference}</span>
-                  <span className="text-[9px] text-text-light">({ref.translation})</span>
+                  <span className="text-[12px] font-bold text-sage">{ref.reference}</span>
+                  <span className="text-[11px] text-text-muted">({ref.translation})</span>
                 </div>
-                <p className="text-[12px] leading-relaxed text-text italic border-l-2 border-sage/30 pl-2.5">
+                <p className="text-[14px] leading-[1.7] text-text italic border-l-2 border-sage/30 pl-2.5">
                   {ref.text}
                 </p>
-                <p className="mt-1.5 text-[11px] leading-relaxed text-text-muted">
+                <p className="mt-1.5 text-[13px] leading-[1.7] text-text-muted">
                   {`\u2192 ${ref.relevance}`}
                 </p>
               </div>

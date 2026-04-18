@@ -37,9 +37,12 @@ export default function PostilaContent({ content }: { content: string }) {
   const paragraphs = displayText.split(/\n\n+/).filter(Boolean);
 
   return (
-    <div className="text-[12px] leading-relaxed text-text-muted">
+    <div
+      className="font-lora text-[17px] leading-[1.85] tracking-[0.01em] text-text"
+      style={{ textAlign: "justify", hyphens: "auto" } as React.CSSProperties}
+    >
       {paragraphs.map((para, i) => (
-        <p key={i} className={i > 0 ? "mt-2" : ""}>
+        <p key={i} className={i > 0 ? "mt-4" : ""}>
           {para}
           {isLong && !expanded && i === paragraphs.length - 1 && "\u2026"}
         </p>
@@ -47,7 +50,7 @@ export default function PostilaContent({ content }: { content: string }) {
       {isLong && (
         <button
           onClick={() => setExpanded(!expanded)}
-          className="mt-2 text-[11px] font-medium text-brick underline decoration-brick/30 hover:decoration-brick"
+          className="mt-4 font-sans text-[12px] font-medium text-brick underline decoration-brick/30 hover:decoration-brick"
         >
           {expanded ? `Sbalit` : `Rozbalit cel\u00FD text`}
         </button>
