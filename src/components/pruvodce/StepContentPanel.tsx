@@ -26,7 +26,6 @@ import StepContext from "./StepContext";
 import SubStepNav from "./SubStepNav";
 import UnifiedFlow from "./UnifiedFlow";
 import PreviousStepOutputs from "./PreviousStepOutputs";
-import Notepad from "./Notepad";
 
 interface StepContentPanelProps {
   phase: Phase;
@@ -346,15 +345,6 @@ function MobileGuide({
       />
 
       <PreviousStepOutputs subStepSlug={subSlug} />
-
-      <div className="mt-3">
-        <Notepad
-          slug={subSlug}
-          isOpen={false}
-          onToggle={() => {}}
-          onHasContentChange={onNotepadContent}
-        />
-      </div>
 
       <nav className="mt-6 flex items-center justify-between border-t border-border pt-6">
         {prevPhase ? (

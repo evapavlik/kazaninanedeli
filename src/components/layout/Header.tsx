@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const navLinks = [
+const navLinks: { href: string; label: string; badge?: string }[] = [
   { href: "/pruvodce/priprava", label: "Průvodce" },
   { href: "/kazani", label: "Kázání" },
   { href: "/metodika", label: "Metodika" },
   { href: "/slovnik", label: "Slovník" },
   { href: "/zdroje", label: "Zdroje" },
-  { href: "/o-projektu", label: "O projektu" },
+  { href: "/o-projektu", label: "O projektu", badge: "zkušební provoz" },
 ];
 
 export default function Header() {
@@ -31,9 +31,14 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-[13px] font-medium text-text-muted no-underline transition-colors duration-200 hover:text-brick"
+              className="group flex flex-col items-center text-[13px] font-medium text-text-muted no-underline leading-tight transition-colors duration-200 hover:text-brick"
             >
-              {link.label}
+              <span>{link.label}</span>
+              {link.badge && (
+                <span className="mt-0.5 text-[9px] font-normal uppercase tracking-[0.12em] text-text-light/70 group-hover:text-brick/70">
+                  {link.badge}
+                </span>
+              )}
             </Link>
           ))}
         </nav>
@@ -65,9 +70,14 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-[13px] font-medium text-text-muted no-underline transition-colors hover:bg-cream hover:text-brick"
+                className="flex items-baseline gap-2 rounded-lg px-3 py-2.5 text-[13px] font-medium text-text-muted no-underline transition-colors hover:bg-cream hover:text-brick"
               >
-                {link.label}
+                <span>{link.label}</span>
+                {link.badge && (
+                  <span className="text-[9px] font-normal uppercase tracking-[0.12em] text-text-light/70">
+                    {link.badge}
+                  </span>
+                )}
               </Link>
             ))}
           </div>
