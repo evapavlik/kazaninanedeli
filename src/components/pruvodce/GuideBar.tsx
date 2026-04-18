@@ -10,7 +10,6 @@ import StepContext from "./StepContext";
 import SubStepNav from "./SubStepNav";
 import UnifiedFlow from "./UnifiedFlow";
 import PreviousStepOutputs from "./PreviousStepOutputs";
-import Notepad from "./Notepad";
 import BibleContextView from "./BibleContextView";
 import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
 import LiturgicalCalendar from "@/components/tools/LiturgicalCalendar";
@@ -273,16 +272,6 @@ export default function GuideBar({
 
               {/* Previous step outputs */}
               <PreviousStepOutputs subStepSlug={subSlug} />
-
-              {/* Notepad */}
-              <div className="mt-3">
-                <Notepad
-                  slug={subSlug}
-                  isOpen={false}
-                  onToggle={() => {}}
-                  onHasContentChange={onNotepadContent}
-                />
-              </div>
 
               </div>
 
