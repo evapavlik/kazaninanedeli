@@ -26,6 +26,19 @@ import StepContext from "./StepContext";
 import SubStepNav from "./SubStepNav";
 import UnifiedFlow from "./UnifiedFlow";
 import PreviousStepOutputs from "./PreviousStepOutputs";
+import BibleContextView from "./BibleContextView";
+import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
+import CommentaryPanel from "./CommentaryPanel";
+import SermonInspirationPanel from "./SermonInspirationPanel";
+
+const MOBILE_TOOL_LABELS: Record<string, string> = {
+  translations: "Porovn\u00E1n\u00ED p\u0159eklad\u016F",
+  bookContext: "Kontext knihy",
+  liturgy: "Liturgick\u00FD kalend\u00E1\u0159",
+  originals: "P\u016Fvodn\u00ED jazyky",
+  commentary: "Koment\u00E1\u0159e",
+  sermons: "K\u00E1z\u00E1n\u00ED jin\u00FDch",
+};
 
 interface StepContentPanelProps {
   phase: Phase;
@@ -223,6 +236,7 @@ export default function StepContentPanel({
             onNotepadContent={handleNotepadContent}
             prevPhase={prevPhase}
             nextPhase={nextPhase}
+            reference={savedRef}
           />
         </div>
       </div>
@@ -292,6 +306,7 @@ function MobileGuide({
   onNotepadContent,
   prevPhase,
   nextPhase,
+  reference,
 }: {
   phase: Phase;
   currentSub: SubStep;
@@ -305,7 +320,19 @@ function MobileGuide({
   onNotepadContent: (hasContent: boolean) => void;
   prevPhase: { slug: string; title: string } | null;
   nextPhase: { slug: string; title: string } | null;
+  reference: string;
 }) {
+  const [activeToolView, setActiveToolView] = useState<string | null>(null);
+  const toolPanelRef = useRef<HTMLDivElement | null>(null);
+
+  const handleOpenTool = useCallback((key: string) => {
+    setActiveToolView(key);
+    // Scroll the tool panel into view after render
+    setTimeout(() => {
+      toolPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  }, []);
+
   return (
     <>
       <div className="mb-4">
@@ -342,7 +369,45 @@ function MobileGuide({
         items={currentSub.flow}
         toolHelpers={flowToolHelpers}
         onCountChange={onFlowCountChange}
+        onOpenTool={handleOpenTool}
       />
+
+      {/* Inline tool panel — shown when user taps a tool button */}
+      {activeToolView && (
+        <div
+          ref={toolPanelRef}
+          className="mt-4 rounded-xl border border-brick/20 bg-white shadow-sm"
+        >
+          <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brick">
+                {MOBILE_TOOL_LABELS[activeToolView] || activeToolView}
+              </span>
+            </div>
+            <button
+              onClick={() => setActiveToolView(null)}
+              className="flex h-8 w-8 items-center justify-center rounded-md text-text-muted hover:bg-cream hover:text-brick"
+              aria-label="Zav\u0159\u00EDt n\u00E1stroj"
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 4L4 12M4 4l8 8" />
+              </svg>
+            </button>
+          </div>
+          <div className="p-4">
+            {activeToolView === "translations" && <TranslationCompare reference={reference} />}
+            {activeToolView === "bookContext" && <BibleContextView reference={reference} />}
+            {activeToolView === "liturgy" && <LiturgicalCalendar />}
+            {activeToolView === "originals" && <OriginalLanguagesPanel reference={reference} />}
+            {activeToolView === "commentary" && reference && (
+              <CommentaryPanel reference={reference} />
+            )}
+            {activeToolView === "sermons" && reference && (
+              <SermonInspirationPanel reference={reference} />
+            )}
+          </div>
+        </div>
+      )}
 
       <PreviousStepOutputs subStepSlug={subSlug} />
 

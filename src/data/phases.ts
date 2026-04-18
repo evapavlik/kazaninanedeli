@@ -74,7 +74,7 @@ export const phases: Phase[] = [
           explanation: `Historick\u00E1 kritika hled\u00E1 Sitz im Leben \u2014 \u017Eivotn\u00ED situaci, v n\u00ED\u017E text vznikl. Intertextualita ukazuje, \u017Ee \u017E\u00E1dn\u00FD text nestoj\u00ED s\u00E1m \u2014 ka\u017Ed\u00FD biblick\u00FD text je protk\u00E1n odkazy na jin\u00E9 texty a tradice. Cizost star\u00FDch text\u016F (Pokorn\u00FD) n\u00E1s upozor\u0148uje, \u017Ee mezi na\u0161\u00EDm sv\u011Btem a sv\u011Btem textu le\u017E\u00ED historick\u00E1 vzd\u00E1lenost, kterou mus\u00EDme respektovat.`,
         },
         flow: [
-          { type: "check", text: `P\u0159e\u010Dt\u011Bte si, co p\u0159edch\u00E1z\u00ED a n\u00E1sleduje va\u0161i perikopou.` },
+          { type: "check", text: `P\u0159e\u010Dt\u011Bte si, co p\u0159edch\u00E1z\u00ED a n\u00E1sleduje va\u0161i perikopu.` },
           { type: "artifact", text: `Kdo napsal a komu? Jak\u00FD je z\u00E1m\u011Br knihy?`, field: "author", placeholder: `Nap\u0159. Ezechiel, prorok v babylonsk\u00E9m exilu, p\u00ED\u0161e vyhnancum...` },
           { type: "artifact", text: `V jak\u00E9 historick\u00E9 situaci text vznikl?`, field: "historicalContext", placeholder: `Nap\u0159. po zni\u010Den\u00ED Jeruzal\u00E9ma 587 p\u0159. Kr., lid v exilu...` },
           { type: "check", text: `Pod\u00EDvejte se, kde se v c\u00EDrkevn\u00EDm roce nach\u00E1z\u00EDte a pro\u010D se tento text \u010Dte pr\u00E1v\u011B te\u010F.` },

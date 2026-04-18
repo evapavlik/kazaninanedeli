@@ -3,8 +3,10 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useCurrentReading } from "@/hooks/useCurrentReading";
+import { useLectionaryReading } from "@/hooks/useLectionaryReading";
 import { useAnnotations } from "@/hooks/useAnnotations";
 import { annotationCategories } from "@/data/annotation-categories";
+import type { LectionaryReading } from "@/data/lectionary";
 import AnnotatedTextDisplay from "./AnnotatedTextDisplay";
 import BibleContextView from "./BibleContextView";
 import TranslationCompare from "./TranslationCompare";
@@ -14,7 +16,18 @@ import CentralIdeaField from "./CentralIdeaField";
 import LiturgicalCalendar from "@/components/tools/LiturgicalCalendar";
 import { getCommentary, type PericopeCommentary } from "@/data/commentary-notes";
 import { fetchCommentary } from "@/lib/supabase-cteni";
-import { parseReferenceForApi, getBibleHubCommentaryUrl } from "@/lib/getbible";
+import { parseReferenceForApi, getBibleHubCommentaryUrl, fetchChapter, formatReference, type BibleTranslation } from "@/lib/getbible";
+
+/** Source of the Bible text: a specific translation code or "custom" for user-pasted text. */
+type TextSource = BibleTranslation | "custom";
+
+const TEXT_SOURCE_LABELS: Record<TextSource, string> = {
+  cep: "\u010CEP",
+  csp: "\u010CSP",
+  bkr: "Kralick\u00E1",
+  textusreceptus: "\u0158ecky (TR)",
+  custom: "Vlastn\u00ED vklad",
+};
 
 interface BibleTextPanelProps {
   currentSlug: string;
@@ -33,15 +46,23 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
     "kazani-bible-ref",
     ""
   );
+  const [savedSource, setSavedSource] = useLocalStorage<TextSource | "">(
+    "kazani-bible-source",
+    ""
+  );
   const [localText, setLocalText] = useState("");
   const [localRef, setLocalRef] = useState("");
+  const [localSource, setLocalSource] = useState<TextSource | "">("");
   const [editing, setEditing] = useState(false);
   const [showSaved, setShowSaved] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const savedIndicatorRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  // Fetch current Sunday reading from CČSH lectionary
+  // Fetch current Sunday reading from Supabase (has full markdown text)
   const { data: currentReading, loading: readingLoading } = useCurrentReading();
+
+  // Fetch current Sunday entry from static lectionary (always works, references only)
+  const lectionary = useLectionaryReading();
 
   // Interactive annotations
   const {
@@ -57,19 +78,25 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
   useEffect(() => {
     setLocalText(savedText);
     setLocalRef(savedRef);
-  }, [savedText, savedRef]);
+    setLocalSource(savedSource);
+  }, [savedText, savedRef, savedSource]);
 
   const saveText = useCallback(
     (text: string) => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
         setSavedText(text);
+        // Manually typed/pasted text → source becomes "custom" (unless already set)
+        if (text.trim() && !savedSource) {
+          setSavedSource("custom");
+          setLocalSource("custom");
+        }
         setShowSaved(true);
         if (savedIndicatorRef.current) clearTimeout(savedIndicatorRef.current);
         savedIndicatorRef.current = setTimeout(() => setShowSaved(false), 1500);
       }, 300);
     },
-    [setSavedText]
+    [setSavedText, setSavedSource, savedSource]
   );
 
   const saveRef = useCallback(
@@ -86,11 +113,17 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
     };
   }, []);
 
-  const applyReading = (reference: string, text: string) => {
+  const applyReading = (
+    reference: string,
+    text: string,
+    source: TextSource = "custom"
+  ) => {
     setLocalRef(reference);
     setLocalText(text);
+    setLocalSource(source);
     setSavedRef(reference);
     setSavedText(text);
+    setSavedSource(source);
     setEditing(false);
   };
 
@@ -111,8 +144,11 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
   const isExegesisStep = currentSlug === "vyklad";
   const showTextarea = !hasText || editing || isFirstStep;
 
-  // Show reading suggestion when no text is entered yet
-  const showSuggestion = !hasText && !readingLoading && currentReading && currentReading.readings.length > 0;
+  // Show reading suggestion when no text is entered yet.
+  // Prefer Supabase (has full text), fall back to static lectionary (always works).
+  const showSupabaseSuggestion =
+    !hasText && !readingLoading && currentReading && currentReading.readings.length > 0;
+  const showLectionarySuggestion = !hasText && !showSupabaseSuggestion && lectionary.entry;
 
   // Annotations enabled only from step 2 onwards
   const annotationsEnabled = !isFirstStep && currentSlug !== "modlitba";
@@ -145,8 +181,14 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
             <p className="text-sm italic leading-relaxed text-text-muted">
               {`V dal\u0161\u00EDm kroku sem vlo\u017E\u00EDte text perikopy, se kterou budete pracovat.`}
             </p>
-            {showSuggestion && (
+            {showSupabaseSuggestion && (
               <SundaySuggestion reading={currentReading} onApply={applyReading} />
+            )}
+            {showLectionarySuggestion && (
+              <LectionarySuggestion
+                entry={lectionary.entry!}
+                onApply={applyReading}
+              />
             )}
           </div>
         )}
@@ -156,11 +198,23 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
 
   return (
     <div className="rounded-xl border border-border bg-cream p-5 lg:p-6">
-      <div className="mb-4 flex items-center justify-between">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
-          {`Biblick\u00FD text`}
-        </p>
-        <div className="flex items-center gap-2">
+      <div className="mb-4 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 min-w-0">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light shrink-0">
+            {`Biblick\u00FD text`}
+          </p>
+          {hasText && localSource && (
+            <span
+              className="inline-flex items-center rounded-full border border-sage/30 bg-sage-pale/40 px-2 py-0.5 text-[10px] font-medium text-sage"
+              title={localSource === "custom"
+                ? "Text vlo\u017Een\u00FD u\u017Eivatelem \u2014 p\u0159eklad nen\u00ED ozna\u010Den"
+                : `P\u0159eklad na\u010Dten\u00FD z ${TEXT_SOURCE_LABELS[localSource]}`}
+            >
+              {TEXT_SOURCE_LABELS[localSource]}
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
           {showSaved && (
             <span className="text-[11px] text-sage">{`\u2713 Ulo\u017Eeno`}</span>
           )}
@@ -176,8 +230,11 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
       </div>
 
       {/* Sunday reading suggestion when empty */}
-      {showSuggestion && (
+      {showSupabaseSuggestion && (
         <SundaySuggestion reading={currentReading} onApply={applyReading} />
+      )}
+      {showLectionarySuggestion && (
+        <LectionarySuggestion entry={lectionary.entry!} onApply={applyReading} />
       )}
 
       {/* Reference input */}
@@ -248,8 +305,13 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
         <>
           <div>
               {localRef && (
-                <p className="mb-3 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
-                  {localRef}
+                <p className="mb-3 flex flex-wrap items-baseline gap-x-2 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
+                  <span>{localRef}</span>
+                  {localSource && (
+                    <span className="text-[11px] font-medium tracking-[0.1em] text-text-light">
+                      {`\u00B7 ${TEXT_SOURCE_LABELS[localSource]}`}
+                    </span>
+                  )}
                 </p>
               )}
               {annotationsEnabled ? (
@@ -739,7 +801,7 @@ function BreathingExercise() {
           {`P\u0159\u00EDprava srdce`}
         </p>
         <p className="mb-10 max-w-[240px] text-center font-literata text-[15px] italic leading-relaxed text-text-muted">
-          {`Zt\u0161\u00EDte se a otev\u0159ete se Bohu i textu.`}
+          {`Zti\u0161te se a otev\u0159ete se Bohu i textu.`}
         </p>
         <button
           onClick={() => setActive(true)}
@@ -962,7 +1024,7 @@ function SundaySuggestion({
   onApply,
 }: {
   reading: NonNullable<ReturnType<typeof useCurrentReading>["data"]>;
-  onApply: (reference: string, text: string) => void;
+  onApply: (reference: string, text: string, source?: TextSource) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -998,7 +1060,7 @@ function SundaySuggestion({
           {reading.readings.map((r) => (
             <button
               key={r.type}
-              onClick={() => onApply(r.reference, r.text)}
+              onClick={() => onApply(r.reference, r.text, "cep")}
               className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left transition-all hover:bg-brick-pale"
             >
               <span className="shrink-0 text-[10px] font-semibold uppercase text-text-light">
@@ -1012,6 +1074,124 @@ function SundaySuggestion({
               </span>
             </button>
           ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Card showing current Sunday's readings from static CČSH lectionary
+ * (works without Supabase). Fetches full text from ČEP on demand.
+ */
+function LectionarySuggestion({
+  entry,
+  onApply,
+}: {
+  entry: NonNullable<ReturnType<typeof useLectionaryReading>["entry"]>;
+  onApply: (reference: string, text: string, source?: TextSource) => void;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const [loadingKey, setLoadingKey] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const readings = [
+    { key: "first", label: entry.readings.first?.label, data: entry.readings.first },
+    { key: "second", label: entry.readings.second?.label, data: entry.readings.second },
+    { key: "gospel", label: entry.readings.gospel?.label, data: entry.readings.gospel },
+  ].filter((r) => r.data !== null && r.data !== undefined) as Array<{
+    key: string;
+    label: string;
+    data: LectionaryReading;
+  }>;
+
+  const handleFetch = async (r: LectionaryReading) => {
+    setLoadingKey(r.reference);
+    setError(null);
+    try {
+      const chapter = await fetchChapter(r.bookNumber, r.chapter, "cep");
+      if (!chapter) {
+        setError(`Nepoda\u0159ilo se na\u010d\u00EDst ${r.reference} z \u010CEP.`);
+        setLoadingKey(null);
+        return;
+      }
+
+      // Filter verses by range
+      const versesToUse = chapter.verses.filter((v) => {
+        if (r.verseStart === null || r.verseStart === undefined) return true;
+        if (v.verse < r.verseStart) return false;
+        if (r.verseEnd !== null && r.verseEnd !== undefined && v.verse > r.verseEnd) return false;
+        return true;
+      });
+
+      const text = versesToUse.map((v) => v.text).join(" ");
+      const ref = formatReference(r.bookNumber, r.chapter, r.verseStart, r.verseEnd);
+      onApply(ref, text, "cep");
+    } catch (e) {
+      setError(
+        e instanceof Error ? e.message : "Chyba p\u0159i na\u010D\u00EDt\u00E1n\u00ED textu."
+      );
+    } finally {
+      setLoadingKey(null);
+    }
+  };
+
+  return (
+    <div className="mt-3 rounded-lg border border-brick/15 bg-white/70 p-3">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="flex w-full items-center justify-between text-left"
+      >
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-brick">
+            {`Tuto ned\u011Bli v C\u010CSH`}
+          </p>
+          <p className="mt-0.5 text-xs font-medium text-text">
+            {entry.sundayName}
+          </p>
+        </div>
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className={`shrink-0 text-text-light transition-transform ${expanded ? "rotate-180" : ""}`}
+        >
+          <path d="M5 8l5 5 5-5" />
+        </svg>
+      </button>
+
+      {expanded && (
+        <div className="mt-3 space-y-2">
+          <p className="text-[10px] text-text-light">
+            {`Klikn\u011Bte na \u010Dten\u00ED \u2014 na\u010Dte se text z \u010CEP p\u0159ekladu.`}
+          </p>
+          {readings.map((r) => {
+            const isLoading = loadingKey === r.data.reference;
+            return (
+              <button
+                key={r.key}
+                onClick={() => handleFetch(r.data)}
+                disabled={isLoading}
+                className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left transition-all hover:bg-brick-pale disabled:opacity-50"
+              >
+                <span className="shrink-0 text-[10px] font-semibold uppercase text-text-light">
+                  {r.label}
+                </span>
+                <span className="flex-1 truncate text-xs font-medium text-text">
+                  {r.data.reference}
+                </span>
+                <span className="shrink-0 text-[10px] text-brick">
+                  {isLoading ? `Na\u010D\u00EDt\u00E1m\u2026` : `Na\u010D\u00EDst \u2192`}
+                </span>
+              </button>
+            );
+          })}
+          {error && (
+            <p className="text-[11px] text-brick">{error}</p>
+          )}
         </div>
       )}
     </div>

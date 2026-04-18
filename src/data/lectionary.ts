@@ -40,7 +40,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 2, 1-5",
+      reference: "Iz 2,1-5",
       bookNumber: 23,
       chapter: 2,
       verseStart: 1,
@@ -48,7 +48,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 25, 1-3",
+      reference: "Ž 25,1-3",
       bookNumber: 19,
       chapter: 25,
       verseStart: 1,
@@ -56,7 +56,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 13, 11-14",
+      reference: "Ř 13,11-14",
       bookNumber: 45,
       chapter: 13,
       verseStart: 11,
@@ -64,7 +64,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 24, 36-44",
+      reference: "Mt 24,36-44",
       bookNumber: 40,
       chapter: 24,
       verseStart: 36,
@@ -81,7 +81,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 11, 1-10",
+      reference: "Iz 11,1-10",
       bookNumber: 23,
       chapter: 11,
       verseStart: 1,
@@ -89,7 +89,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 50, 2",
+      reference: "Ž 50,2",
       bookNumber: 19,
       chapter: 50,
       verseStart: 2,
@@ -97,7 +97,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 15, 4-9",
+      reference: "Ř 15,4-9",
       bookNumber: 45,
       chapter: 15,
       verseStart: 4,
@@ -105,7 +105,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 3, 1-12",
+      reference: "Mt 3,1-12",
       bookNumber: 40,
       chapter: 3,
       verseStart: 1,
@@ -122,7 +122,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 35, 1-6",
+      reference: "Iz 35,1-6",
       bookNumber: 23,
       chapter: 35,
       verseStart: 1,
@@ -130,7 +130,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 85, 2-3",
+      reference: "Ž 85,2-3",
       bookNumber: 19,
       chapter: 85,
       verseStart: 2,
@@ -138,7 +138,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Jakubův 5, 7-10",
+      reference: "Jk 5,7-10",
       bookNumber: 59,
       chapter: 5,
       verseStart: 7,
@@ -146,7 +146,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Žalm 85, 2-3",
+      reference: "Ž 85,2-3",
       bookNumber: 19,
       chapter: 85,
       verseStart: 2,
@@ -163,7 +163,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 7, 10-14",
+      reference: "Iz 7,10-14",
       bookNumber: 23,
       chapter: 7,
       verseStart: 10,
@@ -172,7 +172,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       psalm: null,
       second: {
       label: "2. čtení",
-      reference: "Římanům 1, 1-7",
+      reference: "Ř 1,1-7",
       bookNumber: 45,
       chapter: 1,
       verseStart: 1,
@@ -180,7 +180,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 1, 18-25",
+      reference: "Mt 1,18-25",
       bookNumber: 40,
       chapter: 1,
       verseStart: 18,
@@ -197,7 +197,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Samuelova 7, 1-5",
+      reference: "1S 7,1-5",
       bookNumber: 9,
       chapter: 7,
       verseStart: 1,
@@ -205,7 +205,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 24, 7",
+      reference: "Ž 24,7",
       bookNumber: 19,
       chapter: 24,
       verseStart: 7,
@@ -213,7 +213,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 13, 16-26",
+      reference: "Sk 13,16-26",
       bookNumber: 44,
       chapter: 13,
       verseStart: 16,
@@ -221,7 +221,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 1, 67-79",
+      reference: "Lk 1,67-79",
       bookNumber: 42,
       chapter: 1,
       verseStart: 67,
@@ -238,7 +238,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 9, 1-6",
+      reference: "Iz 9,1-6",
       bookNumber: 23,
       chapter: 9,
       verseStart: 1,
@@ -246,7 +246,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 2, 7",
+      reference: "Ž 2,7",
       bookNumber: 19,
       chapter: 2,
       verseStart: 7,
@@ -254,7 +254,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Titovi 2, 11-14",
+      reference: "Tt 2,11-14",
       bookNumber: 56,
       chapter: 2,
       verseStart: 11,
@@ -262,7 +262,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 2, 1-14",
+      reference: "Lk 2,1-14",
       bookNumber: 42,
       chapter: 2,
       verseStart: 1,
@@ -279,7 +279,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 52, 7-10",
+      reference: "Iz 52,7-10",
       bookNumber: 23,
       chapter: 52,
       verseStart: 7,
@@ -287,7 +287,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 89, 12",
+      reference: "Ž 89,12",
       bookNumber: 19,
       chapter: 89,
       verseStart: 12,
@@ -295,7 +295,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 1, 1-6",
+      reference: "Žd 1,1-6",
       bookNumber: 58,
       chapter: 1,
       verseStart: 1,
@@ -303,7 +303,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 1, 1-14",
+      reference: "J 1,1-14",
       bookNumber: 43,
       chapter: 1,
       verseStart: 1,
@@ -320,7 +320,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 63, 7-9",
+      reference: "Iz 63,7-9",
       bookNumber: 23,
       chapter: 63,
       verseStart: 7,
@@ -329,7 +329,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       psalm: null,
       second: {
       label: "2. čtení",
-      reference: "Židům 2, 10-18",
+      reference: "Žd 2,10-18",
       bookNumber: 58,
       chapter: 2,
       verseStart: 10,
@@ -337,7 +337,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 2, 13-23",
+      reference: "Mt 2,13-23",
       bookNumber: 40,
       chapter: 2,
       verseStart: 13,
@@ -354,7 +354,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Numeri 6, 22-27",
+      reference: "Nu 6,22-27",
       bookNumber: 4,
       chapter: 6,
       verseStart: 22,
@@ -362,7 +362,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 86, 12",
+      reference: "Ž 86,12",
       bookNumber: 19,
       chapter: 86,
       verseStart: 12,
@@ -370,7 +370,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Galatským 4, 4-7",
+      reference: "Ga 4,4-7",
       bookNumber: 48,
       chapter: 4,
       verseStart: 4,
@@ -378,7 +378,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 2, 15-21",
+      reference: "Lk 2,15-21",
       bookNumber: 42,
       chapter: 2,
       verseStart: 15,
@@ -395,7 +395,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 31, 7-11",
+      reference: "Jr 31,7-11",
       bookNumber: 24,
       chapter: 31,
       verseStart: 7,
@@ -403,7 +403,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 103, 2",
+      reference: "Ž 103,2",
       bookNumber: 19,
       chapter: 103,
       verseStart: 2,
@@ -411,7 +411,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 1, 3-14",
+      reference: "Ef 1,3-14",
       bookNumber: 49,
       chapter: 1,
       verseStart: 3,
@@ -419,7 +419,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 1, 10-18",
+      reference: "J 1,10-18",
       bookNumber: 43,
       chapter: 1,
       verseStart: 10,
@@ -436,7 +436,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 60, 1-6",
+      reference: "Iz 60,1-6",
       bookNumber: 23,
       chapter: 60,
       verseStart: 1,
@@ -444,7 +444,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 72, 10-11",
+      reference: "Ž 72,10-11",
       bookNumber: 19,
       chapter: 72,
       verseStart: 10,
@@ -452,7 +452,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 3, 1-12",
+      reference: "Ef 3,1-12",
       bookNumber: 49,
       chapter: 3,
       verseStart: 1,
@@ -460,7 +460,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 2, 1-12",
+      reference: "Mt 2,1-12",
       bookNumber: 40,
       chapter: 2,
       verseStart: 1,
@@ -477,7 +477,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 42, 1-7",
+      reference: "Iz 42,1-7",
       bookNumber: 23,
       chapter: 42,
       verseStart: 1,
@@ -485,7 +485,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 45, 8",
+      reference: "Ž 45,8",
       bookNumber: 19,
       chapter: 45,
       verseStart: 8,
@@ -493,7 +493,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 10, 34-43",
+      reference: "Sk 10,34-43",
       bookNumber: 44,
       chapter: 10,
       verseStart: 34,
@@ -501,7 +501,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 3, 13-17",
+      reference: "Mt 3,13-17",
       bookNumber: 40,
       chapter: 3,
       verseStart: 13,
@@ -518,7 +518,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 49, 3",
+      reference: "Iz 49,3",
       bookNumber: 23,
       chapter: 49,
       verseStart: 3,
@@ -526,7 +526,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 107, 20-21",
+      reference: "Ž 107,20-21",
       bookNumber: 19,
       chapter: 107,
       verseStart: 20,
@@ -534,7 +534,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 1, 1-9",
+      reference: "1K 1,1-9",
       bookNumber: 46,
       chapter: 1,
       verseStart: 1,
@@ -542,7 +542,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 1, 29-42",
+      reference: "J 1,29-42",
       bookNumber: 43,
       chapter: 1,
       verseStart: 29,
@@ -559,7 +559,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 8, 23-9",
+      reference: "Iz 8,23-9",
       bookNumber: 23,
       chapter: 8,
       verseStart: 23,
@@ -567,7 +567,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 102, 16-17",
+      reference: "Ž 102,16-17",
       bookNumber: 19,
       chapter: 102,
       verseStart: 16,
@@ -575,7 +575,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 1, 10-18",
+      reference: "1K 1,10-18",
       bookNumber: 46,
       chapter: 1,
       verseStart: 10,
@@ -583,7 +583,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Žalm 118, 16-17",
+      reference: "Ž 118,16-17",
       bookNumber: 19,
       chapter: 118,
       verseStart: 16,
@@ -600,7 +600,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Micheáš 6, 1-4",
+      reference: "Mi 6,1-4",
       bookNumber: 33,
       chapter: 6,
       verseStart: 1,
@@ -608,7 +608,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 106, 47",
+      reference: "Ž 106,47",
       bookNumber: 19,
       chapter: 106,
       verseStart: 47,
@@ -616,7 +616,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 1, 26-31",
+      reference: "1K 1,26-31",
       bookNumber: 46,
       chapter: 1,
       verseStart: 26,
@@ -624,7 +624,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 5, 1-12",
+      reference: "Mt 5,1-12",
       bookNumber: 40,
       chapter: 5,
       verseStart: 1,
@@ -641,7 +641,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Malachiáš 3, 1-5",
+      reference: "Mal 3,1-5",
       bookNumber: 39,
       chapter: 3,
       verseStart: 1,
@@ -649,7 +649,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 48, 10-11",
+      reference: "Ž 48,10-11",
       bookNumber: 19,
       chapter: 48,
       verseStart: 10,
@@ -657,7 +657,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 2, 14-18",
+      reference: "Žd 2,14-18",
       bookNumber: 58,
       chapter: 2,
       verseStart: 14,
@@ -665,7 +665,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 2, 22-40",
+      reference: "Lk 2,22-40",
       bookNumber: 42,
       chapter: 2,
       verseStart: 22,
@@ -682,7 +682,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 58, 9",
+      reference: "Iz 58,9",
       bookNumber: 23,
       chapter: 58,
       verseStart: 9,
@@ -690,7 +690,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 95, 6-7",
+      reference: "Ž 95,6-7",
       bookNumber: 19,
       chapter: 95,
       verseStart: 6,
@@ -698,7 +698,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 2, 1-9",
+      reference: "1K 2,1-9",
       bookNumber: 46,
       chapter: 2,
       verseStart: 1,
@@ -706,7 +706,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 5, 13-20",
+      reference: "Mt 5,13-20",
       bookNumber: 40,
       chapter: 5,
       verseStart: 13,
@@ -723,7 +723,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Deuteronomium 30, 15-20",
+      reference: "Dt 30,15-20",
       bookNumber: 5,
       chapter: 30,
       verseStart: 15,
@@ -731,7 +731,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 31, 3-4",
+      reference: "Ž 31,3-4",
       bookNumber: 19,
       chapter: 31,
       verseStart: 3,
@@ -739,7 +739,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 3, 1-9",
+      reference: "1K 3,1-9",
       bookNumber: 46,
       chapter: 3,
       verseStart: 1,
@@ -747,7 +747,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 5, 21-37",
+      reference: "Mt 5,21-37",
       bookNumber: 40,
       chapter: 5,
       verseStart: 21,
@@ -764,7 +764,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Leviticus 19, 1-2",
+      reference: "Lv 19,1-2",
       bookNumber: 3,
       chapter: 19,
       verseStart: 1,
@@ -772,7 +772,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 13, 5-6",
+      reference: "Ž 13,5-6",
       bookNumber: 19,
       chapter: 13,
       verseStart: 5,
@@ -780,7 +780,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 3, 10-11",
+      reference: "1K 3,10-11",
       bookNumber: 46,
       chapter: 3,
       verseStart: 10,
@@ -788,7 +788,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 5, 38-48",
+      reference: "Mt 5,38-48",
       bookNumber: 40,
       chapter: 5,
       verseStart: 38,
@@ -805,7 +805,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 49, 8-9",
+      reference: "Iz 49,8-9",
       bookNumber: 23,
       chapter: 49,
       verseStart: 8,
@@ -813,7 +813,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 18, 19-20",
+      reference: "Ž 18,19-20",
       bookNumber: 19,
       chapter: 18,
       verseStart: 19,
@@ -821,7 +821,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 4, 1-5",
+      reference: "1K 4,1-5",
       bookNumber: 46,
       chapter: 4,
       verseStart: 1,
@@ -829,7 +829,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 6, 24-34",
+      reference: "Mt 6,24-34",
       bookNumber: 40,
       chapter: 6,
       verseStart: 24,
@@ -846,7 +846,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Exodus 24, 12-18",
+      reference: "Ex 24,12-18",
       bookNumber: 2,
       chapter: 24,
       verseStart: 12,
@@ -854,7 +854,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 100, 2",
+      reference: "Ž 100,2",
       bookNumber: 19,
       chapter: 100,
       verseStart: 2,
@@ -862,7 +862,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Petrův 1, 16-21",
+      reference: "1Pt 1,16-21",
       bookNumber: 60,
       chapter: 1,
       verseStart: 16,
@@ -870,7 +870,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 17, 1-9",
+      reference: "Mt 17,1-9",
       bookNumber: 40,
       chapter: 17,
       verseStart: 1,
@@ -888,7 +888,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 57, 2",
+      reference: "Ž 57,2",
       bookNumber: 19,
       chapter: 57,
       verseStart: 2,
@@ -896,7 +896,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 5, 20",
+      reference: "1K 5,20",
       bookNumber: 46,
       chapter: 5,
       verseStart: 20,
@@ -904,7 +904,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 6, 1-6",
+      reference: "Mt 6,1-6",
       bookNumber: 40,
       chapter: 6,
       verseStart: 1,
@@ -921,7 +921,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 2, 15-17",
+      reference: "Gn 2,15-17",
       bookNumber: 1,
       chapter: 2,
       verseStart: 15,
@@ -929,7 +929,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 91, 15-16",
+      reference: "Ž 91,15-16",
       bookNumber: 19,
       chapter: 91,
       verseStart: 15,
@@ -937,7 +937,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 5, 12-19",
+      reference: "Ř 5,12-19",
       bookNumber: 45,
       chapter: 5,
       verseStart: 12,
@@ -945,7 +945,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 4, 1-11",
+      reference: "Mt 4,1-11",
       bookNumber: 40,
       chapter: 4,
       verseStart: 1,
@@ -962,7 +962,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 12, 1-4",
+      reference: "Gn 12,1-4",
       bookNumber: 1,
       chapter: 12,
       verseStart: 1,
@@ -970,7 +970,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 25, 6",
+      reference: "Ž 25,6",
       bookNumber: 19,
       chapter: 25,
       verseStart: 6,
@@ -978,7 +978,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 4, 1-5",
+      reference: "Ř 4,1-5",
       bookNumber: 45,
       chapter: 4,
       verseStart: 1,
@@ -986,7 +986,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 3, 1-17",
+      reference: "J 3,1-17",
       bookNumber: 43,
       chapter: 3,
       verseStart: 1,
@@ -1003,7 +1003,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Exodus 17, 3-7",
+      reference: "Ex 17,3-7",
       bookNumber: 2,
       chapter: 17,
       verseStart: 3,
@@ -1011,7 +1011,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 25, 15-16",
+      reference: "Ž 25,15-16",
       bookNumber: 19,
       chapter: 25,
       verseStart: 15,
@@ -1019,7 +1019,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 5, 1-8",
+      reference: "Ř 5,1-8",
       bookNumber: 45,
       chapter: 5,
       verseStart: 1,
@@ -1027,7 +1027,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 4, 5-42",
+      reference: "J 4,5-42",
       bookNumber: 43,
       chapter: 4,
       verseStart: 5,
@@ -1044,7 +1044,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Samuelova 16, 1",
+      reference: "1S 16,1",
       bookNumber: 9,
       chapter: 16,
       verseStart: 1,
@@ -1052,7 +1052,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 135, 6",
+      reference: "Ž 135,6",
       bookNumber: 19,
       chapter: 135,
       verseStart: 6,
@@ -1060,7 +1060,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 5, 8-14",
+      reference: "Ef 5,8-14",
       bookNumber: 49,
       chapter: 5,
       verseStart: 8,
@@ -1068,7 +1068,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 9, 1-41",
+      reference: "J 9,1-41",
       bookNumber: 43,
       chapter: 9,
       verseStart: 1,
@@ -1085,7 +1085,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ezechiel 37, 12-14",
+      reference: "Ez 37,12-14",
       bookNumber: 26,
       chapter: 37,
       verseStart: 12,
@@ -1093,7 +1093,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 43, 1-2",
+      reference: "Ž 43,1-2",
       bookNumber: 19,
       chapter: 43,
       verseStart: 1,
@@ -1101,7 +1101,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 8, 8-11",
+      reference: "Ř 8,8-11",
       bookNumber: 45,
       chapter: 8,
       verseStart: 8,
@@ -1109,7 +1109,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 11, 1-45",
+      reference: "J 11,1-45",
       bookNumber: 43,
       chapter: 11,
       verseStart: 1,
@@ -1126,7 +1126,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 50, 4-7",
+      reference: "Iz 50,4-7",
       bookNumber: 23,
       chapter: 50,
       verseStart: 4,
@@ -1134,7 +1134,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Matouš 27, 11-54",
+      reference: "Mt 27,11-54",
       bookNumber: 40,
       chapter: 27,
       verseStart: 11,
@@ -1142,7 +1142,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 2, 5-11",
+      reference: "Fp 2,5-11",
       bookNumber: 50,
       chapter: 2,
       verseStart: 5,
@@ -1150,7 +1150,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 26, 14-27",
+      reference: "Mt 26,14-27",
       bookNumber: 40,
       chapter: 26,
       verseStart: 14,
@@ -1167,7 +1167,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Exodus 12, 1-4",
+      reference: "Ex 12,1-4",
       bookNumber: 2,
       chapter: 12,
       verseStart: 1,
@@ -1175,7 +1175,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 118, 16-17",
+      reference: "Ž 118,16-17",
       bookNumber: 19,
       chapter: 118,
       verseStart: 16,
@@ -1183,7 +1183,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 11, 23-26",
+      reference: "1K 11,23-26",
       bookNumber: 46,
       chapter: 11,
       verseStart: 23,
@@ -1191,7 +1191,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 13, 1-15",
+      reference: "J 13,1-15",
       bookNumber: 43,
       chapter: 13,
       verseStart: 1,
@@ -1208,7 +1208,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 52, 13-53",
+      reference: "Iz 52,13-53",
       bookNumber: 23,
       chapter: 52,
       verseStart: 13,
@@ -1216,7 +1216,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 22, 17-20",
+      reference: "Ž 22,17-20",
       bookNumber: 19,
       chapter: 22,
       verseStart: 17,
@@ -1224,7 +1224,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 4, 14-16",
+      reference: "Žd 4,14-16",
       bookNumber: 58,
       chapter: 4,
       verseStart: 14,
@@ -1232,7 +1232,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 18, 1-19",
+      reference: "J 18,1-19",
       bookNumber: 43,
       chapter: 18,
       verseStart: 1,
@@ -1249,7 +1249,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 1, 1-2",
+      reference: "Gn 1,1-2",
       bookNumber: 1,
       chapter: 1,
       verseStart: 1,
@@ -1257,7 +1257,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 118, 1",
+      reference: "Ž 118,1",
       bookNumber: 19,
       chapter: 118,
       verseStart: 1,
@@ -1265,7 +1265,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Exodus 14, 1-31",
+      reference: "Ex 14,1-31",
       bookNumber: 2,
       chapter: 14,
       verseStart: 1,
@@ -1273,7 +1273,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 28, 1-10",
+      reference: "Mt 28,1-10",
       bookNumber: 40,
       chapter: 28,
       verseStart: 1,
@@ -1289,7 +1289,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 10, 34-43",
+      reference: "Sk 10,34-43",
       bookNumber: 44,
       chapter: 10,
       verseStart: 34,
@@ -1297,7 +1297,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 139, 18",
+      reference: "Ž 139,18",
       bookNumber: 19,
       chapter: 139,
       verseStart: 18,
@@ -1305,7 +1305,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Koloským 3, 1-4",
+      reference: "Ko 3,1-4",
       bookNumber: 51,
       chapter: 3,
       verseStart: 1,
@@ -1313,7 +1313,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 20, 1-18",
+      reference: "J 20,1-18",
       bookNumber: 43,
       chapter: 20,
       verseStart: 1,
@@ -1330,7 +1330,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Exodus 13, 3-9",
+      reference: "Ex 13,3-9",
       bookNumber: 2,
       chapter: 13,
       verseStart: 3,
@@ -1338,7 +1338,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 105, 1",
+      reference: "Ž 105,1",
       bookNumber: 19,
       chapter: 105,
       verseStart: 1,
@@ -1346,7 +1346,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 10, 34",
+      reference: "Sk 10,34",
       bookNumber: 44,
       chapter: 10,
       verseStart: 34,
@@ -1354,7 +1354,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 28, 8-15",
+      reference: "Mt 28,8-15",
       bookNumber: 40,
       chapter: 28,
       verseStart: 8,
@@ -1371,7 +1371,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 2, 14",
+      reference: "Sk 2,14",
       bookNumber: 44,
       chapter: 2,
       verseStart: 14,
@@ -1380,7 +1380,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       psalm: null,
       second: {
       label: "2. čtení",
-      reference: "Petrův 1, 3-9",
+      reference: "1Pt 1,3-9",
       bookNumber: 60,
       chapter: 1,
       verseStart: 3,
@@ -1388,7 +1388,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 20, 19-31",
+      reference: "J 20,19-31",
       bookNumber: 43,
       chapter: 20,
       verseStart: 19,
@@ -1405,15 +1405,15 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 2, 14",
+      reference: "Sk 2,14a.36-41",
       bookNumber: 44,
       chapter: 2,
       verseStart: 14,
-      verseEnd: null,
+      verseEnd: 41,
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 66, 1-2",
+      reference: "Ž 66,1-2",
       bookNumber: 19,
       chapter: 66,
       verseStart: 1,
@@ -1421,7 +1421,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Petrův 1, 17-23",
+      reference: "1Pt 1,17-23",
       bookNumber: 60,
       chapter: 1,
       verseStart: 17,
@@ -1429,7 +1429,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 24, 13-35",
+      reference: "Lk 24,13-35",
       bookNumber: 42,
       chapter: 24,
       verseStart: 13,
@@ -1446,7 +1446,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 2, 42-47",
+      reference: "Sk 2,42-47",
       bookNumber: 44,
       chapter: 2,
       verseStart: 42,
@@ -1454,7 +1454,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 33, 5-6",
+      reference: "Ž 33,5-6",
       bookNumber: 19,
       chapter: 33,
       verseStart: 5,
@@ -1462,7 +1462,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Petrův 2, 19-25",
+      reference: "1Pt 2,19-25",
       bookNumber: 60,
       chapter: 2,
       verseStart: 19,
@@ -1470,7 +1470,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 10, 1-10",
+      reference: "J 10,1-10",
       bookNumber: 43,
       chapter: 10,
       verseStart: 1,
@@ -1487,7 +1487,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 7, 55-60",
+      reference: "Sk 7,55-60",
       bookNumber: 44,
       chapter: 7,
       verseStart: 55,
@@ -1495,7 +1495,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 98, 1",
+      reference: "Ž 98,1",
       bookNumber: 19,
       chapter: 98,
       verseStart: 1,
@@ -1503,7 +1503,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Petrův 2, 1-10",
+      reference: "1Pt 2,1-10",
       bookNumber: 60,
       chapter: 2,
       verseStart: 1,
@@ -1511,7 +1511,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 14, 1-14",
+      reference: "J 14,1-14",
       bookNumber: 43,
       chapter: 14,
       verseStart: 1,
@@ -1528,7 +1528,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 17, 22-31",
+      reference: "Sk 17,22-31",
       bookNumber: 44,
       chapter: 17,
       verseStart: 22,
@@ -1536,7 +1536,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 66, 8-9",
+      reference: "Ž 66,8-9",
       bookNumber: 19,
       chapter: 66,
       verseStart: 8,
@@ -1544,7 +1544,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Petrův 3, 13-22",
+      reference: "1Pt 3,13-22",
       bookNumber: 60,
       chapter: 3,
       verseStart: 13,
@@ -1552,7 +1552,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 14, 15-21",
+      reference: "J 14,15-21",
       bookNumber: 43,
       chapter: 14,
       verseStart: 15,
@@ -1569,7 +1569,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 1, 1-11",
+      reference: "Sk 1,1-11",
       bookNumber: 44,
       chapter: 1,
       verseStart: 1,
@@ -1577,7 +1577,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 47, 6",
+      reference: "Ž 47,6",
       bookNumber: 19,
       chapter: 47,
       verseStart: 6,
@@ -1585,7 +1585,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 1, 15-23",
+      reference: "Ef 1,15-23",
       bookNumber: 49,
       chapter: 1,
       verseStart: 15,
@@ -1593,7 +1593,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 24, 44-53",
+      reference: "Lk 24,44-53",
       bookNumber: 42,
       chapter: 24,
       verseStart: 44,
@@ -1610,7 +1610,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 1, 6-14",
+      reference: "Sk 1,6-14",
       bookNumber: 44,
       chapter: 1,
       verseStart: 6,
@@ -1618,7 +1618,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 27, 7",
+      reference: "Ž 27,7",
       bookNumber: 19,
       chapter: 27,
       verseStart: 7,
@@ -1626,7 +1626,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Petrův 4, 12-14",
+      reference: "1Pt 4,12-14",
       bookNumber: 60,
       chapter: 4,
       verseStart: 12,
@@ -1634,7 +1634,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 17, 1-11",
+      reference: "J 17,1-11",
       bookNumber: 43,
       chapter: 17,
       verseStart: 1,
@@ -1651,7 +1651,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ezechiel 37, 1-14",
+      reference: "Ez 37,1-14",
       bookNumber: 26,
       chapter: 37,
       verseStart: 1,
@@ -1659,7 +1659,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 104, 30-31",
+      reference: "Ž 104,30-31",
       bookNumber: 19,
       chapter: 104,
       verseStart: 30,
@@ -1667,7 +1667,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 8, 14-17",
+      reference: "Ř 8,14-17",
       bookNumber: 45,
       chapter: 8,
       verseStart: 14,
@@ -1675,7 +1675,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 7, 37-39",
+      reference: "J 7,37-39",
       bookNumber: 43,
       chapter: 7,
       verseStart: 37,
@@ -1692,7 +1692,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 2, 1-11",
+      reference: "Sk 2,1-11",
       bookNumber: 44,
       chapter: 2,
       verseStart: 1,
@@ -1700,7 +1700,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 68, 29-30",
+      reference: "Ž 68,29-30",
       bookNumber: 19,
       chapter: 68,
       verseStart: 29,
@@ -1708,7 +1708,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 12, 3",
+      reference: "1K 12,3",
       bookNumber: 46,
       chapter: 12,
       verseStart: 3,
@@ -1716,7 +1716,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 20, 19-23",
+      reference: "J 20,19-23",
       bookNumber: 43,
       chapter: 20,
       verseStart: 19,
@@ -1733,7 +1733,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Numeri 11, 24-29",
+      reference: "Nu 11,24-29",
       bookNumber: 4,
       chapter: 11,
       verseStart: 24,
@@ -1741,7 +1741,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 17, 14",
+      reference: "Ž 17,14",
       bookNumber: 19,
       chapter: 17,
       verseStart: 14,
@@ -1749,7 +1749,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 10, 34",
+      reference: "Sk 10,34",
       bookNumber: 44,
       chapter: 10,
       verseStart: 34,
@@ -1757,7 +1757,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 3, 16-21",
+      reference: "J 3,16-21",
       bookNumber: 43,
       chapter: 3,
       verseStart: 16,
@@ -1774,7 +1774,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 1, 1-4",
+      reference: "Gn 1,1-4",
       bookNumber: 1,
       chapter: 1,
       verseStart: 1,
@@ -1783,7 +1783,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       psalm: null,
       second: {
       label: "2. čtení",
-      reference: "Korintským 13, 11-13",
+      reference: "1K 13,11-13",
       bookNumber: 46,
       chapter: 13,
       verseStart: 11,
@@ -1791,7 +1791,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 28, 16-20",
+      reference: "Mt 28,16-20",
       bookNumber: 40,
       chapter: 28,
       verseStart: 16,
@@ -1808,7 +1808,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 14, 18-20",
+      reference: "Gn 14,18-20",
       bookNumber: 1,
       chapter: 14,
       verseStart: 18,
@@ -1816,7 +1816,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 145, 15-16",
+      reference: "Ž 145,15-16",
       bookNumber: 19,
       chapter: 145,
       verseStart: 15,
@@ -1824,7 +1824,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 11, 23-26",
+      reference: "1K 11,23-26",
       bookNumber: 46,
       chapter: 11,
       verseStart: 23,
@@ -1832,7 +1832,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 6, 51-58",
+      reference: "J 6,51-58",
       bookNumber: 43,
       chapter: 6,
       verseStart: 51,
@@ -1849,7 +1849,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 49, 8-9",
+      reference: "Iz 49,8-9",
       bookNumber: 23,
       chapter: 49,
       verseStart: 8,
@@ -1857,7 +1857,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 18, 19-20",
+      reference: "Ž 18,19-20",
       bookNumber: 19,
       chapter: 18,
       verseStart: 19,
@@ -1865,7 +1865,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 4, 1-5",
+      reference: "1K 4,1-5",
       bookNumber: 46,
       chapter: 4,
       verseStart: 1,
@@ -1873,7 +1873,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 6, 24-34",
+      reference: "Mt 6,24-34",
       bookNumber: 40,
       chapter: 6,
       verseStart: 24,
@@ -1890,7 +1890,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Deuteronomium 11, 18-21",
+      reference: "Dt 11,18-21",
       bookNumber: 5,
       chapter: 11,
       verseStart: 18,
@@ -1898,7 +1898,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 25, 16",
+      reference: "Ž 25,16",
       bookNumber: 19,
       chapter: 25,
       verseStart: 16,
@@ -1906,7 +1906,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 1, 16-17",
+      reference: "Ř 1,16-17",
       bookNumber: 45,
       chapter: 1,
       verseStart: 16,
@@ -1914,7 +1914,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 7, 21-29",
+      reference: "Mt 7,21-29",
       bookNumber: 40,
       chapter: 7,
       verseStart: 21,
@@ -1931,7 +1931,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ozeáš 5, 15-6",
+      reference: "Oz 5,15-6",
       bookNumber: 28,
       chapter: 5,
       verseStart: 15,
@@ -1939,7 +1939,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 27, 1-2",
+      reference: "Ž 27,1-2",
       bookNumber: 19,
       chapter: 27,
       verseStart: 1,
@@ -1947,7 +1947,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 4, 13-25",
+      reference: "Ř 4,13-25",
       bookNumber: 45,
       chapter: 4,
       verseStart: 13,
@@ -1955,7 +1955,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 9, 9-13",
+      reference: "Mt 9,9-13",
       bookNumber: 40,
       chapter: 9,
       verseStart: 9,
@@ -1972,7 +1972,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Exodus 19, 2-8",
+      reference: "Ex 19,2-8",
       bookNumber: 2,
       chapter: 19,
       verseStart: 2,
@@ -1980,7 +1980,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 27, 7",
+      reference: "Ž 27,7",
       bookNumber: 19,
       chapter: 27,
       verseStart: 7,
@@ -1988,7 +1988,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 5, 1-8",
+      reference: "Ř 5,1-8",
       bookNumber: 45,
       chapter: 5,
       verseStart: 1,
@@ -1996,7 +1996,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Žalm 16, 7-8",
+      reference: "Ž 16,7-8",
       bookNumber: 19,
       chapter: 16,
       verseStart: 7,
@@ -2013,7 +2013,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 20, 10-13",
+      reference: "Jr 20,10-13",
       bookNumber: 24,
       chapter: 20,
       verseStart: 10,
@@ -2021,7 +2021,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 27, 8-9",
+      reference: "Ž 27,8-9",
       bookNumber: 19,
       chapter: 27,
       verseStart: 8,
@@ -2029,7 +2029,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 6, 1",
+      reference: "Ř 6,1",
       bookNumber: 45,
       chapter: 6,
       verseStart: 1,
@@ -2037,7 +2037,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 10, 24-39",
+      reference: "Mt 10,24-39",
       bookNumber: 40,
       chapter: 10,
       verseStart: 24,
@@ -2054,7 +2054,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 28, 5-9",
+      reference: "Jr 28,5-9",
       bookNumber: 24,
       chapter: 28,
       verseStart: 5,
@@ -2062,7 +2062,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 34, 12",
+      reference: "Ž 34,12",
       bookNumber: 19,
       chapter: 34,
       verseStart: 12,
@@ -2070,7 +2070,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 6, 12-23",
+      reference: "Ř 6,12-23",
       bookNumber: 45,
       chapter: 6,
       verseStart: 12,
@@ -2078,7 +2078,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 10, 40-42",
+      reference: "Mt 10,40-42",
       bookNumber: 40,
       chapter: 10,
       verseStart: 40,
@@ -2096,7 +2096,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 48, 10-11",
+      reference: "Ž 48,10-11",
       bookNumber: 19,
       chapter: 48,
       verseStart: 10,
@@ -2104,7 +2104,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 7, 15-25",
+      reference: "Ř 7,15-25",
       bookNumber: 45,
       chapter: 7,
       verseStart: 15,
@@ -2112,7 +2112,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 11, 16-19",
+      reference: "Mt 11,16-19",
       bookNumber: 40,
       chapter: 11,
       verseStart: 16,
@@ -2129,7 +2129,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 55, 10-13",
+      reference: "Iz 55,10-13",
       bookNumber: 23,
       chapter: 55,
       verseStart: 10,
@@ -2137,7 +2137,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 17, 15",
+      reference: "Ž 17,15",
       bookNumber: 19,
       chapter: 17,
       verseStart: 15,
@@ -2145,7 +2145,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 8, 1-11",
+      reference: "Ř 8,1-11",
       bookNumber: 45,
       chapter: 8,
       verseStart: 1,
@@ -2153,7 +2153,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 13, 1-9",
+      reference: "Mt 13,1-9",
       bookNumber: 40,
       chapter: 13,
       verseStart: 1,
@@ -2170,7 +2170,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 44, 6-8",
+      reference: "Iz 44,6-8",
       bookNumber: 23,
       chapter: 44,
       verseStart: 6,
@@ -2178,7 +2178,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 54, 6-7",
+      reference: "Ž 54,6-7",
       bookNumber: 19,
       chapter: 54,
       verseStart: 6,
@@ -2186,7 +2186,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 8, 12-25",
+      reference: "Ř 8,12-25",
       bookNumber: 45,
       chapter: 8,
       verseStart: 12,
@@ -2194,7 +2194,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 13, 24-30",
+      reference: "Mt 13,24-30",
       bookNumber: 40,
       chapter: 13,
       verseStart: 24,
@@ -2211,7 +2211,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Královská 3, 5-12",
+      reference: "1Král 3,5-12",
       bookNumber: 11,
       chapter: 3,
       verseStart: 5,
@@ -2219,7 +2219,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 68, 6-7",
+      reference: "Ž 68,6-7",
       bookNumber: 19,
       chapter: 68,
       verseStart: 6,
@@ -2227,7 +2227,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 8, 26-30",
+      reference: "Ř 8,26-30",
       bookNumber: 45,
       chapter: 8,
       verseStart: 26,
@@ -2235,7 +2235,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 13, 31-33",
+      reference: "Mt 13,31-33",
       bookNumber: 40,
       chapter: 13,
       verseStart: 31,
@@ -2252,7 +2252,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 55, 1-3",
+      reference: "Iz 55,1-3",
       bookNumber: 23,
       chapter: 55,
       verseStart: 1,
@@ -2260,7 +2260,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 145, 15-16",
+      reference: "Ž 145,15-16",
       bookNumber: 19,
       chapter: 145,
       verseStart: 15,
@@ -2268,7 +2268,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 9, 1-5",
+      reference: "Ř 9,1-5",
       bookNumber: 45,
       chapter: 9,
       verseStart: 1,
@@ -2276,7 +2276,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 14, 13-21",
+      reference: "Mt 14,13-21",
       bookNumber: 40,
       chapter: 14,
       verseStart: 13,
@@ -2293,7 +2293,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Královská 19, 9",
+      reference: "1Král 19,9",
       bookNumber: 11,
       chapter: 19,
       verseStart: 9,
@@ -2301,7 +2301,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 85, 8",
+      reference: "Ž 85,8",
       bookNumber: 19,
       chapter: 85,
       verseStart: 8,
@@ -2309,7 +2309,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 10, 8-15",
+      reference: "Ř 10,8-15",
       bookNumber: 45,
       chapter: 10,
       verseStart: 8,
@@ -2317,7 +2317,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 14, 22-33",
+      reference: "Mt 14,22-33",
       bookNumber: 40,
       chapter: 14,
       verseStart: 22,
@@ -2334,7 +2334,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 56, 1",
+      reference: "Iz 56,1",
       bookNumber: 23,
       chapter: 56,
       verseStart: 1,
@@ -2342,7 +2342,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 118, 8-9",
+      reference: "Ž 118,8-9",
       bookNumber: 19,
       chapter: 118,
       verseStart: 8,
@@ -2350,7 +2350,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 11, 1-2",
+      reference: "Ř 11,1-2",
       bookNumber: 45,
       chapter: 11,
       verseStart: 1,
@@ -2358,7 +2358,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 15, 21-28",
+      reference: "Mt 15,21-28",
       bookNumber: 40,
       chapter: 15,
       verseStart: 21,
@@ -2375,7 +2375,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 51, 1-6",
+      reference: "Iz 51,1-6",
       bookNumber: 23,
       chapter: 51,
       verseStart: 1,
@@ -2383,7 +2383,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 86, 1",
+      reference: "Ž 86,1",
       bookNumber: 19,
       chapter: 86,
       verseStart: 1,
@@ -2391,7 +2391,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 12, 1-8",
+      reference: "Ř 12,1-8",
       bookNumber: 45,
       chapter: 12,
       verseStart: 1,
@@ -2399,7 +2399,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 16, 13-20",
+      reference: "Mt 16,13-20",
       bookNumber: 40,
       chapter: 16,
       verseStart: 13,
@@ -2416,7 +2416,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 20, 7-9",
+      reference: "Jr 20,7-9",
       bookNumber: 24,
       chapter: 20,
       verseStart: 7,
@@ -2424,7 +2424,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 86, 3",
+      reference: "Ž 86,3",
       bookNumber: 19,
       chapter: 86,
       verseStart: 3,
@@ -2432,7 +2432,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 12, 9-21",
+      reference: "Ř 12,9-21",
       bookNumber: 45,
       chapter: 12,
       verseStart: 9,
@@ -2440,7 +2440,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 16, 21-27",
+      reference: "Mt 16,21-27",
       bookNumber: 40,
       chapter: 16,
       verseStart: 21,
@@ -2457,7 +2457,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ezechiel 3, 7-11",
+      reference: "Ez 3,7-11",
       bookNumber: 26,
       chapter: 3,
       verseStart: 7,
@@ -2465,7 +2465,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 33, 12",
+      reference: "Ž 33,12",
       bookNumber: 19,
       chapter: 33,
       verseStart: 12,
@@ -2473,7 +2473,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 13, 8-14",
+      reference: "Ř 13,8-14",
       bookNumber: 45,
       chapter: 13,
       verseStart: 8,
@@ -2481,7 +2481,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 18, 15-20",
+      reference: "Mt 18,15-20",
       bookNumber: 40,
       chapter: 18,
       verseStart: 15,
@@ -2498,7 +2498,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 50, 15-21",
+      reference: "Gn 50,15-21",
       bookNumber: 1,
       chapter: 50,
       verseStart: 15,
@@ -2506,7 +2506,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 122, 1",
+      reference: "Ž 122,1",
       bookNumber: 19,
       chapter: 122,
       verseStart: 1,
@@ -2514,7 +2514,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 14, 1-12",
+      reference: "Ř 14,1-12",
       bookNumber: 45,
       chapter: 14,
       verseStart: 1,
@@ -2522,7 +2522,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 18, 21-35",
+      reference: "Mt 18,21-35",
       bookNumber: 40,
       chapter: 18,
       verseStart: 21,
@@ -2539,7 +2539,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jonáš 3, 10-4",
+      reference: "Jon 3,10-4",
       bookNumber: 32,
       chapter: 3,
       verseStart: 10,
@@ -2547,7 +2547,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 78, 1",
+      reference: "Ž 78,1",
       bookNumber: 19,
       chapter: 78,
       verseStart: 1,
@@ -2555,7 +2555,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 1, 21-30",
+      reference: "Fp 1,21-30",
       bookNumber: 50,
       chapter: 1,
       verseStart: 21,
@@ -2563,7 +2563,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 20, 1-16",
+      reference: "Mt 20,1-16",
       bookNumber: 40,
       chapter: 20,
       verseStart: 1,
@@ -2580,7 +2580,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ezechiel 18, 1",
+      reference: "Ez 18,1",
       bookNumber: 26,
       chapter: 18,
       verseStart: 1,
@@ -2588,7 +2588,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 80, 20",
+      reference: "Ž 80,20",
       bookNumber: 19,
       chapter: 80,
       verseStart: 20,
@@ -2596,7 +2596,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 2, 1-13",
+      reference: "Fp 2,1-13",
       bookNumber: 50,
       chapter: 2,
       verseStart: 1,
@@ -2604,7 +2604,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 21, 23-32",
+      reference: "Mt 21,23-32",
       bookNumber: 40,
       chapter: 21,
       verseStart: 23,
@@ -2621,7 +2621,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 5, 1-7",
+      reference: "Iz 5,1-7",
       bookNumber: 23,
       chapter: 5,
       verseStart: 1,
@@ -2629,7 +2629,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 19, 15",
+      reference: "Ž 19,15",
       bookNumber: 19,
       chapter: 19,
       verseStart: 15,
@@ -2637,7 +2637,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 3, 4",
+      reference: "Fp 3,4",
       bookNumber: 50,
       chapter: 3,
       verseStart: 4,
@@ -2645,7 +2645,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 21, 33-46",
+      reference: "Mt 21,33-46",
       bookNumber: 40,
       chapter: 21,
       verseStart: 33,
@@ -2662,7 +2662,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 25, 6-9",
+      reference: "Iz 25,6-9",
       bookNumber: 23,
       chapter: 25,
       verseStart: 6,
@@ -2670,7 +2670,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 130, 3-4",
+      reference: "Ž 130,3-4",
       bookNumber: 19,
       chapter: 130,
       verseStart: 3,
@@ -2678,7 +2678,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 4, 1-9",
+      reference: "Fp 4,1-9",
       bookNumber: 50,
       chapter: 4,
       verseStart: 1,
@@ -2686,7 +2686,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 22, 1-14",
+      reference: "Mt 22,1-14",
       bookNumber: 40,
       chapter: 22,
       verseStart: 1,
@@ -2703,7 +2703,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 45, 1-6",
+      reference: "Iz 45,1-6",
       bookNumber: 23,
       chapter: 45,
       verseStart: 1,
@@ -2711,7 +2711,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 17, 6",
+      reference: "Ž 17,6",
       bookNumber: 19,
       chapter: 17,
       verseStart: 6,
@@ -2719,7 +2719,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Tesalonickým 1, 1-10",
+      reference: "1Te 1,1-10",
       bookNumber: 52,
       chapter: 1,
       verseStart: 1,
@@ -2727,7 +2727,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 21, 14-22",
+      reference: "Mt 21,14-22",
       bookNumber: 40,
       chapter: 21,
       verseStart: 14,
@@ -2744,7 +2744,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Leviticus 19, 1-2",
+      reference: "Lv 19,1-2",
       bookNumber: 3,
       chapter: 19,
       verseStart: 1,
@@ -2752,7 +2752,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 105, 4-5",
+      reference: "Ž 105,4-5",
       bookNumber: 19,
       chapter: 105,
       verseStart: 4,
@@ -2760,7 +2760,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Tesalonickým 2, 1-8",
+      reference: "1Te 2,1-8",
       bookNumber: 52,
       chapter: 2,
       verseStart: 1,
@@ -2768,7 +2768,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 22, 34-46",
+      reference: "Mt 22,34-46",
       bookNumber: 40,
       chapter: 22,
       verseStart: 34,
@@ -2786,7 +2786,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 38, 22-23",
+      reference: "Ž 38,22-23",
       bookNumber: 19,
       chapter: 38,
       verseStart: 22,
@@ -2794,7 +2794,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Tesalonickým 2, 9-13",
+      reference: "1Te 2,9-13",
       bookNumber: 52,
       chapter: 2,
       verseStart: 9,
@@ -2802,7 +2802,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 23, 1-12",
+      reference: "Mt 23,1-12",
       bookNumber: 40,
       chapter: 23,
       verseStart: 1,
@@ -2820,7 +2820,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 141, 2",
+      reference: "Ž 141,2",
       bookNumber: 19,
       chapter: 141,
       verseStart: 2,
@@ -2828,7 +2828,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Tesalonickým 4, 13-18",
+      reference: "1Te 4,13-18",
       bookNumber: 52,
       chapter: 4,
       verseStart: 13,
@@ -2836,7 +2836,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 25, 1-13",
+      reference: "Mt 25,1-13",
       bookNumber: 40,
       chapter: 25,
       verseStart: 1,
@@ -2854,7 +2854,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 130, 1-2",
+      reference: "Ž 130,1-2",
       bookNumber: 19,
       chapter: 130,
       verseStart: 1,
@@ -2862,7 +2862,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Tesalonickým 5, 1-11",
+      reference: "1Te 5,1-11",
       bookNumber: 52,
       chapter: 5,
       verseStart: 1,
@@ -2870,7 +2870,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 25, 14-30",
+      reference: "Mt 25,14-30",
       bookNumber: 40,
       chapter: 25,
       verseStart: 14,
@@ -2887,7 +2887,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ezechiel 34, 11-16",
+      reference: "Ez 34,11-16",
       bookNumber: 26,
       chapter: 34,
       verseStart: 11,
@@ -2895,7 +2895,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 2, 8",
+      reference: "Ž 2,8",
       bookNumber: 19,
       chapter: 2,
       verseStart: 8,
@@ -2903,7 +2903,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 1, 15-23",
+      reference: "Ef 1,15-23",
       bookNumber: 49,
       chapter: 1,
       verseStart: 15,
@@ -2911,7 +2911,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 25, 31-46",
+      reference: "Mt 25,31-46",
       bookNumber: 40,
       chapter: 25,
       verseStart: 31,
@@ -2929,7 +2929,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 86, 9-10",
+      reference: "Ž 86,9-10",
       bookNumber: 19,
       chapter: 86,
       verseStart: 9,
@@ -2937,7 +2937,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 3, 9-11",
+      reference: "1K 3,9-11",
       bookNumber: 46,
       chapter: 3,
       verseStart: 9,
@@ -2945,7 +2945,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 2, 13-22",
+      reference: "J 2,13-22",
       bookNumber: 43,
       chapter: 2,
       verseStart: 13,
@@ -2962,7 +2962,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 20, 28-32",
+      reference: "Sk 20,28-32",
       bookNumber: 44,
       chapter: 20,
       verseStart: 28,
@@ -2970,7 +2970,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 37, 30-31",
+      reference: "Ž 37,30-31",
       bookNumber: 19,
       chapter: 37,
       verseStart: 30,
@@ -2978,7 +2978,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 3, 14-21",
+      reference: "Ef 3,14-21",
       bookNumber: 49,
       chapter: 3,
       verseStart: 14,
@@ -2986,7 +2986,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 24, 42-47",
+      reference: "Mt 24,42-47",
       bookNumber: 40,
       chapter: 24,
       verseStart: 42,
@@ -3003,7 +3003,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 49, 1",
+      reference: "Iz 49,1",
       bookNumber: 23,
       chapter: 49,
       verseStart: 1,
@@ -3011,7 +3011,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 92, 13",
+      reference: "Ž 92,13",
       bookNumber: 19,
       chapter: 92,
       verseStart: 13,
@@ -3019,7 +3019,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 13, 22-26",
+      reference: "Sk 13,22-26",
       bookNumber: 44,
       chapter: 13,
       verseStart: 22,
@@ -3027,7 +3027,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 1, 57-66",
+      reference: "Lk 1,57-66",
       bookNumber: 42,
       chapter: 1,
       verseStart: 57,
@@ -3044,7 +3044,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 12, 1-11",
+      reference: "Sk 12,1-11",
       bookNumber: 44,
       chapter: 12,
       verseStart: 1,
@@ -3052,7 +3052,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 45, 17-18",
+      reference: "Ž 45,17-18",
       bookNumber: 19,
       chapter: 45,
       verseStart: 17,
@@ -3060,7 +3060,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Timoteovi 4, 6-8",
+      reference: "1Tm 4,6-8",
       bookNumber: 54,
       chapter: 4,
       verseStart: 6,
@@ -3068,7 +3068,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 16, 13-19",
+      reference: "Mt 16,13-19",
       bookNumber: 40,
       chapter: 16,
       verseStart: 13,
@@ -3086,7 +3086,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 37, 30-31",
+      reference: "Ž 37,30-31",
       bookNumber: 19,
       chapter: 37,
       verseStart: 30,
@@ -3094,7 +3094,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 3, 7-15",
+      reference: "Fp 3,7-15",
       bookNumber: 50,
       chapter: 3,
       verseStart: 7,
@@ -3102,7 +3102,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 12, 33-37",
+      reference: "Lk 12,33-37",
       bookNumber: 42,
       chapter: 12,
       verseStart: 33,
@@ -3119,7 +3119,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 61,1-3",
+      reference: "Iz 61,1-3",
       bookNumber: 23,
       chapter: 61,
       verseStart: 1,
@@ -3127,7 +3127,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 132, 16-17",
+      reference: "Ž 132,16-17",
       bookNumber: 19,
       chapter: 132,
       verseStart: 16,
@@ -3135,7 +3135,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 4, 1-2",
+      reference: "1K 4,1-2",
       bookNumber: 46,
       chapter: 4,
       verseStart: 1,
@@ -3143,7 +3143,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 10, 1-9",
+      reference: "Lk 10,1-9",
       bookNumber: 42,
       chapter: 10,
       verseStart: 1,
@@ -3160,7 +3160,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 15, 15-21",
+      reference: "Jr 15,15-21",
       bookNumber: 24,
       chapter: 15,
       verseStart: 15,
@@ -3168,7 +3168,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 149, 5-6",
+      reference: "Ž 149,5-6",
       bookNumber: 19,
       chapter: 149,
       verseStart: 5,
@@ -3176,7 +3176,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 8, 31",
+      reference: "Ř 8,31",
       bookNumber: 45,
       chapter: 8,
       verseStart: 31,
@@ -3184,7 +3184,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 10, 17-22",
+      reference: "Mt 10,17-22",
       bookNumber: 40,
       chapter: 10,
       verseStart: 17,
@@ -3201,7 +3201,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 61, 10-11",
+      reference: "Iz 61,10-11",
       bookNumber: 23,
       chapter: 61,
       verseStart: 10,
@@ -3209,7 +3209,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 34, 1-2",
+      reference: "Ž 34,1-2",
       bookNumber: 19,
       chapter: 34,
       verseStart: 1,
@@ -3217,7 +3217,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Zjevení 11, 19-12",
+      reference: "Zj 11,19-12",
       bookNumber: 66,
       chapter: 11,
       verseStart: 19,
@@ -3225,7 +3225,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 1, 46-55",
+      reference: "Lk 1,46-55",
       bookNumber: 42,
       chapter: 1,
       verseStart: 46,
@@ -3243,7 +3243,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 112, 1",
+      reference: "Ž 112,1",
       bookNumber: 19,
       chapter: 112,
       verseStart: 1,
@@ -3251,7 +3251,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Petrův 4, 12-19",
+      reference: "1Pt 4,12-19",
       bookNumber: 60,
       chapter: 4,
       verseStart: 12,
@@ -3259,7 +3259,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 16, 24-27",
+      reference: "Mt 16,24-27",
       bookNumber: 40,
       chapter: 16,
       verseStart: 24,
@@ -3276,7 +3276,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Deuteronomium 28, 15",
+      reference: "Dt 28,15",
       bookNumber: 5,
       chapter: 28,
       verseStart: 15,
@@ -3284,7 +3284,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 65, 14",
+      reference: "Ž 65,14",
       bookNumber: 19,
       chapter: 65,
       verseStart: 14,
@@ -3292,7 +3292,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 9, 615",
+      reference: "1K 9,615",
       bookNumber: 46,
       chapter: 9,
       verseStart: 615,
@@ -3300,7 +3300,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 12, 22-26",
+      reference: "Lk 12,22-26",
       bookNumber: 42,
       chapter: 12,
       verseStart: 22,
@@ -3317,7 +3317,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 28, 14-16",
+      reference: "Iz 28,14-16",
       bookNumber: 23,
       chapter: 28,
       verseStart: 14,
@@ -3325,7 +3325,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 45, 17-18",
+      reference: "Ž 45,17-18",
       bookNumber: 19,
       chapter: 45,
       verseStart: 17,
@@ -3333,7 +3333,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 2, 19-22",
+      reference: "Ef 2,19-22",
       bookNumber: 49,
       chapter: 2,
       verseStart: 19,
@@ -3341,7 +3341,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 15, 17-27",
+      reference: "J 15,17-27",
       bookNumber: 43,
       chapter: 15,
       verseStart: 17,
@@ -3358,7 +3358,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Zjevení 7, 9-17",
+      reference: "Zj 7,9-17",
       bookNumber: 66,
       chapter: 7,
       verseStart: 9,
@@ -3366,7 +3366,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 34, 10",
+      reference: "Ž 34,10",
       bookNumber: 19,
       chapter: 34,
       verseStart: 10,
@@ -3374,7 +3374,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Janův 3, 1-3",
+      reference: "J 3,1-3",
       bookNumber: 43,
       chapter: 3,
       verseStart: 1,
@@ -3382,7 +3382,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 5, 1-12",
+      reference: "Mt 5,1-12",
       bookNumber: 40,
       chapter: 5,
       verseStart: 1,
@@ -3400,7 +3400,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 51, 3",
+      reference: "Ž 51,3",
       bookNumber: 19,
       chapter: 51,
       verseStart: 3,
@@ -3408,7 +3408,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 15, 50-58",
+      reference: "1K 15,50-58",
       bookNumber: 46,
       chapter: 15,
       verseStart: 50,
@@ -3416,7 +3416,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 5, 24-27",
+      reference: "J 5,24-27",
       bookNumber: 43,
       chapter: 5,
       verseStart: 24,
@@ -3433,7 +3433,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Přísloví 3, 1-7",
+      reference: "Př 3,1-7",
       bookNumber: 20,
       chapter: 3,
       verseStart: 1,
@@ -3441,7 +3441,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 24, 3-4",
+      reference: "Ž 24,3-4",
       bookNumber: 19,
       chapter: 24,
       verseStart: 3,
@@ -3449,7 +3449,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 3, 5-11",
+      reference: "1K 3,5-11",
       bookNumber: 46,
       chapter: 3,
       verseStart: 5,
@@ -3457,7 +3457,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 13, 43-52",
+      reference: "Mt 13,43-52",
       bookNumber: 40,
       chapter: 13,
       verseStart: 43,
@@ -3475,7 +3475,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 119, 23",
+      reference: "Ž 119,23",
       bookNumber: 19,
       chapter: 119,
       verseStart: 23,
@@ -3483,7 +3483,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 7, 2",
+      reference: "Sk 7,2",
       bookNumber: 44,
       chapter: 7,
       verseStart: 2,
@@ -3491,7 +3491,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 10, 17-22",
+      reference: "Mt 10,17-22",
       bookNumber: 40,
       chapter: 10,
       verseStart: 17,
@@ -3508,7 +3508,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 31, 15-17",
+      reference: "Jr 31,15-17",
       bookNumber: 24,
       chapter: 31,
       verseStart: 15,
@@ -3516,7 +3516,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 8, 3",
+      reference: "Ž 8,3",
       bookNumber: 19,
       chapter: 8,
       verseStart: 3,
@@ -3524,7 +3524,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 1, 26-29",
+      reference: "1K 1,26-29",
       bookNumber: 46,
       chapter: 1,
       verseStart: 26,
@@ -3532,7 +3532,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 2, 13-18",
+      reference: "Mt 2,13-18",
       bookNumber: 40,
       chapter: 2,
       verseStart: 13,
@@ -3549,7 +3549,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Kazatel 12, 1-8",
+      reference: "Kaz 12,1-8",
       bookNumber: 21,
       chapter: 12,
       verseStart: 1,
@@ -3557,7 +3557,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 93, 1",
+      reference: "Ž 93,1",
       bookNumber: 19,
       chapter: 93,
       verseStart: 1,
@@ -3565,7 +3565,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Janův 2, 12-17",
+      reference: "J 2,12-17",
       bookNumber: 43,
       chapter: 2,
       verseStart: 12,
@@ -3573,7 +3573,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 2, 33-40",
+      reference: "Lk 2,33-40",
       bookNumber: 42,
       chapter: 2,
       verseStart: 33,
@@ -3591,7 +3591,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 69, 15",
+      reference: "Ž 69,15",
       bookNumber: 19,
       chapter: 69,
       verseStart: 15,
@@ -3599,7 +3599,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Timoteovi 2, 22-26",
+      reference: "1Tm 2,22-26",
       bookNumber: 54,
       chapter: 2,
       verseStart: 22,
@@ -3607,7 +3607,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 19, 16-24",
+      reference: "Mt 19,16-24",
       bookNumber: 40,
       chapter: 19,
       verseStart: 16,
@@ -3624,7 +3624,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 64, 1-9",
+      reference: "Iz 64,1-9",
       bookNumber: 23,
       chapter: 64,
       verseStart: 1,
@@ -3632,7 +3632,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 25, 4",
+      reference: "Ž 25,4",
       bookNumber: 19,
       chapter: 25,
       verseStart: 4,
@@ -3640,7 +3640,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 1, 3-9",
+      reference: "1K 1,3-9",
       bookNumber: 46,
       chapter: 1,
       verseStart: 3,
@@ -3648,7 +3648,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 13, 24-37",
+      reference: "Mk 13,24-37",
       bookNumber: 41,
       chapter: 13,
       verseStart: 24,
@@ -3665,7 +3665,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 40, 1-11",
+      reference: "Iz 40,1-11",
       bookNumber: 23,
       chapter: 40,
       verseStart: 1,
@@ -3673,7 +3673,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 50, 2",
+      reference: "Ž 50,2",
       bookNumber: 19,
       chapter: 50,
       verseStart: 2,
@@ -3681,7 +3681,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Petrův 3, 3-15",
+      reference: "1Pt 3,3-15",
       bookNumber: 60,
       chapter: 3,
       verseStart: 3,
@@ -3689,7 +3689,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 1, 1-8",
+      reference: "Mk 1,1-8",
       bookNumber: 41,
       chapter: 1,
       verseStart: 1,
@@ -3706,7 +3706,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 61, 1-4",
+      reference: "Iz 61,1-4",
       bookNumber: 23,
       chapter: 61,
       verseStart: 1,
@@ -3714,7 +3714,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 126, 3",
+      reference: "Ž 126,3",
       bookNumber: 19,
       chapter: 126,
       verseStart: 3,
@@ -3722,7 +3722,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Tesalonickým 5, 16-24",
+      reference: "1Te 5,16-24",
       bookNumber: 52,
       chapter: 5,
       verseStart: 16,
@@ -3730,7 +3730,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 1, 6-8",
+      reference: "J 1,6-8",
       bookNumber: 43,
       chapter: 1,
       verseStart: 6,
@@ -3747,7 +3747,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Samuelova 7, 1-5",
+      reference: "1S 7,1-5",
       bookNumber: 9,
       chapter: 7,
       verseStart: 1,
@@ -3755,7 +3755,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 132, 8",
+      reference: "Ž 132,8",
       bookNumber: 19,
       chapter: 132,
       verseStart: 8,
@@ -3763,7 +3763,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 16, 25-27",
+      reference: "Ř 16,25-27",
       bookNumber: 45,
       chapter: 16,
       verseStart: 25,
@@ -3771,7 +3771,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 1, 26-38",
+      reference: "Lk 1,26-38",
       bookNumber: 42,
       chapter: 1,
       verseStart: 26,
@@ -3789,7 +3789,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 89, 2",
+      reference: "Ž 89,2",
       bookNumber: 19,
       chapter: 89,
       verseStart: 2,
@@ -3797,7 +3797,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 13, 16-26",
+      reference: "Sk 13,16-26",
       bookNumber: 44,
       chapter: 13,
       verseStart: 16,
@@ -3805,7 +3805,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 1, 67-79",
+      reference: "Lk 1,67-79",
       bookNumber: 42,
       chapter: 1,
       verseStart: 67,
@@ -3822,7 +3822,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 9, 1",
+      reference: "Iz 9,1",
       bookNumber: 23,
       chapter: 9,
       verseStart: 1,
@@ -3830,7 +3830,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 2, 7",
+      reference: "Ž 2,7",
       bookNumber: 19,
       chapter: 2,
       verseStart: 7,
@@ -3838,7 +3838,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Titovi 2, 11-14",
+      reference: "Tt 2,11-14",
       bookNumber: 56,
       chapter: 2,
       verseStart: 11,
@@ -3846,7 +3846,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 2, 1-20",
+      reference: "Lk 2,1-20",
       bookNumber: 42,
       chapter: 2,
       verseStart: 1,
@@ -3863,7 +3863,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 52, 7-10",
+      reference: "Iz 52,7-10",
       bookNumber: 23,
       chapter: 52,
       verseStart: 7,
@@ -3871,7 +3871,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 93, 1",
+      reference: "Ž 93,1",
       bookNumber: 19,
       chapter: 93,
       verseStart: 1,
@@ -3879,7 +3879,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 1, 1-12",
+      reference: "Žd 1,1-12",
       bookNumber: 58,
       chapter: 1,
       verseStart: 1,
@@ -3887,7 +3887,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 1, 1-14",
+      reference: "J 1,1-14",
       bookNumber: 43,
       chapter: 1,
       verseStart: 1,
@@ -3904,7 +3904,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 61, 10 - 62",
+      reference: "Iz 61,10-62",
       bookNumber: 23,
       chapter: 61,
       verseStart: 10,
@@ -3912,7 +3912,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 128, 1",
+      reference: "Ž 128,1",
       bookNumber: 19,
       chapter: 128,
       verseStart: 1,
@@ -3920,7 +3920,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Galatským 4, 4-7",
+      reference: "Ga 4,4-7",
       bookNumber: 48,
       chapter: 4,
       verseStart: 4,
@@ -3928,7 +3928,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 2, 22-40",
+      reference: "Lk 2,22-40",
       bookNumber: 42,
       chapter: 2,
       verseStart: 22,
@@ -3945,7 +3945,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Exodus 34, 1-7",
+      reference: "Ex 34,1-7",
       bookNumber: 2,
       chapter: 34,
       verseStart: 1,
@@ -3953,7 +3953,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 106, 47",
+      reference: "Ž 106,47",
       bookNumber: 19,
       chapter: 106,
       verseStart: 47,
@@ -3961,7 +3961,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 1, 1-7",
+      reference: "Ř 1,1-7",
       bookNumber: 45,
       chapter: 1,
       verseStart: 1,
@@ -3969,7 +3969,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 2, 15-21",
+      reference: "Lk 2,15-21",
       bookNumber: 42,
       chapter: 2,
       verseStart: 15,
@@ -3986,7 +3986,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 31, 7-11",
+      reference: "Jr 31,7-11",
       bookNumber: 24,
       chapter: 31,
       verseStart: 7,
@@ -3994,7 +3994,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 93, 1",
+      reference: "Ž 93,1",
       bookNumber: 19,
       chapter: 93,
       verseStart: 1,
@@ -4002,7 +4002,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 1, 3-14",
+      reference: "Ef 1,3-14",
       bookNumber: 49,
       chapter: 1,
       verseStart: 3,
@@ -4010,7 +4010,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 1, 10-18",
+      reference: "J 1,10-18",
       bookNumber: 43,
       chapter: 1,
       verseStart: 10,
@@ -4027,7 +4027,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 60, 1-6",
+      reference: "Iz 60,1-6",
       bookNumber: 23,
       chapter: 60,
       verseStart: 1,
@@ -4035,7 +4035,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 72, 11",
+      reference: "Ž 72,11",
       bookNumber: 19,
       chapter: 72,
       verseStart: 11,
@@ -4043,7 +4043,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 3, 1-12",
+      reference: "Ef 3,1-12",
       bookNumber: 49,
       chapter: 3,
       verseStart: 1,
@@ -4051,7 +4051,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 2, 1-12",
+      reference: "Mt 2,1-12",
       bookNumber: 40,
       chapter: 2,
       verseStart: 1,
@@ -4068,7 +4068,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 1, 1-5",
+      reference: "Gn 1,1-5",
       bookNumber: 1,
       chapter: 1,
       verseStart: 1,
@@ -4076,7 +4076,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 89, 21",
+      reference: "Ž 89,21",
       bookNumber: 19,
       chapter: 89,
       verseStart: 21,
@@ -4084,7 +4084,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 19, 1-7",
+      reference: "Sk 19,1-7",
       bookNumber: 44,
       chapter: 19,
       verseStart: 1,
@@ -4092,7 +4092,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 1, 4-11",
+      reference: "Mk 1,4-11",
       bookNumber: 41,
       chapter: 1,
       verseStart: 4,
@@ -4109,7 +4109,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Samuelova 3, 3",
+      reference: "1S 3,3",
       bookNumber: 9,
       chapter: 3,
       verseStart: 3,
@@ -4117,7 +4117,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 66, 4",
+      reference: "Ž 66,4",
       bookNumber: 19,
       chapter: 66,
       verseStart: 4,
@@ -4125,7 +4125,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 6, 12-20",
+      reference: "1K 6,12-20",
       bookNumber: 46,
       chapter: 6,
       verseStart: 12,
@@ -4133,7 +4133,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 1, 43-51",
+      reference: "J 1,43-51",
       bookNumber: 43,
       chapter: 1,
       verseStart: 43,
@@ -4150,7 +4150,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 3, 21 - 4",
+      reference: "Jr 3,21-4",
       bookNumber: 24,
       chapter: 3,
       verseStart: 21,
@@ -4158,7 +4158,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 98, 1",
+      reference: "Ž 98,1",
       bookNumber: 19,
       chapter: 98,
       verseStart: 1,
@@ -4166,7 +4166,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 7, 17-23",
+      reference: "1K 7,17-23",
       bookNumber: 46,
       chapter: 7,
       verseStart: 17,
@@ -4174,7 +4174,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Žalm 130, 7",
+      reference: "Ž 130,7",
       bookNumber: 19,
       chapter: 130,
       verseStart: 7,
@@ -4191,7 +4191,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Deuteronomium 18, 15-20",
+      reference: "Dt 18,15-20",
       bookNumber: 5,
       chapter: 18,
       verseStart: 15,
@@ -4199,7 +4199,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 113, 5-7",
+      reference: "Ž 113,5-7",
       bookNumber: 19,
       chapter: 113,
       verseStart: 5,
@@ -4207,7 +4207,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 8, 1",
+      reference: "1K 8,1",
       bookNumber: 46,
       chapter: 8,
       verseStart: 1,
@@ -4215,7 +4215,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 1, 21-28",
+      reference: "Mk 1,21-28",
       bookNumber: 41,
       chapter: 1,
       verseStart: 21,
@@ -4232,7 +4232,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Malachiáš 3, 1-4",
+      reference: "Mal 3,1-4",
       bookNumber: 39,
       chapter: 3,
       verseStart: 1,
@@ -4240,7 +4240,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 48, 9",
+      reference: "Ž 48,9",
       bookNumber: 19,
       chapter: 48,
       verseStart: 9,
@@ -4248,7 +4248,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 2, 14-18",
+      reference: "Žd 2,14-18",
       bookNumber: 58,
       chapter: 2,
       verseStart: 14,
@@ -4256,7 +4256,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 2, 22-40",
+      reference: "Lk 2,22-40",
       bookNumber: 42,
       chapter: 2,
       verseStart: 22,
@@ -4273,7 +4273,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 40, 21-31",
+      reference: "Iz 40,21-31",
       bookNumber: 23,
       chapter: 40,
       verseStart: 21,
@@ -4281,7 +4281,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 95, 1",
+      reference: "Ž 95,1",
       bookNumber: 19,
       chapter: 95,
       verseStart: 1,
@@ -4289,7 +4289,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 9, 16-23",
+      reference: "1K 9,16-23",
       bookNumber: 46,
       chapter: 9,
       verseStart: 16,
@@ -4297,7 +4297,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 1, 29-39",
+      reference: "Mk 1,29-39",
       bookNumber: 41,
       chapter: 1,
       verseStart: 29,
@@ -4314,7 +4314,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Královská 5, 1-14",
+      reference: "1Král 5,1-14",
       bookNumber: 11,
       chapter: 5,
       verseStart: 1,
@@ -4322,7 +4322,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 31, 2",
+      reference: "Ž 31,2",
       bookNumber: 19,
       chapter: 31,
       verseStart: 2,
@@ -4330,7 +4330,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 9, 24-27",
+      reference: "1K 9,24-27",
       bookNumber: 46,
       chapter: 9,
       verseStart: 24,
@@ -4338,7 +4338,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 1, 40-45",
+      reference: "Mk 1,40-45",
       bookNumber: 41,
       chapter: 1,
       verseStart: 40,
@@ -4355,7 +4355,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 43, 18-25",
+      reference: "Iz 43,18-25",
       bookNumber: 23,
       chapter: 43,
       verseStart: 18,
@@ -4363,7 +4363,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 41, 5",
+      reference: "Ž 41,5",
       bookNumber: 19,
       chapter: 41,
       verseStart: 5,
@@ -4371,7 +4371,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 1, 18-22",
+      reference: "1K 1,18-22",
       bookNumber: 46,
       chapter: 1,
       verseStart: 18,
@@ -4379,7 +4379,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 2, 1-12",
+      reference: "Mk 2,1-12",
       bookNumber: 41,
       chapter: 2,
       verseStart: 1,
@@ -4396,7 +4396,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ozeáš 2, 14-20",
+      reference: "Oz 2,14-20",
       bookNumber: 28,
       chapter: 2,
       verseStart: 14,
@@ -4404,7 +4404,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 120, 1-2",
+      reference: "Ž 120,1-2",
       bookNumber: 19,
       chapter: 120,
       verseStart: 1,
@@ -4412,7 +4412,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 3, 1-6",
+      reference: "1K 3,1-6",
       bookNumber: 46,
       chapter: 3,
       verseStart: 1,
@@ -4420,7 +4420,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 2, 13-22",
+      reference: "Mk 2,13-22",
       bookNumber: 41,
       chapter: 2,
       verseStart: 13,
@@ -4437,7 +4437,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Královská 2, 1-12",
+      reference: "1Král 2,1-12",
       bookNumber: 11,
       chapter: 2,
       verseStart: 1,
@@ -4445,7 +4445,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 25, 4-5",
+      reference: "Ž 25,4-5",
       bookNumber: 19,
       chapter: 25,
       verseStart: 4,
@@ -4453,7 +4453,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 4, 2-6",
+      reference: "1K 4,2-6",
       bookNumber: 46,
       chapter: 4,
       verseStart: 2,
@@ -4471,7 +4471,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 58, 1-12",
+      reference: "Iz 58,1-12",
       bookNumber: 23,
       chapter: 58,
       verseStart: 1,
@@ -4479,7 +4479,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 57, 2",
+      reference: "Ž 57,2",
       bookNumber: 19,
       chapter: 57,
       verseStart: 2,
@@ -4487,7 +4487,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 5, 20",
+      reference: "1K 5,20",
       bookNumber: 46,
       chapter: 5,
       verseStart: 20,
@@ -4495,7 +4495,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 8, 1-11",
+      reference: "J 8,1-11",
       bookNumber: 43,
       chapter: 8,
       verseStart: 1,
@@ -4512,7 +4512,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 9, 8-17",
+      reference: "Gn 9,8-17",
       bookNumber: 1,
       chapter: 9,
       verseStart: 8,
@@ -4520,7 +4520,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 91, 15-16",
+      reference: "Ž 91,15-16",
       bookNumber: 19,
       chapter: 91,
       verseStart: 15,
@@ -4528,7 +4528,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Petrův 3, 18-22",
+      reference: "1Pt 3,18-22",
       bookNumber: 60,
       chapter: 3,
       verseStart: 18,
@@ -4536,7 +4536,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Žalm 91, 2",
+      reference: "Ž 91,2",
       bookNumber: 19,
       chapter: 91,
       verseStart: 2,
@@ -4553,7 +4553,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 22, 1-14",
+      reference: "Gn 22,1-14",
       bookNumber: 1,
       chapter: 22,
       verseStart: 1,
@@ -4561,7 +4561,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 25, 6",
+      reference: "Ž 25,6",
       bookNumber: 19,
       chapter: 25,
       verseStart: 6,
@@ -4569,7 +4569,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 8, 31-39",
+      reference: "Ř 8,31-39",
       bookNumber: 45,
       chapter: 8,
       verseStart: 31,
@@ -4577,7 +4577,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Žalm 16, 11",
+      reference: "Ž 16,11",
       bookNumber: 19,
       chapter: 16,
       verseStart: 11,
@@ -4594,7 +4594,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Exodus 20, 1-17",
+      reference: "Ex 20,1-17",
       bookNumber: 2,
       chapter: 20,
       verseStart: 1,
@@ -4602,7 +4602,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 25, 15-16",
+      reference: "Ž 25,15-16",
       bookNumber: 19,
       chapter: 25,
       verseStart: 15,
@@ -4610,7 +4610,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 1, 18-25",
+      reference: "1K 1,18-25",
       bookNumber: 46,
       chapter: 1,
       verseStart: 18,
@@ -4618,7 +4618,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 2, 13-22",
+      reference: "J 2,13-22",
       bookNumber: 43,
       chapter: 2,
       verseStart: 13,
@@ -4635,7 +4635,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Numeri 21, 4-9",
+      reference: "Nu 21,4-9",
       bookNumber: 4,
       chapter: 21,
       verseStart: 4,
@@ -4643,7 +4643,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 125, 1-2",
+      reference: "Ž 125,1-2",
       bookNumber: 19,
       chapter: 125,
       verseStart: 1,
@@ -4651,7 +4651,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 2, 1-10",
+      reference: "Ef 2,1-10",
       bookNumber: 49,
       chapter: 2,
       verseStart: 1,
@@ -4659,7 +4659,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 3, 14-21",
+      reference: "J 3,14-21",
       bookNumber: 43,
       chapter: 3,
       verseStart: 14,
@@ -4676,7 +4676,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 31, 31-33",
+      reference: "Jr 31,31-33",
       bookNumber: 24,
       chapter: 31,
       verseStart: 31,
@@ -4684,7 +4684,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 43, 1-2",
+      reference: "Ž 43,1-2",
       bookNumber: 19,
       chapter: 43,
       verseStart: 1,
@@ -4692,7 +4692,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 5, 5-10",
+      reference: "Žd 5,5-10",
       bookNumber: 58,
       chapter: 5,
       verseStart: 5,
@@ -4700,7 +4700,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 12, 20-33",
+      reference: "J 12,20-33",
       bookNumber: 43,
       chapter: 12,
       verseStart: 20,
@@ -4717,7 +4717,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 45, 21-25",
+      reference: "Iz 45,21-25",
       bookNumber: 23,
       chapter: 45,
       verseStart: 21,
@@ -4725,7 +4725,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 22, 28-29",
+      reference: "Ž 22,28-29",
       bookNumber: 19,
       chapter: 22,
       verseStart: 28,
@@ -4733,7 +4733,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 2, 5-11",
+      reference: "Fp 2,5-11",
       bookNumber: 50,
       chapter: 2,
       verseStart: 5,
@@ -4741,7 +4741,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 14, 1 - 15",
+      reference: "Mk 14,1-15",
       bookNumber: 41,
       chapter: 14,
       verseStart: 1,
@@ -4758,7 +4758,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Exodus 12, 1-4",
+      reference: "Ex 12,1-4",
       bookNumber: 2,
       chapter: 12,
       verseStart: 1,
@@ -4766,7 +4766,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 67, 2-3",
+      reference: "Ž 67,2-3",
       bookNumber: 19,
       chapter: 67,
       verseStart: 2,
@@ -4774,7 +4774,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 11, 23-26",
+      reference: "1K 11,23-26",
       bookNumber: 46,
       chapter: 11,
       verseStart: 23,
@@ -4782,7 +4782,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 13, 1-15",
+      reference: "J 13,1-15",
       bookNumber: 43,
       chapter: 13,
       verseStart: 1,
@@ -4799,7 +4799,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 52, 13 - 53",
+      reference: "Iz 52,13-53",
       bookNumber: 23,
       chapter: 52,
       verseStart: 13,
@@ -4807,7 +4807,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 40, 2-3",
+      reference: "Ž 40,2-3",
       bookNumber: 19,
       chapter: 40,
       verseStart: 2,
@@ -4815,7 +4815,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 10, 16-24",
+      reference: "Žd 10,16-24",
       bookNumber: 58,
       chapter: 10,
       verseStart: 16,
@@ -4823,7 +4823,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 18, 1-19",
+      reference: "J 18,1-19",
       bookNumber: 43,
       chapter: 18,
       verseStart: 1,
@@ -4840,7 +4840,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 1, 1 - 2",
+      reference: "Gn 1,1-2",
       bookNumber: 1,
       chapter: 1,
       verseStart: 1,
@@ -4848,7 +4848,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 36, 8",
+      reference: "Ž 36,8",
       bookNumber: 19,
       chapter: 36,
       verseStart: 8,
@@ -4856,7 +4856,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Exodus 14, 1-31",
+      reference: "Ex 14,1-31",
       bookNumber: 2,
       chapter: 14,
       verseStart: 1,
@@ -4864,7 +4864,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 16, 1-8",
+      reference: "Mk 16,1-8",
       bookNumber: 41,
       chapter: 16,
       verseStart: 1,
@@ -4881,7 +4881,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 10, 34-43",
+      reference: "Sk 10,34-43",
       bookNumber: 44,
       chapter: 10,
       verseStart: 34,
@@ -4889,7 +4889,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 118, 28-29",
+      reference: "Ž 118,28-29",
       bookNumber: 19,
       chapter: 118,
       verseStart: 28,
@@ -4897,7 +4897,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 15, 1-11",
+      reference: "1K 15,1-11",
       bookNumber: 46,
       chapter: 15,
       verseStart: 1,
@@ -4905,7 +4905,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 20, 1-18",
+      reference: "J 20,1-18",
       bookNumber: 43,
       chapter: 20,
       verseStart: 1,
@@ -4922,7 +4922,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ezechiel 47, 1-8",
+      reference: "Ez 47,1-8",
       bookNumber: 26,
       chapter: 47,
       verseStart: 1,
@@ -4930,7 +4930,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 118, 1",
+      reference: "Ž 118,1",
       bookNumber: 19,
       chapter: 118,
       verseStart: 1,
@@ -4938,7 +4938,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 2, 14",
+      reference: "Sk 2,14",
       bookNumber: 44,
       chapter: 2,
       verseStart: 14,
@@ -4946,7 +4946,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 28, 8-15",
+      reference: "Mt 28,8-15",
       bookNumber: 40,
       chapter: 28,
       verseStart: 8,
@@ -4963,7 +4963,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 4, 32-35",
+      reference: "Sk 4,32-35",
       bookNumber: 44,
       chapter: 4,
       verseStart: 32,
@@ -4971,7 +4971,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 81, 2",
+      reference: "Ž 81,2",
       bookNumber: 19,
       chapter: 81,
       verseStart: 2,
@@ -4979,7 +4979,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Janův 1, 1 - 2",
+      reference: "J 1,1-2",
       bookNumber: 43,
       chapter: 1,
       verseStart: 1,
@@ -4987,7 +4987,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 20, 19-31",
+      reference: "J 20,19-31",
       bookNumber: 43,
       chapter: 20,
       verseStart: 19,
@@ -5004,7 +5004,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 3, 12-19",
+      reference: "Sk 3,12-19",
       bookNumber: 44,
       chapter: 3,
       verseStart: 12,
@@ -5012,7 +5012,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 33, 5",
+      reference: "Ž 33,5",
       bookNumber: 19,
       chapter: 33,
       verseStart: 5,
@@ -5020,7 +5020,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Janův 3, 1-7",
+      reference: "J 3,1-7",
       bookNumber: 43,
       chapter: 3,
       verseStart: 1,
@@ -5028,7 +5028,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 24, 36",
+      reference: "Lk 24,36",
       bookNumber: 42,
       chapter: 24,
       verseStart: 36,
@@ -5045,7 +5045,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 4, 5-12",
+      reference: "Sk 4,5-12",
       bookNumber: 44,
       chapter: 4,
       verseStart: 5,
@@ -5053,7 +5053,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 66, 1",
+      reference: "Ž 66,1",
       bookNumber: 19,
       chapter: 66,
       verseStart: 1,
@@ -5061,7 +5061,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Janův 3, 16-24",
+      reference: "J 3,16-24",
       bookNumber: 43,
       chapter: 3,
       verseStart: 16,
@@ -5069,7 +5069,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 10, 11-18",
+      reference: "J 10,11-18",
       bookNumber: 43,
       chapter: 10,
       verseStart: 11,
@@ -5086,7 +5086,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 8, 26-40",
+      reference: "Sk 8,26-40",
       bookNumber: 44,
       chapter: 8,
       verseStart: 26,
@@ -5094,7 +5094,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 98, 1",
+      reference: "Ž 98,1",
       bookNumber: 19,
       chapter: 98,
       verseStart: 1,
@@ -5102,7 +5102,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Janův 4, 7-21",
+      reference: "J 4,7-21",
       bookNumber: 43,
       chapter: 4,
       verseStart: 7,
@@ -5110,7 +5110,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 15, 1-8",
+      reference: "J 15,1-8",
       bookNumber: 43,
       chapter: 15,
       verseStart: 1,
@@ -5127,7 +5127,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 10, 44-48",
+      reference: "Sk 10,44-48",
       bookNumber: 44,
       chapter: 10,
       verseStart: 44,
@@ -5135,7 +5135,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 66, 20",
+      reference: "Ž 66,20",
       bookNumber: 19,
       chapter: 66,
       verseStart: 20,
@@ -5143,7 +5143,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Janův 5, 1-6",
+      reference: "J 5,1-6",
       bookNumber: 43,
       chapter: 5,
       verseStart: 1,
@@ -5151,7 +5151,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 15, 9-17",
+      reference: "J 15,9-17",
       bookNumber: 43,
       chapter: 15,
       verseStart: 9,
@@ -5168,7 +5168,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 1, 1-11",
+      reference: "Sk 1,1-11",
       bookNumber: 44,
       chapter: 1,
       verseStart: 1,
@@ -5176,7 +5176,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 68, 18-19",
+      reference: "Ž 68,18-19",
       bookNumber: 19,
       chapter: 68,
       verseStart: 18,
@@ -5184,7 +5184,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 1, 15-21",
+      reference: "Ef 1,15-21",
       bookNumber: 49,
       chapter: 1,
       verseStart: 15,
@@ -5192,7 +5192,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Žalm 47, 6",
+      reference: "Ž 47,6",
       bookNumber: 19,
       chapter: 47,
       verseStart: 6,
@@ -5209,7 +5209,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 1, 15-17",
+      reference: "Sk 1,15-17",
       bookNumber: 44,
       chapter: 1,
       verseStart: 15,
@@ -5217,7 +5217,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 27, 7",
+      reference: "Ž 27,7",
       bookNumber: 19,
       chapter: 27,
       verseStart: 7,
@@ -5225,7 +5225,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Janův 5, 9-13",
+      reference: "J 5,9-13",
       bookNumber: 43,
       chapter: 5,
       verseStart: 9,
@@ -5233,7 +5233,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 17, 6-19",
+      reference: "J 17,6-19",
       bookNumber: 43,
       chapter: 17,
       verseStart: 6,
@@ -5250,7 +5250,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ezechiel 37, 1-14",
+      reference: "Ez 37,1-14",
       bookNumber: 26,
       chapter: 37,
       verseStart: 1,
@@ -5258,7 +5258,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 33, 12",
+      reference: "Ž 33,12",
       bookNumber: 19,
       chapter: 33,
       verseStart: 12,
@@ -5266,7 +5266,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 8, 14-17",
+      reference: "Ř 8,14-17",
       bookNumber: 45,
       chapter: 8,
       verseStart: 14,
@@ -5274,7 +5274,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 7, 37-39",
+      reference: "J 7,37-39",
       bookNumber: 43,
       chapter: 7,
       verseStart: 37,
@@ -5291,7 +5291,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 2, 1-11",
+      reference: "Sk 2,1-11",
       bookNumber: 44,
       chapter: 2,
       verseStart: 1,
@@ -5299,7 +5299,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 104, 30",
+      reference: "Ž 104,30",
       bookNumber: 19,
       chapter: 104,
       verseStart: 30,
@@ -5307,7 +5307,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 8, 22-27",
+      reference: "Ř 8,22-27",
       bookNumber: 45,
       chapter: 8,
       verseStart: 22,
@@ -5315,7 +5315,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 15, 26-27",
+      reference: "J 15,26-27",
       bookNumber: 43,
       chapter: 15,
       verseStart: 26,
@@ -5333,7 +5333,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 71, 15",
+      reference: "Ž 71,15",
       bookNumber: 19,
       chapter: 71,
       verseStart: 15,
@@ -5341,7 +5341,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 8, 14-17",
+      reference: "Sk 8,14-17",
       bookNumber: 44,
       chapter: 8,
       verseStart: 14,
@@ -5349,7 +5349,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 14, 26-29",
+      reference: "J 14,26-29",
       bookNumber: 43,
       chapter: 14,
       verseStart: 26,
@@ -5367,7 +5367,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 71, 15",
+      reference: "Ž 71,15",
       bookNumber: 19,
       chapter: 71,
       verseStart: 15,
@@ -5375,7 +5375,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 8, 14-17",
+      reference: "Sk 8,14-17",
       bookNumber: 44,
       chapter: 8,
       verseStart: 14,
@@ -5383,7 +5383,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 14, 26-29",
+      reference: "J 14,26-29",
       bookNumber: 43,
       chapter: 14,
       verseStart: 26,
@@ -5400,7 +5400,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Deuteronomium 8, 2-3",
+      reference: "Dt 8,2-3",
       bookNumber: 5,
       chapter: 8,
       verseStart: 2,
@@ -5408,7 +5408,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 34, 4",
+      reference: "Ž 34,4",
       bookNumber: 19,
       chapter: 34,
       verseStart: 4,
@@ -5416,7 +5416,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 10, 1-4",
+      reference: "1K 10,1-4",
       bookNumber: 46,
       chapter: 10,
       verseStart: 1,
@@ -5424,7 +5424,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 9, 10-17",
+      reference: "Lk 9,10-17",
       bookNumber: 42,
       chapter: 9,
       verseStart: 10,
@@ -5441,7 +5441,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ozeáš 2, 14-20",
+      reference: "Oz 2,14-20",
       bookNumber: 28,
       chapter: 2,
       verseStart: 14,
@@ -5449,7 +5449,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 120, 1-2",
+      reference: "Ž 120,1-2",
       bookNumber: 19,
       chapter: 120,
       verseStart: 1,
@@ -5457,7 +5457,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 3, 1-6",
+      reference: "1K 3,1-6",
       bookNumber: 46,
       chapter: 3,
       verseStart: 1,
@@ -5465,7 +5465,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 2, 13-22",
+      reference: "Mk 2,13-22",
       bookNumber: 41,
       chapter: 2,
       verseStart: 13,
@@ -5482,7 +5482,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Deuteronomium 5, 12-15",
+      reference: "Dt 5,12-15",
       bookNumber: 5,
       chapter: 5,
       verseStart: 12,
@@ -5490,7 +5490,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 55, 17-18",
+      reference: "Ž 55,17-18",
       bookNumber: 19,
       chapter: 55,
       verseStart: 17,
@@ -5498,7 +5498,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 4, 5-12",
+      reference: "1K 4,5-12",
       bookNumber: 46,
       chapter: 4,
       verseStart: 5,
@@ -5506,7 +5506,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 2, 23 - 3",
+      reference: "Mk 2,23-3",
       bookNumber: 41,
       chapter: 2,
       verseStart: 23,
@@ -5523,7 +5523,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 3, 8-15",
+      reference: "Gn 3,8-15",
       bookNumber: 1,
       chapter: 3,
       verseStart: 8,
@@ -5531,7 +5531,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 27, 1",
+      reference: "Ž 27,1",
       bookNumber: 19,
       chapter: 27,
       verseStart: 1,
@@ -5539,7 +5539,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 4, 13 - 5",
+      reference: "1K 4,13-5",
       bookNumber: 46,
       chapter: 4,
       verseStart: 13,
@@ -5547,7 +5547,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 3, 20-35",
+      reference: "Mk 3,20-35",
       bookNumber: 41,
       chapter: 3,
       verseStart: 20,
@@ -5564,7 +5564,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ezechiel 17, 22-24",
+      reference: "Ez 17,22-24",
       bookNumber: 26,
       chapter: 17,
       verseStart: 22,
@@ -5572,7 +5572,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 27, 7",
+      reference: "Ž 27,7",
       bookNumber: 19,
       chapter: 27,
       verseStart: 7,
@@ -5580,7 +5580,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 5, 6-10",
+      reference: "1K 5,6-10",
       bookNumber: 46,
       chapter: 5,
       verseStart: 6,
@@ -5588,7 +5588,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 4, 26-34",
+      reference: "Mk 4,26-34",
       bookNumber: 41,
       chapter: 4,
       verseStart: 26,
@@ -5605,7 +5605,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jób 38, 1-11",
+      reference: "Jb 38,1-11",
       bookNumber: 18,
       chapter: 38,
       verseStart: 1,
@@ -5613,7 +5613,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 28, 8-9",
+      reference: "Ž 28,8-9",
       bookNumber: 19,
       chapter: 28,
       verseStart: 8,
@@ -5621,7 +5621,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 6, 1-13",
+      reference: "1K 6,1-13",
       bookNumber: 46,
       chapter: 6,
       verseStart: 1,
@@ -5629,7 +5629,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 4, 35-41",
+      reference: "Mk 4,35-41",
       bookNumber: 41,
       chapter: 4,
       verseStart: 35,
@@ -5646,7 +5646,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Pláč 3, 24-33",
+      reference: "Pl 3,24-33",
       bookNumber: 25,
       chapter: 3,
       verseStart: 24,
@@ -5654,7 +5654,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 47, 2-3",
+      reference: "Ž 47,2-3",
       bookNumber: 19,
       chapter: 47,
       verseStart: 2,
@@ -5662,7 +5662,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 8, 7-15",
+      reference: "1K 8,7-15",
       bookNumber: 46,
       chapter: 8,
       verseStart: 7,
@@ -5670,7 +5670,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 5, 21-43",
+      reference: "Mk 5,21-43",
       bookNumber: 41,
       chapter: 5,
       verseStart: 21,
@@ -5687,7 +5687,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ezechiel 2, 1-5",
+      reference: "Ez 2,1-5",
       bookNumber: 26,
       chapter: 2,
       verseStart: 1,
@@ -5695,7 +5695,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 48, 2",
+      reference: "Ž 48,2",
       bookNumber: 19,
       chapter: 48,
       verseStart: 2,
@@ -5703,7 +5703,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 12, 2-10",
+      reference: "1K 12,2-10",
       bookNumber: 46,
       chapter: 12,
       verseStart: 2,
@@ -5711,7 +5711,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 6, 1-13",
+      reference: "Mk 6,1-13",
       bookNumber: 41,
       chapter: 6,
       verseStart: 1,
@@ -5729,7 +5729,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 17, 7-8",
+      reference: "Ž 17,7-8",
       bookNumber: 19,
       chapter: 17,
       verseStart: 7,
@@ -5737,7 +5737,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 1, 3-14",
+      reference: "Ef 1,3-14",
       bookNumber: 49,
       chapter: 1,
       verseStart: 3,
@@ -5745,7 +5745,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 6, 14-29",
+      reference: "Mk 6,14-29",
       bookNumber: 41,
       chapter: 6,
       verseStart: 14,
@@ -5762,7 +5762,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 23, 1-6",
+      reference: "Jr 23,1-6",
       bookNumber: 24,
       chapter: 23,
       verseStart: 1,
@@ -5770,7 +5770,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 54, 3-4",
+      reference: "Ž 54,3-4",
       bookNumber: 19,
       chapter: 54,
       verseStart: 3,
@@ -5778,7 +5778,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 2, 11-22",
+      reference: "Ef 2,11-22",
       bookNumber: 49,
       chapter: 2,
       verseStart: 11,
@@ -5786,7 +5786,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 6, 30-34",
+      reference: "Mk 6,30-34",
       bookNumber: 41,
       chapter: 6,
       verseStart: 30,
@@ -5803,7 +5803,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Královská 4, 42-44",
+      reference: "1Král 4,42-44",
       bookNumber: 11,
       chapter: 4,
       verseStart: 42,
@@ -5811,7 +5811,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 28, 7",
+      reference: "Ž 28,7",
       bookNumber: 19,
       chapter: 28,
       verseStart: 7,
@@ -5819,7 +5819,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 3, 14-21",
+      reference: "Ef 3,14-21",
       bookNumber: 49,
       chapter: 3,
       verseStart: 14,
@@ -5827,7 +5827,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 6, 1-15",
+      reference: "J 6,1-15",
       bookNumber: 43,
       chapter: 6,
       verseStart: 1,
@@ -5844,7 +5844,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Exodus 16, 2-4",
+      reference: "Ex 16,2-4",
       bookNumber: 2,
       chapter: 16,
       verseStart: 2,
@@ -5852,7 +5852,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 34, 2-3",
+      reference: "Ž 34,2-3",
       bookNumber: 19,
       chapter: 34,
       verseStart: 2,
@@ -5860,7 +5860,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 4, 1-7",
+      reference: "Ef 4,1-7",
       bookNumber: 49,
       chapter: 4,
       verseStart: 1,
@@ -5868,7 +5868,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 6, 26-35",
+      reference: "J 6,26-35",
       bookNumber: 43,
       chapter: 6,
       verseStart: 26,
@@ -5885,7 +5885,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Královská 19, 4-8",
+      reference: "1Král 19,4-8",
       bookNumber: 11,
       chapter: 19,
       verseStart: 4,
@@ -5893,7 +5893,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 148, 7",
+      reference: "Ž 148,7",
       bookNumber: 19,
       chapter: 148,
       verseStart: 7,
@@ -5901,7 +5901,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 4, 25 - 5",
+      reference: "Ef 4,25-5",
       bookNumber: 49,
       chapter: 4,
       verseStart: 25,
@@ -5909,7 +5909,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 6, 41-51",
+      reference: "J 6,41-51",
       bookNumber: 43,
       chapter: 6,
       verseStart: 41,
@@ -5926,7 +5926,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Přísloví 9, 1-6",
+      reference: "Př 9,1-6",
       bookNumber: 20,
       chapter: 9,
       verseStart: 1,
@@ -5934,7 +5934,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 84, 2-3",
+      reference: "Ž 84,2-3",
       bookNumber: 19,
       chapter: 84,
       verseStart: 2,
@@ -5942,7 +5942,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 5, 15-20",
+      reference: "Ef 5,15-20",
       bookNumber: 49,
       chapter: 5,
       verseStart: 15,
@@ -5950,7 +5950,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 6, 51-58",
+      reference: "J 6,51-58",
       bookNumber: 43,
       chapter: 6,
       verseStart: 51,
@@ -5967,7 +5967,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jozue 24, 1-2",
+      reference: "Joz 24,1-2",
       bookNumber: 6,
       chapter: 24,
       verseStart: 1,
@@ -5975,7 +5975,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 92, 2-3",
+      reference: "Ž 92,2-3",
       bookNumber: 19,
       chapter: 92,
       verseStart: 2,
@@ -5983,7 +5983,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 5, 25-33",
+      reference: "Ef 5,25-33",
       bookNumber: 49,
       chapter: 5,
       verseStart: 25,
@@ -5991,7 +5991,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 6, 56-69",
+      reference: "J 6,56-69",
       bookNumber: 43,
       chapter: 6,
       verseStart: 56,
@@ -6008,7 +6008,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Deuteronomium 4, 1-2",
+      reference: "Dt 4,1-2",
       bookNumber: 5,
       chapter: 4,
       verseStart: 1,
@@ -6016,7 +6016,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 86, 1-2",
+      reference: "Ž 86,1-2",
       bookNumber: 19,
       chapter: 86,
       verseStart: 1,
@@ -6024,7 +6024,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Jakubův 1, 17-27",
+      reference: "Jk 1,17-27",
       bookNumber: 59,
       chapter: 1,
       verseStart: 17,
@@ -6032,7 +6032,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 7, 1-8",
+      reference: "Mk 7,1-8",
       bookNumber: 41,
       chapter: 7,
       verseStart: 1,
@@ -6049,7 +6049,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 35, 4-7",
+      reference: "Iz 35,4-7",
       bookNumber: 23,
       chapter: 35,
       verseStart: 4,
@@ -6057,7 +6057,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 119, 1",
+      reference: "Ž 119,1",
       bookNumber: 19,
       chapter: 119,
       verseStart: 1,
@@ -6065,7 +6065,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Jakubův 2, 14-18",
+      reference: "Jk 2,14-18",
       bookNumber: 59,
       chapter: 2,
       verseStart: 14,
@@ -6073,7 +6073,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 7, 24-37",
+      reference: "Mk 7,24-37",
       bookNumber: 41,
       chapter: 7,
       verseStart: 24,
@@ -6090,7 +6090,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 50, 4-9",
+      reference: "Iz 50,4-9",
       bookNumber: 23,
       chapter: 50,
       verseStart: 4,
@@ -6098,7 +6098,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 121, 1-2",
+      reference: "Ž 121,1-2",
       bookNumber: 19,
       chapter: 121,
       verseStart: 1,
@@ -6106,7 +6106,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Jakubův 3, 1-12",
+      reference: "Jk 3,1-12",
       bookNumber: 59,
       chapter: 3,
       verseStart: 1,
@@ -6114,7 +6114,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Žalm 28, 6-7",
+      reference: "Ž 28,6-7",
       bookNumber: 19,
       chapter: 28,
       verseStart: 6,
@@ -6131,7 +6131,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 11, 18-20",
+      reference: "Jr 11,18-20",
       bookNumber: 24,
       chapter: 11,
       verseStart: 18,
@@ -6139,7 +6139,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 141, 2",
+      reference: "Ž 141,2",
       bookNumber: 19,
       chapter: 141,
       verseStart: 2,
@@ -6147,7 +6147,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Jakubův 3, 16 - 4",
+      reference: "Jk 3,16-4",
       bookNumber: 59,
       chapter: 3,
       verseStart: 16,
@@ -6155,7 +6155,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 9, 30-37",
+      reference: "Mk 9,30-37",
       bookNumber: 41,
       chapter: 9,
       verseStart: 30,
@@ -6172,7 +6172,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Numeri 11, 16",
+      reference: "Nu 11,16",
       bookNumber: 4,
       chapter: 11,
       verseStart: 16,
@@ -6180,7 +6180,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 102, 16-18",
+      reference: "Ž 102,16-18",
       bookNumber: 19,
       chapter: 102,
       verseStart: 16,
@@ -6188,7 +6188,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Jakubův 5, 13-20",
+      reference: "Jk 5,13-20",
       bookNumber: 59,
       chapter: 5,
       verseStart: 13,
@@ -6196,7 +6196,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 9, 38-50",
+      reference: "Mk 9,38-50",
       bookNumber: 41,
       chapter: 9,
       verseStart: 38,
@@ -6213,7 +6213,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 2, 18-24",
+      reference: "Gn 2,18-24",
       bookNumber: 1,
       chapter: 2,
       verseStart: 18,
@@ -6221,7 +6221,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 90, 1-2",
+      reference: "Ž 90,1-2",
       bookNumber: 19,
       chapter: 90,
       verseStart: 1,
@@ -6229,7 +6229,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 1, 1-4",
+      reference: "Žd 1,1-4",
       bookNumber: 58,
       chapter: 1,
       verseStart: 1,
@@ -6237,7 +6237,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 10, 2-16",
+      reference: "Mk 10,2-16",
       bookNumber: 41,
       chapter: 10,
       verseStart: 2,
@@ -6255,7 +6255,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 130, 1-2",
+      reference: "Ž 130,1-2",
       bookNumber: 19,
       chapter: 130,
       verseStart: 1,
@@ -6263,7 +6263,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 4, 12-16",
+      reference: "Žd 4,12-16",
       bookNumber: 58,
       chapter: 4,
       verseStart: 12,
@@ -6271,7 +6271,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Žalm 133, 1-2",
+      reference: "Ž 133,1-2",
       bookNumber: 19,
       chapter: 133,
       verseStart: 1,
@@ -6288,7 +6288,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 53, 4-12",
+      reference: "Iz 53,4-12",
       bookNumber: 23,
       chapter: 53,
       verseStart: 4,
@@ -6296,7 +6296,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 28, 2",
+      reference: "Ž 28,2",
       bookNumber: 19,
       chapter: 28,
       verseStart: 2,
@@ -6304,7 +6304,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 5, 1-10",
+      reference: "Žd 5,1-10",
       bookNumber: 58,
       chapter: 5,
       verseStart: 1,
@@ -6312,7 +6312,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 10, 35-45",
+      reference: "Mk 10,35-45",
       bookNumber: 41,
       chapter: 10,
       verseStart: 35,
@@ -6329,7 +6329,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 31, 7-9",
+      reference: "Jr 31,7-9",
       bookNumber: 24,
       chapter: 31,
       verseStart: 7,
@@ -6337,7 +6337,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 105, 1",
+      reference: "Ž 105,1",
       bookNumber: 19,
       chapter: 105,
       verseStart: 1,
@@ -6345,7 +6345,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 7, 23-28",
+      reference: "Žd 7,23-28",
       bookNumber: 58,
       chapter: 7,
       verseStart: 23,
@@ -6353,7 +6353,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 10, 46-52",
+      reference: "Mk 10,46-52",
       bookNumber: 41,
       chapter: 10,
       verseStart: 46,
@@ -6370,7 +6370,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Deuteronomium 6, 4-9",
+      reference: "Dt 6,4-9",
       bookNumber: 5,
       chapter: 6,
       verseStart: 4,
@@ -6378,7 +6378,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 48, 10-11",
+      reference: "Ž 48,10-11",
       bookNumber: 19,
       chapter: 48,
       verseStart: 10,
@@ -6386,7 +6386,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 9, 11-15",
+      reference: "Žd 9,11-15",
       bookNumber: 58,
       chapter: 9,
       verseStart: 11,
@@ -6394,7 +6394,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 12, 28",
+      reference: "Mk 12,28",
       bookNumber: 41,
       chapter: 12,
       verseStart: 28,
@@ -6411,7 +6411,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Královská 17, 10-16",
+      reference: "1Král 17,10-16",
       bookNumber: 11,
       chapter: 17,
       verseStart: 10,
@@ -6419,7 +6419,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 88, 2-3",
+      reference: "Ž 88,2-3",
       bookNumber: 19,
       chapter: 88,
       verseStart: 2,
@@ -6427,7 +6427,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 9, 24-28",
+      reference: "Žd 9,24-28",
       bookNumber: 58,
       chapter: 9,
       verseStart: 24,
@@ -6435,7 +6435,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 12, 38-44",
+      reference: "Mk 12,38-44",
       bookNumber: 41,
       chapter: 12,
       verseStart: 38,
@@ -6452,7 +6452,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Daniel 12, 1-3",
+      reference: "Dan 12,1-3",
       bookNumber: 27,
       chapter: 12,
       verseStart: 1,
@@ -6460,7 +6460,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 85, 8-9",
+      reference: "Ž 85,8-9",
       bookNumber: 19,
       chapter: 85,
       verseStart: 8,
@@ -6468,7 +6468,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 10, 31-39",
+      reference: "Žd 10,31-39",
       bookNumber: 58,
       chapter: 10,
       verseStart: 31,
@@ -6476,7 +6476,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Žalm 73, 28",
+      reference: "Ž 73,28",
       bookNumber: 19,
       chapter: 73,
       verseStart: 28,
@@ -6493,7 +6493,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Daniel 7, 9-10",
+      reference: "Dan 7,9-10",
       bookNumber: 27,
       chapter: 7,
       verseStart: 9,
@@ -6501,7 +6501,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 72, 1-2",
+      reference: "Ž 72,1-2",
       bookNumber: 19,
       chapter: 72,
       verseStart: 1,
@@ -6509,7 +6509,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Zjevení 1, 4",
+      reference: "Zj 1,4",
       bookNumber: 66,
       chapter: 1,
       verseStart: 4,
@@ -6517,7 +6517,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 18, 33-37",
+      reference: "J 18,33-37",
       bookNumber: 43,
       chapter: 18,
       verseStart: 33,
@@ -6534,7 +6534,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 56, 1",
+      reference: "Iz 56,1",
       bookNumber: 23,
       chapter: 56,
       verseStart: 1,
@@ -6542,7 +6542,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 84, 2",
+      reference: "Ž 84,2",
       bookNumber: 19,
       chapter: 84,
       verseStart: 2,
@@ -6550,7 +6550,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 2, 19-22",
+      reference: "Ef 2,19-22",
       bookNumber: 49,
       chapter: 2,
       verseStart: 19,
@@ -6558,7 +6558,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 19, 1-10",
+      reference: "Lk 19,1-10",
       bookNumber: 42,
       chapter: 19,
       verseStart: 1,
@@ -6575,7 +6575,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Přísloví 3, 1-7",
+      reference: "Př 3,1-7",
       bookNumber: 20,
       chapter: 3,
       verseStart: 1,
@@ -6583,7 +6583,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 21, 2-3",
+      reference: "Ž 21,2-3",
       bookNumber: 19,
       chapter: 21,
       verseStart: 2,
@@ -6591,7 +6591,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 3, 9-11",
+      reference: "1K 3,9-11",
       bookNumber: 46,
       chapter: 3,
       verseStart: 9,
@@ -6599,7 +6599,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 6, 20-23",
+      reference: "Lk 6,20-23",
       bookNumber: 42,
       chapter: 6,
       verseStart: 20,
@@ -6616,7 +6616,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 49, 1",
+      reference: "Iz 49,1",
       bookNumber: 23,
       chapter: 49,
       verseStart: 1,
@@ -6624,7 +6624,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 92, 13",
+      reference: "Ž 92,13",
       bookNumber: 19,
       chapter: 92,
       verseStart: 13,
@@ -6632,7 +6632,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 13, 22-26",
+      reference: "Sk 13,22-26",
       bookNumber: 44,
       chapter: 13,
       verseStart: 22,
@@ -6640,7 +6640,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 1, 57-66",
+      reference: "Lk 1,57-66",
       bookNumber: 42,
       chapter: 1,
       verseStart: 57,
@@ -6657,7 +6657,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ezechiel 34, 11-16",
+      reference: "Ez 34,11-16",
       bookNumber: 26,
       chapter: 34,
       verseStart: 11,
@@ -6665,7 +6665,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 87, 3",
+      reference: "Ž 87,3",
       bookNumber: 19,
       chapter: 87,
       verseStart: 3,
@@ -6673,7 +6673,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Timoteovi 4, 1-8",
+      reference: "1Tm 4,1-8",
       bookNumber: 54,
       chapter: 4,
       verseStart: 1,
@@ -6681,7 +6681,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 21, 15-19",
+      reference: "J 21,15-19",
       bookNumber: 43,
       chapter: 21,
       verseStart: 15,
@@ -6699,7 +6699,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 37, 30-31",
+      reference: "Ž 37,30-31",
       bookNumber: 19,
       chapter: 37,
       verseStart: 30,
@@ -6707,7 +6707,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 3, 7-15",
+      reference: "Fp 3,7-15",
       bookNumber: 50,
       chapter: 3,
       verseStart: 7,
@@ -6715,7 +6715,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 12, 33-37",
+      reference: "Lk 12,33-37",
       bookNumber: 42,
       chapter: 12,
       verseStart: 33,
@@ -6732,7 +6732,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 59, 20-21",
+      reference: "Iz 59,20-21",
       bookNumber: 23,
       chapter: 59,
       verseStart: 20,
@@ -6740,7 +6740,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 132, 8-9",
+      reference: "Ž 132,8-9",
       bookNumber: 19,
       chapter: 132,
       verseStart: 8,
@@ -6748,7 +6748,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 7, 23-27",
+      reference: "Žd 7,23-27",
       bookNumber: 58,
       chapter: 7,
       verseStart: 23,
@@ -6756,7 +6756,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 24, 42-47",
+      reference: "Mt 24,42-47",
       bookNumber: 40,
       chapter: 24,
       verseStart: 42,
@@ -6773,7 +6773,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 1, 4-9",
+      reference: "Jr 1,4-9",
       bookNumber: 24,
       chapter: 1,
       verseStart: 4,
@@ -6781,7 +6781,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 37, 39-40",
+      reference: "Ž 37,39-40",
       bookNumber: 19,
       chapter: 37,
       verseStart: 39,
@@ -6789,7 +6789,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Petrův 4, 12-19",
+      reference: "1Pt 4,12-19",
       bookNumber: 60,
       chapter: 4,
       verseStart: 12,
@@ -6797,7 +6797,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 21, 12-15",
+      reference: "Lk 21,12-15",
       bookNumber: 42,
       chapter: 21,
       verseStart: 12,
@@ -6814,7 +6814,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 61, 10-11",
+      reference: "Iz 61,10-11",
       bookNumber: 23,
       chapter: 61,
       verseStart: 10,
@@ -6822,7 +6822,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 34, 1-2",
+      reference: "Ž 34,1-2",
       bookNumber: 19,
       chapter: 34,
       verseStart: 1,
@@ -6830,7 +6830,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Zjevení 11, 19 - 12",
+      reference: "Zj 11,19-12",
       bookNumber: 66,
       chapter: 11,
       verseStart: 19,
@@ -6838,7 +6838,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 1, 46-55",
+      reference: "Lk 1,46-55",
       bookNumber: 42,
       chapter: 1,
       verseStart: 46,
@@ -6856,7 +6856,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 41, 2",
+      reference: "Ž 41,2",
       bookNumber: 19,
       chapter: 41,
       verseStart: 2,
@@ -6864,7 +6864,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 8, 35-39",
+      reference: "Ř 8,35-39",
       bookNumber: 45,
       chapter: 8,
       verseStart: 35,
@@ -6872,7 +6872,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 12, 23-26",
+      reference: "J 12,23-26",
       bookNumber: 43,
       chapter: 12,
       verseStart: 23,
@@ -6890,7 +6890,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 65, 10",
+      reference: "Ž 65,10",
       bookNumber: 19,
       chapter: 65,
       verseStart: 10,
@@ -6898,7 +6898,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Galatským 6, 7-10",
+      reference: "Ga 6,7-10",
       bookNumber: 48,
       chapter: 6,
       verseStart: 7,
@@ -6906,7 +6906,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 4, 35-36",
+      reference: "J 4,35-36",
       bookNumber: 43,
       chapter: 4,
       verseStart: 35,
@@ -6923,7 +6923,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 28, 14-16",
+      reference: "Iz 28,14-16",
       bookNumber: 23,
       chapter: 28,
       verseStart: 14,
@@ -6931,7 +6931,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 45, 17-18",
+      reference: "Ž 45,17-18",
       bookNumber: 19,
       chapter: 45,
       verseStart: 17,
@@ -6939,7 +6939,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 2, 19-22",
+      reference: "Ef 2,19-22",
       bookNumber: 49,
       chapter: 2,
       verseStart: 19,
@@ -6947,7 +6947,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 15, 17-27",
+      reference: "J 15,17-27",
       bookNumber: 43,
       chapter: 15,
       verseStart: 17,
@@ -6964,7 +6964,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 66, 20-23",
+      reference: "Iz 66,20-23",
       bookNumber: 23,
       chapter: 66,
       verseStart: 20,
@@ -6972,7 +6972,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 33, 1",
+      reference: "Ž 33,1",
       bookNumber: 19,
       chapter: 33,
       verseStart: 1,
@@ -6980,7 +6980,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Zjevení 21, 1-6",
+      reference: "Zj 21,1-6",
       bookNumber: 66,
       chapter: 21,
       verseStart: 1,
@@ -6988,7 +6988,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 11, 32-44",
+      reference: "J 11,32-44",
       bookNumber: 43,
       chapter: 11,
       verseStart: 32,
@@ -7005,7 +7005,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 25, 6-9",
+      reference: "Iz 25,6-9",
       bookNumber: 23,
       chapter: 25,
       verseStart: 6,
@@ -7014,7 +7014,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       psalm: null,
       second: {
       label: "2. čtení",
-      reference: "Korintským 15, 50-58",
+      reference: "1K 15,50-58",
       bookNumber: 46,
       chapter: 15,
       verseStart: 50,
@@ -7022,7 +7022,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 6, 37-40",
+      reference: "J 6,37-40",
       bookNumber: 43,
       chapter: 6,
       verseStart: 37,
@@ -7039,7 +7039,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Deuteronomium 8, 5-6",
+      reference: "Dt 8,5-6",
       bookNumber: 5,
       chapter: 8,
       verseStart: 5,
@@ -7047,7 +7047,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 105, 4-5",
+      reference: "Ž 105,4-5",
       bookNumber: 19,
       chapter: 105,
       verseStart: 4,
@@ -7055,7 +7055,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 3, 7-11",
+      reference: "Fp 3,7-11",
       bookNumber: 50,
       chapter: 3,
       verseStart: 7,
@@ -7063,7 +7063,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 10, 13-15",
+      reference: "Mk 10,13-15",
       bookNumber: 41,
       chapter: 10,
       verseStart: 13,
@@ -7080,7 +7080,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 26, 1-9",
+      reference: "Jr 26,1-9",
       bookNumber: 24,
       chapter: 26,
       verseStart: 1,
@@ -7088,7 +7088,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 31, 6",
+      reference: "Ž 31,6",
       bookNumber: 19,
       chapter: 31,
       verseStart: 6,
@@ -7096,7 +7096,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 7, 2",
+      reference: "Sk 7,2",
       bookNumber: 44,
       chapter: 7,
       verseStart: 2,
@@ -7104,7 +7104,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 23, 34-39",
+      reference: "Mt 23,34-39",
       bookNumber: 40,
       chapter: 23,
       verseStart: 34,
@@ -7121,7 +7121,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 49, 14-23",
+      reference: "Iz 49,14-23",
       bookNumber: 23,
       chapter: 49,
       verseStart: 14,
@@ -7129,7 +7129,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 124, 7-8",
+      reference: "Ž 124,7-8",
       bookNumber: 19,
       chapter: 124,
       verseStart: 7,
@@ -7137,7 +7137,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Janův 1, 5 - 2",
+      reference: "J 1,5-2",
       bookNumber: 43,
       chapter: 1,
       verseStart: 5,
@@ -7145,7 +7145,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 2, 13-18",
+      reference: "Mt 2,13-18",
       bookNumber: 40,
       chapter: 2,
       verseStart: 13,
@@ -7162,7 +7162,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Kazatel 3, 1-8",
+      reference: "Kaz 3,1-8",
       bookNumber: 21,
       chapter: 3,
       verseStart: 1,
@@ -7170,7 +7170,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 3, 9",
+      reference: "Ž 3,9",
       bookNumber: 19,
       chapter: 3,
       verseStart: 9,
@@ -7178,7 +7178,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Janův 2, 22-29",
+      reference: "J 2,22-29",
       bookNumber: 43,
       chapter: 2,
       verseStart: 22,
@@ -7186,7 +7186,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Marek 11, 12-14",
+      reference: "Mk 11,12-14",
       bookNumber: 41,
       chapter: 11,
       verseStart: 12,
@@ -7204,7 +7204,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 69, 15",
+      reference: "Ž 69,15",
       bookNumber: 19,
       chapter: 69,
       verseStart: 15,
@@ -7212,7 +7212,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Timoteovi 2, 22-26",
+      reference: "1Tm 2,22-26",
       bookNumber: 54,
       chapter: 2,
       verseStart: 22,
@@ -7220,7 +7220,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 19, 16-24",
+      reference: "Mt 19,16-24",
       bookNumber: 40,
       chapter: 19,
       verseStart: 16,
@@ -7237,7 +7237,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 33, 14-16",
+      reference: "Jr 33,14-16",
       bookNumber: 24,
       chapter: 33,
       verseStart: 14,
@@ -7245,7 +7245,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 95, 6-8",
+      reference: "Ž 95,6-8",
       bookNumber: 19,
       chapter: 95,
       verseStart: 6,
@@ -7253,7 +7253,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Tesalonickým 3, 9-13",
+      reference: "1Te 3,9-13",
       bookNumber: 52,
       chapter: 3,
       verseStart: 9,
@@ -7261,7 +7261,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 21, 25-36",
+      reference: "Lk 21,25-36",
       bookNumber: 42,
       chapter: 21,
       verseStart: 25,
@@ -7279,7 +7279,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 111, 2",
+      reference: "Ž 111,2",
       bookNumber: 19,
       chapter: 111,
       verseStart: 2,
@@ -7287,7 +7287,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 1, 3-11",
+      reference: "Fp 1,3-11",
       bookNumber: 50,
       chapter: 1,
       verseStart: 3,
@@ -7295,7 +7295,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 3, 1-6",
+      reference: "Lk 3,1-6",
       bookNumber: 42,
       chapter: 3,
       verseStart: 1,
@@ -7314,7 +7314,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       psalm: null,
       second: {
       label: "2. čtení",
-      reference: "Filipským 4, 4-7",
+      reference: "Fp 4,4-7",
       bookNumber: 50,
       chapter: 4,
       verseStart: 4,
@@ -7322,7 +7322,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 3, 7-18",
+      reference: "Lk 3,7-18",
       bookNumber: 42,
       chapter: 3,
       verseStart: 7,
@@ -7339,7 +7339,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Micheáš 5, 1-4",
+      reference: "Mi 5,1-4",
       bookNumber: 33,
       chapter: 5,
       verseStart: 1,
@@ -7347,7 +7347,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 19, 2",
+      reference: "Ž 19,2",
       bookNumber: 19,
       chapter: 19,
       verseStart: 2,
@@ -7355,7 +7355,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 10, 5-10",
+      reference: "Žd 10,5-10",
       bookNumber: 58,
       chapter: 10,
       verseStart: 5,
@@ -7363,7 +7363,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 1, 39-55",
+      reference: "Lk 1,39-55",
       bookNumber: 42,
       chapter: 1,
       verseStart: 39,
@@ -7380,7 +7380,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Samuelova 7, 1-5",
+      reference: "1S 7,1-5",
       bookNumber: 9,
       chapter: 7,
       verseStart: 1,
@@ -7388,7 +7388,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 72, 11",
+      reference: "Ž 72,11",
       bookNumber: 19,
       chapter: 72,
       verseStart: 11,
@@ -7396,7 +7396,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 13, 16-26",
+      reference: "Sk 13,16-26",
       bookNumber: 44,
       chapter: 13,
       verseStart: 16,
@@ -7404,7 +7404,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 1, 67-79",
+      reference: "Lk 1,67-79",
       bookNumber: 42,
       chapter: 1,
       verseStart: 67,
@@ -7421,7 +7421,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 9, 1",
+      reference: "Iz 9,1",
       bookNumber: 23,
       chapter: 9,
       verseStart: 1,
@@ -7429,7 +7429,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 2, 7",
+      reference: "Ž 2,7",
       bookNumber: 19,
       chapter: 2,
       verseStart: 7,
@@ -7437,7 +7437,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Titovi 2, 11-14",
+      reference: "Tt 2,11-14",
       bookNumber: 56,
       chapter: 2,
       verseStart: 11,
@@ -7445,7 +7445,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 2, 1-14",
+      reference: "Lk 2,1-14",
       bookNumber: 42,
       chapter: 2,
       verseStart: 1,
@@ -7462,7 +7462,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 52, 7-10",
+      reference: "Iz 52,7-10",
       bookNumber: 23,
       chapter: 52,
       verseStart: 7,
@@ -7471,7 +7471,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       psalm: null,
       second: {
       label: "2. čtení",
-      reference: "Židům 1, 1-6",
+      reference: "Žd 1,1-6",
       bookNumber: 58,
       chapter: 1,
       verseStart: 1,
@@ -7479,7 +7479,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 1, 1-14",
+      reference: "J 1,1-14",
       bookNumber: 43,
       chapter: 1,
       verseStart: 1,
@@ -7496,7 +7496,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Samuelova 2, 18-20",
+      reference: "1S 2,18-20",
       bookNumber: 9,
       chapter: 2,
       verseStart: 18,
@@ -7504,7 +7504,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Lukáš 2, 41-52",
+      reference: "Lk 2,41-52",
       bookNumber: 42,
       chapter: 2,
       verseStart: 41,
@@ -7512,7 +7512,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Koloským 3, 12-17",
+      reference: "Ko 3,12-17",
       bookNumber: 51,
       chapter: 3,
       verseStart: 12,
@@ -7520,7 +7520,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 2, 41-52",
+      reference: "Lk 2,41-52",
       bookNumber: 42,
       chapter: 2,
       verseStart: 41,
@@ -7537,7 +7537,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 4, 8-12",
+      reference: "Sk 4,8-12",
       bookNumber: 44,
       chapter: 4,
       verseStart: 8,
@@ -7545,7 +7545,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 145, 1-2",
+      reference: "Ž 145,1-2",
       bookNumber: 19,
       chapter: 145,
       verseStart: 1,
@@ -7553,7 +7553,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 2, 5-13",
+      reference: "Fp 2,5-13",
       bookNumber: 50,
       chapter: 2,
       verseStart: 5,
@@ -7561,7 +7561,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 2, 15-21",
+      reference: "Lk 2,15-21",
       bookNumber: 42,
       chapter: 2,
       verseStart: 15,
@@ -7578,7 +7578,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 31, 7-11",
+      reference: "Jr 31,7-11",
       bookNumber: 24,
       chapter: 31,
       verseStart: 7,
@@ -7587,7 +7587,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       psalm: null,
       second: {
       label: "2. čtení",
-      reference: "Efezským 1, 3-14",
+      reference: "Ef 1,3-14",
       bookNumber: 49,
       chapter: 1,
       verseStart: 3,
@@ -7595,7 +7595,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 1, 10-18",
+      reference: "J 1,10-18",
       bookNumber: 43,
       chapter: 1,
       verseStart: 10,
@@ -7612,7 +7612,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 60, 1-6",
+      reference: "Iz 60,1-6",
       bookNumber: 23,
       chapter: 60,
       verseStart: 1,
@@ -7620,7 +7620,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 72, 1-2",
+      reference: "Ž 72,1-2",
       bookNumber: 19,
       chapter: 72,
       verseStart: 1,
@@ -7628,7 +7628,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 3, 1-12",
+      reference: "Ef 3,1-12",
       bookNumber: 49,
       chapter: 3,
       verseStart: 1,
@@ -7636,7 +7636,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 2, 1-12",
+      reference: "Mt 2,1-12",
       bookNumber: 40,
       chapter: 2,
       verseStart: 1,
@@ -7653,7 +7653,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 43, 1-7",
+      reference: "Iz 43,1-7",
       bookNumber: 23,
       chapter: 43,
       verseStart: 1,
@@ -7661,7 +7661,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 29, 3",
+      reference: "Ž 29,3",
       bookNumber: 19,
       chapter: 29,
       verseStart: 3,
@@ -7669,7 +7669,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 8, 14-17",
+      reference: "Sk 8,14-17",
       bookNumber: 44,
       chapter: 8,
       verseStart: 14,
@@ -7677,7 +7677,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 3, 16-17",
+      reference: "Lk 3,16-17",
       bookNumber: 42,
       chapter: 3,
       verseStart: 16,
@@ -7694,7 +7694,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 62, 1-5",
+      reference: "Iz 62,1-5",
       bookNumber: 23,
       chapter: 62,
       verseStart: 1,
@@ -7702,7 +7702,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 105, 1-2",
+      reference: "Ž 105,1-2",
       bookNumber: 19,
       chapter: 105,
       verseStart: 1,
@@ -7710,7 +7710,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 12, 1-11",
+      reference: "1K 12,1-11",
       bookNumber: 46,
       chapter: 12,
       verseStart: 1,
@@ -7718,7 +7718,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 2, 1-11",
+      reference: "J 2,1-11",
       bookNumber: 43,
       chapter: 2,
       verseStart: 1,
@@ -7735,7 +7735,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Nehemjáš 8, 1-3",
+      reference: "Neh 8,1-3",
       bookNumber: 16,
       chapter: 8,
       verseStart: 1,
@@ -7743,7 +7743,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 97, 11-12",
+      reference: "Ž 97,11-12",
       bookNumber: 19,
       chapter: 97,
       verseStart: 11,
@@ -7751,7 +7751,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 12, 12-31",
+      reference: "1K 12,12-31",
       bookNumber: 46,
       chapter: 12,
       verseStart: 12,
@@ -7759,7 +7759,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 4, 14-21",
+      reference: "Lk 4,14-21",
       bookNumber: 42,
       chapter: 4,
       verseStart: 14,
@@ -7776,7 +7776,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 1, 4-10",
+      reference: "Jr 1,4-10",
       bookNumber: 24,
       chapter: 1,
       verseStart: 4,
@@ -7784,7 +7784,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 71, 19",
+      reference: "Ž 71,19",
       bookNumber: 19,
       chapter: 71,
       verseStart: 19,
@@ -7792,7 +7792,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 13, 1-13",
+      reference: "1K 13,1-13",
       bookNumber: 46,
       chapter: 13,
       verseStart: 1,
@@ -7800,7 +7800,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 4, 21-30",
+      reference: "Lk 4,21-30",
       bookNumber: 42,
       chapter: 4,
       verseStart: 21,
@@ -7817,7 +7817,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Malachiáš 3, 1-4",
+      reference: "Mal 3,1-4",
       bookNumber: 39,
       chapter: 3,
       verseStart: 1,
@@ -7825,7 +7825,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 44, 2",
+      reference: "Ž 44,2",
       bookNumber: 19,
       chapter: 44,
       verseStart: 2,
@@ -7833,7 +7833,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 2, 14-18",
+      reference: "Žd 2,14-18",
       bookNumber: 58,
       chapter: 2,
       verseStart: 14,
@@ -7841,7 +7841,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 2, 22-40",
+      reference: "Lk 2,22-40",
       bookNumber: 42,
       chapter: 2,
       verseStart: 22,
@@ -7858,7 +7858,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 6, 1-8",
+      reference: "Iz 6,1-8",
       bookNumber: 23,
       chapter: 6,
       verseStart: 1,
@@ -7866,7 +7866,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 96, 8",
+      reference: "Ž 96,8",
       bookNumber: 19,
       chapter: 96,
       verseStart: 8,
@@ -7874,7 +7874,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 15, 1-11",
+      reference: "1K 15,1-11",
       bookNumber: 46,
       chapter: 15,
       verseStart: 1,
@@ -7882,7 +7882,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 5, 1-11",
+      reference: "Lk 5,1-11",
       bookNumber: 42,
       chapter: 5,
       verseStart: 1,
@@ -7899,7 +7899,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 17, 5-10",
+      reference: "Jr 17,5-10",
       bookNumber: 24,
       chapter: 17,
       verseStart: 5,
@@ -7907,7 +7907,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 77, 14",
+      reference: "Ž 77,14",
       bookNumber: 19,
       chapter: 77,
       verseStart: 14,
@@ -7915,7 +7915,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 15, 12-20",
+      reference: "1K 15,12-20",
       bookNumber: 46,
       chapter: 15,
       verseStart: 12,
@@ -7923,7 +7923,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 6, 17-26",
+      reference: "Lk 6,17-26",
       bookNumber: 42,
       chapter: 6,
       verseStart: 17,
@@ -7940,7 +7940,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 45, 3-11",
+      reference: "Gn 45,3-11",
       bookNumber: 1,
       chapter: 45,
       verseStart: 3,
@@ -7948,7 +7948,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 18, 7",
+      reference: "Ž 18,7",
       bookNumber: 19,
       chapter: 18,
       verseStart: 7,
@@ -7956,7 +7956,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 15, 35-38",
+      reference: "1K 15,35-38",
       bookNumber: 46,
       chapter: 15,
       verseStart: 35,
@@ -7964,7 +7964,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 6, 27-38",
+      reference: "Lk 6,27-38",
       bookNumber: 42,
       chapter: 6,
       verseStart: 27,
@@ -7981,7 +7981,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 55, 10-13",
+      reference: "Iz 55,10-13",
       bookNumber: 23,
       chapter: 55,
       verseStart: 10,
@@ -7989,7 +7989,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 18, 2-3",
+      reference: "Ž 18,2-3",
       bookNumber: 19,
       chapter: 18,
       verseStart: 2,
@@ -7997,7 +7997,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 15, 51-58",
+      reference: "1K 15,51-58",
       bookNumber: 46,
       chapter: 15,
       verseStart: 51,
@@ -8005,7 +8005,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 6, 39-49",
+      reference: "Lk 6,39-49",
       bookNumber: 42,
       chapter: 6,
       verseStart: 39,
@@ -8022,7 +8022,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Exodus 34, 29-35",
+      reference: "Ex 34,29-35",
       bookNumber: 2,
       chapter: 34,
       verseStart: 29,
@@ -8030,7 +8030,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 99, 9",
+      reference: "Ž 99,9",
       bookNumber: 19,
       chapter: 99,
       verseStart: 9,
@@ -8038,7 +8038,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 3, 12 - 4",
+      reference: "1K 3,12-4",
       bookNumber: 46,
       chapter: 3,
       verseStart: 12,
@@ -8046,7 +8046,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 9, 28-36",
+      reference: "Lk 9,28-36",
       bookNumber: 42,
       chapter: 9,
       verseStart: 28,
@@ -8063,7 +8063,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 17, 5-10",
+      reference: "Jr 17,5-10",
       bookNumber: 24,
       chapter: 17,
       verseStart: 5,
@@ -8071,7 +8071,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 69, 17",
+      reference: "Ž 69,17",
       bookNumber: 19,
       chapter: 69,
       verseStart: 17,
@@ -8079,7 +8079,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 5, 20",
+      reference: "1K 5,20",
       bookNumber: 46,
       chapter: 5,
       verseStart: 20,
@@ -8087,7 +8087,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 6, 16-21",
+      reference: "Mt 6,16-21",
       bookNumber: 40,
       chapter: 6,
       verseStart: 16,
@@ -8104,7 +8104,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Deuteronomium 26, 1-11",
+      reference: "Dt 26,1-11",
       bookNumber: 5,
       chapter: 26,
       verseStart: 1,
@@ -8112,7 +8112,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 91, 15-16",
+      reference: "Ž 91,15-16",
       bookNumber: 19,
       chapter: 91,
       verseStart: 15,
@@ -8120,7 +8120,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 10, 8",
+      reference: "Ř 10,8",
       bookNumber: 45,
       chapter: 10,
       verseStart: 8,
@@ -8128,7 +8128,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 4, 1-13",
+      reference: "Lk 4,1-13",
       bookNumber: 42,
       chapter: 4,
       verseStart: 1,
@@ -8145,7 +8145,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 15, 5-12",
+      reference: "Gn 15,5-12",
       bookNumber: 1,
       chapter: 15,
       verseStart: 5,
@@ -8153,7 +8153,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 25, 6",
+      reference: "Ž 25,6",
       bookNumber: 19,
       chapter: 25,
       verseStart: 6,
@@ -8161,7 +8161,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 3, 17 - 4",
+      reference: "Fp 3,17-4",
       bookNumber: 50,
       chapter: 3,
       verseStart: 17,
@@ -8169,7 +8169,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 13, 31-35",
+      reference: "Lk 13,31-35",
       bookNumber: 42,
       chapter: 13,
       verseStart: 31,
@@ -8186,7 +8186,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 55, 1-9",
+      reference: "Iz 55,1-9",
       bookNumber: 23,
       chapter: 55,
       verseStart: 1,
@@ -8194,7 +8194,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 25, 15-16",
+      reference: "Ž 25,15-16",
       bookNumber: 19,
       chapter: 25,
       verseStart: 15,
@@ -8202,7 +8202,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 10, 1-13",
+      reference: "1K 10,1-13",
       bookNumber: 46,
       chapter: 10,
       verseStart: 1,
@@ -8210,7 +8210,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 13, 1-9",
+      reference: "Lk 13,1-9",
       bookNumber: 42,
       chapter: 13,
       verseStart: 1,
@@ -8227,7 +8227,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jozue 5, 9-12",
+      reference: "Joz 5,9-12",
       bookNumber: 6,
       chapter: 5,
       verseStart: 9,
@@ -8235,7 +8235,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 13, 4-6",
+      reference: "Ž 13,4-6",
       bookNumber: 19,
       chapter: 13,
       verseStart: 4,
@@ -8243,7 +8243,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 5, 16-21",
+      reference: "1K 5,16-21",
       bookNumber: 46,
       chapter: 5,
       verseStart: 16,
@@ -8251,7 +8251,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 15, 1-3",
+      reference: "Lk 15,1-3",
       bookNumber: 42,
       chapter: 15,
       verseStart: 1,
@@ -8268,7 +8268,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 43, 16-21",
+      reference: "Iz 43,16-21",
       bookNumber: 23,
       chapter: 43,
       verseStart: 16,
@@ -8276,7 +8276,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 43, 1-2",
+      reference: "Ž 43,1-2",
       bookNumber: 19,
       chapter: 43,
       verseStart: 1,
@@ -8284,7 +8284,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 3, 7-14",
+      reference: "Fp 3,7-14",
       bookNumber: 50,
       chapter: 3,
       verseStart: 7,
@@ -8292,7 +8292,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 12, 1-8",
+      reference: "J 12,1-8",
       bookNumber: 43,
       chapter: 12,
       verseStart: 1,
@@ -8309,7 +8309,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 52, 13 - 53",
+      reference: "Iz 52,13-53",
       bookNumber: 23,
       chapter: 52,
       verseStart: 13,
@@ -8317,7 +8317,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 118, 8-9",
+      reference: "Ž 118,8-9",
       bookNumber: 19,
       chapter: 118,
       verseStart: 8,
@@ -8325,7 +8325,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 2, 5-11",
+      reference: "Fp 2,5-11",
       bookNumber: 50,
       chapter: 2,
       verseStart: 5,
@@ -8333,7 +8333,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 22, 39 - 23",
+      reference: "Lk 22,39-23",
       bookNumber: 42,
       chapter: 22,
       verseStart: 39,
@@ -8350,7 +8350,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Exodus 12, 1-4",
+      reference: "Ex 12,1-4",
       bookNumber: 2,
       chapter: 12,
       verseStart: 1,
@@ -8358,7 +8358,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 43, 4",
+      reference: "Ž 43,4",
       bookNumber: 19,
       chapter: 43,
       verseStart: 4,
@@ -8366,7 +8366,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 11, 23-26",
+      reference: "1K 11,23-26",
       bookNumber: 46,
       chapter: 11,
       verseStart: 23,
@@ -8374,7 +8374,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 22, 14-30",
+      reference: "Lk 22,14-30",
       bookNumber: 42,
       chapter: 22,
       verseStart: 14,
@@ -8391,7 +8391,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 22, 1-18",
+      reference: "Gn 22,1-18",
       bookNumber: 1,
       chapter: 22,
       verseStart: 1,
@@ -8399,7 +8399,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 31, 6",
+      reference: "Ž 31,6",
       bookNumber: 19,
       chapter: 31,
       verseStart: 6,
@@ -8407,7 +8407,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 11, 1",
+      reference: "Žd 11,1",
       bookNumber: 58,
       chapter: 11,
       verseStart: 1,
@@ -8415,7 +8415,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 18, 1 - 19",
+      reference: "J 18,1-19",
       bookNumber: 43,
       chapter: 18,
       verseStart: 1,
@@ -8432,7 +8432,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 1, 1 - 2",
+      reference: "Gn 1,1-2",
       bookNumber: 1,
       chapter: 1,
       verseStart: 1,
@@ -8440,7 +8440,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 113, 1-2",
+      reference: "Ž 113,1-2",
       bookNumber: 19,
       chapter: 113,
       verseStart: 1,
@@ -8448,7 +8448,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Exodus 14, 1-31",
+      reference: "Ex 14,1-31",
       bookNumber: 2,
       chapter: 14,
       verseStart: 1,
@@ -8456,7 +8456,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 24, 1-12",
+      reference: "Lk 24,1-12",
       bookNumber: 42,
       chapter: 24,
       verseStart: 1,
@@ -8473,7 +8473,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 10, 34-43",
+      reference: "Sk 10,34-43",
       bookNumber: 44,
       chapter: 10,
       verseStart: 34,
@@ -8481,7 +8481,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 118, 28-29",
+      reference: "Ž 118,28-29",
       bookNumber: 19,
       chapter: 118,
       verseStart: 28,
@@ -8489,7 +8489,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 15, 1-11",
+      reference: "1K 15,1-11",
       bookNumber: 46,
       chapter: 15,
       verseStart: 1,
@@ -8497,7 +8497,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 20, 1-18",
+      reference: "J 20,1-18",
       bookNumber: 43,
       chapter: 20,
       verseStart: 1,
@@ -8514,7 +8514,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Samuelova 2, 35-36",
+      reference: "1S 2,35-36",
       bookNumber: 9,
       chapter: 2,
       verseStart: 35,
@@ -8522,7 +8522,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 118, 24",
+      reference: "Ž 118,24",
       bookNumber: 19,
       chapter: 118,
       verseStart: 24,
@@ -8530,7 +8530,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 5, 6",
+      reference: "1K 5,6",
       bookNumber: 46,
       chapter: 5,
       verseStart: 6,
@@ -8538,7 +8538,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 24, 13-35",
+      reference: "Lk 24,13-35",
       bookNumber: 42,
       chapter: 24,
       verseStart: 13,
@@ -8555,7 +8555,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 5, 27-32",
+      reference: "Sk 5,27-32",
       bookNumber: 44,
       chapter: 5,
       verseStart: 27,
@@ -8564,7 +8564,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       psalm: null,
       second: {
       label: "2. čtení",
-      reference: "Zjevení 1, 4-8",
+      reference: "Zj 1,4-8",
       bookNumber: 66,
       chapter: 1,
       verseStart: 4,
@@ -8572,7 +8572,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 20, 19-31",
+      reference: "J 20,19-31",
       bookNumber: 43,
       chapter: 20,
       verseStart: 19,
@@ -8589,7 +8589,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 9, 1-20",
+      reference: "Sk 9,1-20",
       bookNumber: 44,
       chapter: 9,
       verseStart: 1,
@@ -8597,7 +8597,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 33, 5",
+      reference: "Ž 33,5",
       bookNumber: 19,
       chapter: 33,
       verseStart: 5,
@@ -8605,7 +8605,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Zjevení 5, 11-14",
+      reference: "Zj 5,11-14",
       bookNumber: 66,
       chapter: 5,
       verseStart: 11,
@@ -8613,7 +8613,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 21, 1-19",
+      reference: "J 21,1-19",
       bookNumber: 43,
       chapter: 21,
       verseStart: 1,
@@ -8630,7 +8630,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 9, 36-43",
+      reference: "Sk 9,36-43",
       bookNumber: 44,
       chapter: 9,
       verseStart: 36,
@@ -8638,7 +8638,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 66, 1",
+      reference: "Ž 66,1",
       bookNumber: 19,
       chapter: 66,
       verseStart: 1,
@@ -8646,7 +8646,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Zjevení 7, 9-17",
+      reference: "Zj 7,9-17",
       bookNumber: 66,
       chapter: 7,
       verseStart: 9,
@@ -8654,7 +8654,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 10, 22-30",
+      reference: "J 10,22-30",
       bookNumber: 43,
       chapter: 10,
       verseStart: 22,
@@ -8671,7 +8671,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 11, 1-18",
+      reference: "Sk 11,1-18",
       bookNumber: 44,
       chapter: 11,
       verseStart: 1,
@@ -8679,7 +8679,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 98, 1",
+      reference: "Ž 98,1",
       bookNumber: 19,
       chapter: 98,
       verseStart: 1,
@@ -8687,7 +8687,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Zjevení 21, 1-6",
+      reference: "Zj 21,1-6",
       bookNumber: 66,
       chapter: 21,
       verseStart: 1,
@@ -8695,7 +8695,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 13, 31-35",
+      reference: "J 13,31-35",
       bookNumber: 43,
       chapter: 13,
       verseStart: 31,
@@ -8712,7 +8712,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 16, 9-15",
+      reference: "Sk 16,9-15",
       bookNumber: 44,
       chapter: 16,
       verseStart: 9,
@@ -8720,7 +8720,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 67, 3-4",
+      reference: "Ž 67,3-4",
       bookNumber: 19,
       chapter: 67,
       verseStart: 3,
@@ -8728,7 +8728,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Zjevení 21, 10",
+      reference: "Zj 21,10",
       bookNumber: 66,
       chapter: 21,
       verseStart: 10,
@@ -8736,7 +8736,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 14, 23-29",
+      reference: "J 14,23-29",
       bookNumber: 43,
       chapter: 14,
       verseStart: 23,
@@ -8753,7 +8753,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 1, 1-11",
+      reference: "Sk 1,1-11",
       bookNumber: 44,
       chapter: 1,
       verseStart: 1,
@@ -8761,7 +8761,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 68, 18-19",
+      reference: "Ž 68,18-19",
       bookNumber: 19,
       chapter: 68,
       verseStart: 18,
@@ -8769,7 +8769,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 1, 15-23",
+      reference: "Ef 1,15-23",
       bookNumber: 49,
       chapter: 1,
       verseStart: 15,
@@ -8777,7 +8777,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 24, 44-53",
+      reference: "Lk 24,44-53",
       bookNumber: 42,
       chapter: 24,
       verseStart: 44,
@@ -8794,7 +8794,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 16, 16-34",
+      reference: "Sk 16,16-34",
       bookNumber: 44,
       chapter: 16,
       verseStart: 16,
@@ -8802,7 +8802,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 27, 7",
+      reference: "Ž 27,7",
       bookNumber: 19,
       chapter: 27,
       verseStart: 7,
@@ -8810,7 +8810,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Zjevení 22, 12-14",
+      reference: "Zj 22,12-14",
       bookNumber: 66,
       chapter: 22,
       verseStart: 12,
@@ -8818,7 +8818,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 17, 20-26",
+      reference: "J 17,20-26",
       bookNumber: 43,
       chapter: 17,
       verseStart: 20,
@@ -8835,7 +8835,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ezechiel 37, 1-14",
+      reference: "Ez 37,1-14",
       bookNumber: 26,
       chapter: 37,
       verseStart: 1,
@@ -8843,7 +8843,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 33, 12",
+      reference: "Ž 33,12",
       bookNumber: 19,
       chapter: 33,
       verseStart: 12,
@@ -8851,7 +8851,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 8, 14-17",
+      reference: "Ř 8,14-17",
       bookNumber: 45,
       chapter: 8,
       verseStart: 14,
@@ -8859,7 +8859,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 7, 37-39",
+      reference: "J 7,37-39",
       bookNumber: 43,
       chapter: 7,
       verseStart: 37,
@@ -8876,7 +8876,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 2, 1-11",
+      reference: "Sk 2,1-11",
       bookNumber: 44,
       chapter: 2,
       verseStart: 1,
@@ -8884,7 +8884,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 130, 5",
+      reference: "Ž 130,5",
       bookNumber: 19,
       chapter: 130,
       verseStart: 5,
@@ -8892,7 +8892,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Římanům 8, 14-17",
+      reference: "Ř 8,14-17",
       bookNumber: 45,
       chapter: 8,
       verseStart: 14,
@@ -8900,7 +8900,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 14, 8-17",
+      reference: "J 14,8-17",
       bookNumber: 43,
       chapter: 14,
       verseStart: 8,
@@ -8917,7 +8917,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 10, 34",
+      reference: "Sk 10,34",
       bookNumber: 44,
       chapter: 10,
       verseStart: 34,
@@ -8926,7 +8926,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       psalm: null,
       second: {
       label: "2. čtení",
-      reference: "Korintským 12, 3",
+      reference: "1K 12,3",
       bookNumber: 46,
       chapter: 12,
       verseStart: 3,
@@ -8934,7 +8934,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 20, 19-23",
+      reference: "J 20,19-23",
       bookNumber: 43,
       chapter: 20,
       verseStart: 19,
@@ -8951,7 +8951,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Přísloví 8, 1-3",
+      reference: "Př 8,1-3",
       bookNumber: 20,
       chapter: 8,
       verseStart: 1,
@@ -8960,7 +8960,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       psalm: null,
       second: {
       label: "2. čtení",
-      reference: "Římanům 1, 1-6",
+      reference: "Ř 1,1-6",
       bookNumber: 45,
       chapter: 1,
       verseStart: 1,
@@ -8968,7 +8968,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 16, 12-15",
+      reference: "J 16,12-15",
       bookNumber: 43,
       chapter: 16,
       verseStart: 12,
@@ -8985,7 +8985,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Přísloví 9, 1-5",
+      reference: "Př 9,1-5",
       bookNumber: 20,
       chapter: 9,
       verseStart: 1,
@@ -8993,7 +8993,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 81, 11",
+      reference: "Ž 81,11",
       bookNumber: 19,
       chapter: 81,
       verseStart: 11,
@@ -9001,7 +9001,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 11, 27-32",
+      reference: "1K 11,27-32",
       bookNumber: 46,
       chapter: 11,
       verseStart: 27,
@@ -9009,7 +9009,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 6, 22-35",
+      reference: "J 6,22-35",
       bookNumber: 43,
       chapter: 6,
       verseStart: 22,
@@ -9026,7 +9026,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 55, 10-13",
+      reference: "Iz 55,10-13",
       bookNumber: 23,
       chapter: 55,
       verseStart: 10,
@@ -9034,7 +9034,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 18, 2-3",
+      reference: "Ž 18,2-3",
       bookNumber: 19,
       chapter: 18,
       verseStart: 2,
@@ -9042,7 +9042,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 15, 51-58",
+      reference: "1K 15,51-58",
       bookNumber: 46,
       chapter: 15,
       verseStart: 51,
@@ -9050,7 +9050,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 6, 39-49",
+      reference: "Lk 6,39-49",
       bookNumber: 42,
       chapter: 6,
       verseStart: 39,
@@ -9067,7 +9067,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Královská 8, 22-23",
+      reference: "1Král 8,22-23",
       bookNumber: 11,
       chapter: 8,
       verseStart: 22,
@@ -9075,7 +9075,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 25, 16",
+      reference: "Ž 25,16",
       bookNumber: 19,
       chapter: 25,
       verseStart: 16,
@@ -9083,7 +9083,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Galatským 1, 1-12",
+      reference: "Ga 1,1-12",
       bookNumber: 48,
       chapter: 1,
       verseStart: 1,
@@ -9091,7 +9091,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 7, 1-10",
+      reference: "Lk 7,1-10",
       bookNumber: 42,
       chapter: 7,
       verseStart: 1,
@@ -9108,7 +9108,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Královská 17, 17-24",
+      reference: "1Král 17,17-24",
       bookNumber: 11,
       chapter: 17,
       verseStart: 17,
@@ -9116,7 +9116,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 30, 2",
+      reference: "Ž 30,2",
       bookNumber: 19,
       chapter: 30,
       verseStart: 2,
@@ -9124,7 +9124,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Galatským 1, 11-24",
+      reference: "Ga 1,11-24",
       bookNumber: 48,
       chapter: 1,
       verseStart: 11,
@@ -9132,7 +9132,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 7, 11-17",
+      reference: "Lk 7,11-17",
       bookNumber: 42,
       chapter: 7,
       verseStart: 11,
@@ -9149,7 +9149,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Samuelova 11, 26 - 12",
+      reference: "1S 11,26-12",
       bookNumber: 9,
       chapter: 11,
       verseStart: 26,
@@ -9157,7 +9157,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 32, 5",
+      reference: "Ž 32,5",
       bookNumber: 19,
       chapter: 32,
       verseStart: 5,
@@ -9165,7 +9165,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Galatským 2, 16-21",
+      reference: "Ga 2,16-21",
       bookNumber: 48,
       chapter: 2,
       verseStart: 16,
@@ -9173,7 +9173,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 7, 36 - 8",
+      reference: "Lk 7,36-8",
       bookNumber: 42,
       chapter: 7,
       verseStart: 36,
@@ -9190,7 +9190,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 65, 1-9",
+      reference: "Iz 65,1-9",
       bookNumber: 23,
       chapter: 65,
       verseStart: 1,
@@ -9198,7 +9198,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 31, 24",
+      reference: "Ž 31,24",
       bookNumber: 19,
       chapter: 31,
       verseStart: 24,
@@ -9206,7 +9206,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Galatským 3, 23-29",
+      reference: "Ga 3,23-29",
       bookNumber: 48,
       chapter: 3,
       verseStart: 23,
@@ -9214,7 +9214,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 8, 26-39",
+      reference: "Lk 8,26-39",
       bookNumber: 42,
       chapter: 8,
       verseStart: 26,
@@ -9231,7 +9231,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Královská 19, 15-16",
+      reference: "1Král 19,15-16",
       bookNumber: 11,
       chapter: 19,
       verseStart: 15,
@@ -9239,7 +9239,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 47, 2-3",
+      reference: "Ž 47,2-3",
       bookNumber: 19,
       chapter: 47,
       verseStart: 2,
@@ -9247,7 +9247,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Galatským 5, 1",
+      reference: "Ga 5,1",
       bookNumber: 48,
       chapter: 5,
       verseStart: 1,
@@ -9255,7 +9255,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 9, 51-62",
+      reference: "Lk 9,51-62",
       bookNumber: 42,
       chapter: 9,
       verseStart: 51,
@@ -9272,7 +9272,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 66, 10-14",
+      reference: "Iz 66,10-14",
       bookNumber: 23,
       chapter: 66,
       verseStart: 10,
@@ -9280,7 +9280,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 48, 14",
+      reference: "Ž 48,14",
       bookNumber: 19,
       chapter: 48,
       verseStart: 14,
@@ -9289,7 +9289,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       second: null,
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 10, 1-11",
+      reference: "Lk 10,1-11",
       bookNumber: 42,
       chapter: 10,
       verseStart: 1,
@@ -9306,7 +9306,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Deuteronomium 30, 9-14",
+      reference: "Dt 30,9-14",
       bookNumber: 5,
       chapter: 30,
       verseStart: 9,
@@ -9314,7 +9314,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 17, 8-2",
+      reference: "Ž 17,8-2",
       bookNumber: 19,
       chapter: 17,
       verseStart: 8,
@@ -9322,7 +9322,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Koloským 1, 1-14",
+      reference: "Ko 1,1-14",
       bookNumber: 51,
       chapter: 1,
       verseStart: 1,
@@ -9330,7 +9330,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 10, 25-37",
+      reference: "Lk 10,25-37",
       bookNumber: 42,
       chapter: 10,
       verseStart: 25,
@@ -9347,7 +9347,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 23, 1-6",
+      reference: "Jr 23,1-6",
       bookNumber: 24,
       chapter: 23,
       verseStart: 1,
@@ -9355,7 +9355,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 15, 1 -2",
+      reference: "Ž 15,1-2",
       bookNumber: 19,
       chapter: 15,
       verseStart: 1,
@@ -9363,7 +9363,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Koloským 1, 15-28",
+      reference: "Ko 1,15-28",
       bookNumber: 51,
       chapter: 1,
       verseStart: 15,
@@ -9371,7 +9371,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 10, 38-42",
+      reference: "Lk 10,38-42",
       bookNumber: 42,
       chapter: 10,
       verseStart: 38,
@@ -9388,7 +9388,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 18, 20-32",
+      reference: "Gn 18,20-32",
       bookNumber: 1,
       chapter: 18,
       verseStart: 20,
@@ -9396,7 +9396,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 55, 23",
+      reference: "Ž 55,23",
       bookNumber: 19,
       chapter: 55,
       verseStart: 23,
@@ -9404,7 +9404,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Koloským 2, 6-15",
+      reference: "Ko 2,6-15",
       bookNumber: 51,
       chapter: 2,
       verseStart: 6,
@@ -9412,7 +9412,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 11, 1-13",
+      reference: "Lk 11,1-13",
       bookNumber: 42,
       chapter: 11,
       verseStart: 1,
@@ -9429,7 +9429,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Kazatel 1, 2",
+      reference: "Kaz 1,2",
       bookNumber: 21,
       chapter: 1,
       verseStart: 2,
@@ -9437,7 +9437,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 33, 20-22",
+      reference: "Ž 33,20-22",
       bookNumber: 19,
       chapter: 33,
       verseStart: 20,
@@ -9445,7 +9445,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Koloským 3, 1-11",
+      reference: "Ko 3,1-11",
       bookNumber: 51,
       chapter: 3,
       verseStart: 1,
@@ -9453,7 +9453,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 12, 13-21",
+      reference: "Lk 12,13-21",
       bookNumber: 42,
       chapter: 12,
       verseStart: 13,
@@ -9470,7 +9470,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 15, 1-6",
+      reference: "Gn 15,1-6",
       bookNumber: 1,
       chapter: 15,
       verseStart: 1,
@@ -9478,7 +9478,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 131, 3",
+      reference: "Ž 131,3",
       bookNumber: 19,
       chapter: 131,
       verseStart: 3,
@@ -9486,7 +9486,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 11, 1-3",
+      reference: "Žd 11,1-3",
       bookNumber: 58,
       chapter: 11,
       verseStart: 1,
@@ -9494,7 +9494,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 12, 32-40",
+      reference: "Lk 12,32-40",
       bookNumber: 42,
       chapter: 12,
       verseStart: 32,
@@ -9511,7 +9511,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 23, 23-29",
+      reference: "Jr 23,23-29",
       bookNumber: 24,
       chapter: 23,
       verseStart: 23,
@@ -9519,7 +9519,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 82, 8",
+      reference: "Ž 82,8",
       bookNumber: 19,
       chapter: 82,
       verseStart: 8,
@@ -9527,7 +9527,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 11, 29 - 12",
+      reference: "Žd 11,29-12",
       bookNumber: 58,
       chapter: 11,
       verseStart: 29,
@@ -9535,7 +9535,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 12, 49-57",
+      reference: "Lk 12,49-57",
       bookNumber: 42,
       chapter: 12,
       verseStart: 49,
@@ -9552,7 +9552,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 58, 9",
+      reference: "Iz 58,9",
       bookNumber: 23,
       chapter: 58,
       verseStart: 9,
@@ -9560,7 +9560,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 92, 2-3",
+      reference: "Ž 92,2-3",
       bookNumber: 19,
       chapter: 92,
       verseStart: 2,
@@ -9568,7 +9568,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 12, 18-29",
+      reference: "Žd 12,18-29",
       bookNumber: 58,
       chapter: 12,
       verseStart: 18,
@@ -9576,7 +9576,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 13, 10-17",
+      reference: "Lk 13,10-17",
       bookNumber: 42,
       chapter: 13,
       verseStart: 10,
@@ -9594,7 +9594,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 104, 33-34",
+      reference: "Ž 104,33-34",
       bookNumber: 19,
       chapter: 104,
       verseStart: 33,
@@ -9602,7 +9602,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 13, 1-8",
+      reference: "Žd 13,1-8",
       bookNumber: 58,
       chapter: 13,
       verseStart: 1,
@@ -9610,7 +9610,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 14, 1",
+      reference: "Lk 14,1",
       bookNumber: 42,
       chapter: 14,
       verseStart: 1,
@@ -9627,7 +9627,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Deuteronomium 30, 15-20",
+      reference: "Dt 30,15-20",
       bookNumber: 5,
       chapter: 30,
       verseStart: 15,
@@ -9635,7 +9635,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 119, 137",
+      reference: "Ž 119,137",
       bookNumber: 19,
       chapter: 119,
       verseStart: 137,
@@ -9644,7 +9644,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       second: null,
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 14, 25-33",
+      reference: "Lk 14,25-33",
       bookNumber: 42,
       chapter: 14,
       verseStart: 25,
@@ -9661,7 +9661,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Exodus 32, 1",
+      reference: "Ex 32,1",
       bookNumber: 2,
       chapter: 32,
       verseStart: 1,
@@ -9669,7 +9669,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 138, 3",
+      reference: "Ž 138,3",
       bookNumber: 19,
       chapter: 138,
       verseStart: 3,
@@ -9677,7 +9677,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Timoteovi 1, 12-17",
+      reference: "1Tm 1,12-17",
       bookNumber: 54,
       chapter: 1,
       verseStart: 12,
@@ -9685,7 +9685,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 15, 1-10",
+      reference: "Lk 15,1-10",
       bookNumber: 42,
       chapter: 15,
       verseStart: 1,
@@ -9703,7 +9703,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 113, 5-7",
+      reference: "Ž 113,5-7",
       bookNumber: 19,
       chapter: 113,
       verseStart: 5,
@@ -9711,7 +9711,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Timoteovi 2, 1-7",
+      reference: "1Tm 2,1-7",
       bookNumber: 54,
       chapter: 2,
       verseStart: 1,
@@ -9719,7 +9719,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 16, 1-13",
+      reference: "Lk 16,1-13",
       bookNumber: 42,
       chapter: 16,
       verseStart: 1,
@@ -9737,7 +9737,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 78, 1",
+      reference: "Ž 78,1",
       bookNumber: 19,
       chapter: 78,
       verseStart: 1,
@@ -9746,7 +9746,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       second: null,
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 16, 19-31",
+      reference: "Lk 16,19-31",
       bookNumber: 42,
       chapter: 16,
       verseStart: 19,
@@ -9764,7 +9764,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 37, 5",
+      reference: "Ž 37,5",
       bookNumber: 19,
       chapter: 37,
       verseStart: 5,
@@ -9772,7 +9772,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Timoteovi 1, 1-14",
+      reference: "1Tm 1,1-14",
       bookNumber: 54,
       chapter: 1,
       verseStart: 1,
@@ -9780,7 +9780,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 17, 5-10",
+      reference: "Lk 17,5-10",
       bookNumber: 42,
       chapter: 17,
       verseStart: 5,
@@ -9797,7 +9797,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Královská 5, 1-15",
+      reference: "1Král 5,1-15",
       bookNumber: 11,
       chapter: 5,
       verseStart: 1,
@@ -9805,7 +9805,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 51, 9",
+      reference: "Ž 51,9",
       bookNumber: 19,
       chapter: 51,
       verseStart: 9,
@@ -9813,7 +9813,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Timoteovi 2, 8-15",
+      reference: "1Tm 2,8-15",
       bookNumber: 54,
       chapter: 2,
       verseStart: 8,
@@ -9821,7 +9821,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 17, 11-19",
+      reference: "Lk 17,11-19",
       bookNumber: 42,
       chapter: 17,
       verseStart: 11,
@@ -9838,7 +9838,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 32, 23-31",
+      reference: "Gn 32,23-31",
       bookNumber: 1,
       chapter: 32,
       verseStart: 23,
@@ -9846,7 +9846,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 28, 7",
+      reference: "Ž 28,7",
       bookNumber: 19,
       chapter: 28,
       verseStart: 7,
@@ -9854,7 +9854,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Timoteovi 3, 14 - 4",
+      reference: "1Tm 3,14-4",
       bookNumber: 54,
       chapter: 3,
       verseStart: 14,
@@ -9862,7 +9862,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 18, 1-8",
+      reference: "Lk 18,1-8",
       bookNumber: 42,
       chapter: 18,
       verseStart: 1,
@@ -9879,7 +9879,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 14, 7-9",
+      reference: "Jr 14,7-9",
       bookNumber: 24,
       chapter: 14,
       verseStart: 7,
@@ -9887,7 +9887,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 34, 18-19",
+      reference: "Ž 34,18-19",
       bookNumber: 19,
       chapter: 34,
       verseStart: 18,
@@ -9895,7 +9895,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Timoteovi 4, 6-8",
+      reference: "1Tm 4,6-8",
       bookNumber: 54,
       chapter: 4,
       verseStart: 6,
@@ -9903,7 +9903,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 18, 9-14",
+      reference: "Lk 18,9-14",
       bookNumber: 42,
       chapter: 18,
       verseStart: 9,
@@ -9920,7 +9920,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 1, 10-18",
+      reference: "Iz 1,10-18",
       bookNumber: 23,
       chapter: 1,
       verseStart: 10,
@@ -9928,7 +9928,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 112, 1",
+      reference: "Ž 112,1",
       bookNumber: 19,
       chapter: 112,
       verseStart: 1,
@@ -9936,7 +9936,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Tesalonickým 1, 1-4",
+      reference: "1Te 1,1-4",
       bookNumber: 52,
       chapter: 1,
       verseStart: 1,
@@ -9944,7 +9944,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 19, 1-10",
+      reference: "Lk 19,1-10",
       bookNumber: 42,
       chapter: 19,
       verseStart: 1,
@@ -9961,7 +9961,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jób 19, 23-27",
+      reference: "Jb 19,23-27",
       bookNumber: 18,
       chapter: 19,
       verseStart: 23,
@@ -9969,7 +9969,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 88, 2-3",
+      reference: "Ž 88,2-3",
       bookNumber: 19,
       chapter: 88,
       verseStart: 2,
@@ -9977,7 +9977,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Tesalonickým 2, 1-5",
+      reference: "1Te 2,1-5",
       bookNumber: 52,
       chapter: 2,
       verseStart: 1,
@@ -9985,7 +9985,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 20, 27-40",
+      reference: "Lk 20,27-40",
       bookNumber: 42,
       chapter: 20,
       verseStart: 27,
@@ -10002,7 +10002,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Malachiáš 3, 19-21",
+      reference: "Mal 3,19-21",
       bookNumber: 39,
       chapter: 3,
       verseStart: 19,
@@ -10010,7 +10010,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 19, 5",
+      reference: "Ž 19,5",
       bookNumber: 19,
       chapter: 19,
       verseStart: 5,
@@ -10018,7 +10018,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Tesalonickým 3, 6-13",
+      reference: "1Te 3,6-13",
       bookNumber: 52,
       chapter: 3,
       verseStart: 6,
@@ -10026,7 +10026,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 21, 5-19",
+      reference: "Lk 21,5-19",
       bookNumber: 42,
       chapter: 21,
       verseStart: 5,
@@ -10043,7 +10043,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jeremjáš 23, 1-6",
+      reference: "Jr 23,1-6",
       bookNumber: 24,
       chapter: 23,
       verseStart: 1,
@@ -10051,7 +10051,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 72, 8",
+      reference: "Ž 72,8",
       bookNumber: 19,
       chapter: 72,
       verseStart: 8,
@@ -10059,7 +10059,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Koloským 1, 11-20",
+      reference: "Ko 1,11-20",
       bookNumber: 51,
       chapter: 1,
       verseStart: 11,
@@ -10067,7 +10067,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 23, 33-43",
+      reference: "Lk 23,33-43",
       bookNumber: 42,
       chapter: 23,
       verseStart: 33,
@@ -10086,7 +10086,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       psalm: null,
       second: {
       label: "2. čtení",
-      reference: "Římanům 13, 11-14",
+      reference: "Ř 13,11-14",
       bookNumber: 45,
       chapter: 13,
       verseStart: 11,
@@ -10094,7 +10094,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 10, 16-33",
+      reference: "Mt 10,16-33",
       bookNumber: 40,
       chapter: 10,
       verseStart: 16,
@@ -10112,7 +10112,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 132, 8-9",
+      reference: "Ž 132,8-9",
       bookNumber: 19,
       chapter: 132,
       verseStart: 8,
@@ -10120,7 +10120,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Titovi 1, 7-9",
+      reference: "Tt 1,7-9",
       bookNumber: 56,
       chapter: 1,
       verseStart: 7,
@@ -10128,7 +10128,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 25, 14-29",
+      reference: "Mt 25,14-29",
       bookNumber: 40,
       chapter: 25,
       verseStart: 14,
@@ -10145,7 +10145,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 49, 1",
+      reference: "Iz 49,1",
       bookNumber: 23,
       chapter: 49,
       verseStart: 1,
@@ -10153,7 +10153,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 92, 13",
+      reference: "Ž 92,13",
       bookNumber: 19,
       chapter: 92,
       verseStart: 13,
@@ -10161,7 +10161,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 13, 22-26",
+      reference: "Sk 13,22-26",
       bookNumber: 44,
       chapter: 13,
       verseStart: 22,
@@ -10169,7 +10169,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 1, 57-66",
+      reference: "Lk 1,57-66",
       bookNumber: 42,
       chapter: 1,
       verseStart: 57,
@@ -10186,7 +10186,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Skutky 3, 1-10",
+      reference: "Sk 3,1-10",
       bookNumber: 44,
       chapter: 3,
       verseStart: 1,
@@ -10194,7 +10194,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 19, 5",
+      reference: "Ž 19,5",
       bookNumber: 19,
       chapter: 19,
       verseStart: 5,
@@ -10202,7 +10202,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Galatským 1, 11-18",
+      reference: "Ga 1,11-18",
       bookNumber: 48,
       chapter: 1,
       verseStart: 11,
@@ -10210,7 +10210,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Jan 21, 15-19",
+      reference: "J 21,15-19",
       bookNumber: 43,
       chapter: 21,
       verseStart: 15,
@@ -10228,7 +10228,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 37, 30-31",
+      reference: "Ž 37,30-31",
       bookNumber: 19,
       chapter: 37,
       verseStart: 30,
@@ -10236,7 +10236,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 3, 7-15",
+      reference: "Fp 3,7-15",
       bookNumber: 50,
       chapter: 3,
       verseStart: 7,
@@ -10244,7 +10244,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 12, 33-37",
+      reference: "Lk 12,33-37",
       bookNumber: 42,
       chapter: 12,
       verseStart: 33,
@@ -10261,7 +10261,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 56, 6-7",
+      reference: "Iz 56,6-7",
       bookNumber: 23,
       chapter: 56,
       verseStart: 6,
@@ -10269,7 +10269,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 117, 1-2",
+      reference: "Ž 117,1-2",
       bookNumber: 19,
       chapter: 117,
       verseStart: 1,
@@ -10277,7 +10277,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Efezským 3, 1-7",
+      reference: "Ef 3,1-7",
       bookNumber: 49,
       chapter: 3,
       verseStart: 1,
@@ -10285,7 +10285,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Žalm 117, 1-2",
+      reference: "Ž 117,1-2",
       bookNumber: 19,
       chapter: 117,
       verseStart: 1,
@@ -10303,7 +10303,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 79, 1",
+      reference: "Ž 79,1",
       bookNumber: 19,
       chapter: 79,
       verseStart: 1,
@@ -10311,7 +10311,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Timoteovi 2, 22-26",
+      reference: "1Tm 2,22-26",
       bookNumber: 54,
       chapter: 2,
       verseStart: 22,
@@ -10319,7 +10319,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 23, 29-39",
+      reference: "Mt 23,29-39",
       bookNumber: 40,
       chapter: 23,
       verseStart: 29,
@@ -10336,7 +10336,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 61, 10-11",
+      reference: "Iz 61,10-11",
       bookNumber: 23,
       chapter: 61,
       verseStart: 10,
@@ -10344,7 +10344,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 34, 1-2",
+      reference: "Ž 34,1-2",
       bookNumber: 19,
       chapter: 34,
       verseStart: 1,
@@ -10352,7 +10352,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Zjevení 11, 19 - 12",
+      reference: "Zj 11,19-12",
       bookNumber: 66,
       chapter: 11,
       verseStart: 19,
@@ -10360,7 +10360,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 1, 46-55",
+      reference: "Lk 1,46-55",
       bookNumber: 42,
       chapter: 1,
       verseStart: 46,
@@ -10379,7 +10379,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       psalm: null,
       second: {
       label: "2. čtení",
-      reference: "Galatským 5, 13-16",
+      reference: "Ga 5,13-16",
       bookNumber: 48,
       chapter: 5,
       verseStart: 13,
@@ -10387,7 +10387,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 5, 2",
+      reference: "Mt 5,2",
       bookNumber: 40,
       chapter: 5,
       verseStart: 2,
@@ -10404,7 +10404,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Leviticus 19, 9-10",
+      reference: "Lv 19,9-10",
       bookNumber: 3,
       chapter: 19,
       verseStart: 9,
@@ -10412,7 +10412,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 85, 13",
+      reference: "Ž 85,13",
       bookNumber: 19,
       chapter: 85,
       verseStart: 13,
@@ -10420,7 +10420,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 9, 9-12",
+      reference: "1K 9,9-12",
       bookNumber: 46,
       chapter: 9,
       verseStart: 9,
@@ -10428,7 +10428,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Exodus 34, 21",
+      reference: "Ex 34,21",
       bookNumber: 2,
       chapter: 34,
       verseStart: 21,
@@ -10445,7 +10445,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Izajáš 28, 14-16",
+      reference: "Iz 28,14-16",
       bookNumber: 23,
       chapter: 28,
       verseStart: 14,
@@ -10453,7 +10453,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 133, 1",
+      reference: "Ž 133,1",
       bookNumber: 19,
       chapter: 133,
       verseStart: 1,
@@ -10461,7 +10461,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Filipským 1, 8-11",
+      reference: "Fp 1,8-11",
       bookNumber: 50,
       chapter: 1,
       verseStart: 8,
@@ -10469,7 +10469,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 22, 15-22",
+      reference: "Mt 22,15-22",
       bookNumber: 40,
       chapter: 22,
       verseStart: 15,
@@ -10487,7 +10487,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 18, 29",
+      reference: "Ž 18,29",
       bookNumber: 19,
       chapter: 18,
       verseStart: 29,
@@ -10495,7 +10495,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Židům 11, 32 - 12",
+      reference: "Žd 11,32-12",
       bookNumber: 58,
       chapter: 11,
       verseStart: 32,
@@ -10503,7 +10503,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 6, 20-36",
+      reference: "Lk 6,20-36",
       bookNumber: 42,
       chapter: 6,
       verseStart: 20,
@@ -10520,7 +10520,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Jób 7, 1-4",
+      reference: "Jb 7,1-4",
       bookNumber: 18,
       chapter: 7,
       verseStart: 1,
@@ -10529,7 +10529,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       psalm: null,
       second: {
       label: "2. čtení",
-      reference: "Jakubův 4, 13-15",
+      reference: "Jk 4,13-15",
       bookNumber: 59,
       chapter: 4,
       verseStart: 13,
@@ -10537,7 +10537,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 12, 35-38",
+      reference: "Lk 12,35-38",
       bookNumber: 42,
       chapter: 12,
       verseStart: 35,
@@ -10554,7 +10554,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Přísloví 3, 1-7",
+      reference: "Př 3,1-7",
       bookNumber: 20,
       chapter: 3,
       verseStart: 1,
@@ -10562,7 +10562,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 24, 3-4",
+      reference: "Ž 24,3-4",
       bookNumber: 19,
       chapter: 24,
       verseStart: 3,
@@ -10570,7 +10570,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Korintským 3, 5-11",
+      reference: "1K 3,5-11",
       bookNumber: 46,
       chapter: 3,
       verseStart: 5,
@@ -10578,7 +10578,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 13, 43",
+      reference: "Mt 13,43",
       bookNumber: 40,
       chapter: 13,
       verseStart: 43,
@@ -10595,7 +10595,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Deuteronomium 30, 15-20",
+      reference: "Dt 30,15-20",
       bookNumber: 5,
       chapter: 30,
       verseStart: 15,
@@ -10603,7 +10603,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 119, 1-2",
+      reference: "Ž 119,1-2",
       bookNumber: 19,
       chapter: 119,
       verseStart: 1,
@@ -10611,7 +10611,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Skutky 7, 2",
+      reference: "Sk 7,2",
       bookNumber: 44,
       chapter: 7,
       verseStart: 2,
@@ -10619,7 +10619,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Lukáš 21, 26-28",
+      reference: "Lk 21,26-28",
       bookNumber: 42,
       chapter: 21,
       verseStart: 26,
@@ -10636,7 +10636,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Genesis 33, 1-5",
+      reference: "Gn 33,1-5",
       bookNumber: 1,
       chapter: 33,
       verseStart: 1,
@@ -10644,7 +10644,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 124, 7-8",
+      reference: "Ž 124,7-8",
       bookNumber: 19,
       chapter: 124,
       verseStart: 7,
@@ -10652,7 +10652,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Zjevení 14, 1-5",
+      reference: "Zj 14,1-5",
       bookNumber: 66,
       chapter: 14,
       verseStart: 1,
@@ -10660,7 +10660,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 2, 13-18",
+      reference: "Mt 2,13-18",
       bookNumber: 40,
       chapter: 2,
       verseStart: 13,
@@ -10677,7 +10677,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Daniel 5, 1-7",
+      reference: "Dan 5,1-7",
       bookNumber: 27,
       chapter: 5,
       verseStart: 1,
@@ -10685,7 +10685,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       psalm: {
       label: "Žalm",
-      reference: "Žalm 15, 1-2",
+      reference: "Ž 15,1-2",
       bookNumber: 19,
       chapter: 15,
       verseStart: 1,
@@ -10693,7 +10693,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Timoteovi 4, 1-8",
+      reference: "1Tm 4,1-8",
       bookNumber: 54,
       chapter: 4,
       verseStart: 1,
@@ -10712,7 +10712,7 @@ export const LECTIONARY: LectionaryEntry[] = [
       first: null,
       psalm: {
       label: "Žalm",
-      reference: "Žalm 69, 15",
+      reference: "Ž 69,15",
       bookNumber: 19,
       chapter: 69,
       verseStart: 15,
@@ -10720,7 +10720,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       second: {
       label: "2. čtení",
-      reference: "Timoteovi 2, 22-26",
+      reference: "1Tm 2,22-26",
       bookNumber: 54,
       chapter: 2,
       verseStart: 22,
@@ -10728,7 +10728,7 @@ export const LECTIONARY: LectionaryEntry[] = [
     },
       gospel: {
       label: "Evangelium",
-      reference: "Matouš 19, 16-24",
+      reference: "Mt 19,16-24",
       bookNumber: 40,
       chapter: 19,
       verseStart: 16,
