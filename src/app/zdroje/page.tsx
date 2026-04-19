@@ -14,6 +14,13 @@ interface Resource {
 
 const resources: Resource[] = [
   {
+    title: "Kazatelství v kontextu tradice a přítomnosti",
+    author: "Ján Liguš, Tomáš Butta, Pavel Kolář a kol.",
+    description:
+      "Kolektivní monografie Husitské teologické fakulty UK (2014). Primární zdroj pro homiletiku v tradici CČSH — od Farského přes Kováře, Trtíka a Rutrleho k současnosti. Z ní čerpají úvodní texty tohoto průvodce.",
+    type: "kniha",
+  },
+  {
     title: "Hermeneutika jako teorie porozumění",
     author: "Petr Pokorný",
     description:
