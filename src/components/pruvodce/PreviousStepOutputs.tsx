@@ -3,14 +3,16 @@
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useSermonArtifacts } from "@/hooks/useSermonArtifacts";
 
+interface AnnotationItem {
+  id: string;
+  selectedText: string;
+  category: string;
+  note: string;
+}
+
 interface AnnotationStore {
   textHash: string;
-  annotations: Array<{
-    id: string;
-    selectedText: string;
-    category: string;
-    note: string;
-  }>;
+  annotations: AnnotationItem[];
 }
 
 interface PreviousStepOutputsProps {
@@ -26,20 +28,27 @@ export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputs
   const { artifacts } = useSermonArtifacts();
 
   // Determine what to show based on current sub-step
-  const showAnnotations = ["kontext", "vyklad"].includes(subStepSlug);
+  // Annotations show on text-working sub-steps AND during sermon composition,
+  // so the preacher can draw on their own observations and notes while writing.
+  const showAnnotations = ["kontext", "vyklad", "aktualizace", "stavba", "formulace"].includes(
+    subStepSlug
+  );
   const showCentralIdea = ["aktualizace", "stavba"].includes(subStepSlug);
   const showFCF = subStepSlug === "stavba";
   const showPrednes = subStepSlug === "prednes";
 
-  // Get keyword annotations
-  const keywords = annotations?.annotations
-    ?.filter((a) => a.category === "keyword")
-    ?.map((a) => a.selectedText) || [];
-  const actors = annotations?.annotations
-    ?.filter((a) => a.category === "actor")
-    ?.map((a) => a.selectedText) || [];
+  const allAnnotations: AnnotationItem[] = annotations?.annotations ?? [];
+  const keywordAnnotations = allAnnotations.filter((a) => a.category === "keyword");
+  const actorAnnotations = allAnnotations.filter((a) => a.category === "actor");
+  const tensionAnnotations = allAnnotations.filter((a) => a.category === "tension");
+  const questionAnnotations = allAnnotations.filter((a) => a.category === "question");
 
-  const hasAnnotations = showAnnotations && (keywords.length > 0 || actors.length > 0);
+  const hasAnnotations =
+    showAnnotations &&
+    (keywordAnnotations.length > 0 ||
+      actorAnnotations.length > 0 ||
+      tensionAnnotations.length > 0 ||
+      questionAnnotations.length > 0);
   const hasCentralIdea = showCentralIdea && artifacts.centralIdea.trim().length > 0;
   const hasFCF = showFCF && fcfData && (fcfData.need || fcfData.intersection);
   const hasPrednes = showPrednes && (artifacts.sermonThesis.trim().length > 0 || artifacts.outlinePoints.trim().length > 0);
@@ -53,41 +62,35 @@ export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputs
       </p>
 
       {hasAnnotations && (
-        <div className="mb-3">
-          {keywords.length > 0 && (
-            <div className="mb-2">
-              <p className="mb-1 text-[11px] font-medium text-text-muted">
-                {`Kl\u00ED\u010Dov\u00E1 slova:`}
-              </p>
-              <div className="flex flex-wrap gap-1">
-                {keywords.map((kw, i) => (
-                  <span
-                    key={i}
-                    className="rounded-full bg-brick-pale px-2 py-0.5 text-[11px] font-medium text-brick"
-                  >
-                    {kw}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-          {actors.length > 0 && (
-            <div>
-              <p className="mb-1 text-[11px] font-medium text-text-muted">
-                {`Osoby a d\u011Bje:`}
-              </p>
-              <div className="flex flex-wrap gap-1">
-                {actors.map((m, i) => (
-                  <span
-                    key={i}
-                    className="rounded-full bg-sage-pale px-2 py-0.5 text-[11px] font-medium text-sage"
-                  >
-                    {m}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
+        <div className="mb-3 space-y-3">
+          <AnnotationGroup
+            label="Klíčová slova"
+            items={keywordAnnotations}
+            pillClass="bg-brick-pale text-brick"
+            textClass="text-brick"
+            borderClass="border-brick/40 bg-brick/5"
+          />
+          <AnnotationGroup
+            label="Osoby a děje"
+            items={actorAnnotations}
+            pillClass="bg-sage-pale text-sage"
+            textClass="text-sage"
+            borderClass="border-sage/40 bg-sage/5"
+          />
+          <AnnotationGroup
+            label="Zlom / napětí"
+            items={tensionAnnotations}
+            pillClass="bg-sand/30 text-text"
+            textClass="text-text"
+            borderClass="border-sand/60 bg-sand/10"
+          />
+          <AnnotationGroup
+            label="Otázky"
+            items={questionAnnotations}
+            pillClass="bg-[#7b5ea7]/10 text-[#7b5ea7]"
+            textClass="text-[#7b5ea7]"
+            borderClass="border-[#7b5ea7]/40 bg-[#7b5ea7]/5"
+          />
         </div>
       )}
 
@@ -145,6 +148,66 @@ export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputs
               </p>
             </div>
           )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+interface AnnotationGroupProps {
+  label: string;
+  items: AnnotationItem[];
+  pillClass: string;
+  textClass: string;
+  borderClass: string;
+}
+
+function AnnotationGroup({
+  label,
+  items,
+  pillClass,
+  textClass,
+  borderClass,
+}: AnnotationGroupProps) {
+  if (items.length === 0) return null;
+
+  const withNotes = items.filter((a) => a.note.trim().length > 0);
+  const withoutNotes = items.filter((a) => a.note.trim().length === 0);
+
+  return (
+    <div>
+      <p className="mb-1.5 text-[11px] font-medium text-text-muted">{`${label}:`}</p>
+
+      {/* Annotations with notes — shown as cards with the user's comment */}
+      {withNotes.length > 0 && (
+        <div className="mb-1.5 space-y-1.5">
+          {withNotes.map((a) => (
+            <div
+              key={a.id}
+              className={`rounded-md border-l-2 px-2.5 py-1.5 ${borderClass}`}
+            >
+              <p className={`text-[11px] font-semibold leading-tight ${textClass}`}>
+                {`\u201E${a.selectedText}\u201C`}
+              </p>
+              <p className="mt-0.5 text-[11px] leading-relaxed text-text-muted">
+                {a.note}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Annotations without notes — just the pills */}
+      {withoutNotes.length > 0 && (
+        <div className="flex flex-wrap gap-1">
+          {withoutNotes.map((a) => (
+            <span
+              key={a.id}
+              className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${pillClass}`}
+            >
+              {a.selectedText}
+            </span>
+          ))}
         </div>
       )}
     </div>
