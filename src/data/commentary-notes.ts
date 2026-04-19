@@ -1,8 +1,16 @@
 /**
  * Commentary notes for specific pericopes.
  * These are original exegetical summaries for practical sermon preparation.
- * Keyed by "{bookNumber}:{chapter}" — notes apply to the whole chapter
- * but highlight the lectionary pericope.
+ *
+ * Keying:
+ *  - `"{bookNumber}:{chapter}"` — chapter-wide commentary (default)
+ *  - `"{bookNumber}:{chapter}:{verseStart}-{verseEnd}"` — specific pericope
+ *    within a chapter, used when the same chapter has multiple distinct
+ *    lectionary readings (e.g. Sk 2,1-13 = Pentecost vs. Sk 2,14.36-41 =
+ *    Peter's sermon)
+ *
+ * `getCommentary()` first looks for a pericope-specific match, then
+ * falls back to the chapter-wide one.
  */
 
 export interface VerseNote {
@@ -1503,6 +1511,46 @@ const COMMENTARY: Record<string, PericopeCommentary> = {
     ],
   },
 
+  // Sk 2,14a.36–41 — Petrovo kázání o Letnicích (Misericordias Domini, rok A)
+  "44:2:14-41": {
+    reference: `Sk 2,14a.36–41`,
+    title: `Petrovo kázání o Letnicích`,
+    context: `1. čtení 2. neděle po Velikonocích (Misericordias Domini) v roce A. Perikopa navazuje přímo na vylití Ducha a reakci zástupu (vv. 1–13). Petr — ještě před několika týdny ten, kdo Ježíše zapřel — vystupuje jako mluvčí dvanácti a pronáší první veřejné kázání církve. Vynechané verše 15–35 obsahují prorocký výklad události (citace Joela 2, Žalmu 16 a Žalmu 110), kterým Petr ukazuje, že ukřižovaný a vzkříšený Ježíš je oním zaslíbeným Mesiášem a Pánem. Vybrané verše 14a a 36–41 tvoří rámec a vyústění: úvod kázání a jeho christologické vyvrcholení s voláním po odpovědi. Text je modelový příklad kérygmatu — nejstarší formy křesťanského zvěstování.`,
+    keyWords: [
+      { word: `Χριστός (Christos) — Mesiáš`, explanation: `V. 36: „Bůh jej učinil Pánem i Mesiášem.“ Ne titul získaný postupně, ale vzkříšením potvrzený. Petr formuluje christologické jádro: ukřižovaný je Mesiáš.` },
+      { word: `κύριος (kyrios) — Pán`, explanation: `V Septuagintě překlad Božího jména JHWH. Petr aplikuje na Ježíše — odvážná teologická identifikace. Ne pán jako domácí pán, ale Hospodin.` },
+      { word: `μετάνοια (metanoia) — pokání`, explanation: `V. 38: „Obraťte se.“ Doslova „změna mysli“ — ne pocit lítosti, ale radikální obrat smýšlení i směru života. Odpověď na kérygma, ne emoce.` },
+      { word: `βάπτισμα (baptisma) — křest`, explanation: `V. 38: „Dejte se pokřtít ve jménu Ježíše Krista.“ Křest „v Ježíšově jménu“ (εἰς τὸ ὄνομα) — vstup do jeho vlády a společenství. Viditelný znak metanoie.` },
+      { word: `ἐπαγγελία (epangelia) — zaslíbení`, explanation: `V. 39: „Zaslíbení platí vám a vašim dětem i všem daleko vzdáleným.“ Tři okruhy: přítomní Židé, jejich potomci, pohané. Univerzalita rané církve.` },
+      { word: `σῴζω (sózó) — zachránit`, explanation: `V. 40: „Zachraňte se z tohoto zvráceného pokolení!“ Pasivní tvar: nechte se zachránit. Záchrana je dar, ne výkon — ale vyžaduje odpověď.` },
+    ],
+    structure: `A. Úvod kázání (v. 14a): Petr se zvedá s Jedenácti, pozvedá hlas — gesto autority mluvčího. B. [Vynecháno: výklad Joel + Žalmy, vv. 15–35.] C. Kérygma (v. 36): závěr argumentu — „ten Ježíš, kterého jste vy ukřižovali, učinil Bůh Pánem i Mesiášem“. D. Reakce zástupu (v. 37): „bodlo je to u srdce“ (κατενύγησαν) — „co máme dělat?“ Otázka vyvolaná Slovem. E. Petrova odpověď (vv. 38–39): metanoia, křest, dar Ducha, trojí okruh zaslíbení. F. Výsledek (vv. 40–41): Petr pokračuje v napomínání, tři tisíce přijímají slovo a jsou pokřtěni — církev se rodí z odpovědi na kázání.`,
+    theologicalThemes: [
+      `Kérygma — nejstarší forma křesťanského zvěstování: Ježíš ukřižovaný a vzkříšený je Pán a Mesiáš`,
+      `Odpovědnost a milost — „vy jste ukřižovali“ (v. 36) a hned „obraťte se a budete zachráněni“ (v. 38). Evangelium neobchází vinu, ale otevírá cestu z ní`,
+      `Křest v Ježíšově jménu jako veřejné přijetí kérygmatu a vstup do společenství`,
+      `Univerzalita zaslíbení — „vám i vašim dětem i všem vzdáleným“ (v. 39): od Jeruzaléma ke všem národům`,
+      `Duch svatý jako dar spojený se křtem, nikoli zásluha`,
+      `Církev vzniká z odpovědi na zvěstované Slovo, ne z lidské iniciativy`,
+    ],
+    applicationHints: [
+      `Kázání je odpověď na Boží čin, ne samostatné dílo: teprve po vylití Ducha Petr vykládá, co Bůh udělal. Řád zůstává — nejprve Bůh, pak naše slovo`,
+      `Metanoia není emocionální výkyv, ale obrat mysli a směru. Neptejme se posluchače „cítíš lítost?“, ale „měníš směr?“`,
+      `„Co máme dělat?“ (v. 37) je dobrá otázka — znamená, že Slovo zasáhlo. Kazatel nemusí nutit k rozhodnutí, stačí nechat Slovo působit`,
+      `Zaslíbení „vám i vzdáleným“ (v. 39) je protiotázka církvi: koho ještě mám za „vzdáleného“? Kde kreslím hranice, které Bůh nedělá?`,
+      `Misericordias Domini — neděle pastýřské milosti. Petr, který Ježíše zapřel, nyní pase stádo slovem milosti. Kazatel kazuje vždy jako omilostněný, ne jako bezchybný`,
+      `Tři tisíce (v. 41) nejsou Petrova zásluha, ale Boží odpověď na Petrovu odpověď. Čísla nejsou metrikou kazatele`,
+    ],
+    verseNotes: [
+      { verse: 14, note: `„Petr … pozvedl svůj hlas“ (ἐπῆρεν τὴν φωνήν) — semitismus pro slavnostní řečnické gesto. Autorita není dána Petrovou osobou, ale Duchem, který právě sestoupil.` },
+      { verse: 36, note: `„Ať ví s jistotou celý dům izraelský“ — slavnostní formulace. „Tento Ježíš, kterého jste ukřižovali“ — přímé pojmenování. Zároveň: „učinil Bůh“ (pasivum Boží aktivity) — vzkříšení je Boží akt, ne triumf lidského Ježíše.` },
+      { verse: 37, note: `κατενύγησαν — „bylo jim to u srdce“ — obraz bodnutí, ne jen emocionální dojetí. Srdce v hebrejském smyslu jako sídlo vůle a rozhodování. „Co máme dělat?“ není zoufalství, ale otevřenost.` },
+      { verse: 38, note: `Čtyři prvky odpovědi: (1) metanoia — obrat, (2) křest ve jménu Ježíše Krista — veřejné přihlášení, (3) odpuštění hříchů — Boží odpověď, (4) dar Ducha svatého — Boží přítomnost. Pořadí není recept, ale teologický řád: člověk se obrací, Bůh dává.` },
+      { verse: 39, note: `„Vzdáleným“ (τοῖς εἰς μακρὰν) — dvojsmyslné: prostorově (diaspora, pohané) i časově (budoucí generace). Lukáš tu už otevírá dveře, kterými později projdou Kornélius (Sk 10) a Pavlovo misie k pohanům.` },
+      { verse: 41, note: `„Kdo ochotně přijali jeho slovo“ (οἱ ἀποδεξάμενοι) — aktivní sloveso, ne pasivní poslechnutí. Přijetí slova je vlastní akt víry. „Asi tři tisíce“ — Lukášův stylistický kontrast k třem tisícům padlým u Sinaje (Ex 32,28): kde Zákon usmrcoval, Duch dává život.` },
+    ],
+  },
+
   // Iz 25,6–9 — Hostina na hoře — Hospodin setře slzy
   "23:25": {
     reference: `Iz 25,6–9`,
@@ -1890,11 +1938,58 @@ const COMMENTARY: Record<string, PericopeCommentary> = {
 };
 
 /**
- * Get commentary for a chapter, keyed by "{bookNumber}:{chapter}"
+ * Get commentary for a chapter or pericope.
+ *
+ * Lookup order:
+ *  1. Pericope-specific key `"{book}:{chapter}:{start}-{end}"` whose verse
+ *     range contains `verseStart` (or `verseEnd`, if provided).
+ *  2. Chapter-wide key `"{book}:{chapter}"` as fallback.
+ *
+ * Used when a single chapter has multiple distinct lectionary readings —
+ * e.g. Sk 2,1-13 (Letnice) vs Sk 2,14a.36-41 (Petrovo kázání).
  */
 export function getCommentary(
   bookNumber: number,
-  chapter: number
+  chapter: number,
+  verseStart?: number | null,
+  verseEnd?: number | null
 ): PericopeCommentary | null {
+  if (verseStart != null) {
+    const prefix = `${bookNumber}:${chapter}:`;
+    for (const key of Object.keys(COMMENTARY)) {
+      if (!key.startsWith(prefix)) continue;
+      const m = key.slice(prefix.length).match(/^(\d+)-(\d+)$/);
+      if (!m) continue;
+      const start = parseInt(m[1], 10);
+      const end = parseInt(m[2], 10);
+      if (verseStart >= start && verseStart <= end) return COMMENTARY[key];
+      if (verseEnd != null && verseEnd >= start && verseEnd <= end) return COMMENTARY[key];
+    }
+  }
   return COMMENTARY[`${bookNumber}:${chapter}`] || null;
+}
+
+/**
+ * Does a pericope-specific (verse-range) commentary exist for this location?
+ * Used by UI to decide whether to skip the chapter-level Supabase fetch,
+ * which would otherwise overwrite the more precise local pericope match.
+ */
+export function hasPericopeCommentary(
+  bookNumber: number,
+  chapter: number,
+  verseStart?: number | null,
+  verseEnd?: number | null
+): boolean {
+  if (verseStart == null) return false;
+  const prefix = `${bookNumber}:${chapter}:`;
+  for (const key of Object.keys(COMMENTARY)) {
+    if (!key.startsWith(prefix)) continue;
+    const m = key.slice(prefix.length).match(/^(\d+)-(\d+)$/);
+    if (!m) continue;
+    const start = parseInt(m[1], 10);
+    const end = parseInt(m[2], 10);
+    if (verseStart >= start && verseStart <= end) return true;
+    if (verseEnd != null && verseEnd >= start && verseEnd <= end) return true;
+  }
+  return false;
 }

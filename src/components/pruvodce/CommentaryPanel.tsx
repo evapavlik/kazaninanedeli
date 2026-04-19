@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getCommentary, type PericopeCommentary } from "@/data/commentary-notes";
+import { getCommentary, hasPericopeCommentary, type PericopeCommentary } from "@/data/commentary-notes";
 import { fetchCommentary } from "@/lib/supabase-cteni";
 import { parseReferenceForApi, getBibleHubCommentaryUrl } from "@/lib/getbible";
 
@@ -16,12 +16,18 @@ export default function CommentaryPanel({ reference }: { reference: string }) {
 
   // Fetch commentary from DB, fallback to local
   const [commentary, setCommentary] = useState<PericopeCommentary | null>(
-    parsed ? getCommentary(parsed.bookNumber, parsed.chapter) : null
+    parsed ? getCommentary(parsed.bookNumber, parsed.chapter, parsed.verseStart, parsed.verseEnd) : null
   );
   const [commentaryLoading, setCommentaryLoading] = useState(false);
 
   useEffect(() => {
     if (!parsed) return;
+    // Skip DB fetch if we already have a pericope-specific local match.
+    // Supabase commentary is keyed only by chapter and would otherwise
+    // overwrite the more precise pericope entry.
+    if (hasPericopeCommentary(parsed.bookNumber, parsed.chapter, parsed.verseStart, parsed.verseEnd)) {
+      return;
+    }
     setCommentaryLoading(true);
     fetchCommentary(parsed.bookNumber, parsed.chapter)
       .then((dbData) => {
