@@ -357,6 +357,7 @@ function ArtifactInput({
 }) {
   const [localValue, setLocalValue] = useState(value);
   const [settled, setSettled] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const isDirty = localValue !== value;
 
@@ -374,6 +375,54 @@ function ArtifactInput({
     onComplete(localValue);
     setSettled(true);
     setTimeout(() => setSettled(false), 1000);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLTextAreaElement>) => {
+    // Accept drops if the drag carries a bubble payload or plain text
+    const hasBubble = e.dataTransfer.types.includes("application/x-kazani-bubble");
+    const hasText = e.dataTransfer.types.includes("text/plain");
+    if (!hasBubble && !hasText) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    if (!dragActive) setDragActive(true);
+  };
+
+  const handleDragLeave = () => {
+    setDragActive(false);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    setDragActive(false);
+
+    const bubbleRaw = e.dataTransfer.getData("application/x-kazani-bubble");
+    let droppedText = "";
+    let bubbleId: string | null = null;
+    if (bubbleRaw) {
+      try {
+        const parsed = JSON.parse(bubbleRaw) as { id?: string; text?: string };
+        droppedText = parsed.text ?? "";
+        bubbleId = parsed.id ?? null;
+      } catch {
+        droppedText = e.dataTransfer.getData("text/plain");
+      }
+    } else {
+      droppedText = e.dataTransfer.getData("text/plain");
+    }
+    if (!droppedText) return;
+
+    const existing = localValue;
+    const next = existing.trim() ? `${existing.trim()}\n\n${droppedText}` : droppedText;
+    setLocalValue(next);
+    onChange(next);
+    onComplete(next);
+
+    // Notify drawer that this bubble has been consumed
+    if (bubbleId && typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("kazani:bubble-consumed", { detail: { id: bubbleId } })
+      );
+    }
   };
 
   return (
@@ -397,9 +446,16 @@ function ArtifactInput({
           ref={textareaRef}
           value={localValue}
           onChange={handleChange}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
           placeholder={placeholder}
           rows={rows}
-          className="w-full rounded-md border border-brick/15 bg-white px-2.5 py-1.5 text-[12px] leading-relaxed text-text placeholder:text-text-light/40 focus:border-brick/30 focus:outline-none focus:ring-1 focus:ring-brick/10 resize-y"
+          className={`w-full rounded-md border bg-white px-2.5 py-1.5 text-[12px] leading-relaxed text-text placeholder:text-text-light/40 focus:outline-none resize-y transition-all ${
+            dragActive
+              ? "border-brick ring-2 ring-brick/20 bg-brick-pale/40"
+              : "border-brick/15 focus:border-brick/30 focus:ring-1 focus:ring-brick/10"
+          }`}
         />
         <div
           className={`mt-1.5 overflow-hidden transition-all duration-300 ${

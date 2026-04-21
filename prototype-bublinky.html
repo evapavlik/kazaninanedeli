@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototyp — Bublinky s přetahováním</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Lora:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Literata:ital,wght@0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brick: #c41e1e;
+    --brick-pale: #fdf0f0;
+    --sage: #4a7c6f;
+    --sage-pale: #eaf3f1;
+    --sand: #d4c4a8;
+    --cream: #f4f0ea;
+    --off-white: #faf8f5;
+    --text: #1f1a16;
+    --text-muted: #6b6259;
+    --text-light: #9e968e;
+    --border: #e8e0d5;
+    --question: #7b5ea7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    padding-bottom: 40px;
+  }
+
+  .proto-note {
+    background: #fff8e0;
+    color: #7a5a00;
+    padding: 8px 16px;
+    font-size: 12px;
+    text-align: center;
+    border-bottom: 1px solid #e8d890;
+  }
+
+  .layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px;
+  }
+
+  /* Header */
+  .page-header {
+    margin-bottom: 24px;
+  }
+  .page-header h1 {
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    font-size: 22px;
+  }
+  .page-header p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* Two-col on desktop, stacked on mobile */
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 900px) {
+    .cols { grid-template-columns: 1fr 340px; gap: 24px; }
+  }
+
+  /* Sermon fields */
+  .field {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .field.drop-target {
+    border-color: var(--brick);
+    background: var(--brick-pale);
+  }
+  .field-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--brick);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .field textarea {
+    width: 100%;
+    min-height: 60px;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+    resize: vertical;
+  }
+  .field textarea::placeholder {
+    color: var(--text-light);
+    font-style: italic;
+  }
+  .field .dropped-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+  .field .dropped-chip::before {
+    content: "↓";
+    color: var(--sage);
+    font-weight: 600;
+  }
+
+  /* Right column — bubbles */
+  .bubbles-col {
+    /* On desktop: sticky panel */
+  }
+  @media (min-width: 900px) {
+    .bubbles-col {
+      position: sticky;
+      top: 16px;
+      align-self: start;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+    }
+  }
+
+  .bubbles-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 0 2px;
+  }
+  .bubbles-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .bubbles-header .count {
+    font-size: 11px;
+    color: var(--text-light);
+  }
+  .bubbles-filters {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .bubbles-filters button {
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 999px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .bubbles-filters button.active {
+    background: var(--text);
+    color: #fff;
+    border-color: var(--text);
+  }
+  .bubbles-filters button:hover:not(.active) {
+    border-color: var(--text-muted);
+  }
+
+  /* Bubble */
+  .bubble {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--text-light);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    cursor: grab;
+    position: relative;
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.3s;
+    user-select: none;
+  }
+  .bubble:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .bubble:active { cursor: grabbing; }
+  .bubble.consumed { opacity: 0; transform: scale(0.8); pointer-events: none; }
+
+  .bubble.keyword { border-left-color: var(--brick); }
+  .bubble.actor { border-left-color: var(--sage); }
+  .bubble.tension { border-left-color: var(--sand); }
+  .bubble.question { border-left-color: var(--question); }
+  .bubble.notebook { border-left-color: var(--text-light); background: #fefcfa; }
+  .bubble.artifact { border-left-color: var(--sage-pale); background: var(--sage-pale); }
+
+  .bubble-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .bubble-tag {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light);
+  }
+  .bubble.keyword .bubble-tag { color: var(--brick); }
+  .bubble.actor .bubble-tag { color: var(--sage); }
+  .bubble.question .bubble-tag { color: var(--question); }
+  .bubble.tension .bubble-tag { color: #8a6d38; }
+
+  .bubble-insert-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-light);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: all 0.15s;
+  }
+  .bubble-insert-btn:hover {
+    background: var(--cream);
+    color: var(--brick);
+  }
+
+  .bubble-title {
+    font-family: 'Literata', serif;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 1.35;
+    margin-bottom: 3px;
+    color: var(--text);
+  }
+  .bubble-body {
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--text-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .bubbles-empty {
+    text-align: center;
+    padding: 32px 16px;
+    color: var(--text-light);
+    font-size: 13px;
+    font-style: italic;
+  }
+
+  /* Mobile insert menu */
+  .insert-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(31, 26, 22, 0.4);
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .insert-menu-backdrop.open { opacity: 1; pointer-events: auto; }
+
+  .insert-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    padding: 16px 20px 28px;
+    z-index: 101;
+    transform: translateY(100%);
+    transition: transform 0.25s;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+  }
+  .insert-menu.open { transform: translateY(0); }
+  .insert-menu h3 {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+  .insert-menu .preview {
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 14px;
+    max-height: 80px;
+    overflow-y: auto;
+  }
+  .insert-menu ul { list-style: none; }
+  .insert-menu li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .insert-menu li:last-child { border-bottom: none; }
+  .insert-menu li:hover { color: var(--brick); }
+  .insert-menu li .field-name {
+    font-weight: 500;
+  }
+  .insert-menu li .field-hint {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+  .insert-menu .cancel {
+    width: 100%;
+    padding: 10px;
+    margin-top: 12px;
+    background: var(--cream);
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+
+  /* Demo badge */
+  .demo-hint {
+    background: var(--sage-pale);
+    border: 1px dashed var(--sage);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--sage);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .demo-hint strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="proto-note">Prototyp — Bublinky s přetahováním · varianta (b): po vložení zmizí a jsou editovatelné v poli</div>
+
+<div class="layout">
+  <div class="page-header">
+    <h1>Tvorba kázání · Formulace</h1>
+    <p>Zkus si to. Klikni na bublinku → vyber, kam ji vložit. Bublinka se přemístí do pole a můžeš ji tam upravit.</p>
+  </div>
+
+  <div class="demo-hint">
+    <strong>Jak to funguje:</strong> Na desktopu ji přetáhneš myší. Na mobilu klikneš na bublinku a vybereš cílové pole. Po vložení bublinka zmizí ze zásobníku — obsah je už v kázání a můžeš ho editovat jako běžný text.
+  </div>
+
+  <div class="cols">
+    <!-- Left: sermon fields (drop targets) -->
+    <div class="main-col">
+      <div class="field" data-field="thesis" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+        <div class="field-label">Thesis kázání</div>
+        <textarea placeholder="Jednou větou: co budeš kázat?"></textarea>
+      </div>
+
+      <div class="field" data-field="outline" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+        <div class="field-label">Osnova</div>
+        <textarea placeholder="Hlavní body (2–4)..."></textarea>
+      </div>
+
+      <div class="field" data-field="intro" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+        <div class="field-label">Úvod</div>
+        <textarea placeholder="Jak vtáhneš posluchače?"></textarea>
+      </div>
+
+      <div class="field" data-field="conclusion" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+        <div class="field-label">Závěr</div>
+        <textarea placeholder="Jak shrneš a pošleš dál?"></textarea>
+      </div>
+
+      <div class="field" data-field="text" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+        <div class="field-label">Celý text kázání</div>
+        <textarea placeholder="Sem napiš celé kázání..." rows="5"></textarea>
+      </div>
+    </div>
+
+    <!-- Right: bubbles -->
+    <div class="bubbles-col">
+      <div class="bubbles-header">
+        <h2>📓 Můj zápisník</h2>
+        <span class="count" id="bubbles-count">8 bublinek</span>
+      </div>
+
+      <div class="bubbles-filters">
+        <button class="active" onclick="filter(event, 'all')">Vše</button>
+        <button onclick="filter(event, 'anotace')">Anotace</button>
+        <button onclick="filter(event, 'zapisniky')">Zápisníčky</button>
+        <button onclick="filter(event, 'odpovedi')">Odpovědi</button>
+      </div>
+
+      <div id="bubbles-list">
+        <!-- Anotace -->
+        <div class="bubble keyword" data-type="anotace" draggable="true" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)" onclick="openInsertMenu(this)">
+          <div class="bubble-meta">
+            <span class="bubble-tag">Klíčové slovo</span>
+            <button class="bubble-insert-btn" title="Vložit">↗</button>
+          </div>
+          <div class="bubble-title">„vzkřísil"</div>
+          <div class="bubble-body">Silné sloveso — Boží iniciativa. Ne náš výkon, ale Boží čin.</div>
+        </div>
+
+        <div class="bubble actor" data-type="anotace" draggable="true" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)" onclick="openInsertMenu(this)">
+          <div class="bubble-meta">
+            <span class="bubble-tag">Osoba</span>
+            <button class="bubble-insert-btn">↗</button>
+          </div>
+          <div class="bubble-title">„Ezechiel"</div>
+          <div class="bubble-body">Prorok v exilu. Mluví k lidem, co ztratili chrám i zemi.</div>
+        </div>
+
+        <div class="bubble question" data-type="anotace" draggable="true" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)" onclick="openInsertMenu(this)">
+          <div class="bubble-meta">
+            <span class="bubble-tag">Otázka</span>
+            <button class="bubble-insert-btn">↗</button>
+          </div>
+          <div class="bubble-title">„Mohou tyto kosti ožít?"</div>
+          <div class="bubble-body">Otázka pro dnešní posluchače — co ve mně je suché a bez života?</div>
+        </div>
+
+        <div class="bubble tension" data-type="anotace" draggable="true" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)" onclick="openInsertMenu(this)">
+          <div class="bubble-meta">
+            <span class="bubble-tag">Zlom</span>
+            <button class="bubble-insert-btn">↗</button>
+          </div>
+          <div class="bubble-title">„a náhle zašelestily"</div>
+          <div class="bubble-body">Okamžik zlomu — od ticha k pohybu. Tady se něco mění.</div>
+        </div>
+
+        <!-- Zápisníčky -->
+        <div class="bubble notebook" data-type="zapisniky" draggable="true" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)" onclick="openInsertMenu(this)">
+          <div class="bubble-meta">
+            <span class="bubble-tag">Zápisník · Kontext</span>
+            <button class="bubble-insert-btn">↗</button>
+          </div>
+          <div class="bubble-body">Exil — lid bez země, bez chrámu, bez identity. Jak to rezonuje s naší dobou?</div>
+        </div>
+
+        <div class="bubble notebook" data-type="zapisniky" draggable="true" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)" onclick="openInsertMenu(this)">
+          <div class="bubble-meta">
+            <span class="bubble-tag">Zápisník · Aktualizace</span>
+            <button class="bubble-insert-btn">↗</button>
+          </div>
+          <div class="bubble-body">Příběh paní Věry — po manželově smrti nemohla vstát z postele, pomohlo jí společenství.</div>
+        </div>
+
+        <!-- Odpovědi -->
+        <div class="bubble artifact" data-type="odpovedi" draggable="true" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)" onclick="openInsertMenu(this)">
+          <div class="bubble-meta">
+            <span class="bubble-tag">Odpověď · Centrální myšlenka</span>
+            <button class="bubble-insert-btn">↗</button>
+          </div>
+          <div class="bubble-body">Bůh oživuje i to, co vypadá mrtvé a beznadějné.</div>
+        </div>
+
+        <div class="bubble artifact" data-type="odpovedi" draggable="true" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)" onclick="openInsertMenu(this)">
+          <div class="bubble-meta">
+            <span class="bubble-tag">Odpověď · Potřeba posluchačů</span>
+            <button class="bubble-insert-btn">↗</button>
+          </div>
+          <div class="bubble-body">Mnozí prožívají nejistotu, únavu, ztrátu blízkých. Některé rodiny nedávno někoho pohřbily.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile insert menu -->
+<div class="insert-menu-backdrop" id="insertBackdrop" onclick="closeInsertMenu()"></div>
+<div class="insert-menu" id="insertMenu">
+  <h3>Vložit do kázání</h3>
+  <div class="preview" id="insertPreview"></div>
+  <ul>
+    <li onclick="insertTo('thesis')"><div class="field-name">Thesis kázání</div><div class="field-hint">Jednou větou</div></li>
+    <li onclick="insertTo('outline')"><div class="field-name">Osnova</div><div class="field-hint">Hlavní body</div></li>
+    <li onclick="insertTo('intro')"><div class="field-name">Úvod</div><div class="field-hint">Jak vtáhnout posluchače</div></li>
+    <li onclick="insertTo('conclusion')"><div class="field-name">Závěr</div><div class="field-hint">Jak shrnout</div></li>
+    <li onclick="insertTo('text')"><div class="field-name">Celý text kázání</div><div class="field-hint">Vložit jako odstavec</div></li>
+  </ul>
+  <button class="cancel" onclick="closeInsertMenu()">Zrušit</button>
+</div>
+
+<script>
+  let activeBubble = null;
+
+  // Filter
+  function filter(e, type) {
+    document.querySelectorAll('.bubbles-filters button').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    document.querySelectorAll('.bubble').forEach(b => {
+      b.style.display = (type === 'all' || b.dataset.type === type) ? '' : 'none';
+    });
+  }
+
+  // Drag (desktop)
+  function onDragStart(e) {
+    activeBubble = e.currentTarget;
+    e.currentTarget.style.opacity = '0.5';
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', getBubbleText(activeBubble));
+  }
+  function onDragEnd(e) {
+    e.currentTarget.style.opacity = '';
+  }
+  function onDragOver(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('drop-target');
+  }
+  function onDragLeave(e) {
+    e.currentTarget.classList.remove('drop-target');
+  }
+  function onDrop(e) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drop-target');
+    if (!activeBubble) return;
+    const text = getBubbleText(activeBubble);
+    insertIntoField(e.currentTarget, text);
+    consumeBubble(activeBubble);
+    activeBubble = null;
+  }
+
+  // Insert menu (mobile or tap)
+  function openInsertMenu(bubble) {
+    // Only trigger on direct click (not drag end)
+    if (activeBubble === bubble) { activeBubble = null; return; }
+    activeBubble = bubble;
+    document.getElementById('insertPreview').textContent = getBubbleText(bubble);
+    document.getElementById('insertMenu').classList.add('open');
+    document.getElementById('insertBackdrop').classList.add('open');
+  }
+  function closeInsertMenu() {
+    document.getElementById('insertMenu').classList.remove('open');
+    document.getElementById('insertBackdrop').classList.remove('open');
+    activeBubble = null;
+  }
+  function insertTo(fieldName) {
+    if (!activeBubble) return;
+    const field = document.querySelector(`.field[data-field="${fieldName}"]`);
+    const text = getBubbleText(activeBubble);
+    insertIntoField(field, text);
+    consumeBubble(activeBubble);
+    closeInsertMenu();
+  }
+
+  // Helpers
+  function getBubbleText(bubble) {
+    const title = bubble.querySelector('.bubble-title')?.textContent || '';
+    const body = bubble.querySelector('.bubble-body')?.textContent || '';
+    return title ? `${title} — ${body}` : body;
+  }
+  function insertIntoField(field, text) {
+    const ta = field.querySelector('textarea');
+    const current = ta.value.trim();
+    ta.value = current ? `${current}\n\n${text}` : text;
+    ta.focus();
+    // Subtle flash
+    field.style.background = 'var(--sage-pale)';
+    setTimeout(() => { field.style.background = ''; }, 600);
+  }
+  function consumeBubble(bubble) {
+    bubble.classList.add('consumed');
+    setTimeout(() => {
+      bubble.remove();
+      updateCount();
+    }, 300);
+  }
+  function updateCount() {
+    const n = document.querySelectorAll('.bubble').length;
+    document.getElementById('bubbles-count').textContent = n === 0
+      ? 'Prázdno — vše je v kázání'
+      : `${n} bublinek`;
+    if (n === 0) {
+      document.getElementById('bubbles-list').innerHTML = '<div class="bubbles-empty">Všechny bublinky jsou v kázání. Můžeš je tam dál upravovat.</div>';
+    }
+  }
+
+  // Close with Esc
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInsertMenu(); });
+</script>
+
+</body>
+</html>

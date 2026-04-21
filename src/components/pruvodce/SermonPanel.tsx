@@ -2,9 +2,12 @@
 
 import { useState } from "react";
 import type { SermonArtifacts } from "@/hooks/useSermonArtifacts";
+import { useBubbles } from "@/hooks/useBubbles";
+import BubbleDrawer from "./BubbleDrawer";
 
 interface SermonPanelProps {
   artifacts: SermonArtifacts;
+  onArtifactChange: (field: keyof SermonArtifacts, value: string) => void;
 }
 
 interface PanelField {
@@ -67,12 +70,14 @@ function truncate(str: string, max: number): string {
   return firstLine + (hasMore ? "\n…" : "");
 }
 
-export default function SermonPanel({ artifacts }: SermonPanelProps) {
+export default function SermonPanel({ artifacts, onArtifactChange }: SermonPanelProps) {
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({
     kostra: false,
     posluchaci: false,
     text: true,
   });
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const { availableCount } = useBubbles();
 
   const totalFields = SECTIONS.reduce((n, s) => n + s.fields.length, 0);
   const filledFields = SECTIONS.reduce(
@@ -96,6 +101,29 @@ export default function SermonPanel({ artifacts }: SermonPanelProps) {
           {filledFields} / {totalFields} polí
         </span>
       </div>
+
+      {/* Můj zápisník button — opens the drawer with all collected material */}
+      <button
+        onClick={() => setDrawerOpen(true)}
+        className="group mx-2.5 mt-2.5 flex items-center gap-2.5 rounded-lg border border-brick/20 bg-gradient-to-br from-brick-pale to-sage-pale px-3 py-2.5 text-left transition-all hover:-translate-y-[1px] hover:border-brick hover:shadow-[0_2px_10px_rgba(196,30,30,0.08)]"
+      >
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brick text-base text-white">
+          📓
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-[12px] font-semibold leading-tight text-text">
+            Můj zápisník
+          </span>
+          <span className="block text-[10px] leading-tight text-text-muted">
+            {availableCount === 0
+              ? "zatím prázdno"
+              : `${availableCount} ${availableCount === 1 ? "bublinka" : availableCount < 5 ? "bublinky" : "bublinek"}`}
+          </span>
+        </span>
+        <span className="text-brick transition-transform group-hover:translate-x-0.5">
+          →
+        </span>
+      </button>
 
       {/* Body */}
       <div className="flex-1 overflow-y-auto p-2.5 space-y-0.5">
@@ -201,6 +229,14 @@ export default function SermonPanel({ artifacts }: SermonPanelProps) {
           })
         )}
       </div>
+
+      {/* Drawer — portal-like overlay, closes on backdrop or Esc */}
+      <BubbleDrawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        artifacts={artifacts}
+        onArtifactChange={onArtifactChange}
+      />
     </div>
   );
 }
