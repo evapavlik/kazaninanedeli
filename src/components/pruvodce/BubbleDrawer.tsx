@@ -29,18 +29,23 @@ const FILTERS: { key: FilterKey; label: string }[] = [
   { key: "artifact", label: "Odpovědi" },
 ];
 
-/** Fields the user can insert a bubble into (sermon composition fields). */
+/**
+ * The drawer's pracovní plocha — one big target: the final sermon text.
+ * Planning pieces (jádro, osnova, úvod, závěr) live in the Stavba sub-step
+ * and are pulled into this field as bubbles, so nothing gets written twice.
+ */
 const INSERT_TARGETS: {
   field: keyof SermonArtifacts;
   label: string;
   hint: string;
   rows: number;
 }[] = [
-  { field: "sermonThesis", label: "Jádro kázání", hint: "Jednou větou", rows: 2 },
-  { field: "outlinePoints", label: "Osnova", hint: "Hlavní body", rows: 3 },
-  { field: "intro", label: "Úvod", hint: "Jak vtáhnout posluchače", rows: 2 },
-  { field: "conclusion", label: "Závěr", hint: "Jak shrnout a poslat dál", rows: 2 },
-  { field: "sermonText", label: "Celé kázání", hint: "Plný text promluvy", rows: 5 },
+  {
+    field: "sermonText",
+    label: "Celý text kázání",
+    hint: "Plný text promluvy — skládej z bublinek",
+    rows: 20,
+  },
 ];
 
 /** Category -> left-border color class. */
@@ -113,19 +118,36 @@ export default function BubbleDrawer({
     return available.filter((b) => b.source === filter);
   }, [available, filter]);
 
-  const handleInsertTo = (field: keyof SermonArtifacts) => {
-    if (!pendingBubble) return;
+  const insertBubble = (bubble: Bubble, field: keyof SermonArtifacts) => {
     const current = (artifacts[field] ?? "").trim();
-    const text = pendingBubble.title
-      ? `${pendingBubble.title} — ${pendingBubble.body}`
-      : pendingBubble.body;
+    const text = bubble.title
+      ? `${bubble.title} — ${bubble.body}`
+      : bubble.body;
     const next = current ? `${current}\n\n${text}` : text;
     onArtifactChange(field, next);
     // Dispatch event — every useBubbles instance (drawer + SermonPanel button)
     // listens for this and updates its consumed list, keeping the counter in sync.
-    dispatchBubbleConsumed(pendingBubble.id);
+    dispatchBubbleConsumed(bubble.id);
+  };
+
+  const handleInsertTo = (field: keyof SermonArtifacts) => {
+    if (!pendingBubble) return;
+    insertBubble(pendingBubble, field);
     setPendingBubble(null);
-    onClose();
+    // Don't auto-close the drawer — the preacher is mid-composition and wants
+    // to keep pulling from the stash.
+  };
+
+  /**
+   * Tap on a bubble: if there's only one possible target (the default setup),
+   * insert directly. Otherwise open the picker.
+   */
+  const handleBubbleTap = (bubble: Bubble) => {
+    if (INSERT_TARGETS.length === 1) {
+      insertBubble(bubble, INSERT_TARGETS[0].field);
+    } else {
+      setPendingBubble(bubble);
+    }
   };
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>, bubble: Bubble) => {
@@ -168,7 +190,7 @@ export default function BubbleDrawer({
                 Můj zápisník
               </h2>
               <p className="mt-0.5 font-lora text-[12px] italic leading-snug text-text-muted md:text-[13px]">
-                Vlevo skládáš kázání, vpravo máš materiál — přetáhni bublinku do pole nebo na ni klikni.
+                Vlevo skládáš finální text kázání, vpravo máš veškerý nasbíraný materiál — přetáhni bublinku nebo na ni klikni.
               </p>
             </div>
             <button
@@ -183,13 +205,13 @@ export default function BubbleDrawer({
 
         {/* Body — two-column grid on desktop (composition left, stash right) */}
         <div className="px-5 pb-20 pt-4 md:px-6 md:grid md:grid-cols-[1fr_280px] md:gap-6">
-          {/* LEFT column — composition fields (the work surface) */}
+          {/* LEFT column — the single „Celý text kázání" workspace */}
           <section className="mb-6 md:mb-0">
             <h3 className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-brick">
-              Pracovní plocha — pole kázání
+              Pracovní plocha — celý text kázání
             </h3>
             <p className="mb-3 font-lora text-[11px] italic leading-snug text-text-muted">
-              Sem přetáhni bublinku — nebo piš rovnou.
+              Sem přetáhni bublinky a skládej finální text. Jádro, osnovu, úvod a závěr z fáze Stavba najdeš v zásobníku jako bublinky.
             </p>
             <div className="space-y-3">
               {INSERT_TARGETS.map((t) => (
@@ -243,7 +265,7 @@ export default function BubbleDrawer({
                     key={bubble.id}
                     bubble={bubble}
                     onDragStart={(e) => handleDragStart(e, bubble)}
-                    onTap={() => setPendingBubble(bubble)}
+                    onTap={() => handleBubbleTap(bubble)}
                   />
                 ))}
               </div>

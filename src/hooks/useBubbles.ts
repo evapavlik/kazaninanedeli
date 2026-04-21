@@ -79,7 +79,13 @@ const ARTIFACT_FIELD_LABELS: Partial<Record<keyof SermonArtifacts, string>> = {
   sermonText: "Celé kázání",
 };
 
-/** Artifact fields that become draggable bubbles (excludes composed-sermon fields). */
+/**
+ * Artifact fields that become draggable bubbles. This includes the planning
+ * pieces from the Stavba sub-step (thesis, outline, intro, conclusion) so the
+ * preacher can pull them into the final „Celý text kázání" in Formulace.
+ * We deliberately exclude `sermonText` itself — you can't drag the final text
+ * back into its own field.
+ */
 const ARTIFACT_FIELDS_AS_BUBBLES: (keyof SermonArtifacts)[] = [
   "personalSituation",
   "expectations",
@@ -92,6 +98,11 @@ const ARTIFACT_FIELDS_AS_BUBBLES: (keyof SermonArtifacts)[] = [
   "textListenerBridge",
   "illustrations",
   "takeaway",
+  // Planning pieces from Stavba — pull them into the final prose
+  "sermonThesis",
+  "outlinePoints",
+  "intro",
+  "conclusion",
 ];
 
 function safeParse<T>(raw: string | null, fallback: T): T {
