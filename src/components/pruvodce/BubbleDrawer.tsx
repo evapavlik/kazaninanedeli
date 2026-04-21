@@ -151,24 +151,24 @@ export default function BubbleDrawer({
         }`}
       />
 
-      {/* Drawer — slim on desktop, full-width sheet on mobile */}
+      {/* Drawer — wide two-column workspace on desktop, single column on mobile */}
       <aside
         role="dialog"
         aria-label="Můj zápisník"
         aria-hidden={!open}
-        className={`fixed top-0 right-0 bottom-0 z-[61] w-[min(400px,92vw)] bg-off-white shadow-[-4px_0_30px_rgba(0,0,0,0.12)] transition-transform duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] overflow-y-auto ${
+        className={`fixed top-0 right-0 bottom-0 z-[61] w-[min(760px,96vw)] bg-off-white shadow-[-4px_0_30px_rgba(0,0,0,0.12)] transition-transform duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] overflow-y-auto ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        {/* Header */}
-        <div className="sticky top-0 z-10 border-b border-border bg-off-white px-5 pt-4 pb-3">
+        {/* Header — title + close */}
+        <div className="sticky top-0 z-10 border-b border-border bg-off-white px-5 pt-4 pb-3 md:px-6">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <h2 className="font-cormorant text-[22px] font-medium leading-tight text-text">
+              <h2 className="font-cormorant text-[22px] font-medium leading-tight text-text md:text-[26px]">
                 Můj zápisník
               </h2>
-              <p className="mt-0.5 font-lora text-[12px] italic leading-snug text-text-muted">
-                Přetáhni bublinku do pole kázání — nebo na ni klikni a vyber cíl.
+              <p className="mt-0.5 font-lora text-[12px] italic leading-snug text-text-muted md:text-[13px]">
+                Vlevo skládáš kázání, vpravo máš materiál — přetáhni bublinku do pole nebo na ni klikni.
               </p>
             </div>
             <button
@@ -179,40 +179,19 @@ export default function BubbleDrawer({
               ✕
             </button>
           </div>
-
-          <div className="mt-2.5 flex flex-wrap gap-1">
-            {FILTERS.map((f) => (
-              <button
-                key={f.key}
-                onClick={() => setFilter(f.key)}
-                className={`rounded-full border px-2.5 py-0.5 text-[10px] font-medium transition-colors ${
-                  filter === f.key
-                    ? "border-text bg-text text-white"
-                    : "border-border bg-white text-text-muted hover:border-text-muted"
-                }`}
-              >
-                {f.label}
-              </button>
-            ))}
-            <span className="ml-auto self-center text-[10px] text-text-light">
-              {availableCount === 0
-                ? "prázdno"
-                : `${availableCount} ${pluralBublinek(availableCount)}`}
-            </span>
-          </div>
         </div>
 
-        {/* Body */}
-        <div className="px-5 pb-20 pt-3">
-          {/* Composition fields — the work surface, always visible inside the drawer */}
-          <section className="mb-5">
-            <h3 className="mb-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-brick">
+        {/* Body — two-column grid on desktop (composition left, stash right) */}
+        <div className="px-5 pb-20 pt-4 md:px-6 md:grid md:grid-cols-[1fr_280px] md:gap-6">
+          {/* LEFT column — composition fields (the work surface) */}
+          <section className="mb-6 md:mb-0">
+            <h3 className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-brick">
               Pracovní plocha — pole kázání
             </h3>
-            <p className="mb-2.5 font-lora text-[11px] italic leading-snug text-text-muted">
+            <p className="mb-3 font-lora text-[11px] italic leading-snug text-text-muted">
               Sem přetáhni bublinku — nebo piš rovnou.
             </p>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {INSERT_TARGETS.map((t) => (
                 <CompositionField
                   key={t.field}
@@ -226,30 +205,50 @@ export default function BubbleDrawer({
             </div>
           </section>
 
-          {/* Divider */}
-          <div className="mb-4 flex items-center gap-2">
-            <div className="h-px flex-1 bg-border" />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-text-light">
+          {/* RIGHT column — bubble stash */}
+          <section className="md:sticky md:top-[108px] md:self-start md:max-h-[calc(100vh-124px)] md:overflow-y-auto md:pr-1">
+            <h3 className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-text-muted">
               Zásobník bublinek
-            </span>
-            <div className="h-px flex-1 bg-border" />
-          </div>
+            </h3>
 
-          {/* Bubble list */}
-          {filtered.length === 0 ? (
-            <EmptyState hasAny={available.length > 0} filter={filter} />
-          ) : (
-            <div className="space-y-2.5">
-              {filtered.map((bubble) => (
-                <BubbleCard
-                  key={bubble.id}
-                  bubble={bubble}
-                  onDragStart={(e) => handleDragStart(e, bubble)}
-                  onTap={() => setPendingBubble(bubble)}
-                />
+            {/* Filters + count */}
+            <div className="mb-3 flex flex-wrap items-center gap-1">
+              {FILTERS.map((f) => (
+                <button
+                  key={f.key}
+                  onClick={() => setFilter(f.key)}
+                  className={`rounded-full border px-2.5 py-0.5 text-[10px] font-medium transition-colors ${
+                    filter === f.key
+                      ? "border-text bg-text text-white"
+                      : "border-border bg-white text-text-muted hover:border-text-muted"
+                  }`}
+                >
+                  {f.label}
+                </button>
               ))}
+              <span className="ml-auto text-[10px] text-text-light">
+                {availableCount === 0
+                  ? "prázdno"
+                  : `${availableCount} ${pluralBublinek(availableCount)}`}
+              </span>
             </div>
-          )}
+
+            {/* Bubble list */}
+            {filtered.length === 0 ? (
+              <EmptyState hasAny={available.length > 0} filter={filter} />
+            ) : (
+              <div className="space-y-2.5">
+                {filtered.map((bubble) => (
+                  <BubbleCard
+                    key={bubble.id}
+                    bubble={bubble}
+                    onDragStart={(e) => handleDragStart(e, bubble)}
+                    onTap={() => setPendingBubble(bubble)}
+                  />
+                ))}
+              </div>
+            )}
+          </section>
         </div>
       </aside>
 
