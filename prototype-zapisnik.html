@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prototyp — Můj zápisník</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Literata:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brick: #c41e1e;
+    --brick-light: #d63030;
+    --brick-pale: #fdf0f0;
+    --sage: #4a7c6f;
+    --sage-light: #6ba396;
+    --sage-pale: #eaf3f1;
+    --sand: #d4c4a8;
+    --cream: #f4f0ea;
+    --off-white: #faf8f5;
+    --text: #1f1a16;
+    --text-muted: #6b6259;
+    --text-light: #9e968e;
+    --border: #e8e0d5;
+    --border-strong: #d0c4b4;
+    --question: #7b5ea7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+  }
+
+  /* Proto note */
+  .proto-note {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: #fff8e0;
+    color: #7a5a00;
+    padding: 8px 20px;
+    font-size: 12px;
+    text-align: center;
+    border-bottom: 1px solid #e8d890;
+  }
+
+  /* Page mock — left (main) + right (panel) */
+  .page-mock {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 24px;
+    padding: 48px 24px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .main-col {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    min-height: 600px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .main-col h1 {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--text);
+    font-style: normal;
+    margin-bottom: 8px;
+  }
+
+  /* Right panel (existing SermonPanel) */
+  .right-col {
+    position: sticky;
+    top: 48px;
+    align-self: start;
+  }
+  .sermon-panel {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .sermon-panel-title {
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .progress-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    color: var(--text-light);
+    font-weight: 500;
+  }
+  .progress-dot span { color: var(--brick); font-weight: 600; }
+  .sermon-panel-section {
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .sermon-panel-section h4 {
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--text);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .sermon-panel-section .truncate {
+    color: var(--text-light);
+    font-style: italic;
+    font-size: 11px;
+  }
+
+  /* The new Zápisník button */
+  .zapisnik-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: linear-gradient(135deg, var(--brick-pale) 0%, var(--sage-pale) 100%);
+    border: 1px solid var(--brick)/30;
+    border-color: rgba(196, 30, 30, 0.2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    text-align: left;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+  }
+  .zapisnik-button:hover {
+    border-color: var(--brick);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 12px rgba(196, 30, 30, 0.08);
+  }
+  .zapisnik-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--brick);
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .zapisnik-label {
+    flex: 1;
+    min-width: 0;
+  }
+  .zapisnik-title {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .zapisnik-meta {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .zapisnik-arrow {
+    color: var(--brick);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  /* Drawer */
+  .drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(31, 26, 22, 0.35);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .drawer-backdrop.open { opacity: 1; pointer-events: auto; }
+
+  .drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(720px, 92vw);
+    background: var(--off-white);
+    z-index: 201;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    box-shadow: -4px 0 30px rgba(0,0,0,0.12);
+  }
+  .drawer.open { transform: translateX(0); }
+
+  .drawer-header {
+    position: sticky;
+    top: 0;
+    background: var(--off-white);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 32px 16px;
+    z-index: 10;
+  }
+  .drawer-header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .drawer-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .drawer-close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 22px;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 8px;
+    line-height: 1;
+    margin-top: 2px;
+  }
+  .drawer-close:hover {
+    background: var(--cream);
+    color: var(--brick);
+  }
+  .drawer-subtitle {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  .drawer-nav {
+    display: flex;
+    gap: 18px;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+    overflow-x: auto;
+  }
+  .drawer-nav a {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 4px 0;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .drawer-nav a:hover {
+    color: var(--brick);
+    border-bottom-color: var(--brick);
+  }
+  .drawer-nav a .count {
+    color: var(--text-light);
+    font-weight: 400;
+    margin-left: 4px;
+  }
+
+  .drawer-body {
+    padding: 24px 32px 48px;
+  }
+
+  /* Section styles */
+  .section {
+    margin-bottom: 36px;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--brick);
+  }
+  .section-header .section-count {
+    font-size: 12px;
+    color: var(--text-light);
+    letter-spacing: 0.05em;
+  }
+  .section-header .section-desc {
+    font-family: 'Lora', serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-left: auto;
+    text-align: right;
+  }
+
+  /* Annotations group */
+  .annotation-group {
+    margin-bottom: 20px;
+  }
+  .annotation-group-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .annotation {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 3px solid;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    font-family: 'Lora', serif;
+  }
+  .annotation.keyword { border-left-color: var(--brick); }
+  .annotation.actor { border-left-color: var(--sage); }
+  .annotation.tension { border-left-color: var(--sand); }
+  .annotation.question { border-left-color: var(--question); }
+  .annotation-text {
+    font-family: 'Literata', serif;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .annotation.keyword .annotation-text { color: var(--brick); }
+  .annotation.actor .annotation-text { color: var(--sage); }
+  .annotation.tension .annotation-text { color: #7a6840; }
+  .annotation.question .annotation-text { color: var(--question); }
+  .annotation-note {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  /* Notebook entries */
+  .notebook-entry {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+  }
+  .notebook-entry-header {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .notebook-entry-phase {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--brick);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .notebook-entry-step {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .notebook-entry-body {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text);
+    white-space: pre-wrap;
+  }
+
+  /* Artifact entries */
+  .artifact-group {
+    margin-bottom: 16px;
+  }
+  .artifact-group-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  .artifact {
+    margin-bottom: 14px;
+  }
+  .artifact-question {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .artifact-answer {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+    padding-left: 12px;
+    border-left: 2px solid var(--sage);
+  }
+
+  /* Empty placeholder */
+  .empty-hint {
+    font-size: 12px;
+    color: var(--text-light);
+    font-style: italic;
+    padding: 8px 0;
+  }
+
+  @media (max-width: 800px) {
+    .page-mock { grid-template-columns: 1fr; }
+    .right-col { position: static; }
+    .drawer-body { padding: 20px 20px 40px; }
+    .drawer-header { padding: 16px 20px 12px; }
+    .drawer-title { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="proto-note">Prototyp — „Můj zápisník" · drawer otevíraný z pravého panelu</div>
+
+<div class="page-mock">
+  <div class="main-col">
+    <h1>Tvorba kázání · Stavba</h1>
+    <p style="margin-top:12px;">[hlavní obsah fáze 3 — pole pro thesis, osnovu atd.]</p>
+    <p style="margin-top:24px; font-size:13px;">↑ Tohle je zjednodušená ilustrace — prototyp ukazuje jen pravý panel a drawer.</p>
+  </div>
+
+  <div class="right-col">
+    <div class="sermon-panel">
+      <div class="sermon-panel-title">
+        📖 Moje kázání
+        <span class="progress-dot"><span>11</span>/16</span>
+      </div>
+
+      <!-- NEW: Zápisník button at top -->
+      <button class="zapisnik-button" onclick="openDrawer()">
+        <div class="zapisnik-icon">📓</div>
+        <div class="zapisnik-label">
+          <div class="zapisnik-title">Můj zápisník</div>
+          <div class="zapisnik-meta">6 anotací · 4 zápisníčky · 11 odpovědí</div>
+        </div>
+        <div class="zapisnik-arrow">→</div>
+      </button>
+
+      <div class="sermon-panel-section">
+        <h4>Kostra kázání</h4>
+        <div class="truncate">„I v beznaději jsme voláni…"</div>
+      </div>
+      <div class="sermon-panel-section">
+        <h4>Posluchači & poselství</h4>
+        <div class="truncate">Mnozí prožívají nejistotu…</div>
+      </div>
+      <div class="sermon-panel-section">
+        <h4>Porozumění textu</h4>
+        <div class="truncate">Ezechiel 37 — údolí kostí…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Drawer backdrop -->
+<div class="drawer-backdrop" id="backdrop" onclick="closeDrawer()"></div>
+
+<!-- Drawer -->
+<aside class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div class="drawer-header-top">
+      <div>
+        <div class="drawer-title">Můj zápisník</div>
+        <div class="drawer-subtitle">Všechno, co jsi si zaznamenala — na jednom místě.</div>
+      </div>
+      <button class="drawer-close" onclick="closeDrawer()" title="Zavřít (Esc)">✕</button>
+    </div>
+    <nav class="drawer-nav">
+      <a href="#anotace">Anotace textu <span class="count">6</span></a>
+      <a href="#zapisnicky">Zápisníčky <span class="count">4</span></a>
+      <a href="#odpovedi">Moje odpovědi <span class="count">11</span></a>
+    </nav>
+  </div>
+
+  <div class="drawer-body">
+
+    <!-- Annotations section -->
+    <section class="section" id="anotace">
+      <div class="section-header">
+        <h2>Anotace textu</h2>
+        <span class="section-count">6 zvýraznění</span>
+        <span class="section-desc">Co ti v textu vystoupilo.</span>
+      </div>
+
+      <div class="annotation-group">
+        <div class="annotation-group-label">Klíčová slova</div>
+        <div class="annotation keyword">
+          <div class="annotation-text">„vzkřísil"</div>
+          <div class="annotation-note">Silné sloveso — Boží iniciativa. Ne náš výkon, ale Boží čin.</div>
+        </div>
+        <div class="annotation keyword">
+          <div class="annotation-text">„prach"</div>
+          <div class="annotation-note">Motiv Gn 2 — z prachu jsme stvořeni, z prachu znovu povoláni.</div>
+        </div>
+      </div>
+
+      <div class="annotation-group">
+        <div class="annotation-group-label">Osoby a děje</div>
+        <div class="annotation actor">
+          <div class="annotation-text">„Ezechiel"</div>
+          <div class="annotation-note">Prorok v exilu. Mluví k lidem, co ztratili chrám i zemi. Podobnost s naší obcí po covidu?</div>
+        </div>
+        <div class="annotation actor">
+          <div class="annotation-text">„Hospodin"</div>
+          <div class="annotation-note">V Ezechielovi se sám ptá: „Mohou tyto kosti ožít?" — otázka, kterou dává proroku.</div>
+        </div>
+      </div>
+
+      <div class="annotation-group">
+        <div class="annotation-group-label">Zlom / napětí</div>
+        <div class="annotation tension">
+          <div class="annotation-text">„a náhle zašelestily"</div>
+          <div class="annotation-note">Okamžik zlomu — od ticha k pohybu. Tady se něco mění.</div>
+        </div>
+      </div>
+
+      <div class="annotation-group">
+        <div class="annotation-group-label">Otázky</div>
+        <div class="annotation question">
+          <div class="annotation-text">„Mohou tyto kosti ožít?"</div>
+          <div class="annotation-note">Otázka, kterou si mají posluchači položit dnes — co ve mně je suché a bez života?</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notebook entries -->
+    <section class="section" id="zapisnicky">
+      <div class="section-header">
+        <h2>Zápisníčky</h2>
+        <span class="section-count">4 poznámky</span>
+        <span class="section-desc">Volné myšlenky z jednotlivých kroků.</span>
+      </div>
+
+      <div class="notebook-entry">
+        <div class="notebook-entry-header">
+          <span class="notebook-entry-phase">Fáze 1 · Modlitba</span>
+          <span class="notebook-entry-step">Příprava srdce</span>
+        </div>
+        <div class="notebook-entry-body">Dnes těžko otevírám Bibli — babička v nemocnici. Možná právě proto je dobré s tímhle textem.</div>
+      </div>
+
+      <div class="notebook-entry">
+        <div class="notebook-entry-header">
+          <span class="notebook-entry-phase">Fáze 2 · Kontext</span>
+          <span class="notebook-entry-step">Zasazení do kontextu</span>
+        </div>
+        <div class="notebook-entry-body">Exil — lid bez země, bez chrámu, bez identity. Jak to rezonuje s naší dobou? Mnozí se cítí bezkontextoví, bez kořenů.
+
+Matthew Henry (z komentáře): „The dry bones represent the captivity of Judah."</div>
+      </div>
+
+      <div class="notebook-entry">
+        <div class="notebook-entry-header">
+          <span class="notebook-entry-phase">Fáze 2 · Výklad</span>
+          <span class="notebook-entry-step">Výklad textu</span>
+        </div>
+        <div class="notebook-entry-body">Struktura: vidění (1–10) → vysvětlení (11–14). Ezechiel vidí kosti → je voláním prorokovat → kosti se pohybují → duch vstoupí → vysvětlení: „tyto kosti = celý dům Izraele".
+
+Důležité: Bůh jedná skrze prorokovo slovo. Tedy i skrze kázání.</div>
+      </div>
+
+      <div class="notebook-entry">
+        <div class="notebook-entry-header">
+          <span class="notebook-entry-phase">Fáze 3 · Aktualizace</span>
+          <span class="notebook-entry-step">Most mezi textem a dneškem</span>
+        </div>
+        <div class="notebook-entry-body">Napadá mě: když někdo dnes řekne „jsem vyhořelá", „nemám na nic energii" — je to obraz suchých kostí. Text říká: i tam Bůh jedná první.
+
+Nápad na ilustraci: příběh paní Věry z obce, co po manželově smrti nemohla ani vstát z postele, a pak jí pomohlo společenství.</div>
+      </div>
+    </section>
+
+    <!-- Artifacts -->
+    <section class="section" id="odpovedi">
+      <div class="section-header">
+        <h2>Moje odpovědi</h2>
+        <span class="section-count">11 vyplněných</span>
+        <span class="section-desc">Co jsi vyplnila v polích průvodce.</span>
+      </div>
+
+      <div class="artifact-group">
+        <div class="artifact-group-label">Fáze 2 · Práce s textem</div>
+
+        <div class="artifact">
+          <div class="artifact-question">Celkový dojem z textu</div>
+          <div class="artifact-answer">Překvapivě nadějný. Začíná strašidelně — údolí kostí — ale končí vzkříšením celého lidu. Bůh jedná proti všem očekáváním.</div>
+        </div>
+
+        <div class="artifact">
+          <div class="artifact-question">Kdo napsal a komu?</div>
+          <div class="artifact-answer">Ezechiel, prorok v babylonském exilu, píše vyhnancům — lidem, kteří ztratili chrám, zemi i identitu.</div>
+        </div>
+
+        <div class="artifact">
+          <div class="artifact-question">Historická situace</div>
+          <div class="artifact-answer">Po zničení Jeruzaléma 587 př. Kr., lid v Babylonu. Exil, ale taky možnost obnovy.</div>
+        </div>
+
+        <div class="artifact">
+          <div class="artifact-question">Jak souvisí s liturgickým obdobím?</div>
+          <div class="artifact-answer">5. neděle postní — cesta k Velikonocům, motiv smrti a vzkříšení se prolíná.</div>
+        </div>
+
+        <div class="artifact">
+          <div class="artifact-question">Centrální myšlenka textu</div>
+          <div class="artifact-answer">Bůh oživuje i to, co vypadá mrtvé a beznadějné.</div>
+        </div>
+      </div>
+
+      <div class="artifact-group">
+        <div class="artifact-group-label">Fáze 3 · Tvorba kázání</div>
+
+        <div class="artifact">
+          <div class="artifact-question">Co vaši posluchači právě prožívají?</div>
+          <div class="artifact-answer">Mnozí prožívají nejistotu, únavu, ztrátu blízkých. Část obce stárne, několik rodin ztratilo někoho blízkého.</div>
+        </div>
+
+        <div class="artifact">
+          <div class="artifact-question">Kde se setkává svět textu se světem posluchačů?</div>
+          <div class="artifact-answer">Moment, kdy člověk zjistí, že už nemá sílu. „Údolí suchých kostí" = to místo v životě, kde si říkáš: tohle už se nezvedne.</div>
+        </div>
+
+        <div class="artifact">
+          <div class="artifact-question">Thesis kázání</div>
+          <div class="artifact-answer">I když se cítíme mrtví, Bůh nás volá k novému životu — a dělá první krok on, ne my.</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</aside>
+
+<script>
+  const drawer = document.getElementById('drawer');
+  const backdrop = document.getElementById('backdrop');
+  function openDrawer() { drawer.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeDrawer() { drawer.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow = ''; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+</script>
+
+</body>
+</html>

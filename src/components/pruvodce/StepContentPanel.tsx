@@ -217,7 +217,12 @@ export default function StepContentPanel({
             </div>
 
             {/* Moje kázání — visible throughout all steps */}
-            <SermonPanel artifacts={artifacts} />
+            <SermonPanel
+              artifacts={artifacts}
+              onArtifactChange={(field, value) =>
+                updateField(field as keyof typeof artifacts, value)
+              }
+            />
           </div>
         </div>
 
