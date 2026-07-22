@@ -76,9 +76,6 @@ export function getSundayId(date: Date): string | null {
   const easterDate = new Date(easter.getFullYear(), easter.getMonth(), easter.getDate());
   const adventStart = getAdventStart(year);
 
-  // Also need previous year's Advent for early January
-  const prevAdventStart = getAdventStart(year - 1);
-
   // Ash Wednesday
   const ashWednesday = addDays(easterDate, -46);
 
@@ -121,20 +118,20 @@ export function getSundayId(date: Date): string | null {
     }
   }
 
-  // Also check previous year's advent for early-year dates
-  // (this handles the case where we're before Jan 6 and in the Christmas season)
-
   // CHRISTMAS SEASON (a5-a10)
   // Dec 24 = a5
   if (isSameDay(d, new Date(year, 11, 24))) return "5";
-  // Dec 24 vigil = a6
-  if (isSameDay(d, new Date(year, 11, 24)) && false) return "6"; // vigil is same day, different service
   // Dec 25 = a7
   if (isSameDay(d, new Date(year, 11, 25))) return "7";
 
-  // First Sunday after Christmas (a8)
-  const christmasDate = new Date(year, 11, 25);
+  // The Sundays after Christmas may fall in late December or early January.
+  // For a January date the relevant Nativity is the *previous* calendar year's,
+  // otherwise a8/a10 become unreachable and early-January Sundays get no reading.
+  const christmasYear = d.getMonth() === 0 ? year - 1 : year;
+  const christmasDate = new Date(christmasYear, 11, 25);
   const firstSundayAfterChristmas = getNextSunday(addDays(christmasDate, 1));
+
+  // First Sunday after Christmas (a8)
   if (isSameDay(sunday, firstSundayAfterChristmas)) return "8";
 
   // New Year / Jan 1 (a9)
