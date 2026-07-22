@@ -80,9 +80,10 @@ export default function StepContentPanel({
   const { artifacts, updateField, getStepContext } = useSermonArtifacts();
 
   const isTextPhase = phase.slug === "text";
-  const savedRef = typeof window !== "undefined"
-    ? JSON.parse(localStorage.getItem("kazani-bible-ref") || '""')
-    : "";
+  // Read the reference through the hook: SSR-safe (no render-time localStorage
+  // read → no hydration mismatch), crash-safe (guarded parse), and reactive —
+  // it now stays in sync with BibleTextPanel, which writes the same key.
+  const [savedRef] = useLocalStorage<string>("kazani-bible-ref", "");
 
   // Track which sub-steps are completed
   const [completedSubStepsArr, setCompletedSubStepsArr] = useLocalStorage<number[]>(
@@ -273,10 +274,14 @@ export default function StepContentPanel({
 
 /** Onboarding hint — shown once on first visit */
 function OnboardingHint() {
-  const [visible, setVisible] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return !localStorage.getItem("kazani-onboarding-seen");
-  });
+  // Decide visibility after mount only — reading localStorage during the initial
+  // render would diverge from the server-rendered HTML and trip a hydration
+  // mismatch. Start hidden, then reveal once we've checked storage on the client.
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (!localStorage.getItem("kazani-onboarding-seen")) setVisible(true);
+  }, []);
 
   if (!visible) return null;
 

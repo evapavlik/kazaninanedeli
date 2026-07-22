@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 
 /**
@@ -63,14 +63,24 @@ const EMPTY_ARTIFACTS: SermonArtifacts = {
 const STORAGE_KEY = "kazani-artifacts";
 
 export function useSermonArtifacts() {
-  const [artifacts, setArtifacts] = useLocalStorage<SermonArtifacts>(
+  // Stored data may be partial — an older schema, a half-written blob, or a
+  // manually-cleared key. Type it as Partial and always merge over
+  // EMPTY_ARTIFACTS so consumers get every field as a string and can safely
+  // call .trim(); fields added in future versions default to "" automatically.
+  const [rawArtifacts, setArtifacts] = useLocalStorage<Partial<SermonArtifacts>>(
     STORAGE_KEY,
     EMPTY_ARTIFACTS
   );
 
+  const artifacts = useMemo<SermonArtifacts>(
+    () => ({ ...EMPTY_ARTIFACTS, ...rawArtifacts }),
+    [rawArtifacts]
+  );
+
   const updateField = useCallback(
     (field: keyof SermonArtifacts, value: string) => {
-      setArtifacts((prev) => ({ ...prev, [field]: value }));
+      // Merge over EMPTY_ARTIFACTS so a partial stored blob is healed on first write.
+      setArtifacts((prev) => ({ ...EMPTY_ARTIFACTS, ...prev, [field]: value }));
     },
     [setArtifacts]
   );
