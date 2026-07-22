@@ -37,7 +37,7 @@ export default function NarrativeTypeIdentifier({ slug }: { slug: string }) {
     <div className="space-y-4">
       <p className="text-xs leading-relaxed text-text-muted">
         {suggestedId && !selectedId
-          ? `Na z\u00E1klad\u011B odkazu navrhujeme typ textu. Klikn\u011Bte pro potvrzen\u00ED nebo vyberte jin\u00FD.`
+          ? `Na z\u00E1klad\u011B odkazu navrhujeme typ textu. Klikni pro potvrzen\u00ED nebo vyber jin\u00FD.`
           : `Ur\u010Dete, jak\u00FD typ textu p\u0159ipravujete. Ka\u017Ed\u00FD \u017E\u00E1nr m\u00E1 sv\u00E1 specifika pro pozorov\u00E1n\u00ED.`}
       </p>
 

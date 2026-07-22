@@ -126,7 +126,7 @@ export default function OutlineBuilder({ slug }: { slug: string }) {
         label={`Centr\u00E1ln\u00ED my\u0161lenka (jedna v\u011Bta)`}
         value={data.centralIdea}
         onChange={(v) => updateField("centralIdea", v)}
-        placeholder={`Co je j\u00E1dro va\u0161eho k\u00E1z\u00E1n\u00ED v jedn\u00E9 v\u011Bt\u011B?`}
+        placeholder={`Co je j\u00E1dro tv\u00E9ho k\u00E1z\u00E1n\u00ED v jedn\u00E9 v\u011Bt\u011B?`}
         rows={2}
         variant="brick"
       />
@@ -136,7 +136,7 @@ export default function OutlineBuilder({ slug }: { slug: string }) {
         label={`C\u00EDl k\u00E1z\u00E1n\u00ED (co si poslucha\u010D odnes\u00ED)`}
         value={data.goal}
         onChange={(v) => updateField("goal", v)}
-        placeholder={`Co chcete, aby poslucha\u010D ud\u011Blal, pochopil nebo pro\u017Eil?`}
+        placeholder={`Co chce\u0161, aby poslucha\u010D ud\u011Blal, pochopil nebo pro\u017Eil?`}
         rows={2}
         variant="brick"
       />
@@ -203,7 +203,7 @@ export default function OutlineBuilder({ slug }: { slug: string }) {
                 label={`Obsah`}
                 value={point.content}
                 onChange={(v) => updatePoint(point.id, "content", v)}
-                placeholder={`Co chcete v tomto bodu \u0159\u00EDci?`}
+                placeholder={`Co chce\u0161 v tomto bodu \u0159\u00EDci?`}
                 rows={2}
                 variant="brick"
               />
@@ -225,7 +225,7 @@ export default function OutlineBuilder({ slug }: { slug: string }) {
         label={`Z\u00E1v\u011Br`}
         value={data.conclusion}
         onChange={(v) => updateField("conclusion", v)}
-        placeholder={`Jak zakon\u010D\u00EDte? Shrnut\u00ED, v\u00FDzva, modlitba\u2026`}
+        placeholder={`Jak zakon\u010D\u00ED\u0161? Shrnut\u00ED, v\u00FDzva, modlitba\u2026`}
         rows={3}
         variant="sage"
       />

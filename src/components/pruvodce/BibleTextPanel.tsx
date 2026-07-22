@@ -179,7 +179,7 @@ export default function BibleTextPanel({ currentSlug, focusMode, onFocusToggle, 
         ) : (
           <div className="mt-6">
             <p className="text-sm italic leading-relaxed text-text-muted">
-              {`V dal\u0161\u00EDm kroku sem vlo\u017E\u00EDte text perikopy, se kterou budete pracovat.`}
+              {`V dal\u0161\u00EDm kroku sem vlo\u017E\u00ED\u0161 text perikopy, se kterou bude\u0161 pracovat.`}
             </p>
             {showSupabaseSuggestion && (
               <SundaySuggestion reading={currentReading} onApply={applyReading} />
@@ -932,7 +932,7 @@ function AnnotationGuide({ hasAnnotations }: { hasAnnotations: boolean }) {
       {open && (
         <div className="mt-2 rounded-lg border border-sage/20 bg-sage-pale/50 px-3 py-3">
           <p className="mb-3 text-[11px] leading-relaxed text-text-muted">
-            {`Ozna\u010Dov\u00E1n\u00ED v\u00E1m pom\u016F\u017Ee vid\u011Bt text hloub\u011Bji. Ozna\u010Dte my\u0161\u00ED libovolnou fr\u00E1zi a vyberte kategorii. Pozn\u00E1mky z\u016Fstanou ulo\u017Een\u00E9 a prov\u00E1z\u00ED v\u00E1s v\u0161emi kroky.`}
+            {`Ozna\u010Dov\u00E1n\u00ED ti pom\u016F\u017Ee vid\u011Bt text hloub\u011Bji. Ozna\u010D my\u0161\u00ED libovolnou fr\u00E1zi a vyber kategorii. Pozn\u00E1mky z\u016Fstanou ulo\u017Een\u00E9 a prov\u00E1z\u00ED t\u011B v\u0161emi kroky.`}
           </p>
           <div className="space-y-2">
             <div className="flex items-start gap-2">
@@ -940,7 +940,7 @@ function AnnotationGuide({ hasAnnotations }: { hasAnnotations: boolean }) {
                 {annotationCategories[0].name}
               </span>
               <p className="text-[11px] leading-relaxed text-text-muted">
-                {`Opakuj\u00EDc\u00ED se slova a hlavn\u00ED pojmy. Ve v\u00FDkladu z nich vych\u00E1z\u00EDte.`}
+                {`Opakuj\u00EDc\u00ED se slova a hlavn\u00ED pojmy. Ve v\u00FDkladu z nich vych\u00E1z\u00ED\u0161.`}
               </p>
             </div>
             <div className="flex items-start gap-2">
@@ -964,7 +964,7 @@ function AnnotationGuide({ hasAnnotations }: { hasAnnotations: boolean }) {
                 {annotationCategories[3].name}
               </span>
               <p className="text-[11px] leading-relaxed text-text-muted">
-                {`Co v\u00E1m nen\u00ED jasn\u00E9 nebo v\u00E1s zarazilo. Stoj\u00ED za to hledat odpov\u011B\u010F.`}
+                {`Co ti nen\u00ED jasn\u00E9 nebo t\u011B zarazilo. Stoj\u00ED za to hledat odpov\u011B\u010F.`}
               </p>
             </div>
           </div>
@@ -1172,7 +1172,7 @@ function LectionarySuggestion({
       {expanded && (
         <div className="mt-3 space-y-2">
           <p className="text-[10px] text-text-light">
-            {`Klikn\u011Bte na \u010Dten\u00ED \u2014 na\u010Dte se text z \u010CEP p\u0159ekladu.`}
+            {`Klikni na \u010Dten\u00ED \u2014 na\u010Dte se text z \u010CEP p\u0159ekladu.`}
           </p>
           {readings.map((r) => {
             const isLoading = loadingKey === r.data.reference;

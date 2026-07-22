@@ -59,8 +59,8 @@ export default function BibleBookContext({ slug }: { slug: string }) {
     <div className="space-y-4">
       <p className="text-xs leading-relaxed text-text-muted">
         {selected && autoDetected
-          ? `Kniha byla rozpozn\u00E1na z odkazu \u201E${bibleRef}\u201C. M\u016F\u017Eete ji zm\u011Bnit.`
-          : `Vyberte biblickou knihu, ze kter\u00E9 p\u0159ipravujete k\u00E1z\u00E1n\u00ED, a z\u00EDskejte z\u00E1kladn\u00ED kontext.`}
+          ? `Kniha byla rozpozn\u00E1na z odkazu \u201E${bibleRef}\u201C. M\u016F\u017Ee\u0161 ji zm\u011Bnit.`
+          : `Vyber biblickou knihu, ze kter\u00E9 p\u0159ipravuje\u0161 k\u00E1z\u00E1n\u00ED, a z\u00EDskej z\u00E1kladn\u00ED kontext.`}
       </p>
 
       {/* Search or selected display */}

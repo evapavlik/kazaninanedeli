@@ -19,7 +19,7 @@ export default function SlovnikPage() {
           {`Slovn\u00EDk pojm\u016F`}
         </h1>
         <p className="mb-10 text-base font-light leading-[1.85] text-text-muted">
-          {`Z\u00E1kladn\u00ED pojmy z\u00A0hermeneutiky, exegeze a\u00A0homiletiky, se kter\u00FDmi se v\u00A0pr\u016Fvodci setk\u00E1te.`}
+          {`Z\u00E1kladn\u00ED pojmy z\u00A0hermeneutiky, exegeze a\u00A0homiletiky, se kter\u00FDmi se v\u00A0pr\u016Fvodci potk\u00E1\u0161.`}
         </p>
 
         <div className="space-y-6">

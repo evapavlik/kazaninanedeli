@@ -72,7 +72,7 @@ export default function OProjektuPage() {
               {`Pro\u010D to d\u011Bl\u00E1m`}
             </h2>
             <p className="mb-3 text-sm leading-relaxed text-text">
-              {`P\u0159\u00EDprava k\u00E1z\u00E1n\u00ED je n\u00E1ro\u010Dn\u00E1 discipl\u00EDna. Vy\u017Eaduje pr\u00E1ci s\u00A0biblick\u00FDm textem, porozum\u011Bn\u00ED jeho kontextu, schopnost naj\u00EDt aktu\u00E1ln\u00ED sd\u011Blen\u00ED a\u00A0p\u0159edat ho srozumiteln\u011B poslucha\u010D\u016Fm. S\u00E1ma jako za\u010D\u00EDnaj\u00EDc\u00ED kazatelka v\u00EDm, jak m\u016F\u017Ee b\u00FDt tento \u00FAkol zahlcuj\u00EDc\u00ED \u2014 zvl\u00E1\u0161\u0165 kdy\u017E stoj\u00EDte p\u0159ed n\u00EDm poprv\u00E9.`}
+              {`P\u0159\u00EDprava k\u00E1z\u00E1n\u00ED je n\u00E1ro\u010Dn\u00E1 discipl\u00EDna. Vy\u017Eaduje pr\u00E1ci s\u00A0biblick\u00FDm textem, porozum\u011Bn\u00ED jeho kontextu, schopnost naj\u00EDt aktu\u00E1ln\u00ED sd\u011Blen\u00ED a\u00A0p\u0159edat ho srozumiteln\u011B poslucha\u010D\u016Fm. Sama jako za\u010D\u00EDnaj\u00EDc\u00ED kazatelka v\u00EDm, jak m\u016F\u017Ee b\u00FDt tento \u00FAkol zahlcuj\u00EDc\u00ED \u2014 zvl\u00E1\u0161\u0165 kdy\u017E p\u0159ed n\u00EDm stoj\u00ED\u0161 poprv\u00E9.`}
             </p>
             <p className="text-sm leading-relaxed text-text">
               {`Cht\u011Bla jsem si vytvo\u0159it pr\u016Fvodce, kter\u00FD nab\u00EDdne jasnou cestu krok za krokem \u2014 od prvn\u00EDho setk\u00E1n\u00ED s\u00A0textem a\u017E k\u00A0p\u0159ipraven\u00E9mu k\u00E1z\u00E1n\u00ED. Sna\u017E\u00EDm se v\u00A0n\u011Bm kombinovat akademickou hermeneutickou metodologii s\u00A0praktick\u00FDmi zahrani\u010Dn\u00EDmi p\u0159\u00EDstupy a\u00A0p\u0159ev\u00E1d\u011Bt je do srozumiteln\u00E9 formy.`}
@@ -116,7 +116,7 @@ export default function OProjektuPage() {
               {`Zku\u0161ebn\u00ED provoz \u2014 budu r\u00E1da za zp\u011Btnou vazbu`}
             </h2>
             <p className="mb-4 text-sm leading-relaxed text-text">
-              {`Aplikace je ve zku\u0161ebn\u00EDm provozu \u2014 u\u010D\u00ED se spolu se mnou. Budu r\u00E1da za Va\u0161i zp\u011Btnou vazbu, n\u00E1pady a\u00A0n\u00E1m\u011Bty. A\u0165 u\u017E jde o\u00A0chybu, o\u00A0to, co by\u00A0V\u00E1m usnadnilo p\u0159\u00EDpravu k\u00E1z\u00E1n\u00ED, nebo o\u00A0jak\u00FDkoli podn\u011Bt \u2014 napi\u0161te mi, pros\u00EDm.`}
+              {`Aplikace je ve zku\u0161ebn\u00EDm provozu \u2014 u\u010D\u00ED se spolu se mnou. Budu r\u00E1da za tvou zp\u011Btnou vazbu, n\u00E1pady a\u00A0n\u00E1m\u011Bty. A\u0165 u\u017E jde o\u00A0chybu, o\u00A0to, co by\u00A0ti usnadnilo p\u0159\u00EDpravu k\u00E1z\u00E1n\u00ED, nebo o\u00A0jak\u00FDkoli podn\u011Bt \u2014 napi\u0161 mi, pros\u00EDm.`}
             </p>
             <a
               href={`mailto:${AUTHOR_EMAIL}`}

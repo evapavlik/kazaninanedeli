@@ -238,7 +238,7 @@ export default function UnifiedFlow({
                       <textarea
                         defaultValue={reflections[i] || ""}
                         onChange={(e) => handleReflection(i, e.target.value)}
-                        placeholder={`Va\u0161e odpov\u011B\u010F\u2026`}
+                        placeholder={`Tvoje odpov\u011B\u010F\u2026`}
                         rows={2}
                         className="w-full rounded-md border border-sage/15 bg-white px-2.5 py-1.5 text-[12px] leading-relaxed text-text placeholder:text-text-light/40 focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/20 resize-y"
                       />
@@ -264,7 +264,7 @@ export default function UnifiedFlow({
                   <ArtifactInput
                     text={item.text}
                     value={artifactValue}
-                    placeholder={artifactPlaceholder || `Va\u0161e odpov\u011B\u010F\u2026`}
+                    placeholder={artifactPlaceholder || `Tvoje odpov\u011B\u010F\u2026`}
                     isDone={isDone}
                     rows={artifactRows}
                     onChange={(value) => {

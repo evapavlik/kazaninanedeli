@@ -185,7 +185,7 @@ export default function TextAnnotation({ slug }: { slug: string }) {
 
       {data.annotations.length === 0 && data.bibleText && (
         <p className="py-2 text-center text-xs italic text-text-light">
-          {`P\u0159idejte pozn\u00E1mky ke kl\u00ED\u010Dov\u00FDm slov\u016Fm z textu.`}
+          {`P\u0159idej pozn\u00E1mky ke kl\u00ED\u010Dov\u00FDm slov\u016Fm z textu.`}
         </p>
       )}
     </div>

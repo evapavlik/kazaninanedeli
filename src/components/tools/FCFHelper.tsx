@@ -26,7 +26,7 @@ const questions = [
   },
   {
     key: "listeners" as const,
-    label: `Co pr\u00E1v\u011B pro\u017E\u00EDvaj\u00ED va\u0161i poslucha\u010Di?`,
+    label: `Co pr\u00E1v\u011B pro\u017E\u00EDvaj\u00ED tvoji poslucha\u010Di?`,
     placeholder: `Aktu\u00E1ln\u00ED situace sboru, spole\u010Dnosti, lidsk\u00E9 \u017Eivoty\u2026`,
   },
   {

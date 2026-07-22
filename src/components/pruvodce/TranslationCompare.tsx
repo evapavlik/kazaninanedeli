@@ -31,7 +31,7 @@ export default function TranslationCompare({
     if (!parsed) {
       setState({
         status: "error",
-        message: `Nepoda\u0159ilo se rozpoznat odkaz. Zkuste form\u00E1t nap\u0159. \u201EMk 4,1\u201320\u201C.`,
+        message: `Nepoda\u0159ilo se rozpoznat odkaz. Zkus form\u00E1t nap\u0159. \u201EMk 4,1\u201320\u201C.`,
       });
       return;
     }
@@ -85,7 +85,7 @@ export default function TranslationCompare({
       if (abortRef.current?.signal.aborted) return;
       setState({
         status: "error",
-        message: `Chyba p\u0159i na\u010D\u00EDt\u00E1n\u00ED p\u0159eklad\u016F. Zkuste to pros\u00EDm znovu.`,
+        message: `Chyba p\u0159i na\u010D\u00EDt\u00E1n\u00ED p\u0159eklad\u016F. Zkus to pros\u00EDm znovu.`,
       });
     }
   }, []);
