@@ -10,7 +10,7 @@ import BuildingBlocks from "./BuildingBlocks";
 import TranslationCompare from "./TranslationCompare";
 import GuideBar from "./GuideBar";
 import SermonPanel from "./SermonPanel";
-import { useSermonArtifacts } from "@/hooks/useSermonArtifacts";
+import { useSermonArtifacts, type SermonArtifacts } from "@/hooks/useSermonArtifacts";
 
 // Tool components (for inline flow helpers)
 import NarrativeTypeIdentifier from "@/components/tools/NarrativeTypeIdentifier";
@@ -239,6 +239,8 @@ export default function StepContentPanel({
             onSubStepSelect={handleSubStepSelect}
             onFlowCountChange={handleFlowCountChange}
             onNotepadContent={handleNotepadContent}
+            artifacts={artifacts}
+            onArtifactChange={(field, value) => updateField(field as keyof typeof artifacts, value)}
             prevPhase={prevPhase}
             nextPhase={nextPhase}
             reference={savedRef}
@@ -309,6 +311,8 @@ function MobileGuide({
   onSubStepSelect,
   onFlowCountChange,
   onNotepadContent,
+  artifacts,
+  onArtifactChange,
   prevPhase,
   nextPhase,
   reference,
@@ -323,6 +327,8 @@ function MobileGuide({
   onSubStepSelect: (index: number) => void;
   onFlowCountChange: (completed: number, total: number) => void;
   onNotepadContent: (hasContent: boolean) => void;
+  artifacts: SermonArtifacts;
+  onArtifactChange: (field: string, value: string) => void;
   prevPhase: { slug: string; title: string } | null;
   nextPhase: { slug: string; title: string } | null;
   reference: string;
@@ -375,6 +381,8 @@ function MobileGuide({
         toolHelpers={flowToolHelpers}
         onCountChange={onFlowCountChange}
         onOpenTool={handleOpenTool}
+        artifacts={artifacts}
+        onArtifactChange={onArtifactChange}
       />
 
       {/* Inline tool panel — shown when user taps a tool button */}
