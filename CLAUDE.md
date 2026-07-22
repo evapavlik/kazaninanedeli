@@ -24,7 +24,7 @@ Před implementací jakékoli UI komponenty projdi, jak zapadá do celku. Zkontr
 - Tailwind CSS v4
 - TypeScript
 - Fonty: Cormorant Garamond, Lora, Plus Jakarta Sans
-- Barvy: brick (#9b4a3c), sage (#6b8f71), cream (#faf7f4)
+- Barvy: brick (#c41e1e), sage (#4a7c6f), cream (#f4f0ea), pozadí off-white (#faf8f5) — zdroj pravdy je `src/app/globals.css`
 
 ## Konvence
 - Commit messages v angličtině
