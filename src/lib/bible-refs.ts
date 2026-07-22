@@ -5,90 +5,125 @@
  * Based on cteninanedeli/supabase/functions/_shared/biblical-refs.ts
  */
 
-/** Canonical abbreviation → bible-books.ts book ID */
+/**
+ * Abbreviation → bible-books.ts book ID.
+ *
+ * Keyed by the abbreviations that actually appear in the lectionary data
+ * (CČSH short forms like "1K", "Ř", "Ž", "Ga", "Žd") plus the normalized
+ * forms produced from full Czech book names (e.g. "Korintským" → "1Kor").
+ * Only books present in bible-books.ts are listed — a reference to any other
+ * book returns bookId: null so the context panel hides instead of showing
+ * content from an unrelated book.
+ */
 const ABBREV_TO_BOOK_ID: Record<string, string> = {
   // Old Testament
   "Gn": "genesis",
   "Ex": "exodus",
-  "Lv": "genesis", // not in our DB, fallback
-  "Dt": "genesis", // not in our DB
-  "Joz": "genesis",
-  "Sd": "genesis",
-  "Rt": "genesis",
-  "Sam": "genesis",
+  "Ž": "psalms",
+  "Z": "psalms",
   "Iz": "isaiah",
   "Jr": "jeremiah",
   "Ez": "ezekiel",
   "Dan": "daniel",
   "Jon": "jonah",
-  "Job": "job",
+  "Př": "proverbs",
   "Pr": "proverbs",
-  // Psalms
-  "Z": "psalms",
+  "Jb": "job",
+  "Job": "job",
   // New Testament
   "Mt": "matthew",
   "Mk": "mark",
   "Lk": "luke",
   "J": "john",
   "Sk": "acts",
+  "Ř": "romans",
   "R": "romans",
+  "1K": "1corinthians",
   "1Kor": "1corinthians",
+  "2K": "2corinthians",
   "2Kor": "2corinthians",
+  "Ga": "galatians",
   "Gal": "galatians",
   "Ef": "ephesians",
   "Fp": "philippians",
+  "Ko": "colossians",
   "Kol": "colossians",
+  "1Te": "1thessalonians",
   "1Sol": "1thessalonians",
+  "1Tm": "1timothy",
   "1Tim": "1timothy",
+  "Žd": "hebrews",
   "Zd": "hebrews",
   "Jk": "james",
   "1Pt": "1peter",
-  "2Pt": "1peter",
   "1J": "1john",
-  "2J": "1john",
-  "3J": "1john",
-  "Jud": "james",
   "Zj": "revelation",
 };
 
-/** Canonical abbreviation → suggested narrative type ID */
+/**
+ * Abbreviation → suggested narrative type ID (a default the user can override).
+ *
+ * Keyed like ABBREV_TO_BOOK_ID by the lectionary's own abbreviations plus the
+ * normalized full-name forms. Unlike the book map this may cover books that are
+ * not in bible-books.ts, since the suggestion does not need a context card.
+ */
 const ABBREV_TO_NARRATIVE: Record<string, string> = {
-  // Gospels — depend on content, but suggest "narrative" as default
+  // Gospels — depend on content, but suggest a sensible default
   "Mt": "discourse",
   "Mk": "narrative",
   "Lk": "narrative",
   "J": "discourse",
   // Epistles
+  "Ř": "epistle",
   "R": "epistle",
+  "1K": "epistle",
   "1Kor": "epistle",
+  "2K": "epistle",
   "2Kor": "epistle",
+  "Ga": "epistle",
   "Gal": "epistle",
   "Ef": "epistle",
   "Fp": "epistle",
+  "Ko": "epistle",
   "Kol": "epistle",
+  "1Te": "epistle",
   "1Sol": "epistle",
+  "1Tm": "epistle",
   "1Tim": "epistle",
+  "Žd": "epistle",
   "Zd": "epistle",
   "Jk": "epistle",
   "1Pt": "epistle",
-  "2Pt": "epistle",
   "1J": "epistle",
-  "Jud": "epistle",
-  // Poetry
+  "Tt": "epistle",
+  // Poetry / wisdom
+  "Ž": "poetry",
   "Z": "poetry",
+  "Př": "poetry",
   "Pr": "poetry",
   "Kaz": "poetry",
-  "Pis": "poetry",
+  "Jb": "poetry",
   "Job": "poetry",
+  "Pl": "poetry",
   // Prophecy
   "Iz": "prophecy",
   "Jr": "prophecy",
   "Ez": "prophecy",
+  "Oz": "prophecy",
+  "Mi": "prophecy",
+  "Mal": "prophecy",
   "Dan": "apocalyptic",
   "Zj": "apocalyptic",
   // Narrative
   "Gn": "narrative",
   "Ex": "narrative",
+  "Lv": "narrative",
+  "Nu": "narrative",
+  "Dt": "narrative",
+  "Joz": "narrative",
+  "1S": "narrative",
+  "1Král": "narrative",
+  "Neh": "narrative",
   "Sk": "narrative",
   "Jon": "narrative",
 };
@@ -148,8 +183,9 @@ export function parseReference(raw: string): {
   const ref = raw.trim();
   if (!ref) return null;
 
-  // Handle numbered books: "1 Kor", "2 Pt", "1. Jan"
-  const numberedMatch = ref.match(/^([12345])\.\?\s+(.+)$/i);
+  // Handle numbered books in every form the data and users produce:
+  // "1K" (no space, CČSH style), "1 Kor" (space), "1. Jan" (dotted).
+  const numberedMatch = ref.match(/^([12345])\.?\s*(.+)$/i);
   let prefix = "";
   let rest = ref;
   if (numberedMatch) {
