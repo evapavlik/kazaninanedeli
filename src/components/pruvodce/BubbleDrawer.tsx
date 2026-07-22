@@ -111,10 +111,26 @@ export default function BubbleDrawer({
   } | null>(null);
   const undoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Focus management: remember what had focus before the drawer opened so we
+  // can hand it back on close, and move focus into the drawer on open.
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+  const restoreFocusRef = useRef<HTMLElement | null>(null);
+
   // Portal target is only available on the client
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (open) {
+      restoreFocusRef.current = (document.activeElement as HTMLElement) ?? null;
+      const id = requestAnimationFrame(() => closeBtnRef.current?.focus());
+      return () => cancelAnimationFrame(id);
+    }
+    // On close, return focus to whatever opened the drawer.
+    restoreFocusRef.current?.focus();
+    restoreFocusRef.current = null;
+  }, [open]);
 
   // Trigger the wiggle each time the drawer opens, unless the preacher has
   // already dragged or tapped a bubble in this session.
@@ -304,8 +320,9 @@ export default function BubbleDrawer({
       {/* Drawer — wide two-column workspace on desktop, single column on mobile */}
       <aside
         role="dialog"
+        aria-modal="false"
         aria-label="Můj zápisník"
-        aria-hidden={!open}
+        inert={!open || undefined}
         className={`fixed top-0 right-0 bottom-0 z-[61] w-[min(760px,96vw)] bg-off-white shadow-[-4px_0_30px_rgba(0,0,0,0.12)] transition-transform duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] overflow-y-auto ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
@@ -322,6 +339,7 @@ export default function BubbleDrawer({
               </p>
             </div>
             <button
+              ref={closeBtnRef}
               onClick={onClose}
               aria-label="Zavřít zápisník"
               className="shrink-0 rounded-lg px-2 py-0.5 text-lg text-text-muted hover:bg-cream hover:text-brick"
@@ -544,11 +562,26 @@ function BubbleCard({
     onDragStart(e);
   };
 
+  // Keyboard equivalent of a tap — Enter/Space inserts (or returns) the bubble,
+  // so the drawer works without a mouse or touch.
+  const handleKeyActivate = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onTap();
+    }
+  };
+
+  const label = `${bubble.tag}${bubble.title ? ` — ${bubble.title}` : bubble.body ? ` — ${bubble.body}` : ""}`;
+
   if (consumed) {
     return (
       <div
-        className={`group relative cursor-pointer select-none rounded-lg border border-dashed border-border border-l-[3px] ${border} ${bg} px-4 py-3 opacity-40 transition-opacity hover:opacity-70`}
+        role="button"
+        tabIndex={0}
+        aria-label={`Vrátit do zásobníku: ${label}`}
+        className={`group relative cursor-pointer select-none rounded-lg border border-dashed border-border border-l-[3px] ${border} ${bg} px-4 py-3 opacity-40 transition-opacity hover:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage/50`}
         onClick={onTap}
+        onKeyDown={handleKeyActivate}
         title="Vrátit do zásobníku"
       >
         <div className="mb-1 flex items-center justify-between gap-2">
@@ -574,11 +607,15 @@ function BubbleCard({
   return (
     <div
       ref={cardRef}
+      role="button"
+      tabIndex={0}
+      aria-label={`Vložit do kázání: ${label}. Stiskni Enter, nebo přetáhni myší.`}
       draggable
       onDragStart={handleDragStartWrapped}
       onClick={onTap}
+      onKeyDown={handleKeyActivate}
       style={wiggleStyle}
-      className={`group relative cursor-grab select-none rounded-lg border border-border border-l-[3px] ${border} ${bg} pl-7 pr-4 py-3 shadow-sm transition-all hover:-translate-y-[1px] hover:shadow-md active:cursor-grabbing`}
+      className={`group relative cursor-grab select-none rounded-lg border border-border border-l-[3px] ${border} ${bg} pl-7 pr-4 py-3 shadow-sm transition-all hover:-translate-y-[1px] hover:shadow-md active:cursor-grabbing focus:outline-none focus-visible:ring-2 focus-visible:ring-sage/50`}
       title="Přetáhni do pole kázání — nebo klikni"
     >
       {/* Grip dots — drag affordance */}
