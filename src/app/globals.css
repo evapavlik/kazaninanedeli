@@ -11,7 +11,7 @@
   --color-cream: #f4f0ea;
   --color-text: #1f1a16;
   --color-text-muted: #6b6259;
-  --color-text-light: #9e968e;
+  --color-text-light: #756d66;
   --color-brick: #c41e1e;
   --color-brick-light: #d63030;
   --color-brick-pale: #fdf0f0;
@@ -93,16 +93,18 @@ html {
   to { stroke-dashoffset: 0; }
 }
 
-/* Ring ripple expands from checkbox center and fades */
+/* Ring ripple expands from checkbox center and fades.
+   Colour tracks the brick token via color-mix so it always matches the
+   checkbox, regardless of which brand palette is active. */
 @keyframes checkRipple {
-  0%   { box-shadow: 0 0 0 0px rgba(155, 74, 60, 0.35); }
-  100% { box-shadow: 0 0 0 9px rgba(155, 74, 60, 0); }
+  0%   { box-shadow: 0 0 0 0px color-mix(in srgb, var(--color-brick) 35%, transparent); }
+  100% { box-shadow: 0 0 0 9px color-mix(in srgb, var(--color-brick) 0%, transparent); }
 }
 
 /* Artifact settle — sage glow on completing a written artifact */
 @keyframes artifactSettle {
-  0%   { box-shadow: 0 0 0 3px rgba(107, 143, 113, 0.45); }
-  100% { box-shadow: 0 0 0 0px rgba(107, 143, 113, 0); }
+  0%   { box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-sage) 45%, transparent); }
+  100% { box-shadow: 0 0 0 0px color-mix(in srgb, var(--color-sage) 0%, transparent); }
 }
 
 /*
@@ -124,4 +126,25 @@ html {
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/*
+ * Respect the reader's reduced-motion preference. The app leans on gentle,
+ * continuous animation (breathing circle, guide-bar pulse, bubble wiggle); for
+ * vestibular-sensitive users we collapse all of it to near-instant so the
+ * interface can settle into stillness. Content stays fully visible.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
 }
