@@ -133,7 +133,7 @@ export default function SermonPanel({ artifacts, onArtifactChange }: SermonPanel
             <p className="text-[11px] text-text-light leading-relaxed">
               Tady se zobrazí vše,
               <br />
-              co jste dosud připravili.
+              co máš dosud připravené.
             </p>
           </div>
         ) : (

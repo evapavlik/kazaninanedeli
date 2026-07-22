@@ -55,7 +55,7 @@ export default function SermonInspirationPanel({
           {`D\u011bjiny p\u016fsoben\u00ed textu`}
         </p>
         <p className="text-[14px] leading-[1.7] text-text">
-          {`Pod\u00edvejte se, jak text \u010detli jin\u00ed kazatel\u00e9 \u2014 C\u010cSH Patriarcha Karel Farsk\u00fd a auto\u0159i \u010cesk\u00e9ho z\u00e1pasu. Podle Pokorn\u00e9ho je zn\u00e1t jin\u00e9 v\u00fdklady \u201enezbytnost\u00ed pro sou\u010dasn\u00e9ho vyklada\u010de\u201c \u2014 ale nikdy ne normou. Udr\u017ete si vlastn\u00ed centr\u00e1ln\u00ed my\u0161lenku.`}
+          {`Pod\u00edvej se, jak text \u010detli jin\u00ed kazatel\u00e9 \u2014 C\u010cSH Patriarcha Karel Farsk\u00fd a auto\u0159i \u010cesk\u00e9ho z\u00e1pasu. Podle Pokorn\u00e9ho je zn\u00e1t jin\u00e9 v\u00fdklady \u201enezbytnost\u00ed pro sou\u010dasn\u00e9ho vyklada\u010de\u201c \u2014 ale nikdy ne normou. Udr\u017ete si vlastn\u00ed centr\u00e1ln\u00ed my\u0161lenku.`}
         </p>
       </div>
 
@@ -197,7 +197,7 @@ export default function SermonInspirationPanel({
 
       {nothingFound && (
         <p className="text-[14px] leading-[1.7] italic text-text-muted">
-          {`Pro tuto perikopu zat\u00edm nem\u00e1me \u017e\u00e1dn\u00e9 k\u00e1z\u00e1n\u00ed Farsk\u00e9ho ani z \u010cesk\u00e9ho z\u00e1pasu. Zkuste tento krok pracovat samostatn\u011b \u2014 t\u00edm l\u00e9pe se nauc\u00edte rozli\u0161ovat vlastn\u00ed my\u0161len\u00ed.`}
+          {`Pro tuto perikopu zat\u00edm nem\u00e1me \u017e\u00e1dn\u00e9 k\u00e1z\u00e1n\u00ed Farsk\u00e9ho ani z \u010cesk\u00e9ho z\u00e1pasu. Zkus tento krok pracovat samostatn\u011b \u2014 t\u00edm l\u00e9pe se nauc\u00edte rozli\u0161ovat vlastn\u00ed my\u0161len\u00ed.`}
         </p>
       )}
     </div>

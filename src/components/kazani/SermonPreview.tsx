@@ -23,10 +23,10 @@ export default function SermonPreview() {
       <div className="flex flex-col items-center justify-center py-16 text-center">
         <span className="mb-4 text-4xl">{"\uD83D\uDCDD"}</span>
         <h1 className="font-lora text-xl font-bold text-text">
-          {`Va\u0161e k\u00E1z\u00E1n\u00ED se teprve rod\u00ED`}
+          {`Tvoje k\u00E1z\u00E1n\u00ED se teprve rod\u00ED`}
         </h1>
         <p className="mt-2 max-w-md text-sm text-text-muted">
-          {`Projd\u011Bte pr\u016Fvodcem a vypl\u0148te kl\u00ED\u010Dov\u00E1 pole \u2014 centr\u00E1ln\u00ED my\u0161lenku, osnovu, \u00FAvod a z\u00E1v\u011Br. V\u0161e se zobraz\u00ED zde.`}
+          {`Projdi pr\u016Fvodcem a vypl\u0148 kl\u00ED\u010Dov\u00E1 pole \u2014 centr\u00E1ln\u00ED my\u0161lenku, osnovu, \u00FAvod a z\u00E1v\u011Br. V\u0161e se zobraz\u00ED zde.`}
         </p>
         <Link
           href="/pruvodce/text"
@@ -51,7 +51,7 @@ export default function SermonPreview() {
           </h1>
         )}
         <p className="mt-2 text-xs text-text-muted">
-          {`V\u0161e, co jste p\u0159ipravili \u2014 na jednom m\u00EDst\u011B. Klikn\u011Bte na libovoln\u00E9 pole pro \u00FApravu.`}
+          {`V\u0161e, co m\u00E1\u0161 p\u0159ipraven\u00E9 \u2014 na jednom m\u00EDst\u011B. Klikni na libovoln\u00E9 pole pro \u00FApravu.`}
         </p>
       </div>
 
@@ -79,7 +79,7 @@ export default function SermonPreview() {
         onEdit={setEditing}
         onSave={updateField}
         highlight
-        placeholder={`Formulujte hlavn\u00ED my\u0161lenku k\u00E1z\u00E1n\u00ED jednou v\u011Btou...`}
+        placeholder={`Formuluj hlavn\u00ED my\u0161lenku k\u00E1z\u00E1n\u00ED jednou v\u011Btou...`}
       />
 
       {/* Listeners */}

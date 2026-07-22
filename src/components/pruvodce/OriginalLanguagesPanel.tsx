@@ -70,7 +70,7 @@ export default function OriginalLanguagesPanel({
             {`Kl\u00ED\u010Dov\u00E1 slova v origin\u00E1le`}
           </p>
           <p className="text-[11px] text-text-muted">
-            {`Text je v `}{isOT ? `hebrej\u0161tin\u011B` : `\u0159e\u010Dtin\u011B`}{` \u2014 prozkoumejte v\u00FDznam slov`}
+            {`Text je v `}{isOT ? `hebrej\u0161tin\u011B` : `\u0159e\u010Dtin\u011B`}{` \u2014 prozkoumej v\u00FDznam slov`}
           </p>
         </div>
       </div>
@@ -107,7 +107,7 @@ export default function OriginalLanguagesPanel({
       {keywords.length > 0 && (
         <div className="mb-3">
           <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-text-light">
-            {`Va\u0161e kl\u00ED\u010Dov\u00E1 slova z kroku 2`}
+            {`Tvoje kl\u00ED\u010Dov\u00E1 slova z kroku 2`}
           </p>
           <div className="flex flex-wrap gap-1.5">
             {keywords.map((kw) => (
@@ -128,7 +128,7 @@ export default function OriginalLanguagesPanel({
             ))}
           </div>
           <p className="mt-1.5 text-[9px] text-text-light/60">
-            {`Klikn\u011Bte pro vyhled\u00E1n\u00ED v origin\u00E1le na BibleHub`}
+            {`Klikni pro vyhled\u00E1n\u00ED v origin\u00E1le na BibleHub`}
           </p>
         </div>
       )}

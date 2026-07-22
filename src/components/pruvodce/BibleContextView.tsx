@@ -121,7 +121,7 @@ export default function BibleContextView({ reference }: BibleContextViewProps) {
                       {part.title}
                       {isActivePart && (
                         <span className="ml-1.5 inline-block rounded bg-brick/10 px-1.5 py-0.5 align-middle text-[9px] font-bold uppercase tracking-wider text-brick">
-                          {`v\u00E1\u0161 text`}
+                          {`tv\u016Fj text`}
                         </span>
                       )}
                     </p>
@@ -299,7 +299,7 @@ function SectionRow({
           {section.title}
           {isActive && (
             <span className="ml-1.5 inline-block rounded bg-brick/10 px-1.5 py-0.5 align-middle text-[9px] font-bold uppercase tracking-wider text-brick">
-              {`va\u0161e perikopa`}
+              {`tvoje perikopa`}
             </span>
           )}
         </span>

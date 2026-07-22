@@ -643,7 +643,7 @@ function EmptyState({ kind, filter }: { kind: EmptyStateKind; filter: FilterKey 
       <div className="py-12 text-center">
         <div className="mb-3 text-3xl">✨</div>
         <p className="font-lora text-[14px] italic leading-relaxed text-text-muted">
-          Hezká práce — všechno jsi už použila.
+          Hezká práce — všechno už máš použité.
           <br />
           <span className="text-text-light">
             Potřebuješ něco vrátit? Klikni na vyblednutou bublinku nahoře.

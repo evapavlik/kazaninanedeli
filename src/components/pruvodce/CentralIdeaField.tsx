@@ -84,7 +84,7 @@ export default function CentralIdeaField() {
           </span>
           {isLong && (
             <span className="text-[9px] text-brick">
-              {`Zkuste to stru\u010Dn\u011Bji \u2014 jedna v\u011Bta`}
+              {`Zkus to stru\u010Dn\u011Bji \u2014 jedna v\u011Bta`}
             </span>
           )}
         </div>

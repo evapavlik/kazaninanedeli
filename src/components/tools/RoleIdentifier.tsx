@@ -71,7 +71,7 @@ export default function RoleIdentifier({ slug }: { slug: string }) {
   return (
     <div className="space-y-4">
       <p className="text-xs leading-relaxed text-text-muted">
-        {`Identifikujte postavy a role v textu a zamy\u0161lejte se, kdo je to dnes.`}
+        {`Identifikuj postavy a role v textu a zamysli se, kdo je to dnes.`}
       </p>
 
       {/* Add role */}
@@ -123,7 +123,7 @@ export default function RoleIdentifier({ slug }: { slug: string }) {
 
       {data.roles.length === 0 && (
         <p className="py-2 text-center text-xs italic text-text-light">
-          {`Zat\u00EDm \u017E\u00E1dn\u00E9 role. P\u0159idejte postavu z textu.`}
+          {`Zat\u00EDm \u017E\u00E1dn\u00E9 role. P\u0159idej postavu z textu.`}
         </p>
       )}
 

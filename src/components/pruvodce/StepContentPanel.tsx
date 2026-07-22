@@ -288,7 +288,7 @@ function OnboardingHint() {
   return (
     <div className="mb-5 flex items-center gap-2.5 rounded-[10px] border border-brick/15 bg-brick-pale px-4 py-2.5 text-[13px] text-brick animate-in fade-in slide-in-from-top-1 duration-500 delay-1000 fill-mode-both">
       <span className="shrink-0 text-base">{"\uD83D\uDC47"}</span>
-      <span>{`Pr\u016Fvodce p\u0159\u00EDpravou najdete v li\u0161t\u011B dole. Provede v\u00E1s krok za krokem.`}</span>
+      <span>{`Pr\u016Fvodce p\u0159\u00EDpravou najde\u0161 v li\u0161t\u011B dole. Provede t\u011B krok za krokem.`}</span>
       <button
         onClick={dismiss}
         className="ml-auto shrink-0 px-1 text-brick/50 transition-opacity hover:text-brick"
@@ -481,11 +481,11 @@ function BuildingBlocksForStep({
   const context = getStepContext(slug);
 
   const EMPTY_HINTS: Record<string, string> = {
-    kontext: `Vra\u0165te se ke \u010Dten\u00ED a zaznamenejte sv\u016Fj celkov\u00FD dojem \u2014 pom\u016F\u017Ee v\u00E1m p\u0159i v\u00FDkladu.`,
-    vyklad: `Nejd\u0159\u00EDve si text p\u0159e\u010Dt\u011Bte a zasad\u0165te do kontextu \u2014 va\u0161e pozn\u00E1mky se zde zobraz\u00ED.`,
-    aktualizace: `Formulujte nejd\u0159\u00EDve centr\u00E1ln\u00ED my\u0161lenku textu \u2014 bude z\u00E1kladem pro aktualizaci.`,
-    stavba: `Nejd\u0159\u00EDve propojte text s poslucha\u010Di \u2014 va\u0161e poznatky se zobraz\u00ED jako stavebn\u00ED materi\u00E1l.`,
-    prednes: `Dokon\u010Dete nejd\u0159\u00EDve osnovu k\u00E1z\u00E1n\u00ED \u2014 pak se p\u0159iprav\u00EDte na p\u0159ednes.`,
+    kontext: `Vra\u0165 se ke \u010Dten\u00ED a zaznamenej sv\u016Fj celkov\u00FD dojem \u2014 pom\u016F\u017Ee ti p\u0159i v\u00FDkladu.`,
+    vyklad: `Nejd\u0159\u00EDve si text p\u0159e\u010Dti a zasa\u010F do kontextu \u2014 tvoje pozn\u00E1mky se zde zobraz\u00ED.`,
+    aktualizace: `Formuluj nejd\u0159\u00EDve centr\u00E1ln\u00ED my\u0161lenku textu \u2014 bude z\u00E1kladem pro aktualizaci.`,
+    stavba: `Nejd\u0159\u00EDve propoj text s poslucha\u010Di \u2014 tvoje poznatky se zobraz\u00ED jako stavebn\u00ED materi\u00E1l.`,
+    prednes: `Dokon\u010Di nejd\u0159\u00EDve osnovu k\u00E1z\u00E1n\u00ED \u2014 pak se p\u0159iprav\u00ED\u0161 na p\u0159ednes.`,
   };
 
   if (context.items.length === 0 && !EMPTY_HINTS[slug]) return null;
