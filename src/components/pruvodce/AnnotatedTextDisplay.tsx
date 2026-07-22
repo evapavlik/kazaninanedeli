@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { getCategory, type CategoryId } from "@/data/annotation-categories";
 import type { PositionedAnnotation } from "@/hooks/useAnnotations";
 import SelectionPopup from "./SelectionPopup";
@@ -120,10 +120,10 @@ export default function AnnotatedTextDisplay({
     []
   );
 
-  const handleMouseUp = useCallback(() => {
-    // Close any open detail popover
-    setDetailPopover(null);
-
+  // Compute the category popup from the current DOM selection. Shared by mouse
+  // (onMouseUp, instant) and touch (selectionchange, debounced) so annotating
+  // works on phones/tablets where long-press selection never fires mouseup.
+  const updateSelectionFromDom = useCallback(() => {
     const selection = window.getSelection();
     if (!selection || selection.isCollapsed || !selection.rangeCount) {
       setSelectionPopup(null);
@@ -156,6 +156,8 @@ export default function AnnotatedTextDisplay({
 
     const rect = range.getBoundingClientRect();
 
+    // A fresh selection supersedes any open annotation detail popover.
+    setDetailPopover(null);
     setSelectionPopup({
       x: rect.left + rect.width / 2 - 100,
       y: rect.top,
@@ -164,6 +166,21 @@ export default function AnnotatedTextDisplay({
       selectedText,
     });
   }, [getTextOffset]);
+
+  // Touch selection (long-press) only emits `selectionchange`, never mouseup.
+  // Debounce so the popup appears once the selection settles, not mid-drag.
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    const onSelectionChange = () => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(updateSelectionFromDom, 300);
+    };
+    document.addEventListener("selectionchange", onSelectionChange);
+    return () => {
+      if (timer) clearTimeout(timer);
+      document.removeEventListener("selectionchange", onSelectionChange);
+    };
+  }, [updateSelectionFromDom]);
 
   const handleCategorySelect = useCallback(
     (category: CategoryId) => {
@@ -213,7 +230,7 @@ export default function AnnotatedTextDisplay({
         {/* Text column */}
         <div
           ref={containerRef}
-          onMouseUp={handleMouseUp}
+          onMouseUp={updateSelectionFromDom}
           className={`select-text cursor-text ${className}`}
         >
           {segments.map((seg, i) => {

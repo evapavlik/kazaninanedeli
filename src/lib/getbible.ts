@@ -5,6 +5,14 @@
 
 export type BibleTranslation = "cep" | "bkr" | "csp" | "textusreceptus";
 
+/**
+ * How long to wait for a Bible API response before giving up. Without this a
+ * stalled connection leaves the reader staring at a spinner indefinitely; with
+ * it the fetch aborts and the caller's catch resolves to null (the "no text"
+ * state) after a bounded wait.
+ */
+const FETCH_TIMEOUT_MS = 8000;
+
 export interface BibleVerse {
   chapter: number;
   verse: number;
@@ -262,7 +270,7 @@ export async function fetchChapter(
 
   try {
     const url = `https://api.getbible.net/v2/${translation}/${bookNumber}/${chapter}.json`;
-    const response = await fetch(url);
+    const response = await fetch(url, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
 
     if (!response.ok) return null;
 
@@ -323,7 +331,7 @@ export async function fetchChapterBolls(
 
   try {
     const url = `https://bolls.life/get-text/${translationCode}/${bookNumber}/${chapter}/`;
-    const response = await fetch(url);
+    const response = await fetch(url, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
 
     if (!response.ok) return null;
 
