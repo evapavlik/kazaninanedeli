@@ -8,7 +8,7 @@ import type { FlowToolHelper } from "./UnifiedFlow";
 import BibleTextPanel from "./BibleTextPanel";
 import BuildingBlocks from "./BuildingBlocks";
 import TranslationCompare from "./TranslationCompare";
-import GuideBar from "./GuideBar";
+import GuideRail from "./GuideRail";
 import SermonPanel from "./SermonPanel";
 import { useSermonArtifacts, type SermonArtifacts } from "@/hooks/useSermonArtifacts";
 
@@ -85,6 +85,10 @@ export default function StepContentPanel({
   // it now stays in sync with BibleTextPanel, which writes the same key.
   const [savedRef] = useLocalStorage<string>("kazani-bible-ref", "");
 
+  // Guide rail: open by default, remembers the reader's choice across visits.
+  // When quiet it shrinks to a 56px strip so the text stays dominant.
+  const [guideQuiet, setGuideQuiet] = useLocalStorage<boolean>("kazani-guide-quiet", false);
+
   // Track which sub-steps are completed
   const [completedSubStepsArr, setCompletedSubStepsArr] = useLocalStorage<number[]>(
     `kazani-completed-substeps-${phase.slug}`,
@@ -160,23 +164,13 @@ export default function StepContentPanel({
     setActiveSubStep(index);
   };
 
-  // Ref for scrolling to translations
+  // Ref for the inline translation-compare block (text phase).
   const translationsRef = useRef<HTMLDivElement>(null);
-  const handleScrollToTranslations = useCallback(() => {
-    translationsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-    // Brief highlight
-    if (translationsRef.current) {
-      translationsRef.current.style.boxShadow = "0 0 0 3px rgba(155,74,60,0.25)";
-      setTimeout(() => {
-        if (translationsRef.current) translationsRef.current.style.boxShadow = "none";
-      }, 2500);
-    }
-  }, []);
 
   return (
     <div className="relative">
       {/* MAIN: Full-width text */}
-      <div className="mx-auto max-w-6xl pb-[100px]">
+      <div className="mx-auto w-full">
         {/* Mobile toggle */}
         <div className="lg:hidden mb-4">
           <button
@@ -201,15 +195,36 @@ export default function StepContentPanel({
           )}
         </div>
 
-        {/* Desktop: 2-col grid — main content + Moje kázání panel */}
+        {/* Desktop: guide rail | text | Moje kázání. The rail sits beside the
+            text (never over it) and can be quieted to a 56px strip. */}
         <div className="hidden lg:block">
-          <div className="grid grid-cols-[1fr_268px] gap-4 items-start">
-            <div>
+          <div className="guide-layout" data-quiet={guideQuiet ? "true" : undefined}>
+            <GuideRail
+              phase={phase}
+              currentSub={currentSub}
+              subSlug={subSlug}
+              activeSubStep={activeSubStep}
+              completedSubSteps={completedSubSteps}
+              onSubStepSelect={handleSubStepSelect}
+              flowToolHelpers={flowToolHelpers}
+              onFlowCountChange={handleFlowCountChange}
+              artifacts={artifacts}
+              onArtifactChange={(field, value) => updateField(field as keyof typeof artifacts, value)}
+              prevPhase={prevPhase}
+              nextPhase={nextPhase}
+              reference={savedRef}
+              checkCount={checkCount}
+              collapsed={guideQuiet}
+              onToggleCollapse={() => setGuideQuiet((q) => !q)}
+            />
+
+            {/* Reading column — capped and centred so quieting the guide gives
+                balanced margins, not an empty right-hand gutter. */}
+            <div className="mx-auto w-full max-w-[800px]">
               <OnboardingHint />
               <BuildingBlocksForStep slug={currentSub.slug} getStepContext={getStepContext} />
               <BibleTextPanel currentSlug={subSlug} />
 
-              {/* Translation compare — inline below text */}
               {isTextPhase && savedRef && (
                 <div className="mt-6 transition-shadow duration-400" ref={translationsRef}>
                   <TranslationCompare reference={savedRef} />
@@ -217,13 +232,15 @@ export default function StepContentPanel({
               )}
             </div>
 
-            {/* Moje kázání — visible throughout all steps */}
-            <SermonPanel
-              artifacts={artifacts}
-              onArtifactChange={(field, value) =>
-                updateField(field as keyof typeof artifacts, value)
-              }
-            />
+            {/* Moje kázání — only once the viewport is wide enough for all three */}
+            <div className="hidden xl:block">
+              <SermonPanel
+                artifacts={artifacts}
+                onArtifactChange={(field, value) =>
+                  updateField(field as keyof typeof artifacts, value)
+                }
+              />
+            </div>
           </div>
         </div>
 
@@ -248,26 +265,6 @@ export default function StepContentPanel({
           />
         </div>
       </div>
-
-      {/* GUIDE BAR — fixed bottom, desktop only */}
-      <GuideBar
-        phase={phase}
-        currentSub={currentSub}
-        subSlug={subSlug}
-        activeSubStep={activeSubStep}
-        completedSubSteps={completedSubSteps}
-        onSubStepSelect={handleSubStepSelect}
-        flowToolHelpers={flowToolHelpers}
-        onFlowCountChange={handleFlowCountChange}
-        onNotepadContent={handleNotepadContent}
-        artifacts={artifacts}
-        onArtifactChange={(field, value) => updateField(field as keyof typeof artifacts, value)}
-        prevPhase={prevPhase}
-        nextPhase={nextPhase}
-        reference={savedRef}
-        checkCount={checkCount}
-        onScrollToTranslations={isTextPhase ? handleScrollToTranslations : undefined}
-      />
     </div>
   );
 }
@@ -292,8 +289,8 @@ function OnboardingHint() {
 
   return (
     <div className="mb-5 flex items-center gap-2.5 rounded-[10px] border border-brick/15 bg-brick-pale px-4 py-2.5 text-[13px] text-brick animate-in fade-in slide-in-from-top-1 duration-500 delay-1000 fill-mode-both">
-      <span className="shrink-0 text-base">{"\uD83D\uDC47"}</span>
-      <span>{`Pr\u016Fvodce p\u0159\u00EDpravou najde\u0161 v li\u0161t\u011B dole. Provede t\u011B krok za krokem.`}</span>
+      <span className="shrink-0 text-base">{"\uD83D\uDC48"}</span>
+      <span>{`Pr\u016Fvodce p\u0159\u00EDpravou najde\u0161 vlevo. Provede t\u011B krok za krokem.`}</span>
       <button
         onClick={dismiss}
         className="ml-auto shrink-0 px-1 text-brick/50 transition-opacity hover:text-brick"

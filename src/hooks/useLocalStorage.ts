@@ -67,13 +67,16 @@ export function useLocalStorage<T>(
         const newValue = value instanceof Function ? value(prev) : value;
         try {
           window.localStorage.setItem(key, JSON.stringify(newValue));
-          // Let sibling instances in this tab know (storage event is cross-tab only).
-          window.dispatchEvent(new CustomEvent(SYNC_EVENT, { detail: { key } }));
         } catch (error) {
           console.warn(`useLocalStorage: error writing "${key}"`, error);
         }
         return newValue;
       });
+      // Notify sibling instances in this tab (the storage event is cross-tab
+      // only). Dispatched here in the event-handler scope — NOT inside the
+      // updater above, where a synchronous listener would call setState while
+      // React is still rendering.
+      window.dispatchEvent(new CustomEvent(SYNC_EVENT, { detail: { key } }));
     },
     [key]
   );
