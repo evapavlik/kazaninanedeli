@@ -196,16 +196,35 @@ export const TRANSLATION_LABELS: Record<BibleTranslation, string> = {
   textusreceptus: "\u0158ecky (TR)",
 };
 
-/**
- * Parse a Czech Bible reference into book number, chapter, and verse range.
- * E.g. "Mk 4,1-20" \u2192 { bookNumber: 41, chapter: 4, verseStart: 1, verseEnd: 20 }
- */
-export function parseReferenceForApi(raw: string): {
+/** One contiguous run of verses within a chapter. */
+export interface VerseSegment {
+  start: number;
+  end: number;
+}
+
+export interface ParsedReference {
   bookNumber: number;
   chapter: number;
+  /** Envelope: first verse of the first segment (null = whole chapter). */
   verseStart: number | null;
+  /** Envelope: last verse of the last segment. */
   verseEnd: number | null;
-} | null {
+  /**
+   * All contiguous verse runs. Lectionary pericopes are often discontinuous \u2014
+   * "Mt 13,31-33.44-52" reads verses 31\u201333 AND 44\u201352 while skipping 34\u201343.
+   * Empty array = whole chapter.
+   */
+  segments: VerseSegment[];
+}
+
+/**
+ * Parse a Czech Bible reference into book number, chapter, and verse segments.
+ * E.g. "Mk 4,1-20"            \u2192 segments [{1,20}]
+ *      "Mt 13,31-33.44-52"    \u2192 segments [{31,33},{44,52}]
+ *      "Sk 2,14a.36-41"       \u2192 segments [{14,14},{36,41}] (letter suffixes ignored)
+ *      "\u017D 23"                   \u2192 segments [] (whole chapter)
+ */
+export function parseReferenceForApi(raw: string): ParsedReference | null {
   const ref = raw.trim();
   if (!ref) return null;
 
@@ -236,17 +255,46 @@ export function parseReferenceForApi(raw: string): {
 
   if (!bookNumber) return null;
 
-  // Parse chapter and verses: "4,1-20" or "37, 12-14" or "4,1" or "4"
-  const cvMatch = chapterVerse.match(
-    /^(\d+)(?:[,:]\s*(\d+)(?:\s*[-\u2013\u2014]\s*(\d+))?)?/
-  );
+  // Chapter, then everything after "," / ":" as the verse expression
+  // ("4,1-20", "37, 12-14", "13, 31-33.44-52", "4,1", "4")
+  const cvMatch = chapterVerse.match(/^(\d+)(?:[,:]\s*(.*))?/);
   if (!cvMatch) return null;
 
   const chapter = parseInt(cvMatch[1], 10);
-  const verseStart = cvMatch[2] ? parseInt(cvMatch[2], 10) : null;
-  const verseEnd = cvMatch[3] ? parseInt(cvMatch[3], 10) : null;
+  const verseExpr = cvMatch[2]?.trim() ?? "";
 
-  return { bookNumber, chapter, verseStart, verseEnd };
+  // Split discontinuous runs on "." \u2014 each run is "N", "N-M", possibly with
+  // half-verse letter suffixes ("14a", "36b-41"), which we drop: verse-level
+  // granularity is all the chapter APIs can serve. Unparseable pieces are
+  // skipped rather than failing the whole reference.
+  const segments: VerseSegment[] = [];
+  if (verseExpr) {
+    for (const piece of verseExpr.split(".")) {
+      const m = piece.trim().match(/(\d+)[a-c]?(?:\s*[-\u2013\u2014]\s*(\d+)[a-c]?)?/i);
+      if (!m) continue;
+      const start = parseInt(m[1], 10);
+      const end = m[2] ? parseInt(m[2], 10) : start;
+      segments.push({ start, end: Math.max(start, end) });
+    }
+    segments.sort((a, b) => a.start - b.start);
+  }
+
+  return {
+    bookNumber,
+    chapter,
+    verseStart: segments.length ? segments[0].start : null,
+    verseEnd: segments.length ? segments[segments.length - 1].end : null,
+    segments,
+  };
+}
+
+/**
+ * Does a verse number fall inside the parsed reference?
+ * Whole-chapter references (no segments) match every verse.
+ */
+export function verseInReference(verse: number, parsed: ParsedReference): boolean {
+  if (parsed.segments.length === 0) return true;
+  return parsed.segments.some((s) => verse >= s.start && verse <= s.end);
 }
 
 /**
