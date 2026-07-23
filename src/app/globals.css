@@ -129,6 +129,29 @@ html {
 }
 
 /*
+ * Guide workspace (desktop) — the guide lives as a left rail beside the text,
+ * never over it. Columns: rail | text | "Moje kázání". The rail collapses to a
+ * 56px quiet strip (data-quiet), and the sermon column only appears once the
+ * viewport is wide enough (≥1280px) to fit all three comfortably. Dynamic
+ * column widths live here rather than in Tailwind classes because the widths
+ * switch at runtime (open ↔ quiet). Only rendered inside a `hidden lg:block`
+ * wrapper, so it is desktop-only by construction.
+ */
+.guide-layout {
+  display: grid;
+  grid-template-columns: 330px minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+.guide-layout[data-quiet="true"] {
+  grid-template-columns: 56px minmax(0, 1fr);
+}
+@media (min-width: 1280px) {
+  .guide-layout { grid-template-columns: 330px minmax(0, 1fr) 268px; }
+  .guide-layout[data-quiet="true"] { grid-template-columns: 56px minmax(0, 1fr) 268px; }
+}
+
+/*
  * Respect the reader's reduced-motion preference. The app leans on gentle,
  * continuous animation (breathing circle, guide-bar pulse, bubble wiggle); for
  * vestibular-sensitive users we collapse all of it to near-instant so the

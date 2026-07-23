@@ -32,7 +32,7 @@ export default async function PhasePage({ params }: PageProps) {
 
   return (
     <div className="px-4 py-8 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-[1400px]">
         {/* Progress bar */}
         <div className="mb-8 flex justify-center">
           <StepProgress currentStep={phase.number} />
