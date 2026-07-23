@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import {
   parseReferenceForApi,
+  verseInReference,
   fetchChapter,
   fetchChapterBolls,
   isOldTestament,
@@ -66,13 +67,11 @@ export default function TranslationCompare({
         return;
       }
 
-      const filterVerses = (verses: BibleVerse[]): BibleVerse[] => {
-        if (parsed.verseStart === null) return verses;
-        const end = parsed.verseEnd ?? parsed.verseStart;
-        return verses.filter(
-          (v) => v.verse >= parsed.verseStart! && v.verse <= end
-        );
-      };
+      // Segment-aware: discontinuous pericopes ("Mt 13,31-33.44-52") keep
+      // exactly the verses the lectionary prescribes — no silent truncation
+      // to the first run, no filler verses from the gap.
+      const filterVerses = (verses: BibleVerse[]): BibleVerse[] =>
+        verses.filter((v) => verseInReference(v.verse, parsed));
 
       setState({
         status: "success",
