@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototyp — Průvodce ve sloupci + Minimální cesta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Literata:opsz,wght@7..72,400;7..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#fff; --off-white:#faf8f5; --cream:#f4f0ea;
+    --text:#1f1a16; --text-muted:#6b6259; --text-light:#756d66;
+    --brick:#c41e1e; --brick-light:#d63030; --brick-pale:#fdf0f0;
+    --sage:#4a7c6f; --sage-light:#6ba396; --sage-pale:#eaf3f1;
+    --sand:#d4c4a8; --border:#e8e0d5; --border-strong:#d0c4b4;
+    --purple:#7b5ea7;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--off-white); color:var(--text);
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif; font-size:15px; line-height:1.6;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  }
+
+  /* ---------- header ---------- */
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 28px; background:var(--white); border-bottom:1px solid var(--border);
+    position:sticky; top:0; z-index:20;
+  }
+  header .logo{font-family:'Lora',serif; font-weight:700; color:var(--brick); font-size:17px; text-decoration:none}
+  header nav{display:flex; gap:26px; font-size:13.5px; color:var(--text-muted)}
+  header nav span{cursor:pointer}
+  header nav span:hover{color:var(--text)}
+  .proto-badge{
+    font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--sage);
+    border:1px solid var(--sage-light); border-radius:99px; padding:3px 10px; background:var(--sage-pale);
+  }
+
+  /* ---------- layout: rail | text | sermon ---------- */
+  .workspace{
+    display:grid; grid-template-columns:330px minmax(0,1fr) 260px;
+    gap:26px; max-width:1440px; margin:0 auto; padding:26px 28px 60px;
+    align-items:start;
+  }
+  @media (max-width:1160px){ .workspace{grid-template-columns:330px minmax(0,1fr)} .sermon-rail{display:none} }
+  @media (max-width:860px){ .workspace{grid-template-columns:1fr} .guide-rail{position:static} }
+
+  /* ---------- guide rail ---------- */
+  .guide-rail{
+    position:sticky; top:78px; max-height:calc(100vh - 100px); overflow-y:auto;
+    background:var(--white); border:1px solid var(--border); border-radius:16px;
+    padding:18px 18px 20px; scrollbar-width:thin;
+    transition:width .3s cubic-bezier(.4,0,.2,1);
+  }
+  .rail-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px}
+  .rail-phase{display:flex; align-items:center; gap:10px}
+  .rail-phase .icon{width:36px;height:36px;border-radius:10px;background:var(--brick-pale);display:grid;place-items:center;font-size:17px}
+  .rail-phase .kicker{font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--brick)}
+  .rail-phase h1{font-family:'Lora',serif;font-size:15.5px;font-weight:700;line-height:1.25}
+  .rail-collapse{
+    flex:none;width:30px;height:30px;border:1px solid var(--border);border-radius:9px;background:var(--white);
+    color:var(--text-light);cursor:pointer;display:grid;place-items:center;font-size:13px;
+  }
+  .rail-collapse:hover{border-color:var(--brick);color:var(--brick)}
+
+  /* mode toggle */
+  .mode-toggle{
+    display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--cream);
+    border-radius:11px;padding:4px;margin-bottom:6px;
+  }
+  .mode-toggle button{
+    border:0;border-radius:8px;padding:7px 4px;font:600 12.5px 'Plus Jakarta Sans',sans-serif;
+    color:var(--text-muted);background:transparent;cursor:pointer;transition:all .2s;
+  }
+  .mode-toggle button.active{background:var(--white);color:var(--brick);box-shadow:0 1px 4px rgba(0,0,0,.07)}
+  .mode-hint{font-size:11.5px;color:var(--text-light);text-align:center;margin-bottom:14px;font-style:italic}
+
+  /* substep pills */
+  .substeps{display:flex;gap:6px;margin-bottom:14px}
+  .substeps button{
+    flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+    border:1px solid var(--border);background:var(--white);border-radius:9px;
+    padding:7px 4px;font:500 12px 'Plus Jakarta Sans',sans-serif;color:var(--text-muted);cursor:pointer;
+  }
+  .substeps button.active{border-color:var(--brick);color:var(--brick);background:var(--brick-pale)}
+  .substeps button.done .num{background:var(--brick);color:#fff;border-color:var(--brick)}
+  .substeps .num{
+    width:17px;height:17px;border:1.5px solid var(--border-strong);border-radius:50%;
+    display:grid;place-items:center;font-size:10px;font-weight:700;color:var(--text-light);
+  }
+  .substeps button.active .num{border-color:var(--brick);color:var(--brick)}
+
+  /* theory accordion */
+  .theory{border-left:3px solid var(--sage);background:var(--sage-pale);border-radius:0 10px 10px 0;margin-bottom:14px}
+  .theory summary{
+    list-style:none;cursor:pointer;padding:10px 12px;display:flex;align-items:center;gap:8px;
+    font-size:12px;color:var(--text-muted);
+  }
+  .theory summary::-webkit-details-marker{display:none}
+  .theory summary b{font-family:'Lora',serif;font-size:13px;color:var(--text);font-weight:600}
+  .theory .body{padding:0 12px 12px;font-size:12.5px;line-height:1.65;color:var(--text-muted)}
+  .theory .src{display:block;margin-top:6px;font-size:11px;font-style:italic;color:var(--text-light)}
+
+  .rail-desc{font-size:13px;font-weight:300;line-height:1.7;color:var(--text-muted);margin-bottom:16px}
+
+  /* flow items */
+  .flow{display:flex;flex-direction:column;gap:4px}
+  .flow-check{
+    display:flex;gap:11px;align-items:flex-start;padding:9px 10px;border-radius:10px;cursor:pointer;
+  }
+  .flow-check:hover{background:var(--cream)}
+  .flow-check .box{
+    flex:none;width:19px;height:19px;margin-top:1px;border:1.7px solid var(--border-strong);
+    border-radius:6px;background:var(--white);display:grid;place-items:center;transition:all .2s;
+  }
+  .flow-check.checked .box{background:var(--brick);border-color:var(--brick)}
+  .flow-check .box svg{opacity:0;transition:opacity .15s}
+  .flow-check.checked .box svg{opacity:1}
+  .flow-check .txt{font-size:13.5px;line-height:1.55;color:var(--text)}
+  .flow-check.checked .txt{color:var(--text-light);text-decoration:line-through;text-decoration-color:var(--border-strong)}
+
+  .flow-artifact{padding:10px 10px 4px}
+  .flow-artifact label{display:flex;gap:9px;font-size:13.5px;font-weight:600;line-height:1.5;margin-bottom:8px}
+  .flow-artifact label .ic{flex:none;font-size:14px}
+  .flow-artifact textarea{
+    width:100%;min-height:64px;resize:vertical;border:1px solid var(--border);border-radius:10px;
+    background:var(--off-white);padding:9px 11px;font:400 13px/1.6 'Plus Jakarta Sans',sans-serif;color:var(--text);
+  }
+  .flow-artifact textarea:focus{outline:none;border-color:var(--sage-light);box-shadow:0 0 0 3px rgba(74,124,111,.08)}
+  .flow-artifact textarea::placeholder{color:var(--text-light);opacity:.55}
+  .saved-flash{font-size:11px;color:var(--sage);opacity:0;transition:opacity .3s;margin-left:23px}
+  .saved-flash.show{opacity:1}
+
+  /* tool link inside a flow row — independently clickable */
+  .tool-link{
+    border:0;background:none;padding:0;font:600 13px 'Plus Jakarta Sans',sans-serif;
+    color:var(--sage);cursor:pointer;white-space:nowrap;
+  }
+  .tool-link:hover{text-decoration:underline}
+
+  /* tool view — opens INSIDE the rail (text stays visible beside it) */
+  .tool-view{display:none}
+  .full-mode.tool-open .tool-view{display:block}
+  .full-mode.tool-open > *:not(.tool-view){display:none}
+  .tool-view .tool-back{
+    border:0;background:none;padding:6px 0;font:600 12.5px 'Plus Jakarta Sans',sans-serif;
+    color:var(--text-muted);cursor:pointer;margin-bottom:8px;
+  }
+  .tool-view .tool-back:hover{color:var(--brick)}
+  .tool-view h2{font-family:'Lora',serif;font-size:15px;font-weight:700;margin-bottom:10px}
+  .tool-body{
+    border:1px solid var(--border);border-radius:12px;background:var(--off-white);
+    padding:14px;font-size:13px;line-height:1.65;color:var(--text-muted);
+  }
+  .tool-body .season{
+    display:inline-flex;align-items:center;gap:7px;border-radius:99px;
+    background:var(--sage-pale);color:var(--sage);font-weight:600;font-size:12px;
+    padding:4px 12px;margin-bottom:9px;
+  }
+
+  .rail-tip{
+    margin-top:16px;border-radius:10px;background:var(--cream);padding:11px 13px;
+    font-size:12.5px;line-height:1.65;color:var(--text-muted);
+  }
+  .rail-tip b{color:var(--brick);font-weight:600}
+
+  .rail-nav{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)}
+  .rail-nav .back{font-size:12.5px;color:var(--text-muted);background:none;border:0;cursor:pointer;padding:8px 10px;border-radius:8px}
+  .rail-nav .back:hover{background:var(--cream)}
+  .rail-nav .next{
+    font:600 13px 'Plus Jakarta Sans',sans-serif;color:#fff;background:var(--brick);border:0;
+    padding:9px 18px;border-radius:9px;cursor:pointer;transition:all .2s;
+  }
+  .rail-nav .next:hover{background:var(--brick-light);transform:translateY(-1px)}
+
+  /* minimal mode */
+  .minimal{display:none;flex-direction:column;gap:16px}
+  .minimal.on{display:flex}
+  .full-mode{display:block}
+  .full-mode.off{display:none}
+  .spine{border:1px solid var(--border);border-radius:12px;padding:13px 14px;background:var(--white)}
+  .spine.active{border-color:var(--sage-light);box-shadow:0 0 0 3px rgba(74,124,111,.07)}
+  .spine .step-k{display:flex;align-items:center;gap:9px;margin-bottom:4px}
+  .spine .n{
+    width:22px;height:22px;border-radius:50%;background:var(--sage-pale);color:var(--sage);
+    display:grid;place-items:center;font-size:11.5px;font-weight:700;
+  }
+  .spine h3{font-family:'Lora',serif;font-size:14px;font-weight:700}
+  .spine .why{font-size:11.5px;color:var(--text-light);margin-bottom:9px;line-height:1.5}
+  .spine textarea{
+    width:100%;resize:vertical;border:1px solid var(--border);border-radius:9px;background:var(--off-white);
+    padding:9px 11px;font:400 13px/1.6 'Plus Jakarta Sans',sans-serif;color:var(--text);
+  }
+  .spine textarea:focus{outline:none;border-color:var(--sage-light);box-shadow:0 0 0 3px rgba(74,124,111,.08)}
+  .spine textarea::placeholder{color:var(--text-light);opacity:.55}
+
+  /* progress dots — live only in the quiet strip; the open rail already
+     shows position via the substep pills and the checklist itself.
+     One scale only: dot = substep. The current dot "ripens" — fills with a
+     conic gradient as the step's items get done (set inline from JS). */
+  .progress-dots{display:flex;gap:5px;align-items:center}
+  .progress-dots i{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background .3s}
+  .progress-dots i.done{background:var(--brick)}
+  .progress-dots i.cur{background:var(--brick-pale);border:2px solid var(--brick);width:10px;height:10px;margin:-1px}
+
+  /* quiet rail — 56px strip: icon, vertical progress dots, label */
+  .guide-rail.collapsed{width:56px;padding:14px 8px;overflow:hidden}
+  .guide-rail.collapsed > *:not(.rail-head):not(.strip-extras){display:none}
+  .guide-rail.collapsed .rail-head{flex-direction:column;gap:10px;margin:0}
+  .guide-rail.collapsed .rail-phase .kicker,
+  .guide-rail.collapsed .rail-phase h1{display:none}
+  .strip-extras{display:none}
+  .guide-rail.collapsed .strip-extras{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:16px}
+  .strip-extras .progress-dots{flex-direction:column;gap:7px}
+  .vert-label{
+    writing-mode:vertical-rl;font-family:'Cormorant Garamond',serif;
+    font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--brick);
+  }
+  .workspace.rail-collapsed{grid-template-columns:56px minmax(0,1fr) 260px}
+  @media (max-width:1160px){ .workspace.rail-collapsed{grid-template-columns:56px minmax(0,1fr)} }
+
+  /* ---------- text column ---------- */
+  .text-col{min-width:0}
+  .text-card{
+    background:var(--cream);border:1px solid var(--border);border-radius:16px;
+    padding:34px clamp(22px,4vw,48px) 44px;
+  }
+  .text-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+  .text-ref{
+    font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--brick);
+  }
+  .text-meta{display:flex;align-items:center;gap:8px}
+  .chip{
+    font-size:10.5px;font-weight:500;color:var(--sage);border:1px solid rgba(74,124,111,.3);
+    background:rgba(234,243,241,.5);border-radius:99px;padding:2px 9px;
+  }
+  .sunday-note{font-size:12px;color:var(--text-light);margin-bottom:22px}
+  .bible{
+    font-family:'Literata',Georgia,serif;font-size:17.5px;line-height:2.0;
+    max-width:66ch;text-align:justify;hyphens:auto;
+  }
+  .bible .v{font-size:10.5px;color:var(--text-light);vertical-align:super;margin-right:3px;font-family:'Plus Jakarta Sans',sans-serif}
+  mark{border-radius:3px;padding:0 3px;cursor:pointer;transition:box-shadow .15s}
+  mark:hover{box-shadow:0 0 0 1.5px currentColor}
+  mark.kw{background:rgba(196,30,30,.13);color:var(--brick)}
+  mark.actor{background:rgba(74,124,111,.15);color:var(--sage)}
+  mark.tension{background:rgba(212,196,168,.35);color:#8a6d38}
+  mark.q{background:rgba(123,94,167,.13);color:var(--purple)}
+  .annot-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px;padding-top:16px;border-top:1px dashed var(--border-strong)}
+  .annot-legend span{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--text-muted)}
+  .annot-legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+  /* ---------- sermon rail ---------- */
+  .sermon-rail{
+    position:sticky;top:78px;background:var(--white);border:1px solid var(--border);
+    border-radius:16px;padding:16px;
+  }
+  .sermon-rail h2{
+    font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--text-light);margin-bottom:4px;
+  }
+  .sermon-rail .count{font-size:11px;color:var(--sage);margin-bottom:12px}
+  .sermon-field{border-top:1px solid var(--border);padding:9px 2px}
+  .sermon-field .k{font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-light)}
+  .sermon-field .val{font-family:'Lora',serif;font-size:12.5px;line-height:1.55;color:var(--text);margin-top:3px}
+  .sermon-field .val.empty{color:var(--text-light);font-style:italic;font-weight:300}
+  .sermon-open{
+    margin-top:12px;width:100%;border:1px solid var(--border);background:var(--off-white);
+    border-radius:9px;padding:8px;font:600 12px 'Plus Jakarta Sans',sans-serif;color:var(--text-muted);cursor:pointer;
+  }
+  .sermon-open:hover{border-color:var(--sage);color:var(--sage)}
+
+  footer{
+    max-width:1440px;margin:0 auto;padding:0 28px 40px;
+    font-size:11.5px;color:var(--text-light);display:flex;gap:18px;flex-wrap:wrap;
+  }
+  footer b{color:var(--text-muted)}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo">Kázání na neděli</a>
+  <nav>
+    <span>Průvodce</span><span>Kázání</span><span>Metodika</span><span>Slovník</span>
+  </nav>
+  <span class="proto-badge">Prototyp · průvodce ve sloupci</span>
+</header>
+
+<div class="workspace" id="ws">
+
+  <!-- ================= GUIDE RAIL ================= -->
+  <aside class="guide-rail" id="rail" aria-label="Průvodce přípravou">
+    <div class="rail-head">
+      <div class="rail-phase">
+        <span class="icon">📖</span>
+        <div>
+          <p class="kicker">Fáze 2 ze 4</p>
+          <h1>Práce s textem</h1>
+        </div>
+      </div>
+      <button class="rail-collapse" id="collapseBtn" title="Ztišit průvodce — jen text" aria-label="Ztišit průvodce">⟨</button>
+    </div>
+
+    <div class="strip-extras">
+      <span class="progress-dots" id="stripDots" aria-label="Postup podkroky"></span>
+      <span class="vert-label">Průvodce</span>
+    </div>
+
+    <div class="mode-toggle" role="tablist" aria-label="Rychlost průvodce">
+      <button id="modeFull" class="active" role="tab" aria-selected="true">Celá cesta</button>
+      <button id="modeMin" role="tab" aria-selected="false">Minimální cesta</button>
+    </div>
+    <p class="mode-hint" id="modeHint">Krok za krokem podle Pokorného hermeneutiky.</p>
+
+    <!-- ---------- FULL MODE ---------- -->
+    <div class="full-mode" id="fullMode">
+      <div class="tool-view" id="toolView">
+        <button class="tool-back" id="toolBack">‹ Zpět na kroky</button>
+        <h2 id="toolTitle"></h2>
+        <div class="tool-body">
+          <span class="season">● Mezidobí (po Letnicích)</span>
+          <p><b>Neděle po svatém Duchu</b> · 15. v mezidobí<br>
+          Čtení: Iz 55,10–13 · Ř 8,1–11 · Mt 13,1–9</p>
+          <p style="margin-top:9px;font-size:11.5px;font-style:italic;color:var(--text-light)">
+            Prototyp ukazuje umístění: nástroj se otevírá uvnitř průvodce a text perikopy zůstává viditelný vedle.
+          </p>
+        </div>
+      </div>
+      <div class="substeps" id="substeps">
+        <button class="active" data-i="0"><span class="num">1</span>Čtení</button>
+        <button data-i="1"><span class="num">2</span>Kontext</button>
+        <button data-i="2"><span class="num">3</span>Výklad</button>
+      </div>
+
+      <details class="theory">
+        <summary>📖 <div><span style="display:block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase">Teoretické pozadí</span><b id="theoryTitle">Text jako kódovací systém</b></div></summary>
+        <div class="body" id="theoryBody">
+          Biblický text má svůj sukcesivní povrch (čteme ho postupně, slovo za slovem) a svou redundanci (opakování klíčových motivů). Pozorné čtení odhaluje, co text skutečně říká — ne co si myslíme, že říká.
+          <span class="src" id="theorySrc">Pokorný, kap. 2–3 (Jazykový svět, Text)</span>
+        </div>
+      </details>
+
+      <p class="rail-desc" id="stepDesc">Prvním krokem je pozorné, opakované čtení. Učíme se textu naslouchat dříve, než ho začneme vykládat.</p>
+
+      <div class="flow" id="flow"></div>
+
+      <div class="rail-tip" id="stepTip"><b>Tip:</b> Nespěchej na výklad. Čím déle u textu zůstaneš, tím víc ti odhalí.</div>
+
+      <div class="rail-nav">
+        <button class="back">‹ Příprava srdce</button>
+        <button class="next" id="nextBtn">Další krok ›</button>
+      </div>
+    </div>
+
+    <!-- ---------- MINIMAL MODE ---------- -->
+    <div class="minimal" id="minMode">
+      <div class="spine active">
+        <div class="step-k"><span class="n">1</span><h3>Centrální myšlenka textu</h3></div>
+        <p class="why">Co text říká — jednou větou. Jádro výkladu.</p>
+        <textarea rows="2" placeholder="Např. Slovo přináší úrodu i tam, kde to vzdáváme."></textarea>
+      </div>
+      <div class="spine">
+        <div class="step-k"><span class="n">2</span><h3>Thesis kázání</h3></div>
+        <p class="why">Co řekneš svým posluchačům — tuto neděli, v této situaci.</p>
+        <textarea rows="2" placeholder="Např. Bůh rozsévá štědře — i do našich skal a trní."></textarea>
+      </div>
+      <div class="spine">
+        <div class="step-k"><span class="n">3</span><h3>Text kázání</h3></div>
+        <p class="why">Piš tak, jak mluvíš. 12–15 minut ≈ 1 500–2 000 slov.</p>
+        <textarea rows="8" placeholder="Úvod:&#10;…&#10;&#10;1. bod:&#10;…&#10;&#10;Závěr:&#10;…"></textarea>
+      </div>
+      <div class="rail-tip"><b>Málo času?</b> Tohle stačí. Všechny ostatní kroky průvodce tu na tebe počkají — celá cesta se ti kdykoli zase otevře.</div>
+    </div>
+  </aside>
+
+  <!-- ================= TEXT COLUMN ================= -->
+  <main class="text-col">
+    <div class="text-card">
+      <div class="text-head">
+        <span class="text-ref">Mt 13,1–9</span>
+        <span class="text-meta"><span class="chip">Kralická</span><span class="chip" style="color:var(--text-light);border-color:var(--border)">✓ Uloženo</span></span>
+      </div>
+      <p class="sunday-note">Evangelium · Neděle po svatém Duchu (15. v mezidobí)</p>
+
+      <div class="bible">
+        <p>
+          <span class="v">1</span>A v ten den vyšed <mark class="actor">Ježíš</mark> z domu, sedl podle moře.
+          <span class="v">2</span>I sešli se k němu <mark class="actor">zástupové mnozí</mark>, takže vstoupiv na lodí, seděl, všecken pak zástup stál na břehu.
+          <span class="v">3</span>I mluvil jim mnoho v <mark class="kw">podobenstvích</mark>, řka: Aj, vyšel <mark class="kw">rozsevač</mark>, aby rozsíval.
+          <span class="v">4</span>A když on rozsíval, některá seménka padla podle cesty, a přiletěli ptáci, i szobali je.
+          <span class="v">5</span>Jiná pak padla na místa skalnatá, kdežto neměla mnoho země, a rychle vzešla, protože neměla hlubokosti země.
+          <span class="v">6</span>Ale když slunce vzešlo, <mark class="tension">uvadla</mark>, a že neměla kořene, uschla.
+          <span class="v">7</span>Jiná pak padla v trní; i vzrostlo trní, a <mark class="tension">udusilo je</mark>.
+          <span class="v">8</span>A jiná padla v zemi dobrou; i vydalo užitek, některé stý, jiné šedesátý a jiné třidcátý.
+          <span class="v">9</span><mark class="q">Kdo má uši k slyšení, slyš.</mark>
+        </p>
+      </div>
+
+      <div class="annot-legend">
+        <span><i style="background:rgba(196,30,30,.25)"></i>Klíčové slovo</span>
+        <span><i style="background:rgba(74,124,111,.3)"></i>Osoby a děje</span>
+        <span><i style="background:rgba(212,196,168,.6)"></i>Zlom / napětí</span>
+        <span><i style="background:rgba(123,94,167,.25)"></i>Otázka</span>
+        <span style="margin-left:auto;color:var(--text-light);font-style:italic">Označ libovolnou frázi a vyber kategorii</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= SERMON RAIL ================= -->
+  <aside class="sermon-rail" aria-label="Moje kázání">
+    <h2>Moje kázání</h2>
+    <p class="count">2 / 16 polí</p>
+    <div class="sermon-field">
+      <p class="k">Celkový dojem</p>
+      <p class="val">Text působí štědře — rozsévač nešetří.</p>
+    </div>
+    <div class="sermon-field">
+      <p class="k">Centrální myšlenka</p>
+      <p class="val">Slovo přináší úrodu i tam, kde to vzdáváme.</p>
+    </div>
+    <div class="sermon-field">
+      <p class="k">Thesis kázání</p>
+      <p class="val empty">zatím prázdné</p>
+    </div>
+    <button class="sermon-open">📓 Můj zápisník · 5 bublinek</button>
+  </aside>
+</div>
+
+<footer>
+  <span><b>Prototyp k rozhodnutí:</b> průvodce jako trvalý boční sloupec — nikdy nezakrývá text; posun (tečky) je vidět i ve ztišeném proužku.</span>
+  <span>Interakce: ⟨ ztiší průvodce na proužek s tečkami · klikej kroky · přepínej podkroky · Celá/Minimální cesta.</span>
+</footer>
+
+<script>
+/* ---------- substep content (real texts from phases.ts, tykání) ---------- */
+const SUBSTEPS = [
+  {
+    desc:"Prvním krokem je pozorné, opakované čtení. Učíme se textu naslouchat dříve, než ho začneme vykládat.",
+    theory:{t:"Text jako kódovací systém", b:"Biblický text má svůj sukcesivní povrch (čteme ho postupně, slovo za slovem) a svou redundanci (opakování klíčových motivů). Pozorné čtení odhaluje, co text skutečně říká — ne co si myslíme, že říká.", s:"Pokorný, kap. 2–3 (Jazykový svět, Text)"},
+    tip:"Nespěchej na výklad. Čím déle u textu zůstaneš, tím víc ti odhalí.",
+    flow:[
+      {t:"check", text:"První čtení: přečti text pomalu a nahlas."},
+      {t:"artifact", label:"Jaký je tvůj celkový dojem z textu?", ph:"Např. text působí nadějně, překvapil mě kontrast…"},
+      {t:"check", text:"Druhé čtení: označuj klíčová slova a opakující se motivy v textu."},
+      {t:"check", text:"Třetí čtení: všímej si struktury — kde je zlom, kdo jedná, kde je napětí."},
+    ]
+  },
+  {
+    desc:"Biblické texty nevznikly ve vzduchoprázdnu. Mají svůj literární, historický a liturgický kontext.",
+    theory:{t:"Historická kritika a intertextualita", b:"Historická kritika hledá Sitz im Leben — životní situaci, v níž text vznikl. Žádný text nestojí sám: každý je protkán odkazy na jiné texty a tradice.", s:"Pokorný, kap. 3–4 (Text, Metody interpretace)"},
+    tip:"Nemusíš starověku rozumět do hloubky. I základní kontext — kdo píše komu a proč — výrazně promění tvé porozumění textu.",
+    flow:[
+      {t:"check", text:"Přečti si, co předchází a následuje tvoji perikopu."},
+      {t:"artifact", label:"Kdo napsal a komu? Jaký je záměr knihy?", ph:"Např. Matouš píše židokřesťanské obci…"},
+      {t:"check", text:"Podívej se, kde se v církevním roce nacházíš a proč se tento text čte právě teď.", tool:"🗓️ Liturgický kalendář"},
+      {t:"check", text:"Hledej křížové odkazy — kde se podobné motivy objevují jinde v Bibli."},
+    ]
+  },
+  {
+    desc:"Exegeze je jádrem přípravy. Hledáme, kde se setkává svět textu se světem čtenáře — splývání horizontů.",
+    theory:{t:"Splývání horizontů (Horizontverschmelzung)", b:"Horizont textu (jeho původní smysl) se setkává s horizontem čtenáře (naší současnou situací). Výklad využívá filologickou metodu, synchronní interpretaci a rétorickou kritiku.", s:"Pokorný, kap. 4–5 (Metody interpretace, Výklad)"},
+    tip:"Centrální myšlenku textu se pokus formulovat jednou jedinou větou. Pokud to ještě nejde, textu plně nerozumíš — a to je v pořádku, vrať se k němu.",
+    flow:[
+      {t:"check", text:"Vyber 2–3 klíčová slova a zjisti jejich význam v původním kontextu.", tool:"🔤 Původní jazyky"},
+      {t:"check", text:"Porovnej překlady — kde se liší a proč.", tool:"⇄ Porovnání překladů"},
+      {t:"check", text:"Nahlédni do komentáře k danému textu."},
+      {t:"artifact", label:"Centrální myšlenka textu jednou větou:", ph:"Např. Slovo přináší úrodu i tam, kde to vzdáváme."},
+    ]
+  }
+];
+
+const flowEl = document.getElementById('flow');
+const state = SUBSTEPS.map(s => s.flow.map(() => false));
+let cur = 0;
+
+function renderFlow(){
+  const s = SUBSTEPS[cur];
+  document.getElementById('stepDesc').textContent = s.desc;
+  document.getElementById('theoryTitle').textContent = s.theory.t;
+  document.getElementById('theoryBody').childNodes[0].textContent = s.theory.b + ' ';
+  document.getElementById('theorySrc').textContent = s.theory.s;
+  document.getElementById('stepTip').innerHTML = '<b>Tip:</b> ' + s.tip;
+  flowEl.innerHTML = '';
+  s.flow.forEach((item, i) => {
+    if (item.t === 'check'){
+      const d = document.createElement('div');
+      d.className = 'flow-check' + (state[cur][i] ? ' checked' : '');
+      d.setAttribute('role','checkbox');
+      d.setAttribute('aria-checked', state[cur][i]);
+      d.tabIndex = 0;
+      d.innerHTML = `<span class="box"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M2 6.5L4.8 9 10 3.5"/></svg></span><span class="txt">${item.text}${item.tool ? ` <button class="tool-link">${item.tool} ›</button>` : ''}</span>`;
+      const toggle = () => { state[cur][i] = !state[cur][i]; renderFlow(); updatePills(); };
+      d.addEventListener('click', toggle);
+      d.addEventListener('keydown', e => { if (e.key===' '||e.key==='Enter'){e.preventDefault();toggle();} });
+      // The tool opens on its own click — it must not toggle the row's checkbox
+      // (neither by mouse nor by Enter when the button itself is focused).
+      const tl = d.querySelector('.tool-link');
+      if (tl){
+        tl.addEventListener('click', e => { e.stopPropagation(); openTool(item.tool); });
+        tl.addEventListener('keydown', e => e.stopPropagation());
+      }
+      flowEl.appendChild(d);
+    } else {
+      const d = document.createElement('div');
+      d.className = 'flow-artifact';
+      d.innerHTML = `<label><span class="ic">📝</span>${item.label}</label><textarea rows="2" placeholder="${item.ph}"></textarea><span class="saved-flash">✓ Uloženo</span>`;
+      const ta = d.querySelector('textarea'); const fl = d.querySelector('.saved-flash');
+      let t; ta.addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => { fl.classList.add('show'); state[cur][i] = ta.value.trim().length > 0; updatePills(); setTimeout(()=>fl.classList.remove('show'), 1400); }, 500); });
+      flowEl.appendChild(d);
+    }
+  });
+}
+function updatePills(){
+  document.querySelectorAll('#substeps button').forEach((b, i) => {
+    b.classList.toggle('done', state[i].every(Boolean));
+    b.classList.toggle('active', i === cur);
+  });
+  renderDots();
+}
+document.querySelectorAll('#substeps button').forEach(b => b.addEventListener('click', () => { cur = +b.dataset.i; renderFlow(); updatePills(); }));
+document.getElementById('nextBtn').addEventListener('click', () => { if (cur < 2){ cur++; renderFlow(); updatePills(); } });
+
+/* mode toggle */
+const modeFull = document.getElementById('modeFull'), modeMin = document.getElementById('modeMin');
+function setMode(min){
+  modeFull.classList.toggle('active', !min); modeMin.classList.toggle('active', min);
+  modeFull.setAttribute('aria-selected', !min); modeMin.setAttribute('aria-selected', min);
+  document.getElementById('fullMode').classList.toggle('off', min);
+  document.getElementById('minMode').classList.toggle('on', min);
+  document.getElementById('modeHint').textContent = min
+    ? 'Jen páteř: myšlenka → thesis → text. Zbytek počká.'
+    : 'Krok za krokem podle Pokorného hermeneutiky.';
+}
+modeFull.addEventListener('click', () => setMode(false));
+modeMin.addEventListener('click', () => setMode(true));
+
+/* quiet mode — the rail shrinks to a 56px strip; progress dots stay visible,
+   so "kde jsem" never leaves the preacher's peripheral vision */
+const ws = document.getElementById('ws'), rail = document.getElementById('rail'), cbtn = document.getElementById('collapseBtn');
+cbtn.addEventListener('click', () => {
+  const c = rail.classList.toggle('collapsed');
+  ws.classList.toggle('rail-collapsed', c);
+  cbtn.textContent = c ? '⟩' : '⟨';
+  cbtn.title = c ? 'Otevřít průvodce' : 'Ztišit průvodce — jen text';
+});
+
+/* tool view — mirrors the app's pattern: the tool opens inside the guide,
+   the pericope text stays visible beside it */
+function openTool(name){
+  document.getElementById('toolTitle').textContent = name.replace(/^[^ ]+ /, '');
+  document.getElementById('fullMode').classList.add('tool-open');
+}
+document.getElementById('toolBack').addEventListener('click', () =>
+  document.getElementById('fullMode').classList.remove('tool-open'));
+
+/* progress dots — quiet strip only, ONE scale: dot = substep (the journey is
+   genuinely sequential there). The current dot ripens like a waxing moon —
+   a conic fill grows as the step's items get done, so granular progress stays
+   visible without introducing a second number. */
+const SUBSTEP_NAMES = ['Čtení', 'Kontext', 'Výklad'];
+function renderDots(){
+  const items = state[cur]; const done = items.filter(Boolean).length;
+  const fill = Math.round((done / items.length) * 100);
+  document.getElementById('stripDots').innerHTML = SUBSTEPS.map((_, i) => {
+    if (state[i].every(Boolean)) return `<i class="done" title="${SUBSTEP_NAMES[i]} — hotovo"></i>`;
+    if (i === cur) return `<i class="cur" title="${SUBSTEP_NAMES[i]} — hotovo ${done} z ${items.length}" style="background:conic-gradient(var(--brick) ${fill}%, var(--brick-pale) 0)"></i>`;
+    return `<i title="${SUBSTEP_NAMES[i]}"></i>`;
+  }).join('');
+}
+
+renderFlow(); updatePills();
+</script>
+</body>
+</html>
