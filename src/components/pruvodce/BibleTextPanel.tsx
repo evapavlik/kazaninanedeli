@@ -8,6 +8,7 @@ import { useAnnotations } from "@/hooks/useAnnotations";
 import { annotationCategories } from "@/data/annotation-categories";
 import type { LectionaryReading } from "@/data/lectionary";
 import AnnotatedTextDisplay from "./AnnotatedTextDisplay";
+import BreathingPractice from "./BreathingPractice";
 import { fetchChapter, formatReference, type BibleTranslation } from "@/lib/getbible";
 
 /** Source of the Bible text: a specific translation code or "custom" for user-pasted text. */
@@ -23,9 +24,17 @@ const TEXT_SOURCE_LABELS: Record<TextSource, string> = {
 
 interface BibleTextPanelProps {
   currentSlug: string;
+  /** Step 1 only: the breathing practice finished — tick off the prayer step. */
+  onBreathingComplete?: () => void;
+  /** Step 1 only: move on to the text phase once the reader is ready. */
+  onOpenText?: () => void;
 }
 
-export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
+export default function BibleTextPanel({
+  currentSlug,
+  onBreathingComplete,
+  onOpenText,
+}: BibleTextPanelProps) {
   const [savedText, setSavedText] = useLocalStorage<string>(
     "kazani-bible-text",
     ""
@@ -128,12 +137,22 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
   // Annotations enabled only from step 2 onwards
   const annotationsEnabled = !isFirstStep && currentSlug !== "modlitba";
 
-  // Step 1: breathing exercise first, blurred text underneath
+  // Step 1: breathing practice first, blurred text underneath
   if (isFirstStep) {
+    const gospel = lectionary.entry?.readings.gospel;
     return (
       <div className="rounded-xl border border-border bg-cream p-5 lg:p-6">
-        {/* Breathing exercise — always visible, always first */}
-        <BreathingExercise />
+        {/* Breathing practice — part of the guide step, not a separate island:
+            finishing it ticks the prayer step off and opens the way to the text. */}
+        <BreathingPractice
+          onComplete={onBreathingComplete}
+          reading={
+            lectionary.entry && gospel
+              ? { title: lectionary.entry.sundayName, reference: `Evangelium: ${gospel.reference}` }
+              : null
+          }
+          onOpenText={onOpenText}
+        />
 
         {/* Blurred text underneath — fades out at bottom */}
         {hasText ? (
@@ -334,178 +353,6 @@ export default function BibleTextPanel({ currentSlug }: BibleTextPanelProps) {
           )}
         </div>
       )}
-    </div>
-  );
-}
-
-/** Breathing exercise for step 1 — inspired by meditation apps */
-function BreathingExercise() {
-  const [active, setActive] = useState(false);
-  const [phase, setPhase] = useState<"inhale" | "hold" | "exhale">("exhale");
-  const [count, setCount] = useState(0);
-  const intervalRef = useRef<ReturnType<typeof setTimeout>>(undefined);
-
-  const INHALE = 4;
-  const HOLD = 2;
-  const EXHALE = 6;
-  const TOTAL_CYCLES = 3;
-
-  const phaseLabels = {
-    inhale: `N\u00E1dech`,
-    hold: `Zadr\u017Eet`,
-    exhale: `V\u00FDdech`,
-  };
-
-  useEffect(() => {
-    if (!active) return;
-
-    let currentPhase: "inhale" | "hold" | "exhale" = "inhale";
-    let tick = 0;
-    let cycles = 0;
-
-    setPhase("exhale");
-    setCount(INHALE);
-
-    // Brief delay so browser renders small circle, then start growing
-    const startDelay = setTimeout(() => {
-      setPhase("inhale");
-    }, 50);
-
-    const phaseDurations = { inhale: INHALE, hold: HOLD, exhale: EXHALE };
-
-    intervalRef.current = setInterval(() => {
-      tick++;
-      const duration = phaseDurations[currentPhase];
-      const remaining = duration - (tick % duration === 0 ? duration : tick % duration);
-
-      if (tick % duration === 0) {
-        // Move to next phase
-        if (currentPhase === "inhale") {
-          currentPhase = "hold";
-          tick = 0;
-          setPhase("hold");
-          setCount(HOLD);
-        } else if (currentPhase === "hold") {
-          currentPhase = "exhale";
-          tick = 0;
-          setPhase("exhale");
-          setCount(EXHALE);
-        } else {
-          cycles++;
-          if (cycles >= TOTAL_CYCLES) {
-            setActive(false);
-            return;
-          }
-          currentPhase = "inhale";
-          tick = 0;
-          setPhase("inhale");
-          setCount(INHALE);
-        }
-      } else {
-        setCount(remaining);
-      }
-    }, 1000);
-
-    return () => {
-      clearTimeout(startDelay);
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [active]);
-
-  useEffect(() => {
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, []);
-
-  if (!active) {
-    return (
-      <div className="flex min-h-[420px] flex-col items-center justify-center py-12">
-        <p className="mb-2 font-cormorant text-[13px] font-semibold uppercase tracking-[0.2em] text-sage/70">
-          {`P\u0159\u00EDprava srdce`}
-        </p>
-        <p className="mb-10 max-w-[240px] text-center font-literata text-[15px] italic leading-relaxed text-text-muted">
-          {`Zti\u0161te se a otev\u0159ete se Bohu i textu.`}
-        </p>
-        <button
-          onClick={() => setActive(true)}
-          className="group flex flex-col items-center gap-4"
-        >
-          <div className="relative flex h-40 w-40 items-center justify-center">
-            {/* Outer pulsing ring */}
-            <div className="breathe-ring absolute inset-0 rounded-full border border-sage/20" />
-            {/* Inner breathing circle */}
-            <div className="breathe-idle flex h-32 w-32 items-center justify-center rounded-full bg-sage-pale/60 backdrop-blur-sm transition-colors duration-500 group-hover:bg-sage-pale">
-              <span className="font-literata text-base font-medium text-sage">{`D\u00FDchat`}</span>
-            </div>
-          </div>
-          <span className="text-[11px] tracking-wide text-text-light/60">
-            {`3 klidn\u00E9 cykly`}
-          </span>
-        </button>
-      </div>
-    );
-  }
-
-  // Circle scale: small at start/exhale, grows on inhale, holds at full
-  const expanded = phase === "inhale" || phase === "hold";
-  const duration = phase === "inhale" ? INHALE : phase === "exhale" ? EXHALE : 0.3;
-
-  const circleStyle: React.CSSProperties = {
-    transform: expanded ? "scale(1)" : "scale(0.55)",
-    transition: `transform ${duration}s cubic-bezier(0.4, 0, 0.2, 1)`,
-  };
-
-  const ringOuterStyle: React.CSSProperties = {
-    transform: expanded ? "scale(1)" : "scale(0.6)",
-    opacity: expanded ? 0.35 : 0.1,
-    transition: `all ${duration}s cubic-bezier(0.4, 0, 0.2, 1)`,
-  };
-
-  const ringInnerStyle: React.CSSProperties = {
-    transform: expanded ? "scale(1)" : "scale(0.58)",
-    opacity: expanded ? 0.15 : 0.05,
-    transition: `all ${duration}s cubic-bezier(0.4, 0, 0.2, 1)`,
-  };
-
-  return (
-    <div className="flex min-h-[420px] flex-col items-center justify-center py-12">
-      <p className="mb-10 font-cormorant text-[13px] font-semibold uppercase tracking-[0.2em] text-sage/60">
-        {`P\u0159\u00EDprava srdce`}
-      </p>
-
-      {/* Breathing circle — large, immersive */}
-      <div className="relative mb-10 flex h-64 w-64 items-center justify-center">
-        {/* Outer ring */}
-        <div
-          className="absolute inset-0 rounded-full border border-sage/30"
-          style={ringOuterStyle}
-        />
-        {/* Middle ring */}
-        <div
-          className="absolute inset-4 rounded-full bg-sage/10"
-          style={ringInnerStyle}
-        />
-        {/* Main breathing circle */}
-        <div
-          className="flex h-48 w-48 items-center justify-center rounded-full bg-sage-pale/80 shadow-[0_0_60px_rgba(74,124,111,0.12)]"
-          style={circleStyle}
-        >
-          <div className="flex flex-col items-center">
-            <span className="font-literata text-6xl font-light text-sage">{count}</span>
-            <span className="mt-2 font-cormorant text-[15px] font-semibold uppercase tracking-[0.25em] text-sage/70">
-              {phaseLabels[phase]}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <button
-        onClick={() => setActive(false)}
-        className="text-[11px] tracking-wide text-text-light/50 transition-colors hover:text-text-muted"
-      >
-        {`Ukon\u010Dit`}
-      </button>
     </div>
   );
 }
