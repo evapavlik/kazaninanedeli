@@ -15,6 +15,7 @@ import LiturgicalCalendar from "@/components/tools/LiturgicalCalendar";
 import TranslationCompare from "./TranslationCompare";
 import CommentaryPanel from "./CommentaryPanel";
 import SermonInspirationPanel from "./SermonInspirationPanel";
+import MinimalPath from "./MinimalPath";
 
 const TOOL_LABELS: Record<string, string> = {
   translations: "Porovnání překladů",
@@ -42,6 +43,9 @@ interface GuideRailProps {
   checkCount: { completed: number; total: number };
   collapsed: boolean;
   onToggleCollapse: () => void;
+  /** Minimal path: just the sermon spine, for weeks with little time. */
+  minimal: boolean;
+  onMinimalChange: (minimal: boolean) => void;
 }
 
 /**
@@ -68,6 +72,8 @@ export default function GuideRail({
   checkCount,
   collapsed,
   onToggleCollapse,
+  minimal,
+  onMinimalChange,
 }: GuideRailProps) {
   const [activeToolView, setActiveToolView] = useState<string | null>(null);
 
@@ -173,7 +179,38 @@ export default function GuideRail({
         </button>
       </div>
 
-      {activeToolView ? (
+      {/* Pace switch. The full path is the method; the minimal path is its
+          spine (myšlenka → thesis → text) for the weeks there isn't time for
+          more. Both write the same artifact fields, so switching loses nothing. */}
+      <div className="mb-1.5 grid grid-cols-2 gap-1 rounded-[11px] bg-cream p-1" role="tablist" aria-label="Rychlost průvodce">
+        {([
+          { id: "full" as const, label: "Celá cesta" },
+          { id: "minimal" as const, label: "Minimální cesta" },
+        ]).map((m) => (
+          <button
+            key={m.id}
+            role="tab"
+            aria-selected={minimal === (m.id === "minimal")}
+            onClick={() => onMinimalChange(m.id === "minimal")}
+            className={`rounded-lg px-1 py-[7px] text-[12.5px] font-semibold transition-all ${
+              minimal === (m.id === "minimal")
+                ? "bg-white text-brick shadow-[0_1px_4px_rgba(0,0,0,.07)]"
+                : "text-text-muted hover:text-text"
+            }`}
+          >
+            {m.label}
+          </button>
+        ))}
+      </div>
+      <p className="mb-3.5 text-center text-[11.5px] italic text-text-light">
+        {minimal
+          ? `Jen páteř: myšlenka → thesis → text.`
+          : `Krok za krokem podle Pokorného hermeneutiky.`}
+      </p>
+
+      {minimal ? (
+        <MinimalPath artifacts={artifacts} onArtifactChange={onArtifactChange} />
+      ) : activeToolView ? (
         /* ---- TOOL VIEW — opens inside the rail; text stays visible beside it */
         <div key={`step-${activeSubStep}`}>
           <button
