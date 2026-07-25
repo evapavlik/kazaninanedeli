@@ -92,6 +92,10 @@ export default function StepContentPanel({
   // When quiet it shrinks to a 56px strip so the text stays dominant.
   const [guideQuiet, setGuideQuiet] = useLocalStorage<boolean>("kazani-guide-quiet", false);
 
+  // Pace: the full method, or just the sermon spine on a tight week.
+  // Remembered like the quiet choice, so a hurried week stays hurried.
+  const [minimalPath, setMinimalPath] = useLocalStorage<boolean>("kazani-minimal-path", false);
+
   // Track which sub-steps are completed
   const [completedSubStepsArr, setCompletedSubStepsArr] = useLocalStorage<number[]>(
     `kazani-completed-substeps-${phase.slug}`,
@@ -250,6 +254,8 @@ export default function StepContentPanel({
               checkCount={checkCount}
               collapsed={guideQuiet}
               onToggleCollapse={() => setGuideQuiet((q) => !q)}
+              minimal={minimalPath}
+              onMinimalChange={setMinimalPath}
             />
 
             {/* Reading column — capped and centred so quieting the guide gives
