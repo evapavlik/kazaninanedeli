@@ -15,6 +15,7 @@ import LiturgicalCalendar from "@/components/tools/LiturgicalCalendar";
 import TranslationCompare from "./TranslationCompare";
 import CommentaryPanel from "./CommentaryPanel";
 import SermonInspirationPanel from "./SermonInspirationPanel";
+import MinimalPath from "./MinimalPath";
 
 const TOOL_LABELS: Record<string, string> = {
   translations: "Porovnání překladů",
@@ -42,9 +43,10 @@ interface GuideRailProps {
   checkCount: { completed: number; total: number };
   collapsed: boolean;
   onToggleCollapse: () => void;
+  /** Minimal path: just the sermon spine, for weeks with little time. */
+  minimal: boolean;
+  onMinimalChange: (minimal: boolean) => void;
 }
-
-const SUB_NAMES = (phase: Phase) => phase.subSteps.map((s) => s.title);
 
 /**
  * The guide as a permanent left side-rail (desktop). Replaces the old
@@ -70,6 +72,8 @@ export default function GuideRail({
   checkCount,
   collapsed,
   onToggleCollapse,
+  minimal,
+  onMinimalChange,
 }: GuideRailProps) {
   const [activeToolView, setActiveToolView] = useState<string | null>(null);
 
@@ -78,46 +82,45 @@ export default function GuideRail({
     setActiveToolView(null);
   };
 
-  // Ripening progress dots — one per sub-step. The current one fills with a
-  // conic gradient in proportion to items done in that step.
-  const fill = checkCount.total
-    ? Math.round((checkCount.completed / checkCount.total) * 100)
-    : 0;
-  const names = SUB_NAMES(phase);
-
-  const dots = phase.subSteps.map((_, i) => {
-    const done = completedSubSteps.has(i);
-    const isCurrent = i === activeSubStep;
-    if (done) {
-      return (
-        <span
-          key={i}
-          className="block h-2 w-2 rounded-full bg-brick"
-          title={`${names[i]} — hotovo`}
-        />
-      );
-    }
-    if (isCurrent) {
-      return (
-        <span
-          key={i}
-          className="block h-2.5 w-2.5 rounded-full"
-          style={{ background: `conic-gradient(#c41e1e ${fill}%, #fdf0f0 0)` }}
-          title={`${names[i]} — hotovo ${checkCount.completed} z ${checkCount.total}`}
-        />
-      );
-    }
-    return (
-      <span
-        key={i}
-        className="block h-2 w-2 rounded-full bg-border"
-        title={names[i]}
-      />
-    );
-  });
-
   // ---- QUIET STRIP -------------------------------------------------------
   if (collapsed) {
+    // Ripening progress dots — one per sub-step, the current one filled with a
+    // conic gradient in proportion to items done. Built here rather than at the
+    // top of the component: the open rail shows position via SubStepNav and
+    // never renders these, so computing them there is wasted work.
+    const fill = checkCount.total
+      ? Math.round((checkCount.completed / checkCount.total) * 100)
+      : 0;
+
+    const dots = phase.subSteps.map((sub, i) => {
+      if (completedSubSteps.has(i)) {
+        return (
+          <span
+            key={i}
+            className="block h-2 w-2 rounded-full bg-brick"
+            title={`${sub.title} — hotovo`}
+          />
+        );
+      }
+      if (i === activeSubStep) {
+        return (
+          <span
+            key={i}
+            className="block h-2.5 w-2.5 rounded-full"
+            style={{ background: `conic-gradient(#c41e1e ${fill}%, #fdf0f0 0)` }}
+            title={`${sub.title} — hotovo ${checkCount.completed} z ${checkCount.total}`}
+          />
+        );
+      }
+      return (
+        <span
+          key={i}
+          className="block h-2 w-2 rounded-full bg-border"
+          title={sub.title}
+        />
+      );
+    });
+
     return (
       <aside
         aria-label="Průvodce přípravou (ztišený)"
@@ -176,7 +179,38 @@ export default function GuideRail({
         </button>
       </div>
 
-      {activeToolView ? (
+      {/* Pace switch. The full path is the method; the minimal path is its
+          spine (myšlenka → thesis → text) for the weeks there isn't time for
+          more. Both write the same artifact fields, so switching loses nothing. */}
+      <div className="mb-1.5 grid grid-cols-2 gap-1 rounded-[11px] bg-cream p-1" role="tablist" aria-label="Rychlost průvodce">
+        {([
+          { id: "full" as const, label: "Celá cesta" },
+          { id: "minimal" as const, label: "Minimální cesta" },
+        ]).map((m) => (
+          <button
+            key={m.id}
+            role="tab"
+            aria-selected={minimal === (m.id === "minimal")}
+            onClick={() => onMinimalChange(m.id === "minimal")}
+            className={`rounded-lg px-1 py-[7px] text-[12.5px] font-semibold transition-all ${
+              minimal === (m.id === "minimal")
+                ? "bg-white text-brick shadow-[0_1px_4px_rgba(0,0,0,.07)]"
+                : "text-text-muted hover:text-text"
+            }`}
+          >
+            {m.label}
+          </button>
+        ))}
+      </div>
+      <p className="mb-3.5 text-center text-[11.5px] italic text-text-light">
+        {minimal
+          ? `Jen páteř: myšlenka → thesis → text.`
+          : `Krok za krokem podle Pokorného hermeneutiky.`}
+      </p>
+
+      {minimal ? (
+        <MinimalPath artifacts={artifacts} onArtifactChange={onArtifactChange} />
+      ) : activeToolView ? (
         /* ---- TOOL VIEW — opens inside the rail; text stays visible beside it */
         <div key={`step-${activeSubStep}`}>
           <button

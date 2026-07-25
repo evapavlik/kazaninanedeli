@@ -338,7 +338,12 @@ export default function UnifiedFlow({
 }
 
 /** Artifact input field — saves to sermon artifacts store */
-function ArtifactInput({
+/**
+ * A sermon-artifact textarea: debounced autosave, explicit "Uložit", the
+ * settle animation, and bubble drag-and-drop. Exported so the minimal path can
+ * present the same field without re-implementing any of that behaviour.
+ */
+export function ArtifactInput({
   text,
   value,
   placeholder,

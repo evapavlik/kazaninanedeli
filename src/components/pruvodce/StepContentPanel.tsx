@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useCallback, useEffect, useMemo, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { Phase, SubStep } from "@/types";
 import { checklistToolMap } from "@/data/checklist-tool-map";
+import { phases } from "@/data/phases";
 import type { FlowToolHelper } from "./UnifiedFlow";
 import BibleTextPanel from "./BibleTextPanel";
 import BuildingBlocks from "./BuildingBlocks";
@@ -73,6 +75,7 @@ export default function StepContentPanel({
   prevPhase,
   nextPhase,
 }: StepContentPanelProps) {
+  const router = useRouter();
   const [textPanelOpen, setTextPanelOpen] = useState(false);
   const [activeSubStep, setActiveSubStep] = useState(0);
 
@@ -88,6 +91,10 @@ export default function StepContentPanel({
   // Guide rail: open by default, remembers the reader's choice across visits.
   // When quiet it shrinks to a 56px strip so the text stays dominant.
   const [guideQuiet, setGuideQuiet] = useLocalStorage<boolean>("kazani-guide-quiet", false);
+
+  // Pace: the full method, or just the sermon spine on a tight week.
+  // Remembered like the quiet choice, so a hurried week stays hurried.
+  const [minimalPath, setMinimalPath] = useLocalStorage<boolean>("kazani-minimal-path", false);
 
   // Track which sub-steps are completed
   const [completedSubStepsArr, setCompletedSubStepsArr] = useLocalStorage<number[]>(
@@ -164,8 +171,39 @@ export default function StepContentPanel({
     setActiveSubStep(index);
   };
 
-  // Ref for the inline translation-compare block (text phase).
-  const translationsRef = useRef<HTMLDivElement>(null);
+  /**
+   * The breathing practice IS the guide's prayer step ("Začni modlitbou — pros
+   * o otevřenost a vnímavost.", index 1 of the modlitba flow), so finishing it
+   * ticks that box off rather than leaving the reader to tick it manually. We
+   * write the same kazani-flow-* key UnifiedFlow uses; its sibling instance
+   * picks the change up live through the storage sync.
+   */
+  const handleBreathingComplete = useCallback(() => {
+    const PRAYER_STEP_INDEX = 1;
+    const key = "kazani-flow-modlitba";
+    try {
+      const raw = window.localStorage.getItem(key);
+      const parsed: unknown = raw ? JSON.parse(raw) : null;
+      const total = phases[0].subSteps[0].flow.length;
+      const checked = Array.isArray(parsed)
+        ? [...(parsed as boolean[])]
+        : new Array(total).fill(false);
+      while (checked.length < total) checked.push(false);
+      if (checked[PRAYER_STEP_INDEX]) return; // already done — don't churn storage
+      checked[PRAYER_STEP_INDEX] = true;
+      window.localStorage.setItem(key, JSON.stringify(checked));
+      window.dispatchEvent(
+        new CustomEvent("kazani:local-storage", { detail: { key } })
+      );
+    } catch {
+      // A blocked or full localStorage must not break the practice.
+    }
+  }, []);
+
+  /** Once the reader is ready, move on to the text phase. */
+  const handleOpenText = useCallback(() => {
+    router.push("/pruvodce/text");
+  }, [router]);
 
   return (
     <div className="relative">
@@ -216,6 +254,8 @@ export default function StepContentPanel({
               checkCount={checkCount}
               collapsed={guideQuiet}
               onToggleCollapse={() => setGuideQuiet((q) => !q)}
+              minimal={minimalPath}
+              onMinimalChange={setMinimalPath}
             />
 
             {/* Reading column — capped and centred so quieting the guide gives
@@ -223,17 +263,22 @@ export default function StepContentPanel({
             <div className="mx-auto w-full max-w-[800px]">
               <OnboardingHint />
               <BuildingBlocksForStep slug={currentSub.slug} getStepContext={getStepContext} />
-              <BibleTextPanel currentSlug={subSlug} />
+              <BibleTextPanel
+                currentSlug={subSlug}
+                onBreathingComplete={handleBreathingComplete}
+                onOpenText={handleOpenText}
+              />
 
               {isTextPhase && savedRef && (
-                <div className="mt-6 transition-shadow duration-400" ref={translationsRef}>
+                <div className="mt-6">
                   <TranslationCompare reference={savedRef} />
                 </div>
               )}
             </div>
 
-            {/* Moje kázání — only once the viewport is wide enough for all three */}
-            <div className="hidden xl:block">
+            {/* Moje kázání — third column at ≥1280px, a full-width row below the
+                text under that (never hidden: it holds the only notebook entry) */}
+            <div className="guide-sermon">
               <SermonPanel
                 artifacts={artifacts}
                 onArtifactChange={(field, value) =>

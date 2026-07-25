@@ -152,6 +152,78 @@ html {
 }
 
 /*
+ * "Moje kázání" placement. Below 1280px a third column would crush the reading
+ * width, so the panel drops to a full-width row beneath the text — still
+ * present, so the notebook (reachable only from here) never disappears. At
+ * ≥1280px it takes its natural place as the third column.
+ */
+.guide-sermon { grid-column: 1 / -1; }
+@media (min-width: 1280px) {
+  .guide-sermon { grid-column: auto; }
+}
+
+/*
+ * Breathing symbols (Příprava srdce). Continuous, breath-independent motion —
+ * water keeps flowing even between breaths — plus the shared "person" shape for
+ * the procession crossing the parted sea. Breath-driven changes live inline in
+ * BreathingSymbols.tsx, since they are computed from the current phase.
+ */
+.breath-sea-crest {
+  position: absolute;
+  left: -50%;
+  width: 200%;
+  height: 22px;
+  top: -14px;
+  background: radial-gradient(circle at 18px -6px, transparent 18px, #2f5750 19px) repeat-x;
+  background-size: 36px 30px;
+  animation: breathDrift 9s linear infinite;
+}
+@keyframes breathDrift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(36px); }
+}
+
+.breath-wall {
+  background:
+    repeating-linear-gradient(6deg, rgba(255,255,255,.08) 0 12px, rgba(255,255,255,0) 12px 38px),
+    linear-gradient(180deg, #a6e0cf 0%, #66b6a2 26%, #3a7d6e 64%, #214742 100%);
+  background-size: 100% 220%, 100% 100%;
+  animation: breathFlow 13s linear infinite;
+}
+@keyframes breathFlow {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 0 220%, 0 0; }
+}
+
+.breath-person {
+  position: absolute;
+  width: 9px;
+  height: 24px;
+}
+.breath-person::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: #3d4b47;
+}
+.breath-person::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  width: 9px;
+  height: 18px;
+  margin-left: -4.5px;
+  border-radius: 46% 46% 32% 32%;
+  background: linear-gradient(#3d4b47, #2a3431);
+}
+
+/*
  * Respect the reader's reduced-motion preference. The app leans on gentle,
  * continuous animation (breathing circle, guide-bar pulse, bubble wiggle); for
  * vestibular-sensitive users we collapse all of it to near-instant so the
