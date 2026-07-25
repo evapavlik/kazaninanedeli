@@ -152,6 +152,17 @@ html {
 }
 
 /*
+ * "Moje kázání" placement. Below 1280px a third column would crush the reading
+ * width, so the panel drops to a full-width row beneath the text — still
+ * present, so the notebook (reachable only from here) never disappears. At
+ * ≥1280px it takes its natural place as the third column.
+ */
+.guide-sermon { grid-column: 1 / -1; }
+@media (min-width: 1280px) {
+  .guide-sermon { grid-column: auto; }
+}
+
+/*
  * Respect the reader's reduced-motion preference. The app leans on gentle,
  * continuous animation (breathing circle, guide-bar pulse, bubble wiggle); for
  * vestibular-sensitive users we collapse all of it to near-instant so the

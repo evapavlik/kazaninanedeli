@@ -44,8 +44,6 @@ interface GuideRailProps {
   onToggleCollapse: () => void;
 }
 
-const SUB_NAMES = (phase: Phase) => phase.subSteps.map((s) => s.title);
-
 /**
  * The guide as a permanent left side-rail (desktop). Replaces the old
  * fixed-bottom GuideBar: it sits *beside* the text instead of covering it, and
@@ -78,46 +76,45 @@ export default function GuideRail({
     setActiveToolView(null);
   };
 
-  // Ripening progress dots — one per sub-step. The current one fills with a
-  // conic gradient in proportion to items done in that step.
-  const fill = checkCount.total
-    ? Math.round((checkCount.completed / checkCount.total) * 100)
-    : 0;
-  const names = SUB_NAMES(phase);
-
-  const dots = phase.subSteps.map((_, i) => {
-    const done = completedSubSteps.has(i);
-    const isCurrent = i === activeSubStep;
-    if (done) {
-      return (
-        <span
-          key={i}
-          className="block h-2 w-2 rounded-full bg-brick"
-          title={`${names[i]} — hotovo`}
-        />
-      );
-    }
-    if (isCurrent) {
-      return (
-        <span
-          key={i}
-          className="block h-2.5 w-2.5 rounded-full"
-          style={{ background: `conic-gradient(#c41e1e ${fill}%, #fdf0f0 0)` }}
-          title={`${names[i]} — hotovo ${checkCount.completed} z ${checkCount.total}`}
-        />
-      );
-    }
-    return (
-      <span
-        key={i}
-        className="block h-2 w-2 rounded-full bg-border"
-        title={names[i]}
-      />
-    );
-  });
-
   // ---- QUIET STRIP -------------------------------------------------------
   if (collapsed) {
+    // Ripening progress dots — one per sub-step, the current one filled with a
+    // conic gradient in proportion to items done. Built here rather than at the
+    // top of the component: the open rail shows position via SubStepNav and
+    // never renders these, so computing them there is wasted work.
+    const fill = checkCount.total
+      ? Math.round((checkCount.completed / checkCount.total) * 100)
+      : 0;
+
+    const dots = phase.subSteps.map((sub, i) => {
+      if (completedSubSteps.has(i)) {
+        return (
+          <span
+            key={i}
+            className="block h-2 w-2 rounded-full bg-brick"
+            title={`${sub.title} — hotovo`}
+          />
+        );
+      }
+      if (i === activeSubStep) {
+        return (
+          <span
+            key={i}
+            className="block h-2.5 w-2.5 rounded-full"
+            style={{ background: `conic-gradient(#c41e1e ${fill}%, #fdf0f0 0)` }}
+            title={`${sub.title} — hotovo ${checkCount.completed} z ${checkCount.total}`}
+          />
+        );
+      }
+      return (
+        <span
+          key={i}
+          className="block h-2 w-2 rounded-full bg-border"
+          title={sub.title}
+        />
+      );
+    });
+
     return (
       <aside
         aria-label="Průvodce přípravou (ztišený)"

@@ -164,9 +164,6 @@ export default function StepContentPanel({
     setActiveSubStep(index);
   };
 
-  // Ref for the inline translation-compare block (text phase).
-  const translationsRef = useRef<HTMLDivElement>(null);
-
   return (
     <div className="relative">
       {/* MAIN: Full-width text */}
@@ -226,14 +223,15 @@ export default function StepContentPanel({
               <BibleTextPanel currentSlug={subSlug} />
 
               {isTextPhase && savedRef && (
-                <div className="mt-6 transition-shadow duration-400" ref={translationsRef}>
+                <div className="mt-6">
                   <TranslationCompare reference={savedRef} />
                 </div>
               )}
             </div>
 
-            {/* Moje kázání — only once the viewport is wide enough for all three */}
-            <div className="hidden xl:block">
+            {/* Moje kázání — third column at ≥1280px, a full-width row below the
+                text under that (never hidden: it holds the only notebook entry) */}
+            <div className="guide-sermon">
               <SermonPanel
                 artifacts={artifacts}
                 onArtifactChange={(field, value) =>
