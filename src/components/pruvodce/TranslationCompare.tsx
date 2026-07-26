@@ -23,7 +23,6 @@ type FetchState =
 export default function TranslationCompare({
   reference,
 }: TranslationCompareProps) {
-  const [open, setOpen] = useState(true);
   const [state, setState] = useState<FetchState>({ status: "idle" });
   const abortRef = useRef<AbortController | null>(null);
 
@@ -120,46 +119,12 @@ export default function TranslationCompare({
   if (state.status === "idle") return null;
 
   return (
-    <section className="mt-4">
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between rounded-t-lg border border-sage/20 bg-sage-pale/30 px-4 py-3 text-left transition-colors hover:border-sage/40"
-      >
-        <div className="flex items-center gap-2">
-          {/* Translation compare icon */}
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 20 20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            className="shrink-0 text-sage"
-          >
-            <rect x="2" y="3" width="7" height="14" rx="1" />
-            <rect x="11" y="3" width="7" height="14" rx="1" />
-            <path d="M4 7h3M4 10h3M4 13h2" />
-            <path d="M13 7h3M13 10h3M13 13h2" />
-          </svg>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sage/70">
-            {`Porovn\u00E1n\u00ED p\u0159eklad\u016F`}
-          </span>
-        </div>
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 20 20"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          className={`shrink-0 text-sage/50 transition-transform ${open ? "rotate-180" : ""}`}
-        >
-          <path d="M5 8l5 5 5-5" />
-        </svg>
-      </button>
-
-      {open && (
-        <div className="rounded-b-lg border border-t-0 border-sage/20 bg-sage-pale/30 p-4">
+    /* @container so the columns respond to the width they actually get, not to
+       the viewport. Viewport breakpoints lied here: opened in the 330px guide
+       rail on a wide screen, `lg:grid-cols-3` still fired and squeezed three
+       columns into ~90px each. */
+    <section className="@container">
+      <div>
           {/* Loading state */}
           {state.status === "loading" && (
             <div className="flex items-center justify-center gap-2 py-8">
@@ -201,7 +166,7 @@ export default function TranslationCompare({
 
           {/* Success state — columns */}
           {state.status === "success" && (
-            <div className="grid gap-4 lg:grid-cols-3 md:grid-cols-2">
+            <div className="grid gap-4 @lg:grid-cols-2 @2xl:grid-cols-3">
               {/* 1. Original — Hebrew or Greek */}
               <TranslationColumn
                 label={state.isOT ? `Hebrejsky (WLC)` : `\u0158ecky (TR)`}
@@ -221,8 +186,7 @@ export default function TranslationCompare({
               />
             </div>
           )}
-        </div>
-      )}
+      </div>
     </section>
   );
 }

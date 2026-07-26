@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import type { Phase, SubStep } from "@/types";
 import type { FlowToolHelper } from "./UnifiedFlow";
@@ -9,22 +8,7 @@ import StepContext from "./StepContext";
 import SubStepNav from "./SubStepNav";
 import UnifiedFlow from "./UnifiedFlow";
 import PreviousStepOutputs from "./PreviousStepOutputs";
-import BibleContextView from "./BibleContextView";
-import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
-import LiturgicalCalendar from "@/components/tools/LiturgicalCalendar";
-import TranslationCompare from "./TranslationCompare";
-import CommentaryPanel from "./CommentaryPanel";
-import SermonInspirationPanel from "./SermonInspirationPanel";
 import MinimalPath from "./MinimalPath";
-
-const TOOL_LABELS: Record<string, string> = {
-  translations: "Porovnání překladů",
-  bookContext: "Kontext knihy",
-  liturgy: "Liturgický kalendář",
-  originals: "Původní jazyky",
-  commentary: "Komentáře",
-  sermons: "Kázání jiných",
-};
 
 interface GuideRailProps {
   phase: Phase;
@@ -39,7 +23,9 @@ interface GuideRailProps {
   onArtifactChange: (field: string, value: string) => void;
   prevPhase: { slug: string; title: string } | null;
   nextPhase: { slug: string; title: string } | null;
-  reference: string;
+  /** Opens an on-demand tool. It renders on the main surface beside the text —
+      never inside this rail, which is too narrow for it. */
+  onOpenTool: (key: string) => void;
   checkCount: { completed: number; total: number };
   collapsed: boolean;
   onToggleCollapse: () => void;
@@ -52,6 +38,8 @@ interface GuideRailProps {
  * The guide as a permanent left side-rail (desktop). Replaces the old
  * fixed-bottom GuideBar: it sits *beside* the text instead of covering it, and
  * can be quieted to a 56px strip so the text stays the dominant surface.
+ * Tools invoked from a flow item open on the main surface (see ToolPanel), not
+ * in here — the rail is too narrow to read them in.
  * Progress dots — one per sub-step, the current one "ripening" as its items get
  * done — stay visible even in the quiet strip.
  */
@@ -68,20 +56,13 @@ export default function GuideRail({
   onArtifactChange,
   prevPhase,
   nextPhase,
-  reference,
+  onOpenTool,
   checkCount,
   collapsed,
   onToggleCollapse,
   minimal,
   onMinimalChange,
 }: GuideRailProps) {
-  const [activeToolView, setActiveToolView] = useState<string | null>(null);
-
-  const handleSubStepSelect = (index: number) => {
-    onSubStepSelect(index);
-    setActiveToolView(null);
-  };
-
   // ---- QUIET STRIP -------------------------------------------------------
   if (collapsed) {
     // Ripening progress dots — one per sub-step, the current one filled with a
@@ -210,34 +191,6 @@ export default function GuideRail({
 
       {minimal ? (
         <MinimalPath artifacts={artifacts} onArtifactChange={onArtifactChange} />
-      ) : activeToolView ? (
-        /* ---- TOOL VIEW — opens inside the rail; text stays visible beside it */
-        <div key={`step-${activeSubStep}`}>
-          <button
-            onClick={() => setActiveToolView(null)}
-            className="mb-2 flex items-center gap-1.5 text-[13px] font-medium text-brick hover:underline"
-          >
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M10 3L5 8l5 5" />
-            </svg>
-            {`Zpět na kroky`}
-          </button>
-          <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-brick">
-            {TOOL_LABELS[activeToolView] || activeToolView}
-          </h3>
-          <div className="rounded-xl border border-border bg-white p-4">
-            {activeToolView === "translations" && <TranslationCompare reference={reference} />}
-            {activeToolView === "bookContext" && <BibleContextView reference={reference} />}
-            {activeToolView === "liturgy" && <LiturgicalCalendar />}
-            {activeToolView === "originals" && <OriginalLanguagesPanel reference={reference} />}
-            {activeToolView === "commentary" && reference && (
-              <CommentaryPanel reference={reference} />
-            )}
-            {activeToolView === "sermons" && reference && (
-              <SermonInspirationPanel reference={reference} />
-            )}
-          </div>
-        </div>
       ) : (
         /* ---- GUIDE VIEW */
         <>
@@ -247,7 +200,7 @@ export default function GuideRail({
                 subSteps={phase.subSteps}
                 activeIndex={activeSubStep}
                 completedIndices={completedSubSteps}
-                onSelect={handleSubStepSelect}
+                onSelect={onSubStepSelect}
               />
             </div>
           )}
@@ -266,7 +219,7 @@ export default function GuideRail({
               onCountChange={onFlowCountChange}
               artifacts={artifacts}
               onArtifactChange={onArtifactChange}
-              onOpenTool={(key) => setActiveToolView(key)}
+              onOpenTool={onOpenTool}
             />
 
             <PreviousStepOutputs subStepSlug={subSlug} />
