@@ -216,7 +216,7 @@ export default function GuideRail({
 
             {/* Theory after the description, not before the tasks: the text
                 leads, the theory is there when it is wanted. */}
-            <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} quiet />
+            <StepContext theory={currentSub.theory} tip={currentSub.tip} quiet />
 
             <UnifiedFlow
               slug={subSlug}

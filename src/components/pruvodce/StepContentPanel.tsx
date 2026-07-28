@@ -425,7 +425,7 @@ function MobileGuide({
         onSelect={onSubStepSelect}
       />
 
-      <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} />
+      <StepContext theory={currentSub.theory} tip={currentSub.tip} />
 
       <p className="mb-4 text-[13px] font-light leading-[1.8] text-text-muted">
         {currentSub.description}

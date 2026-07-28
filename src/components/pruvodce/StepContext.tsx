@@ -9,7 +9,6 @@ interface StepContextProps {
     explanation: string;
   };
   tip: string;
-  slug: string;
   /**
    * Quiet treatment for the guide rail: a hairline row instead of a coloured
    * card. The theory is meant to be *available*, not a gate — as a filled card
@@ -20,7 +19,7 @@ interface StepContextProps {
   quiet?: boolean;
 }
 
-export default function StepContext({ theory, tip, slug, quiet }: StepContextProps) {
+export default function StepContext({ theory, tip, quiet }: StepContextProps) {
   const [open, setOpen] = useState(false);
 
   if (quiet) {
@@ -120,44 +119,6 @@ export default function StepContext({ theory, tip, slug, quiet }: StepContextPro
               {tip}
             </p>
 
-            {/* Translation links for steps cteni and vyklad */}
-            {(slug === "cteni" || slug === "vyklad") && (
-              <div className="mt-3 flex flex-wrap gap-2">
-                <span className="text-[11px] text-sage">{`Porovnat p\u0159eklady:`}</span>
-                <a
-                  href="https://www.bibleserver.com/CEP"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[11px] font-medium text-sage underline decoration-sage/30 hover:decoration-sage"
-                >
-                  {`\u010CEP`}
-                </a>
-                <a
-                  href="https://www.bible21.cz"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[11px] font-medium text-sage underline decoration-sage/30 hover:decoration-sage"
-                >
-                  Bible21
-                </a>
-                <a
-                  href="https://www.bibleserver.com/BKR"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[11px] font-medium text-sage underline decoration-sage/30 hover:decoration-sage"
-                >
-                  {`Kralick\u00E1`}
-                </a>
-                <a
-                  href="https://www.bibleserver.com/B21"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[11px] font-medium text-sage underline decoration-sage/30 hover:decoration-sage"
-                >
-                  BibleServer
-                </a>
-              </div>
-            )}
           </div>
         </div>
       )}
