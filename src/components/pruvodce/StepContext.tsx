@@ -10,10 +10,60 @@ interface StepContextProps {
   };
   tip: string;
   slug: string;
+  /**
+   * Quiet treatment for the guide rail: a hairline row instead of a coloured
+   * card. The theory is meant to be *available*, not a gate — as a filled card
+   * placed above the tasks it stood between the preacher and the text, while
+   * the tip inside it says „Nespěchej na výklad". Colour reads as "do this
+   * now", and this is a thing you reach for, not a step you pass through.
+   */
+  quiet?: boolean;
 }
 
-export default function StepContext({ theory, tip, slug }: StepContextProps) {
+export default function StepContext({ theory, tip, slug, quiet }: StepContextProps) {
   const [open, setOpen] = useState(false);
+
+  if (quiet) {
+    return (
+      <section className="mb-4">
+        <button
+          onClick={() => setOpen(!open)}
+          aria-expanded={open}
+          className="flex w-full items-center gap-2 border-y border-border py-2.5 text-left transition-colors hover:text-sage"
+        >
+          <span className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.1em] text-sage">
+            {`Teoretické pozadí`}
+          </span>
+          <span className="min-w-0 flex-1 truncate text-[12.5px] text-text-muted">
+            {`· ${theory.concept}`}
+          </span>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className={`shrink-0 text-text-light transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          >
+            <path d="M5 8l5 5 5-5" />
+          </svg>
+        </button>
+
+        {open && (
+          <div className="border-l-2 border-sage-pale py-3 pl-3">
+            <p className="text-[12.5px] leading-[1.75] text-text-muted">
+              {theory.explanation}
+            </p>
+            <p className="mt-2 text-[11px] text-text-light">{theory.source}</p>
+            <p className="mt-3 border-t border-border pt-3 text-[12.5px] font-light italic leading-relaxed text-text-muted">
+              {tip}
+            </p>
+          </div>
+        )}
+      </section>
+    );
+  }
 
   return (
     <section className="mb-6">

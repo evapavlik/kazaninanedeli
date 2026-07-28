@@ -13,6 +13,7 @@ export const phases: Phase[] = [
       {
         slug: "modlitba",
         title: "Modlitba a p\u0159\u00EDprava srdce",
+        shortTitle: "Modlitba",
         subtitle: "Otev\u0159\u00EDt se textu",
         icon: "\uD83D\uDD6F\uFE0F",
         estimatedMinutes: 10,
@@ -44,6 +45,7 @@ export const phases: Phase[] = [
       {
         slug: "cteni",
         title: "\u010Cten\u00ED a pozorov\u00E1n\u00ED textu",
+        shortTitle: "\u010Cten\u00ED",
         subtitle: "Naslouchat textu",
         icon: "\uD83D\uDCD6",
         estimatedMinutes: 20,
@@ -64,6 +66,7 @@ export const phases: Phase[] = [
       {
         slug: "kontext",
         title: "Zasazen\u00ED do kontextu",
+        shortTitle: "Kontext",
         subtitle: "Porozum\u011Bt sv\u011Btu textu",
         icon: "\uD83D\uDDFA\uFE0F",
         estimatedMinutes: 15,
@@ -86,6 +89,7 @@ export const phases: Phase[] = [
       {
         slug: "vyklad",
         title: "V\u00FDklad textu",
+        shortTitle: "V\u00FDklad",
         subtitle: "Hledat smysl",
         icon: "\uD83D\uDD0D",
         estimatedMinutes: 30,
@@ -117,6 +121,7 @@ export const phases: Phase[] = [
       {
         slug: "aktualizace",
         title: "Aktualizace",
+        shortTitle: "Aktualizace",
         subtitle: "Postavit most",
         icon: "\uD83C\uDF09",
         estimatedMinutes: 20,
@@ -137,6 +142,7 @@ export const phases: Phase[] = [
       {
         slug: "stavba",
         title: "Stavba k\u00E1z\u00E1n\u00ED",
+        shortTitle: "Stavba",
         subtitle: "D\u00E1t formu",
         icon: "\uD83C\uDFD7\uFE0F",
         estimatedMinutes: 25,
@@ -158,6 +164,7 @@ export const phases: Phase[] = [
       {
         slug: "formulace",
         title: "Formulace k\u00E1z\u00E1n\u00ED",
+        shortTitle: "Formulace",
         subtitle: "Z osnovy k mluven\u00E9mu slovu",
         icon: "\u270D\uFE0F",
         estimatedMinutes: 30,
@@ -188,6 +195,7 @@ export const phases: Phase[] = [
       {
         slug: "prednes",
         title: "P\u0159\u00EDprava na p\u0159ednes",
+        shortTitle: "P\u0159ednes",
         subtitle: "P\u0159edat \u017Eiv\u011B",
         icon: "\uD83C\uDFA4",
         estimatedMinutes: 15,
