@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import {
   parseReferenceForApi,
   verseInReference,
@@ -14,6 +15,32 @@ interface TranslationCompareProps {
   reference: string;
 }
 
+/**
+ * How the translations line up against each other.
+ *
+ * Both modes align *by verse*, which is what comparing actually means: side-by
+ * -side prose columns drift apart after the first verse (the translations have
+ * different lengths), so finding v33 means hunting for it in each column
+ * separately. "verse" stacks the translations under a verse number and reads
+ * top-down; "table" puts each verse on one row so a difference sits at the same
+ * height across all columns.
+ */
+type CompareMode = "verse" | "table";
+
+const MODES: { id: CompareMode; label: string }[] = [
+  { id: "verse", label: "Po verši" },
+  { id: "table", label: "Tabulka" },
+];
+
+interface TranslationSource {
+  key: string;
+  label: string;
+  verses: BibleVerse[];
+  /** Hebrew or Greek — the source text, set in a serif face and (for Hebrew) RTL. */
+  isOriginal?: boolean;
+  isRTL?: boolean;
+}
+
 type FetchState =
   | { status: "idle" }
   | { status: "loading" }
@@ -23,9 +50,12 @@ type FetchState =
 export default function TranslationCompare({
   reference,
 }: TranslationCompareProps) {
-  const [open, setOpen] = useState(true);
   const [state, setState] = useState<FetchState>({ status: "idle" });
   const abortRef = useRef<AbortController | null>(null);
+
+  // Remembered across visits — a preacher who prefers the table shouldn't have
+  // to re-pick it every Sunday.
+  const [mode, setMode] = useLocalStorage<CompareMode>("kazani-compare-mode", "verse");
 
   const fetchTranslations = useCallback(async (ref: string) => {
     const parsed = parseReferenceForApi(ref);
@@ -113,6 +143,31 @@ export default function TranslationCompare({
     };
   }, []);
 
+  // The Czech translations first — that's what gets read — then the source
+  // text, which is what you consult once something looks odd.
+  const sources: TranslationSource[] = useMemo(() => {
+    if (state.status !== "success") return [];
+    return [
+      { key: "csp", label: "ČSP", verses: state.csp },
+      { key: "bkr", label: "Kralická", verses: state.bkr },
+      {
+        key: "original",
+        label: state.isOT ? "Hebrejsky (WLC)" : "Řecky (TR)",
+        verses: state.original,
+        isOriginal: true,
+        isRTL: state.isOT,
+      },
+    ].filter((s) => s.verses.length > 0);
+  }, [state]);
+
+  // Every verse any source has, in order — a translation missing one verse must
+  // not shift the rest out of alignment.
+  const verseNumbers: number[] = useMemo(() => {
+    const all = new Set<number>();
+    for (const s of sources) for (const v of s.verses) all.add(v.verse);
+    return [...all].sort((a, b) => a - b);
+  }, [sources]);
+
   // Don't render anything if no reference
   if (!reference.trim()) return null;
 
@@ -120,46 +175,13 @@ export default function TranslationCompare({
   if (state.status === "idle") return null;
 
   return (
-    <section className="mt-4">
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between rounded-t-lg border border-sage/20 bg-sage-pale/30 px-4 py-3 text-left transition-colors hover:border-sage/40"
-      >
-        <div className="flex items-center gap-2">
-          {/* Translation compare icon */}
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 20 20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            className="shrink-0 text-sage"
-          >
-            <rect x="2" y="3" width="7" height="14" rx="1" />
-            <rect x="11" y="3" width="7" height="14" rx="1" />
-            <path d="M4 7h3M4 10h3M4 13h2" />
-            <path d="M13 7h3M13 10h3M13 13h2" />
-          </svg>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sage/70">
-            {`Porovn\u00E1n\u00ED p\u0159eklad\u016F`}
-          </span>
-        </div>
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 20 20"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          className={`shrink-0 text-sage/50 transition-transform ${open ? "rotate-180" : ""}`}
-        >
-          <path d="M5 8l5 5 5-5" />
-        </svg>
-      </button>
-
-      {open && (
-        <div className="rounded-b-lg border border-t-0 border-sage/20 bg-sage-pale/30 p-4">
+    /* No viewport breakpoints anywhere below. The old layout keyed three prose
+       columns off `lg:grid-cols-3` — a *viewport* breakpoint — so in the 330px
+       guide rail on a wide screen it still asked for three columns and got
+       ~90px each. Both modes here are width-safe by construction: the verse
+       layout stacks, the table scrolls. */
+    <section>
+      <div>
           {/* Loading state */}
           {state.status === "loading" && (
             <div className="flex items-center justify-center gap-2 py-8">
@@ -199,76 +221,140 @@ export default function TranslationCompare({
             </div>
           )}
 
-          {/* Success state — columns */}
-          {state.status === "success" && (
-            <div className="grid gap-4 lg:grid-cols-3 md:grid-cols-2">
-              {/* 1. Original — Hebrew or Greek */}
-              <TranslationColumn
-                label={state.isOT ? `Hebrejsky (WLC)` : `\u0158ecky (TR)`}
-                verses={state.original}
-                isOriginal
-                isRTL={state.isOT}
-              />
-              {/* 2. ČSP */}
-              <TranslationColumn
-                label={`\u010CSP`}
-                verses={state.csp}
-              />
-              {/* 3. Kralická */}
-              <TranslationColumn
-                label={`Kralick\u00E1`}
-                verses={state.bkr}
-              />
-            </div>
+          {/* Success state */}
+          {state.status === "success" && sources.length > 0 && (
+            <>
+              <div
+                className="mb-4 flex flex-wrap items-center gap-1.5"
+                role="tablist"
+                aria-label="Podoba porovnání"
+              >
+                {MODES.map((m) => (
+                  <button
+                    key={m.id}
+                    role="tab"
+                    aria-selected={mode === m.id}
+                    onClick={() => setMode(m.id)}
+                    className={`rounded-full border px-3.5 py-1.5 text-[12px] font-semibold transition-all ${
+                      mode === m.id
+                        ? "border-brick bg-brick-pale text-brick"
+                        : "border-border bg-white text-text-muted hover:text-text"
+                    }`}
+                  >
+                    {m.label}
+                  </button>
+                ))}
+              </div>
+
+              {mode === "verse" ? (
+                <VerseByVerse sources={sources} verseNumbers={verseNumbers} />
+              ) : (
+                <CompareTable sources={sources} verseNumbers={verseNumbers} />
+              )}
+            </>
           )}
-        </div>
-      )}
+
+          {state.status === "success" && sources.length === 0 && (
+            <p className="py-4 text-center text-[12px] italic text-text-muted">
+              {`Pro tento odkaz se nepodařilo načíst žádný překlad.`}
+            </p>
+          )}
+      </div>
     </section>
   );
 }
 
-function TranslationColumn({
-  label,
-  verses,
-  isOriginal,
-  isRTL,
-}: {
-  label: string;
-  verses: BibleVerse[];
-  isOriginal?: boolean;
-  isRTL?: boolean;
-}) {
-  if (verses.length === 0) {
-    return (
-      <div className="rounded-lg bg-white/50 p-4">
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage/70">
-          {label}
-        </p>
-        <p className="text-[12px] italic text-text-muted">
-          {`P\u0159eklad nen\u00ED k dispozici.`}
-        </p>
-      </div>
-    );
-  }
+/** Look up one verse in one source. */
+function verseText(source: TranslationSource, n: number): string | null {
+  return source.verses.find((v) => v.verse === n)?.text ?? null;
+}
 
+const bodyClass = (s: TranslationSource) =>
+  `text-[15px] leading-[1.75] text-text ${s.isOriginal ? "font-serif" : "font-literata"}`;
+
+const MISSING = <span className="italic text-text-light">{"—"}</span>;
+
+/**
+ * Verse number as a heading, translations stacked beneath it. Reads top-down,
+ * one verse at a time, and holds up at any width — so it is the default.
+ */
+function VerseByVerse({
+  sources,
+  verseNumbers,
+}: {
+  sources: TranslationSource[];
+  verseNumbers: number[];
+}) {
   return (
-    <div className="rounded-lg bg-white/50 p-4">
-      <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage/70">
-        {label}
-      </p>
-      <div
-        className={`text-[15px] leading-[1.9] text-text ${isOriginal ? "font-serif" : "font-literata"}`}
-        dir={isRTL ? "rtl" : undefined}
-      >
-        {verses.map((v) => (
-          <span key={v.verse}>
-            <sup className={`${isRTL ? "ml-0.5" : "mr-0.5"} text-[10px] font-semibold text-text-light/60`}>
-              {v.verse}
-            </sup>
-            {v.text}{" "}
-          </span>
-        ))}
-      </div>
+    <div>
+      {verseNumbers.map((n) => (
+        <div key={n} className="border-t border-border py-3.5 first:border-t-0 first:pt-0">
+          <p className="mb-1.5 font-cormorant text-[15px] font-bold tracking-[0.02em] text-brick">
+            {n}
+          </p>
+          {sources.map((s) => (
+            <div key={s.key} className="grid grid-cols-[84px_minmax(0,1fr)] gap-3 py-0.5">
+              <p className="pt-[5px] text-[10.5px] font-bold uppercase leading-tight tracking-[0.12em] text-sage">
+                {s.label}
+              </p>
+              <p className={bodyClass(s)} dir={s.isRTL ? "rtl" : undefined}>
+                {verseText(s, n) ?? MISSING}
+              </p>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * One row per verse, one column per translation. A difference sits at the same
+ * height across all columns, so it is visible without hunting for it. Scrolls
+ * sideways rather than squeezing when the container is too narrow.
+ */
+function CompareTable({
+  sources,
+  verseNumbers,
+}: {
+  sources: TranslationSource[];
+  verseNumbers: number[];
+}) {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse">
+        <thead>
+          <tr>
+            <th className="w-[38px] border-b border-border pb-2.5 pr-3 text-left" />
+            {sources.map((s) => (
+              <th
+                key={s.key}
+                className="min-w-[170px] border-b border-border px-3 pb-2.5 text-left text-[10.5px] font-bold uppercase tracking-[0.12em] text-sage"
+              >
+                {s.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {verseNumbers.map((n) => (
+            <tr key={n}>
+              <td className="border-b border-border py-2.5 pr-3 align-top font-cormorant text-[14px] font-bold text-brick">
+                {n}
+              </td>
+              {sources.map((s) => (
+                <td
+                  key={s.key}
+                  dir={s.isRTL ? "rtl" : undefined}
+                  className={`border-b border-border px-3 py-2.5 align-top ${bodyClass(s)}`}
+                >
+                  {verseText(s, n) ?? MISSING}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

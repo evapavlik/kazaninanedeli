@@ -9,8 +9,8 @@ import { phases } from "@/data/phases";
 import type { FlowToolHelper } from "./UnifiedFlow";
 import BibleTextPanel from "./BibleTextPanel";
 import BuildingBlocks from "./BuildingBlocks";
-import TranslationCompare from "./TranslationCompare";
 import GuideRail from "./GuideRail";
+import ToolPanel from "./ToolPanel";
 import SermonPanel from "./SermonPanel";
 import { useSermonArtifacts, type SermonArtifacts } from "@/hooks/useSermonArtifacts";
 
@@ -28,19 +28,6 @@ import StepContext from "./StepContext";
 import SubStepNav from "./SubStepNav";
 import UnifiedFlow from "./UnifiedFlow";
 import PreviousStepOutputs from "./PreviousStepOutputs";
-import BibleContextView from "./BibleContextView";
-import OriginalLanguagesPanel from "./OriginalLanguagesPanel";
-import CommentaryPanel from "./CommentaryPanel";
-import SermonInspirationPanel from "./SermonInspirationPanel";
-
-const MOBILE_TOOL_LABELS: Record<string, string> = {
-  translations: "Porovn\u00E1n\u00ED p\u0159eklad\u016F",
-  bookContext: "Kontext knihy",
-  liturgy: "Liturgick\u00FD kalend\u00E1\u0159",
-  originals: "P\u016Fvodn\u00ED jazyky",
-  commentary: "Koment\u00E1\u0159e",
-  sermons: "K\u00E1z\u00E1n\u00ED jin\u00FDch",
-};
 
 interface StepContentPanelProps {
   phase: Phase;
@@ -79,10 +66,14 @@ export default function StepContentPanel({
   const [textPanelOpen, setTextPanelOpen] = useState(false);
   const [activeSubStep, setActiveSubStep] = useState(0);
 
+  // The open tool, if any. Lives here rather than in GuideRail because the tool
+  // renders on the main surface beside the text, not inside the rail.
+  const [activeTool, setActiveTool] = useState<string | null>(null);
+  const toolRef = useRef<HTMLDivElement | null>(null);
+
   // Connected workflow — sermon artifacts
   const { artifacts, updateField, getStepContext } = useSermonArtifacts();
 
-  const isTextPhase = phase.slug === "text";
   // Read the reference through the hook: SSR-safe (no render-time localStorage
   // read → no hydration mismatch), crash-safe (guarded parse), and reactive —
   // it now stays in sync with BibleTextPanel, which writes the same key.
@@ -169,7 +160,18 @@ export default function StepContentPanel({
 
   const handleSubStepSelect = (index: number) => {
     setActiveSubStep(index);
+    // A tool belongs to the step that opened it — moving on closes it.
+    setActiveTool(null);
   };
+
+  /** Open a tool, or close it if the same one is already open (toggle). */
+  const handleOpenTool = useCallback((key: string) => {
+    setActiveTool((prev) => (prev === key ? null : key));
+    // Scroll to the panel once it has rendered.
+    setTimeout(() => {
+      toolRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  }, []);
 
   /**
    * The breathing practice IS the guide's prayer step ("Začni modlitbou — pros
@@ -250,7 +252,7 @@ export default function StepContentPanel({
               onArtifactChange={(field, value) => updateField(field as keyof typeof artifacts, value)}
               prevPhase={prevPhase}
               nextPhase={nextPhase}
-              reference={savedRef}
+              onOpenTool={handleOpenTool}
               checkCount={checkCount}
               collapsed={guideQuiet}
               onToggleCollapse={() => setGuideQuiet((q) => !q)}
@@ -263,17 +265,24 @@ export default function StepContentPanel({
             <div className="mx-auto w-full max-w-[800px]">
               <OnboardingHint />
               <BuildingBlocksForStep slug={currentSub.slug} getStepContext={getStepContext} />
+
+              {/* An open tool sits above the text at full reading width — the
+                  text stays right below it, never replaced. */}
+              {activeTool && (
+                <div ref={toolRef} className="mb-5">
+                  <ToolPanel
+                    toolKey={activeTool}
+                    reference={savedRef}
+                    onClose={() => setActiveTool(null)}
+                  />
+                </div>
+              )}
+
               <BibleTextPanel
                 currentSlug={subSlug}
                 onBreathingComplete={handleBreathingComplete}
                 onOpenText={handleOpenText}
               />
-
-              {isTextPhase && savedRef && (
-                <div className="mt-6">
-                  <TranslationCompare reference={savedRef} />
-                </div>
-              )}
             </div>
 
             {/* Moje kázání — third column at ≥1280px, a full-width row below the
@@ -434,38 +443,12 @@ function MobileGuide({
 
       {/* Inline tool panel — shown when user taps a tool button */}
       {activeToolView && (
-        <div
-          ref={toolPanelRef}
-          className="mt-4 rounded-xl border border-brick/20 bg-white shadow-sm"
-        >
-          <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brick">
-                {MOBILE_TOOL_LABELS[activeToolView] || activeToolView}
-              </span>
-            </div>
-            <button
-              onClick={() => setActiveToolView(null)}
-              className="flex h-8 w-8 items-center justify-center rounded-md text-text-muted hover:bg-cream hover:text-brick"
-              aria-label="Zav\u0159\u00EDt n\u00E1stroj"
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 4L4 12M4 4l8 8" />
-              </svg>
-            </button>
-          </div>
-          <div className="p-4">
-            {activeToolView === "translations" && <TranslationCompare reference={reference} />}
-            {activeToolView === "bookContext" && <BibleContextView reference={reference} />}
-            {activeToolView === "liturgy" && <LiturgicalCalendar />}
-            {activeToolView === "originals" && <OriginalLanguagesPanel reference={reference} />}
-            {activeToolView === "commentary" && reference && (
-              <CommentaryPanel reference={reference} />
-            )}
-            {activeToolView === "sermons" && reference && (
-              <SermonInspirationPanel reference={reference} />
-            )}
-          </div>
+        <div ref={toolPanelRef} className="mt-4">
+          <ToolPanel
+            toolKey={activeToolView}
+            reference={reference}
+            onClose={() => setActiveToolView(null)}
+          />
         </div>
       )}
 
