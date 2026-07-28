@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { phases } from "@/data/phases";
 import type { SermonArtifacts } from "./useSermonArtifacts";
+import type { TranslationNote } from "./useTranslationNotes";
 
 /**
  * A "bubble" represents one piece of raw material the preacher has collected
@@ -123,6 +124,15 @@ function readAnnotations(): AnnotationItem[] {
   return store?.annotations ?? [];
 }
 
+function readTranslationNotes(): TranslationNote[] {
+  if (typeof window === "undefined") return [];
+  const raw = safeParse<TranslationNote[]>(
+    localStorage.getItem("kazani-translation-notes"),
+    []
+  );
+  return Array.isArray(raw) ? raw : [];
+}
+
 function readArtifacts(): SermonArtifacts | null {
   if (typeof window === "undefined") return null;
   return safeParse<SermonArtifacts | null>(
@@ -166,6 +176,35 @@ function buildBubbles(): Bubble[] {
       title: a.note.trim() ? `„${a.selectedText}"` : undefined,
       body,
     });
+  }
+
+  // Notes made while comparing translations. A marked phrase behaves like an
+  // annotation (it has a category and a quote); a note about the whole verse is
+  // a notebook entry, since it is a thought rather than a highlight.
+  for (const n of readTranslationNotes()) {
+    const where = `${n.sourceLabel} ${n.verse}`;
+    if (n.quote && n.category) {
+      const meta = ANNOTATION_LABELS[n.category] ?? {
+        label: "Zvýraznění",
+        category: "keyword" as BubbleCategory,
+      };
+      bubbles.push({
+        id: `tr-${n.id}`,
+        source: "annotation",
+        category: meta.category,
+        tag: `${meta.label} · ${where}`,
+        title: `„${n.quote}"`,
+        body: n.note.trim() || n.quote,
+      });
+    } else {
+      bubbles.push({
+        id: `tr-${n.id}`,
+        source: "notebook",
+        category: "notebook",
+        tag: `Překlady · verš ${n.verse}`,
+        body: n.note,
+      });
+    }
   }
 
   // Notepads per sub-step
