@@ -195,22 +195,28 @@ export default function GuideRail({
         /* ---- GUIDE VIEW */
         <>
           {phase.subSteps.length > 1 && (
-            <div className="mb-4">
-              <SubStepNav
-                subSteps={phase.subSteps}
-                activeIndex={activeSubStep}
-                completedIndices={completedSubSteps}
-                onSelect={onSubStepSelect}
-              />
-            </div>
+            <SubStepNav
+              subSteps={phase.subSteps}
+              activeIndex={activeSubStep}
+              completedIndices={completedSubSteps}
+              onSelect={onSubStepSelect}
+              variant="list"
+            />
           )}
 
           <div key={`step-${activeSubStep}`} style={{ animation: "stepEnter 0.35s ease-out" }}>
-            <StepContext theory={currentSub.theory} tip={currentSub.tip} slug={subSlug} />
-
-            <p className="mb-4 text-[13px] font-light leading-[1.8] text-text-muted">
+            {/* The step's full name. The list above carries the short one, so
+                nothing is lost — it just stopped shouting from three chips. */}
+            <h3 className="mb-1 mt-3.5 font-lora text-[14px] font-bold text-text">
+              {currentSub.title}
+            </h3>
+            <p className="mb-3 text-[13px] font-light leading-[1.8] text-text-muted">
               {currentSub.description}
             </p>
+
+            {/* Theory after the description, not before the tasks: the text
+                leads, the theory is there when it is wanted. */}
+            <StepContext theory={currentSub.theory} tip={currentSub.tip} quiet />
 
             <UnifiedFlow
               slug={subSlug}
@@ -220,6 +226,7 @@ export default function GuideRail({
               artifacts={artifacts}
               onArtifactChange={onArtifactChange}
               onOpenTool={onOpenTool}
+              quiet
             />
 
             <PreviousStepOutputs subStepSlug={subSlug} />

@@ -6,6 +6,12 @@ export type FlowItem =
 export interface SubStep {
   slug: string;
   title: string;
+  /**
+   * One-word name for the guide's step list, where the full title turns three
+   * chips into three lines. The full `title` stays the step's name everywhere
+   * it is read on its own — notebook tags, previous-step outputs, mobile.
+   */
+  shortTitle?: string;
   subtitle: string;
   icon: string;
   estimatedMinutes: number;

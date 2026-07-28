@@ -25,6 +25,12 @@ interface UnifiedFlowProps {
   onArtifactChange?: (field: string, value: string) => void;
   /** Open a tool on the workspace */
   onOpenTool?: (key: string) => void;
+  /**
+   * Quiet treatment for the guide rail: no card around the list, hairline
+   * separators instead of tinted boxes per item. A card inside a card inside a
+   * card made every task look like it needed its own attention.
+   */
+  quiet?: boolean;
 }
 
 export default function UnifiedFlow({
@@ -35,6 +41,7 @@ export default function UnifiedFlow({
   artifacts,
   onOpenTool,
   onArtifactChange,
+  quiet,
 }: UnifiedFlowProps) {
   const [checked, setChecked] = useLocalStorage<boolean[]>(
     `kazani-flow-${slug}`,
@@ -120,10 +127,10 @@ export default function UnifiedFlow({
   if (items.length === 0) return null;
 
   return (
-    <section className="rounded-xl border border-border bg-white">
-      <div className="px-4 py-3">
+    <section className={quiet ? "" : "rounded-xl border border-border bg-white"}>
+      <div className={quiet ? "" : "px-4 py-3"}>
         {/* Subtle progress bar */}
-        <div className="mb-3 flex gap-0.5">
+        <div className={`flex gap-0.5 ${quiet ? "mb-4 mt-1" : "mb-3"}`}>
           {items.map((_, i) => (
             <div
               key={i}
@@ -135,7 +142,7 @@ export default function UnifiedFlow({
         </div>
 
         {/* All items */}
-        <ol className="space-y-1.5">
+        <ol className={quiet ? "" : "space-y-1.5"}>
           {items.map((item, i) => {
             const helpers = getHelpers(i);
             const isToolOpen = openToolIndex === i;
@@ -160,15 +167,21 @@ export default function UnifiedFlow({
             return (
               <li
                 key={i}
-                className={`rounded-lg transition-all duration-200 ${
-                  isDone ? "opacity-60" : ""
-                } ${
-                  isInput
-                    ? isArtifact
-                      ? "border border-brick/10 bg-brick-pale/20 p-2.5"
-                      : "border border-sage/10 bg-sage-pale/20 p-2.5"
-                    : "p-2.5"
-                }`}
+                className={
+                  quiet
+                    ? `border-t border-border py-3 first:border-t-0 first:pt-1 transition-all duration-200 ${
+                        isDone ? "opacity-60" : ""
+                      }`
+                    : `rounded-lg transition-all duration-200 ${
+                        isDone ? "opacity-60" : ""
+                      } ${
+                        isInput
+                          ? isArtifact
+                            ? "border border-brick/10 bg-brick-pale/20 p-2.5"
+                            : "border border-sage/10 bg-sage-pale/20 p-2.5"
+                          : "p-2.5"
+                      }`
+                }
               >
                 {/* Check item */}
                 {!isInput && (
@@ -180,7 +193,9 @@ export default function UnifiedFlow({
                       className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors duration-200 ${
                         isDone
                           ? "border-brick bg-brick text-white"
-                          : "border-brick/30 bg-white group-hover:border-brick/60"
+                          : quiet
+                            ? "border-border-strong bg-white group-hover:border-brick"
+                            : "border-brick/30 bg-white group-hover:border-brick/60"
                       }`}
                       style={justChecked === i ? { animation: 'checkRipple 0.8s ease-out' } : undefined}
                     >
@@ -267,6 +282,7 @@ export default function UnifiedFlow({
                     placeholder={artifactPlaceholder || `Tvoje odpov\u011B\u010F\u2026`}
                     isDone={isDone}
                     rows={artifactRows}
+                    quiet={quiet}
                     onChange={(value) => {
                       if (artifactField) {
                         handleArtifact(artifactField, value);
@@ -351,6 +367,7 @@ export function ArtifactInput({
   rows = 2,
   onChange,
   onComplete,
+  quiet,
 }: {
   text: string;
   value: string;
@@ -359,6 +376,8 @@ export function ArtifactInput({
   rows?: number;
   onChange: (value: string) => void;
   onComplete: (value: string) => void;
+  /** Quiet treatment for the guide rail — a labelled field, not a card. */
+  quiet?: boolean;
 }) {
   const [localValue, setLocalValue] = useState(value);
   const [settled, setSettled] = useState(false);
@@ -432,21 +451,27 @@ export function ArtifactInput({
 
   return (
     <div style={settled ? { animation: 'artifactSettle 1s ease-out' } : undefined}>
-      <div className="flex items-start gap-2">
-        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brick-pale text-brick text-xs">
-          {isDone ? (
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 7l3 3 5-6" />
-            </svg>
-          ) : (
-            <span>{"\uD83D\uDCDD"}</span>
-          )}
-        </span>
-        <span className={`text-[13px] leading-relaxed font-medium ${isDone ? "text-text-muted" : "text-text"}`}>
+      {quiet ? (
+        <label className="block text-[13px] font-semibold leading-relaxed text-text">
           {text}
-        </span>
-      </div>
-      <div className="ml-7 mt-1.5">
+        </label>
+      ) : (
+        <div className="flex items-start gap-2">
+          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brick-pale text-brick text-xs">
+            {isDone ? (
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 7l3 3 5-6" />
+              </svg>
+            ) : (
+              <span>{"\uD83D\uDCDD"}</span>
+            )}
+          </span>
+          <span className={`text-[13px] leading-relaxed font-medium ${isDone ? "text-text-muted" : "text-text"}`}>
+            {text}
+          </span>
+        </div>
+      )}
+      <div className={quiet ? "mt-1.5" : "ml-7 mt-1.5"}>
         <textarea
           ref={textareaRef}
           value={localValue}
@@ -456,11 +481,19 @@ export function ArtifactInput({
           onDrop={handleDrop}
           placeholder={placeholder}
           rows={rows}
-          className={`w-full rounded-md border bg-white px-2.5 py-1.5 text-[12px] leading-relaxed text-text placeholder:text-text-light/40 focus:outline-none resize-y transition-all ${
-            dragActive
-              ? "border-brick ring-2 ring-brick/20 bg-brick-pale/40"
-              : "border-brick/15 focus:border-brick/30 focus:ring-1 focus:ring-brick/10"
-          }`}
+          className={
+            quiet
+              ? `w-full resize-y bg-transparent px-0.5 py-1.5 text-[13px] leading-relaxed text-text placeholder:text-text-light/50 focus:outline-none transition-all ${
+                  dragActive
+                    ? "rounded-md border border-brick bg-brick-pale/40 px-2 ring-2 ring-brick/20"
+                    : "rounded-none border-0 border-b border-border-strong focus:rounded-md focus:border focus:border-sage focus:bg-white focus:px-2"
+                }`
+              : `w-full rounded-md border bg-white px-2.5 py-1.5 text-[12px] leading-relaxed text-text placeholder:text-text-light/40 focus:outline-none resize-y transition-all ${
+                  dragActive
+                    ? "border-brick ring-2 ring-brick/20 bg-brick-pale/40"
+                    : "border-brick/15 focus:border-brick/30 focus:ring-1 focus:ring-brick/10"
+                }`
+          }
         />
         <div
           className={`mt-1.5 overflow-hidden transition-all duration-300 ${
