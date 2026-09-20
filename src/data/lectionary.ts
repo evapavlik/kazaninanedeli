@@ -2580,11 +2580,11 @@ export const LECTIONARY: LectionaryEntry[] = [
     readings: {
       first: {
       label: "1. čtení",
-      reference: "Ez 18,1",
+      reference: "Ez 18,1.29-32",
       bookNumber: 26,
       chapter: 18,
       verseStart: 1,
-      verseEnd: null,
+      verseEnd: 32,
     },
       psalm: {
       label: "Žalm",

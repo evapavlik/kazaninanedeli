@@ -184,21 +184,23 @@ export function getSundayId(date: Date): string | null {
   const nextAdventStart = getAdventStart(year);
 
   if (sunday >= trinitySunday && sunday < nextAdventStart) {
-    // a44 = Trinity Sunday
-    const weeksAfterTrinity = Math.floor(daysBetween(trinitySunday, sunday) / 7);
-    // a44 (Trinity), then a46 (8. v mezidobí) onwards
-    // There's a gap: a44 = Trinity, a45 = Corpus Christi (Thursday), a46 = 8th ordinary
-    if (weeksAfterTrinity === 0) return "44"; // Trinity
+    // a44 = Trinity Sunday (a45 = Corpus Christi, a Thursday — never a Sunday)
+    if (isSameDay(sunday, trinitySunday)) return "44";
 
-    // Ordinary Sundays: a46 through a72
-    // The numbering goes: a46 = 1 week after Trinity, a47 = 2 weeks, etc.
-    const ordinaryId = 46 + (weeksAfterTrinity - 1);
+    // Ordinary Sundays after Pentecost are numbered BACKWARDS from the end of
+    // the church year, not forwards from Trinity: the last Sunday before Advent
+    // is always the 34th (Christ the King, a72), and everything before it is
+    // fixed relative to that. Counting forwards from Trinity drifts by however
+    // many extra weeks an early Easter puts between Pentecost and Advent —
+    // in 2026 that was two Sundays, so 27. 9. showed the readings of 24.
+    // v mezidobí when cyklus.ccsh.cz (and every lectionary) says 26.
+    //
+    // Ids: n. v mezidobí ↔ a{n + 38}, so Christ the King (34.) is a72.
+    const christTheKing = getPreviousSunday(addDays(nextAdventStart, -1));
+    const weeksToEnd = Math.round(daysBetween(sunday, christTheKing) / 7);
+    const ordinaryId = 72 - weeksToEnd;
 
-    // Last Sunday before Advent = Christ the King (a72)
-    const lastSundayBeforeAdvent = getPreviousSunday(addDays(nextAdventStart, -1));
-    if (isSameDay(sunday, lastSundayBeforeAdvent)) return "72";
-
-    if (ordinaryId <= 71) return String(ordinaryId);
+    if (ordinaryId >= 46 && ordinaryId <= 72) return String(ordinaryId);
   }
 
   // Fallback: check if we're in early January (still in Christmas/Epiphany from previous year)
@@ -280,22 +282,35 @@ export function getCurrentEntry(date: Date): LectionaryEntry | null {
 }
 
 /**
- * Vrátí lekcionářový záznam pro nejbližší nadcházející neděli.
+ * Neděle, na kterou se právě připravuje kázání.
+ *
+ * Příprava běží přes týden do soboty večer; v neděli se káže a ještě týž den
+ * je ta neděle „za námi". Proto v neděli míří příprava už na neděli PŘÍŠTÍ —
+ * na rozdíl od `getNextSunday`, což je čistá kalendářní aritmetika, která
+ * v neděli vrací dnešek (a tak ji používají výpočty období).
  */
-export function getNextSundayEntry(date: Date): LectionaryEntry | null {
-  const nextSun = getNextSunday(date);
-  return getCurrentEntry(nextSun);
+export function getPreparationSunday(date: Date): Date {
+  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  return d.getDay() === 0 ? addDays(d, 7) : getNextSunday(d);
 }
 
 /**
- * Vrátí N nadcházejících nedělních záznamů.
+ * Vrátí lekcionářový záznam pro neděli, na kterou se připravuje kázání.
+ */
+export function getNextSundayEntry(date: Date): LectionaryEntry | null {
+  return getCurrentEntry(getPreparationSunday(date));
+}
+
+/**
+ * Vrátí N nadcházejících nedělních záznamů, počínaje tou, na kterou se
+ * připravuje kázání.
  */
 export function getUpcomingSundays(
   date: Date,
   count: number
 ): LectionaryEntry[] {
   const results: LectionaryEntry[] = [];
-  let current = getNextSunday(date);
+  let current = getPreparationSunday(date);
 
   for (let i = 0; i < count * 2 && results.length < count; i++) {
     const entry = getCurrentEntry(current);
