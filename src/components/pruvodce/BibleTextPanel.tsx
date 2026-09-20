@@ -31,6 +31,33 @@ const TEXT_SOURCE_LABELS: Record<TextSource, string> = {
   custom: "Vlastn\u00ED vklad",
 };
 
+/**
+ * ČEP text for a lectionary reading, filtered by the parsed reference so a
+ * discontinuous pericope ("Ez 18,1.29-32") stays exact. Null when the chapter
+ * couldn't be fetched.
+ */
+async function fetchLectionaryText(lect: LectionaryReading): Promise<string | null> {
+  const chapter = await fetchChapter(lect.bookNumber, lect.chapter, "cep");
+  if (!chapter) return null;
+  const parsed = parseReferenceForApi(lect.reference);
+  const verses = chapter.verses.filter((v) => {
+    if (parsed && parsed.segments.length > 0) return verseInReference(v.verse, parsed);
+    if (v.verse < lect.verseStart) return false;
+    if (lect.verseEnd !== null && v.verse > lect.verseEnd) return false;
+    return true;
+  });
+  return verses.map((v) => v.text).join(" ");
+}
+
+/**
+ * Readings auto-loaded before the Supabase-by-position bug was fixed may hold
+ * the text of a *different* Sunday under the right reference. Once per
+ * browser, re-fetch every auto-loaded (non-custom) reading from ČEP. Texts the
+ * preacher pasted herself are left alone.
+ */
+const RESYNC_FLAG = "kazani-readings-resynced";
+const RESYNC_VERSION = "1";
+
 interface BibleTextPanelProps {
   currentSlug: string;
   /** Step 1 only: the breathing practice finished — tick off the prayer step. */
@@ -247,22 +274,49 @@ export default function BibleTextPanel({
     const write = writeSlot;
     setLoadingSlot(key);
     (async () => {
-      const chapter = await fetchChapter(lect.bookNumber, lect.chapter, "cep");
+      const text = await fetchLectionaryText(lect);
       if (!mounted.current) return;
-      if (chapter) {
-        const parsed = parseReferenceForApi(lect.reference);
-        const verses = chapter.verses.filter((v) => {
-          if (parsed && parsed.segments.length > 0) return verseInReference(v.verse, parsed);
-          if (v.verse < lect.verseStart) return false;
-          if (lect.verseEnd !== null && v.verse > lect.verseEnd) return false;
-          return true;
-        });
-        write({ reference: lect.reference, text: verses.map((v) => v.text).join(" "), source: "cep" });
-      }
+      if (text) write({ reference: lect.reference, text, source: "cep" });
       setLoadingSlot((cur) => (cur === key ? null : cur));
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, tabbed, activeReading, slot?.text, readings, currentReading]);
+
+  /** Re-fetch one reading from ČEP for its lectionary reference, overwriting the slot. */
+  const reloadReading = useCallback(
+    async (key: ReadingKey): Promise<boolean> => {
+      const lect = readings.find((r) => r.key === key)?.lectionary;
+      if (!lect) return false;
+      const text = await fetchLectionaryText(lect);
+      if (!mounted.current || !text) return false;
+      const raw = localStorage.getItem(`kazani-reading-${key}`);
+      // Write through storage + sync event rather than the active slot's setter,
+      // since the key being repaired need not be the active one.
+      const slotValue = { reference: lect.reference, text, source: "cep" };
+      if (raw !== JSON.stringify(slotValue)) {
+        localStorage.setItem(`kazani-reading-${key}`, JSON.stringify(slotValue));
+        window.dispatchEvent(new CustomEvent("kazani:local-storage", { detail: { key: `kazani-reading-${key}` } }));
+      }
+      return true;
+    },
+    [readings]
+  );
+
+  useEffect(() => {
+    if (!ready || !tabbed) return;
+    if (localStorage.getItem(RESYNC_FLAG) === RESYNC_VERSION) return;
+    localStorage.setItem(RESYNC_FLAG, RESYNC_VERSION);
+    for (const r of readings) {
+      if (!r.lectionary) continue;
+      try {
+        const stored = JSON.parse(localStorage.getItem(`kazani-reading-${r.key}`) ?? "null");
+        if (stored && stored.text && stored.source !== "custom") void reloadReading(r.key);
+      } catch {
+        /* unreadable slot — auto-load will fill it */
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, tabbed, readings]);
 
   const hasText = localText.trim().length > 0;
   const showTextarea = !hasText || editing || isFirstStep;
@@ -363,6 +417,24 @@ export default function BibleTextPanel({
         <div className="flex items-center gap-2 shrink-0">
           {showSaved && (
             <span className="text-[11px] text-sage">{`\u2713 Ulo\u017Eeno`}</span>
+          )}
+          {tabbed && hasText && !editing && readings.find((r) => r.key === activeReading)?.lectionary && (
+            <button
+              onClick={async () => {
+                if (
+                  localSource === "custom" &&
+                  !window.confirm("Nahradit tvůj vložený text textem z ČEP?")
+                )
+                  return;
+                setLoadingSlot(activeReading);
+                await reloadReading(activeReading);
+                setLoadingSlot((cur) => (cur === activeReading ? null : cur));
+              }}
+              title="Stáhnout text tohoto čtení znovu z ČEP"
+              className="text-[11px] font-medium text-text-light hover:text-brick"
+            >
+              {loadingSlot === activeReading ? `Načítám…` : `Načíst znovu`}
+            </button>
           )}
           {hasText && !editing && (
             <button
