@@ -9,7 +9,13 @@ import { annotationCategories } from "@/data/annotation-categories";
 import type { LectionaryReading } from "@/data/lectionary";
 import AnnotatedTextDisplay from "./AnnotatedTextDisplay";
 import BreathingPractice from "./BreathingPractice";
-import { fetchChapter, formatReference, type BibleTranslation } from "@/lib/getbible";
+import {
+  fetchChapter,
+  formatReference,
+  parseReferenceForApi,
+  verseInReference,
+  type BibleTranslation,
+} from "@/lib/getbible";
 
 /** Source of the Bible text: a specific translation code or "custom" for user-pasted text. */
 type TextSource = BibleTranslation | "custom";
@@ -537,8 +543,13 @@ function LectionarySuggestion({
         return;
       }
 
-      // Filter verses by range
+      // Filter by the reference string, which can carry a discontinuous
+      // pericope ("Ez 18,1.29-32") that verseStart/verseEnd cannot express —
+      // the range would either truncate it or pull in the whole gap. Fall back
+      // to the range only when the reference doesn't parse.
+      const parsed = parseReferenceForApi(r.reference);
       const versesToUse = chapter.verses.filter((v) => {
+        if (parsed && parsed.segments.length > 0) return verseInReference(v.verse, parsed);
         if (r.verseStart === null || r.verseStart === undefined) return true;
         if (v.verse < r.verseStart) return false;
         if (r.verseEnd !== null && r.verseEnd !== undefined && v.verse > r.verseEnd) return false;
@@ -546,7 +557,10 @@ function LectionarySuggestion({
       });
 
       const text = versesToUse.map((v) => v.text).join(" ");
-      const ref = formatReference(r.bookNumber, r.chapter, r.verseStart, r.verseEnd);
+      // Keep the lectionary's own reference when it is richer than a range.
+      const ref = parsed && parsed.segments.length > 1
+        ? r.reference
+        : formatReference(r.bookNumber, r.chapter, r.verseStart, r.verseEnd);
       onApply(ref, text, "cep");
     } catch (e) {
       setError(
