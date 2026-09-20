@@ -7,7 +7,8 @@ import {
   getNextSundayEntry,
   getPreparationSunday,
 } from "@/lib/lectionary-utils";
-import type { LectionaryEntry, LectionaryReading } from "@/data/lectionary";
+import { LECTIONARY, type LectionaryEntry, type LectionaryReading } from "@/data/lectionary";
+import { parseReferenceForApi } from "@/lib/getbible";
 import {
   ACTIVE_READING_KEY,
   READING_KEYS,
@@ -94,7 +95,17 @@ export function useSunday() {
     const currentRef = safeString(localStorage.getItem("kazani-bible-ref"));
     const guess = guessReadingKey(currentRef, entryForTarget) ?? "gospel";
     migrateLegacyText(guess);
-    if (!meta && !hasWork()) setMeta(target);
+    if (meta) return;
+    if (!hasWork()) {
+      setMeta(target);
+      return;
+    }
+    // Work from before Sundays were tracked: name it from the text on the
+    // desk. A pericope belongs to one Sunday of the cycle, and that Sunday
+    // fell on one date in the last year — so „rozpracovaná příprava z
+    // dřívějška" can usually say which Sunday, and when.
+    const inferred = inferSundayFromReference(currentRef, new Date(target.id));
+    if (inferred) setMeta(inferred);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target]);
 
@@ -201,6 +212,37 @@ function safeString(raw: string | null): string {
   } catch {
     return raw;
   }
+}
+
+/**
+ * The Sunday a pericope was read on: find the entry whose reading it is, then
+ * walk back Sunday by Sunday from `before` until the calendar lands on that
+ * entry. Looks back a year — the cycle repeats every three, so one match.
+ */
+function inferSundayFromReference(reference: string, before: Date): SundayMeta | null {
+  if (!reference) return null;
+  // Compare book + chapter + first verse rather than strings: the desk may say
+  // „Matouš 13,31-33.44-52" where the lectionary says „Mt 13,31-33" (full name
+  // vs. abbreviation, and some lectionary references are still truncated).
+  const want = parseReferenceForApi(reference);
+  if (!want) return null;
+  const matches = LECTIONARY.filter((e) =>
+    READING_KEYS.some((k) => {
+      const r = e.readings[k];
+      return r && r.bookNumber === want.bookNumber && r.chapter === want.chapter && r.verseStart === want.verseStart;
+    })
+  );
+  if (matches.length === 0) return null;
+
+  const d = new Date(before.getFullYear(), before.getMonth(), before.getDate());
+  for (let i = 0; i < 53; i++) {
+    const entry = getCurrentEntry(d);
+    if (entry && matches.some((m) => m.sundayId === entry.sundayId && m.year === entry.year)) {
+      return { id: isoDate(d), sundayId: entry.sundayId, name: entry.sundayName };
+    }
+    d.setDate(d.getDate() - 7);
+  }
+  return null;
 }
 
 /** Which of the Sunday's readings a reference most likely is. */

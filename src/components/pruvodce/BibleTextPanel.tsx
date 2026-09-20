@@ -222,10 +222,19 @@ export default function BibleTextPanel({
     if (!lect || autoLoaded.current.has(activeReading)) return;
     autoLoaded.current.add(activeReading);
 
-    const norm = (x: string) => x.replace(/\s+/g, "").replace(/[–—]/g, "-").toLowerCase();
-    const fromSupabase = currentReading?.readings.find(
-      (r) => r.type === activeReading || norm(r.reference) === norm(lect.reference)
-    );
+    // Supabase holds the *last scraped* Sunday, which need not be this one —
+    // so never take its reading by position ("second"); only when the
+    // reference is the same passage (book, chapter, first verse).
+    const want = parseReferenceForApi(lect.reference);
+    const fromSupabase = currentReading?.readings.find((r) => {
+      const got = parseReferenceForApi(r.reference);
+      return (
+        want && got &&
+        got.bookNumber === want.bookNumber &&
+        got.chapter === want.chapter &&
+        got.verseStart === want.verseStart
+      );
+    });
     if (fromSupabase?.text) {
       writeSlot({ reference: lect.reference, text: fromSupabase.text, source: "cep" });
       return;
