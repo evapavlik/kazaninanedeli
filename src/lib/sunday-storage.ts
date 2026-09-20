@@ -58,6 +58,8 @@ const PREFERENCE_KEYS = new Set([
   "kazani-compare-mode",
   "kazani-breath-symbol",
   "kazani-onboarding-seen",
+  // One-time repairs of stored readings — see BibleTextPanel.
+  "kazani-readings-resynced",
 ]);
 /** Bookkeeping for this module — never part of a snapshot. */
 const META_KEYS = new Set([SUNDAY_KEY, ARCHIVE_KEY, "kazani-sunday-seen"]);
