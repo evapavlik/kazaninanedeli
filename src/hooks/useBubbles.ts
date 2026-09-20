@@ -4,6 +4,18 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { phases } from "@/data/phases";
 import type { SermonArtifacts } from "./useSermonArtifacts";
 import type { TranslationNote } from "./useTranslationNotes";
+import {
+  READING_KEYS,
+  annotationsKey,
+  readingSlotKey,
+  type ReadingSlot,
+} from "@/lib/sunday-storage";
+
+const READING_LABELS: Record<string, string> = {
+  first: "1. čtení",
+  second: "2. čtení",
+  gospel: "Evangelium",
+};
 
 /**
  * A "bubble" represents one piece of raw material the preacher has collected
@@ -115,13 +127,26 @@ function safeParse<T>(raw: string | null, fallback: T): T {
   }
 }
 
-function readAnnotations(): AnnotationItem[] {
+/**
+ * Annotations from every reading of the Sunday, each tagged with where it was
+ * made. The preacher reads the first reading, the epistle and the gospel in
+ * turn and marks words in each; when she comes back to the notebook, the one
+ * thing she needs to know about a mark is which text it came from.
+ */
+function readAnnotations(): (AnnotationItem & { where: string })[] {
   if (typeof window === "undefined") return [];
-  const store = safeParse<AnnotationStore | null>(
-    localStorage.getItem("kazani-annotations"),
-    null
-  );
-  return store?.annotations ?? [];
+  const out: (AnnotationItem & { where: string })[] = [];
+  for (const key of READING_KEYS) {
+    const store = safeParse<AnnotationStore | null>(localStorage.getItem(annotationsKey(key)), null);
+    if (!store?.annotations?.length) continue;
+    const slot = safeParse<ReadingSlot | null>(localStorage.getItem(readingSlotKey(key)), null);
+    const where = [READING_LABELS[key], slot?.reference].filter(Boolean).join(" · ");
+    for (const a of store.annotations) out.push({ ...a, where });
+  }
+  // Pre-slot store — a page showing a single text, or state from before slots.
+  const legacy = safeParse<AnnotationStore | null>(localStorage.getItem("kazani-annotations"), null);
+  for (const a of legacy?.annotations ?? []) out.push({ ...a, where: "" });
+  return out;
 }
 
 function readTranslationNotes(): TranslationNote[] {
@@ -172,7 +197,7 @@ function buildBubbles(): Bubble[] {
       id: `ann-${a.id}`,
       source: "annotation",
       category: meta.category,
-      tag: meta.label,
+      tag: a.where ? `${meta.label} · ${a.where}` : meta.label,
       title: a.note.trim() ? `„${a.selectedText}"` : undefined,
       body,
     });

@@ -12,6 +12,7 @@ import BuildingBlocks from "./BuildingBlocks";
 import GuideRail from "./GuideRail";
 import ToolPanel from "./ToolPanel";
 import SermonPanel from "./SermonPanel";
+import { ReturningBanner, SundayHeader, SundayArchive } from "./SundayLifecycle";
 import { useSermonArtifacts, type SermonArtifacts } from "@/hooks/useSermonArtifacts";
 
 // Tool components (for inline flow helpers)
@@ -209,10 +210,14 @@ export default function StepContentPanel({
 
   return (
     <div className="relative">
+      {/* After a break: the work on the desk belongs to another Sunday. */}
+      <ReturningBanner />
+
       {/* MAIN: Full-width text */}
       <div className="mx-auto w-full">
         {/* Mobile toggle */}
         <div className="lg:hidden mb-4">
+          <SundayHeader />
           <button
             onClick={() => setTextPanelOpen(!textPanelOpen)}
             className="flex w-full items-center justify-between rounded-xl border border-border bg-cream px-4 py-3 text-left"
@@ -264,6 +269,7 @@ export default function StepContentPanel({
                 balanced margins, not an empty right-hand gutter. */}
             <div className="mx-auto w-full max-w-[800px]">
               <OnboardingHint />
+              <SundayHeader />
               <BuildingBlocksForStep slug={currentSub.slug} getStepContext={getStepContext} />
 
               {/* An open tool sits above the text at full reading width — the
@@ -294,6 +300,9 @@ export default function StepContentPanel({
                   updateField(field as keyof typeof artifacts, value)
                 }
               />
+              <div className="mt-4">
+                <SundayArchive />
+              </div>
             </div>
           </div>
         </div>
@@ -317,6 +326,9 @@ export default function StepContentPanel({
             nextPhase={nextPhase}
             reference={savedRef}
           />
+          <div className="mt-6">
+            <SundayArchive />
+          </div>
         </div>
       </div>
     </div>
