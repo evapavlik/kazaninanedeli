@@ -56,10 +56,10 @@ export const phases: Phase[] = [
           explanation: `Ferdinand de Saussure uk\u00E1zal, \u017Ee jazyk je k\u00F3dovac\u00ED syst\u00E9m \u2014 soustava znak\u016F, kter\u00E9 nesou v\u00FDznam v r\u00E1mci vz\u00E1jemn\u00FDch vztah\u016F. Biblick\u00FD text m\u00E1 sv\u016Fj sukcesivn\u00ED povrch (\u010Dteme ho postupn\u011B, slovo za slovem) a svou redundanci (opakov\u00E1n\u00ED kl\u00ED\u010Dov\u00FDch motiv\u016F). Pozorn\u00E9 \u010Dten\u00ED odhaluje, co text skute\u010Dn\u011B \u0159\u00EDk\u00E1 \u2014 ne co si mysl\u00EDme, \u017Ee \u0159\u00EDk\u00E1.`,
         },
         flow: [
-          { type: "check", text: `Prvn\u00ED \u010Dten\u00ED: p\u0159e\u010Dti text pomalu a nahlas.` },
+          { type: "check", text: `P\u0159e\u010Dti si v\u0161echna \u010Dten\u00ED t\u00E9 ned\u011Ble pomalu a nahlas \u2014 prvn\u00ED \u010Dten\u00ED, epi\u0161tolu i evangelium.` },
           { type: "artifact", text: `Jak\u00FD je tv\u016Fj celkov\u00FD dojem z textu?`, field: "overallImpression", placeholder: `Nap\u0159. text p\u016Fsob\u00ED nad\u011Bjn\u011B, p\u0159ekvapil m\u011B kontrast...` },
-          { type: "check", text: `Druh\u00E9 \u010Dten\u00ED: ozna\u010Duj kl\u00ED\u010Dov\u00E1 slova a opakuj\u00EDc\u00ED se motivy v textu.` },
-          { type: "check", text: `T\u0159et\u00ED \u010Dten\u00ED: v\u0161\u00EDmej si struktury \u2014 kde je zlom, kdo jedn\u00E1, kde je nap\u011Bt\u00ED.` },
+          { type: "check", text: `\u010Cti znovu a ozna\u010Duj kl\u00ED\u010Dov\u00E1 slova a opakuj\u00EDc\u00ED se motivy \u2014 v ka\u017Ed\u00E9m z text\u016F.` },
+          { type: "check", text: `P\u0159i dal\u0161\u00EDm \u010Dten\u00ED si v\u0161\u00EDmej struktury \u2014 kde je zlom, kdo jedn\u00E1, kde je nap\u011Bt\u00ED.` },
         ],
         tip: `Nesp\u011Bchej na v\u00FDklad. \u010C\u00EDm d\u00E9le u textu z\u016Fstane\u0161, t\u00EDm v\u00EDc ti odhal\u00ED. Zkou\u0161ej \u010D\u00EDst v r\u016Fzn\u00FDch p\u0159ekladech (\u010CEP, Bible21, Kralick\u00E1).`,
       },

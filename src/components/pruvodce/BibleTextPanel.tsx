@@ -5,10 +5,13 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useCurrentReading } from "@/hooks/useCurrentReading";
 import { useLectionaryReading } from "@/hooks/useLectionaryReading";
 import { useAnnotations } from "@/hooks/useAnnotations";
+import { useSunday, useReadingSlot } from "@/hooks/useSunday";
+import { annotationsKey, type ReadingKey } from "@/lib/sunday-storage";
 import { annotationCategories } from "@/data/annotation-categories";
 import type { LectionaryReading } from "@/data/lectionary";
 import AnnotatedTextDisplay from "./AnnotatedTextDisplay";
 import BreathingPractice from "./BreathingPractice";
+import ReadingTabs from "./ReadingTabs";
 import {
   fetchChapter,
   formatReference,
@@ -67,7 +70,29 @@ export default function BibleTextPanel({
   // Fetch current Sunday entry from static lectionary (always works, references only)
   const lectionary = useLectionaryReading();
 
-  // Interactive annotations
+  // The Sunday's three readings. Each has its own slot (text) and its own
+  // annotation store, so the preacher can go through the first reading, the
+  // epistle and the gospel in turn and come back to any of them without
+  // losing a mark. `kazani-bible-*` stays as a mirror of the *active* reading
+  // so every tool that reads "the current text" keeps working unchanged.
+  const { readings, activeReading, setActiveReading } = useSunday();
+  const isFirstStep = currentSlug === "modlitba";
+  const tabbed = !isFirstStep && readings.some((r) => r.lectionary !== null);
+  const [slot, setSlot] = useReadingSlot(activeReading);
+  const [loadingSlot, setLoadingSlot] = useState<ReadingKey | null>(null);
+  const autoLoaded = useRef<Set<string>>(new Set());
+
+  // Marks per reading, for the tab badges.
+  const [annFirst] = useLocalStorage<{ annotations?: unknown[] }>(annotationsKey("first"), {});
+  const [annSecond] = useLocalStorage<{ annotations?: unknown[] }>(annotationsKey("second"), {});
+  const [annGospel] = useLocalStorage<{ annotations?: unknown[] }>(annotationsKey("gospel"), {});
+  const counts: Record<ReadingKey, number> = {
+    first: annFirst?.annotations?.length ?? 0,
+    second: annSecond?.annotations?.length ?? 0,
+    gospel: annGospel?.annotations?.length ?? 0,
+  };
+
+  // Interactive annotations — per reading when tabbed
   const {
     annotations,
     addAnnotation,
@@ -76,37 +101,71 @@ export default function BibleTextPanel({
     clearAnnotations,
     textMismatch,
     syncHash,
-  } = useAnnotations(localText);
+  } = useAnnotations(localText, tabbed ? annotationsKey(activeReading) : undefined);
 
   useEffect(() => {
+    if (tabbed) {
+      setLocalText(slot?.text ?? "");
+      setLocalRef(slot?.reference ?? "");
+      setLocalSource((slot?.source as TextSource | "") ?? "");
+      return;
+    }
     setLocalText(savedText);
     setLocalRef(savedRef);
     setLocalSource(savedSource);
-  }, [savedText, savedRef, savedSource]);
+  }, [tabbed, slot, savedText, savedRef, savedSource]);
+
+  // Mirror the active reading into kazani-bible-* for the tools.
+  useEffect(() => {
+    if (!tabbed) return;
+    const ref = slot?.reference ?? "";
+    const text = slot?.text ?? "";
+    const source = (slot?.source as TextSource | "") ?? "";
+    if (ref !== savedRef) setSavedRef(ref);
+    if (text !== savedText) setSavedText(text);
+    if (source !== savedSource) setSavedSource(source);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tabbed, slot, activeReading]);
+
+  // Persist into the active slot (tabbed) — the mirror follows via the effect above.
+  const writeSlot = useCallback(
+    (patch: Partial<{ reference: string; text: string; source: TextSource | "" }>) => {
+      setSlot((prev) => ({
+        reference: patch.reference ?? prev?.reference ?? "",
+        text: patch.text ?? prev?.text ?? "",
+        source: patch.source ?? prev?.source ?? "",
+      }));
+    },
+    [setSlot]
+  );
 
   const saveText = useCallback(
     (text: string) => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
-        setSavedText(text);
         // Manually typed/pasted text → source becomes "custom" (unless already set)
-        if (text.trim() && !savedSource) {
-          setSavedSource("custom");
-          setLocalSource("custom");
+        const becomesCustom = text.trim() && !(tabbed ? slot?.source : savedSource);
+        if (tabbed) {
+          writeSlot({ text, ...(becomesCustom ? { source: "custom" } : {}) });
+        } else {
+          setSavedText(text);
+          if (becomesCustom) setSavedSource("custom");
         }
+        if (becomesCustom) setLocalSource("custom");
         setShowSaved(true);
         if (savedIndicatorRef.current) clearTimeout(savedIndicatorRef.current);
         savedIndicatorRef.current = setTimeout(() => setShowSaved(false), 1500);
       }, 300);
     },
-    [setSavedText, setSavedSource, savedSource]
+    [tabbed, slot, writeSlot, setSavedText, setSavedSource, savedSource]
   );
 
   const saveRef = useCallback(
     (ref: string) => {
-      setSavedRef(ref);
+      if (tabbed) writeSlot({ reference: ref });
+      else setSavedRef(ref);
     },
-    [setSavedRef]
+    [tabbed, writeSlot, setSavedRef]
   );
 
   useEffect(() => {
@@ -124,21 +183,87 @@ export default function BibleTextPanel({
     setLocalRef(reference);
     setLocalText(text);
     setLocalSource(source);
-    setSavedRef(reference);
-    setSavedText(text);
-    setSavedSource(source);
+    if (tabbed) {
+      writeSlot({ reference, text, source });
+    } else {
+      setSavedRef(reference);
+      setSavedText(text);
+      setSavedSource(source);
+    }
     setEditing(false);
   };
 
+  /**
+   * Fill an empty reading with its lectionary text the first time it is opened,
+   * so "go through all three" is three clicks, not three loads. Supabase (full
+   * ČEP text) first when it has this reference; otherwise ČEP from getbible,
+   * filtered by the parsed reference so discontinuous pericopes stay exact.
+   */
+  // Storage is read in an effect, so on the very first render every slot looks
+  // empty. Acting on that would fetch ČEP over a text the preacher pasted
+  // herself. `ready` flips in the same effect pass as the first read, so the
+  // next render sees both.
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    setReady(true);
+  }, []);
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!ready || !tabbed || slot?.text) return;
+    const info = readings.find((r) => r.key === activeReading);
+    const lect = info?.lectionary;
+    if (!lect || autoLoaded.current.has(activeReading)) return;
+    autoLoaded.current.add(activeReading);
+
+    const norm = (x: string) => x.replace(/\s+/g, "").replace(/[–—]/g, "-").toLowerCase();
+    const fromSupabase = currentReading?.readings.find(
+      (r) => r.type === activeReading || norm(r.reference) === norm(lect.reference)
+    );
+    if (fromSupabase?.text) {
+      writeSlot({ reference: lect.reference, text: fromSupabase.text, source: "cep" });
+      return;
+    }
+
+    // Not cancelled on a tab switch: `writeSlot` is bound to this reading's
+    // slot, so a fetch that finishes after the preacher moved on still lands
+    // in the right place. Only an unmount drops the result.
+    const key = activeReading;
+    const write = writeSlot;
+    setLoadingSlot(key);
+    (async () => {
+      const chapter = await fetchChapter(lect.bookNumber, lect.chapter, "cep");
+      if (!mounted.current) return;
+      if (chapter) {
+        const parsed = parseReferenceForApi(lect.reference);
+        const verses = chapter.verses.filter((v) => {
+          if (parsed && parsed.segments.length > 0) return verseInReference(v.verse, parsed);
+          if (v.verse < lect.verseStart) return false;
+          if (lect.verseEnd !== null && v.verse > lect.verseEnd) return false;
+          return true;
+        });
+        write({ reference: lect.reference, text: verses.map((v) => v.text).join(" "), source: "cep" });
+      }
+      setLoadingSlot((cur) => (cur === key ? null : cur));
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, tabbed, activeReading, slot?.text, readings, currentReading]);
+
   const hasText = localText.trim().length > 0;
-  const isFirstStep = currentSlug === "modlitba";
   const showTextarea = !hasText || editing || isFirstStep;
 
-  // Show reading suggestion when no text is entered yet.
+  // Show reading suggestion when no text is entered yet (single-text mode only —
+  // when tabbed, the readings load themselves).
   // Prefer Supabase (has full text), fall back to static lectionary (always works).
   const showSupabaseSuggestion =
-    !hasText && !readingLoading && currentReading && currentReading.readings.length > 0;
-  const showLectionarySuggestion = !hasText && !showSupabaseSuggestion && lectionary.entry;
+    !tabbed && !hasText && !readingLoading && currentReading && currentReading.readings.length > 0;
+  const showLectionarySuggestion = !tabbed && !hasText && !showSupabaseSuggestion && lectionary.entry;
 
   // Annotations enabled only from step 2 onwards
   const annotationsEnabled = !isFirstStep && currentSlug !== "modlitba";
@@ -198,6 +323,18 @@ export default function BibleTextPanel({
 
   return (
     <div className="rounded-xl border border-border bg-cream p-5 lg:p-6">
+      {tabbed && (
+        <ReadingTabs
+          readings={readings}
+          active={activeReading}
+          onSelect={(k) => {
+            setEditing(false);
+            setActiveReading(k);
+          }}
+          counts={counts}
+          loading={loadingSlot}
+        />
+      )}
       <div className="mb-4 flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 min-w-0">
           <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light shrink-0">
@@ -338,6 +475,9 @@ export default function BibleTextPanel({
             <p className="mb-3 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
               {localRef}
             </p>
+          )}
+          {loadingSlot === activeReading && !hasText && (
+            <p className="mb-2 text-[12px] italic text-text-light">{`Načítám text z ČEP…`}</p>
           )}
           <textarea
             value={localText}

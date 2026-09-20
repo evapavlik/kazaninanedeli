@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototyp — neděle jako jednotka, tři čtení, archiv</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Lora:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Literata:opsz,wght@7..72,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --off-white:#faf8f5; --cream:#f4f0ea;
+    --text:#1f1a16; --muted:#6b6259; --light:#756d66;
+    --brick:#c41e1e; --brick-pale:#fdf0f0;
+    --sage:#4a7c6f; --sage-pale:#eaf3f1;
+    --sand:#d4c4a8; --plum:#7b5ea7;
+    --border:#e8e0d5; --border-strong:#d0c4b4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--off-white);color:var(--text);font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+  .wrap{max-width:1400px;margin:0 auto;padding:22px 32px 80px}
+  .note{border:1px dashed var(--border-strong);background:var(--cream);border-radius:12px;padding:12px 16px;margin-bottom:18px;font-size:12.5px;line-height:1.7;color:var(--muted)}
+  .note b{color:var(--text)}
+  .note kbd{background:#fff;border:1px solid var(--border);border-radius:5px;padding:1px 6px;font:inherit;font-size:11.5px;color:var(--brick)}
+
+  /* --- banner: návrat po delší době --- */
+  .returning{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    border:1px solid rgba(196,30,30,.25);background:var(--brick-pale);border-radius:12px;
+    padding:12px 16px;margin-bottom:18px;font-size:13px;line-height:1.6
+  }
+  .returning .msg{flex:1;min-width:280px}
+  .returning .msg b{color:var(--brick)}
+  .returning .msg small{display:block;color:var(--muted);font-size:12px}
+  .btn{border:1px solid var(--border);background:#fff;border-radius:8px;padding:7px 13px;cursor:pointer;font:600 12.5px/1 "Plus Jakarta Sans",sans-serif;color:var(--muted)}
+  .btn:hover{border-color:var(--brick);color:var(--brick)}
+  .btn.primary{background:var(--brick);border-color:var(--brick);color:#fff}
+  .btn.primary:hover{background:#d63030}
+  .btn.ghost{border-color:transparent}
+
+  .layout{display:grid;grid-template-columns:300px minmax(0,1fr) 300px;gap:24px;align-items:start}
+
+  /* --- lišta (jen kontext, tichá) --- */
+  .rail{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px;position:sticky;top:20px}
+  .eyebrow{font-family:"Cormorant Garamond",serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--brick);margin:0}
+  .rail h2{font-family:Lora,serif;font-size:15.5px;font-weight:700;margin:1px 0 14px}
+  .steps{display:flex;flex-direction:column;gap:1px;margin-bottom:14px}
+  .step{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:8px;font:500 13px/1.3 "Plus Jakarta Sans",sans-serif;color:var(--muted)}
+  .step .dot{width:7px;height:7px;border-radius:50%;background:var(--border-strong)}
+  .step.on{background:var(--brick-pale);color:var(--brick);font-weight:600}
+  .step.on .dot{background:var(--brick)}
+  .item{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--border);font-size:13px;line-height:1.6}
+  .item:first-of-type{border-top:0}
+  .cb{width:16px;height:16px;border:1.5px solid var(--border-strong);border-radius:5px;flex:0 0 auto;margin-top:2px;background:#fff}
+  .cb.done{background:var(--brick);border-color:var(--brick)}
+
+  /* --- text panel --- */
+  .panel{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden}
+  .sunday{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border)}
+  .sunday .name{font-family:Lora,serif;font-weight:700;font-size:15px}
+  .sunday .date{font-size:11.5px;color:var(--light)}
+  .sunday .actions{display:flex;gap:6px}
+
+  .readings{display:flex;gap:0;border-bottom:1px solid var(--border);background:var(--off-white)}
+  .reading{
+    flex:1;border:0;background:transparent;cursor:pointer;padding:12px 14px;text-align:left;
+    border-bottom:2px solid transparent;display:flex;flex-direction:column;gap:2px;position:relative
+  }
+  .reading .lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--light)}
+  .reading .ref{font-family:Lora,serif;font-size:14px;font-weight:600;color:var(--text)}
+  .reading:hover{background:var(--cream)}
+  .reading[aria-selected=true]{background:#fff;border-bottom-color:var(--brick)}
+  .reading[aria-selected=true] .lbl{color:var(--brick)}
+  .reading .count{
+    position:absolute;right:12px;top:12px;min-width:18px;height:18px;border-radius:999px;
+    background:var(--sage-pale);color:var(--sage);font-size:10.5px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;padding:0 5px
+  }
+  .reading .count.zero{display:none}
+
+  .text-body{padding:22px 24px;font-family:Literata,Georgia,serif;font-size:17px;line-height:1.95;min-height:260px}
+  .text-body sup{font-size:10.5px;color:var(--light);margin-right:3px;font-family:"Plus Jakarta Sans",sans-serif}
+  .text-hint{padding:0 24px 14px;font-size:11.5px;font-style:italic;color:var(--light)}
+  mark{border-radius:2px;cursor:pointer;background:transparent}
+  mark.keyword {background:rgba(196,30,30,.20)}
+  mark.actor   {background:rgba(74,124,111,.22)}
+  mark.tension {background:rgba(212,196,168,.55)}
+  mark.question{background:rgba(123,94,167,.20)}
+  .loading{padding:26px;text-align:center;color:var(--light);font-size:13px}
+
+  /* popup kategorií */
+  .selpop{position:fixed;z-index:60;display:flex;gap:4px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:6px;box-shadow:0 8px 26px rgba(0,0,0,.14)}
+  .selpop button{border:0;border-radius:8px;padding:6px 10px;cursor:pointer;font:600 11px/1 "Plus Jakarta Sans",sans-serif}
+  .selpop .keyword {background:rgba(196,30,30,.10);color:var(--brick)}
+  .selpop .actor   {background:rgba(74,124,111,.12);color:var(--sage)}
+  .selpop .tension {background:rgba(212,196,168,.35);color:var(--text)}
+  .selpop .question{background:rgba(123,94,167,.12);color:var(--plum)}
+
+  /* editor poznámky (po kliknutí na značku) */
+  .editor{position:fixed;z-index:60;width:320px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px;box-shadow:0 8px 26px rgba(0,0,0,.14)}
+  .editor .quote{font-family:Literata,Georgia,serif;font-size:13px;font-style:italic;color:var(--muted);border-left:2px solid var(--sage);padding-left:9px;margin:0 0 8px}
+  .editor textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:8px;min-height:56px;resize:vertical;font:400 13.5px/1.6 "Plus Jakarta Sans",sans-serif;outline:none}
+  .editor textarea:focus{border-color:var(--sage)}
+  .editor .row{display:flex;justify-content:space-between;gap:7px;margin-top:8px}
+  .editor .row > div{display:flex;gap:7px}
+  .btn.sage{background:var(--sage);border-color:var(--sage);color:#fff}
+  .btn.danger{color:var(--brick);border-color:transparent}
+
+  /* --- pravý sloupec --- */
+  .side{position:sticky;top:20px;display:flex;flex-direction:column;gap:16px}
+  .card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px}
+  .card h3{font-family:Lora,serif;font-size:14px;margin:0 0 10px;display:flex;align-items:center;gap:7px}
+  .count-pill{background:var(--brick-pale);color:var(--brick);border-radius:999px;padding:1px 8px;font:700 11px/1.6 "Plus Jakarta Sans",sans-serif}
+  .filters{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+  .filters button{border:1px solid var(--border);background:#fff;border-radius:999px;padding:4px 9px;cursor:pointer;font:600 11px/1 "Plus Jakarta Sans",sans-serif;color:var(--muted)}
+  .filters button[aria-pressed=true]{border-color:var(--brick);background:var(--brick-pale);color:var(--brick)}
+  .empty{font-size:12px;color:var(--light);font-style:italic;margin:0;line-height:1.6}
+  .bubble{border:1px solid var(--border);border-radius:10px;padding:9px 10px;margin-bottom:8px;background:var(--off-white)}
+  .bubble .tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);display:flex;gap:6px;align-items:center;margin-bottom:4px}
+  .bubble .tag .src{background:var(--sage-pale);color:var(--sage);border-radius:4px;padding:1px 5px;text-transform:none;letter-spacing:0;font-weight:600}
+  .bubble blockquote{margin:0 0 4px;font-family:Literata,Georgia,serif;font-size:12.5px;font-style:italic;color:var(--text);border-left:2px solid var(--border-strong);padding-left:8px}
+  .bubble p{margin:0;font-size:12.5px;line-height:1.55;color:var(--muted)}
+  .bubble[data-cat=keyword] {border-left:3px solid var(--brick)}
+  .bubble[data-cat=actor]   {border-left:3px solid var(--sage)}
+  .bubble[data-cat=tension] {border-left:3px solid var(--sand)}
+  .bubble[data-cat=question]{border-left:3px solid var(--plum)}
+
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:11px;color:var(--light);margin-bottom:4px}
+  .field textarea{width:100%;border:0;border-bottom:1px solid var(--border-strong);background:transparent;padding:4px 2px;min-height:40px;resize:vertical;font:400 12.5px/1.6 "Plus Jakarta Sans",sans-serif;outline:none}
+
+  .archive{list-style:none;margin:0;padding:0}
+  .archive li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--border);font-size:12.5px}
+  .archive li:first-child{border-top:0}
+  .archive .an{font-weight:600}
+  .archive .ad{font-size:11px;color:var(--light);display:block}
+  .archive .st{font-size:10.5px;color:var(--sage);background:var(--sage-pale);border-radius:4px;padding:2px 6px;white-space:nowrap}
+  .archive .st.draft{color:var(--brick);background:var(--brick-pale)}
+
+  /* --- dialog --- */
+  .backdrop{position:fixed;inset:0;background:rgba(31,26,22,.35);z-index:80;display:flex;align-items:center;justify-content:center}
+  .dialog{width:460px;max-width:92vw;background:#fff;border-radius:16px;padding:22px 24px;box-shadow:0 24px 60px rgba(0,0,0,.25)}
+  .dialog h4{font-family:Lora,serif;font-size:17px;margin:0 0 8px}
+  .dialog p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:0 0 6px}
+  .dialog .sum{background:var(--cream);border-radius:10px;padding:10px 12px;margin:12px 0 16px;font-size:12.5px;line-height:1.7}
+  .dialog .sum b{color:var(--text)}
+  .dialog .row{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+  [hidden]{display:none !important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="note">
+    <b>Co si vyzkoušet.</b>
+    (1) Nahoře je pruh „návrat po delší době" — aplikace si všimla, že ležící neděle je z července — a že dnešní neděle už je za námi, takže míří na příští.
+    Klikni <kbd>Připravit 27. září</kbd> a projdi si dialog: rozpracovanou neděli <b>uložit</b>, nebo <b>zahodit</b>.
+    (2) V textovém panelu přepínej mezi <b>1. čtením · 2. čtením · Evangeliem</b> — každé má vlastní značky, nic se neztrácí.
+    Označ si slova v každém z nich a sleduj vpravo <b>zápisník</b>: u každé bublinky je vidět, <b>ze kterého čtení je</b>, a dá se podle toho filtrovat.
+    (3) Dole vpravo je <b>archiv</b> minulých nedělí.
+  </div>
+
+  <!-- návrat po delší době -->
+  <div class="returning" id="returning">
+    <div class="msg">
+      <b>Vítej zpátky.</b> Naposledy jsi tu pracovala <b id="lastDate">26. července</b> —
+      <span id="lastName">Neděle po svatém Duchu (15. v mezidobí)</span>.
+      <small>Dnes je neděle 20. září — ta už je za námi. Příprava míří na <b>příští neděli 27. září</b> — Neděle po svatém Duchu (26. v mezidobí).</small>
+    </div>
+    <button class="btn ghost" id="btnContinueOld">Pokračovat v minulé</button>
+    <button class="btn primary" id="btnStartNew">Připravit 27. září</button>
+  </div>
+
+  <div class="layout">
+
+    <!-- ===== lišta (kontext) ===== -->
+    <aside class="rail">
+      <p class="eyebrow">Fáze 2 ze 4</p>
+      <h2>Práce s textem</h2>
+      <div class="steps">
+        <div class="step on"><span class="dot"></span>Čtení</div>
+        <div class="step"><span class="dot"></span>Kontext</div>
+        <div class="step"><span class="dot"></span>Výklad</div>
+      </div>
+      <div class="item"><span class="cb"></span><p style="margin:0">První čtení: přečti text pomalu a nahlas.</p></div>
+      <div class="item"><span class="cb"></span><p style="margin:0">Druhé čtení: označuj klíčová slova a opakující se motivy v textu.</p></div>
+      <div class="item"><span class="cb"></span><p style="margin:0">Třetí čtení: všímej si struktury — kde je zlom, kdo jedná, kde je napětí.</p></div>
+    </aside>
+
+    <!-- ===== text ===== -->
+    <main>
+      <section class="panel">
+        <div class="sunday">
+          <div>
+            <div class="name" id="sundayName">—</div>
+            <div class="date" id="sundayDate">—</div>
+          </div>
+          <div class="actions">
+            <button class="btn" id="btnNewSunday">Nová neděle</button>
+          </div>
+        </div>
+        <div class="readings" id="readingTabs"></div>
+        <div class="text-body" id="textBody"><div class="loading">Načítám text…</div></div>
+        <div class="text-hint">Označ myší slovo nebo větu — uloží se hned. Kliknutím na značku doplníš poznámku.</div>
+      </section>
+    </main>
+
+    <!-- ===== pravý sloupec ===== -->
+    <aside class="side">
+      <div class="card">
+        <h3>Můj zápisník <span class="count-pill" id="noteCount">0</span></h3>
+        <div class="filters" id="filters"></div>
+        <div id="noteList"><p class="empty">Zatím prázdné.</p></div>
+      </div>
+
+      <div class="card">
+        <h3>Moje kázání</h3>
+        <div class="field"><label>Centrální myšlenka</label><textarea id="fCentral" placeholder="Zatím prázdné"></textarea></div>
+        <div class="field"><label>Teze kázání</label><textarea id="fThesis" placeholder="Zatím prázdné"></textarea></div>
+      </div>
+
+      <div class="card">
+        <h3>Minulé neděle</h3>
+        <ul class="archive" id="archiveList"></ul>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- dialog: co s rozpracovanou nedělí -->
+<div class="backdrop" id="dlg" hidden>
+  <div class="dialog" role="dialog" aria-modal="true">
+    <h4>Rozpracovaná neděle</h4>
+    <p>Máš rozpracovanou přípravu, která ještě není hotová. Než začneš novou, co s ní?</p>
+    <div class="sum" id="dlgSum"></div>
+    <div class="row">
+      <button class="btn ghost" id="dlgBack">Zpět</button>
+      <button class="btn danger" id="dlgDiscard">Zahodit</button>
+      <button class="btn primary" id="dlgKeep">Uložit do archivu a začít novou</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---------------------------------------------------------------------------
+// Data: neděle jako jednotka. Čtení podle lekcionáře CČSH (cyklus A).
+// Texty se natahují živě z Bolls (ČSP) — stejný zdroj jako aplikace.
+// ---------------------------------------------------------------------------
+const CATS = { keyword:"Klíčové slovo", actor:"Osoby a děje", tension:"Zlom · napětí", question:"Otázka" };
+const esc = s => s.replace(/[&<>]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[c]));
+
+const SUNDAYS = {
+  july: {
+    id:"2026-07-26", name:"Neděle po svatém Duchu (15. v mezidobí)", date:"26. července 2026",
+    readings:[
+      { key:"first",  label:"1. čtení",   ref:"Iz 55,10–13",         book:23, ch:55, vs:10, ve:13 },
+      { key:"second", label:"2. čtení",   ref:"Ř 8,1–11",            book:45, ch:8,  vs:1,  ve:11 },
+      { key:"gospel", label:"Evangelium", ref:"Mt 13,31–33.44–52",   book:40, ch:13, segs:[[31,33],[44,52]] },
+    ],
+    // rozpracováno z minula — pár značek, ať dialog má co ukázat
+    notes:[
+      { id:"j1", reading:"gospel", cat:"keyword",  quote:"zrnu hořčice", note:"" },
+      { id:"j2", reading:"gospel", cat:"tension",  quote:"skryla do tří měřic mouky", note:"Kralická: zadělala — kvas se zapracovává, ne ukrývá." },
+      { id:"j3", reading:"second", cat:"question", quote:"není žádného odsouzení", note:"Jak to slyší někdo, kdo se odsuzuje sám?" },
+    ],
+    sermon:{ central:"Království je malé a skryté, a přesto prorůstá vším.", thesis:"" },
+  },
+  sept: {
+    id:"2026-09-27", name:"Neděle po svatém Duchu (26. v mezidobí)", date:"27. září 2026",
+    readings:[
+      { key:"first",  label:"1. čtení",   ref:"Ez 18,1.29–32", book:26, ch:18, segs:[[1,1],[29,32]] },
+      { key:"second", label:"2. čtení",   ref:"Fp 2,1–13",     book:50, ch:2,  vs:1,  ve:13 },
+      { key:"gospel", label:"Evangelium", ref:"Mt 21,23–32",   book:40, ch:21, vs:23, ve:32 },
+    ],
+    notes:[], sermon:{ central:"", thesis:"" },
+  },
+};
+
+// Archiv už něco obsahuje — ať je vidět, jak vypadá, když se to používá dýl.
+let ARCHIVE = [
+  { id:"2026-06-28", name:"Neděle po svatém Duchu (11. v mezidobí)", date:"28. června", status:"done",  notes:14 },
+  { id:"2026-06-14", name:"Neděle po svatém Duchu (9. v mezidobí)",  date:"14. června", status:"done",  notes:9 },
+];
+
+let CURRENT = SUNDAYS.july;   // začínáme s tím, co „leží" v prohlížeči
+let activeReading = "gospel";
+let filter = "all";
+const textCache = {};         // `${book}/${ch}` → verses
+
+// ---------------------------------------------------------------------------
+async function fetchChapter(book, ch) {
+  const k = `${book}/${ch}`;
+  if (textCache[k]) return textCache[k];
+  const r = await fetch(`https://bolls.life/get-text/CSP09/${book}/${ch}/`);
+  const d = await r.json();
+  textCache[k] = d.map(v => ({ verse:v.verse, text:v.text.replace(/<[^>]*>/g,"").replace(/\[\d+\]/g,"").trim() }));
+  return textCache[k];
+}
+function inReading(v, r) {
+  if (r.segs) return r.segs.some(([a,b]) => v>=a && v<=b);
+  return v>=r.vs && v<=r.ve;
+}
+
+// ---------------------------------------------------------------------------
+// Render
+// ---------------------------------------------------------------------------
+function renderSunday() {
+  document.getElementById("sundayName").textContent = CURRENT.name;
+  document.getElementById("sundayDate").textContent = CURRENT.date;
+  renderTabs(); renderText(); renderNotes(); renderArchive();
+  document.getElementById("fCentral").value = CURRENT.sermon.central;
+  document.getElementById("fThesis").value  = CURRENT.sermon.thesis;
+}
+
+function renderTabs() {
+  const el = document.getElementById("readingTabs");
+  el.innerHTML = CURRENT.readings.map(r => {
+    const n = CURRENT.notes.filter(x => x.reading === r.key).length;
+    return `<button class="reading" role="tab" data-key="${r.key}" aria-selected="${r.key===activeReading}">
+      <span class="lbl">${r.label}</span><span class="ref">${r.ref}</span>
+      <span class="count ${n?'':'zero'}" title="${n} označení">${n}</span>
+    </button>`;
+  }).join("");
+  el.querySelectorAll("[data-key]").forEach(b => b.addEventListener("click", () => {
+    activeReading = b.dataset.key; renderTabs(); renderText();
+  }));
+}
+
+function withMarks(text, marks) {
+  const spans = marks.map(n => ({ n, at:text.indexOf(n.quote) })).filter(s => s.at>=0).sort((a,b)=>a.at-b.at);
+  if (!spans.length) return esc(text);
+  let out="", cur=0;
+  for (const {n,at} of spans) {
+    if (at<cur) continue;
+    out += esc(text.slice(cur,at)) + `<mark class="${n.cat}" data-note="${n.id}" title="${esc(n.note||'přidat poznámku')}">${esc(n.quote)}</mark>`;
+    cur = at + n.quote.length;
+  }
+  return out + esc(text.slice(cur));
+}
+
+async function renderText() {
+  const r = CURRENT.readings.find(x => x.key===activeReading);
+  const body = document.getElementById("textBody");
+  body.innerHTML = `<div class="loading">Načítám ${r.ref}…</div>`;
+  try {
+    const verses = (await fetchChapter(r.book, r.ch)).filter(v => inReading(v.verse, r));
+    if (CURRENT.readings.find(x=>x.key===activeReading) !== r) return; // mezitím přepnuto
+    let html="", prev=null;
+    for (const v of verses) {
+      if (prev!==null && v.verse!==prev+1) html += `<span style="display:block;text-align:center;color:#756d66;letter-spacing:.3em;margin:12px 0;font-family:'Plus Jakarta Sans'">· · ·</span>`;
+      const marks = CURRENT.notes.filter(n => n.reading===r.key && n.verse===v.verse);
+      html += `<span data-verse="${v.verse}"><sup>${v.verse}</sup>${withMarks(v.text, marks)} </span>`;
+      prev = v.verse;
+    }
+    body.innerHTML = html;
+    body.querySelectorAll("mark[data-note]").forEach(m => m.addEventListener("click", e => { e.stopPropagation(); openEditor(m.dataset.note, m.getBoundingClientRect()); }));
+  } catch { body.innerHTML = `<div class="loading">Text se nepodařilo načíst.</div>`; }
+}
+
+function readingLabel(key){ const r=CURRENT.readings.find(x=>x.key===key); return r ? `${r.label} · ${r.ref}` : key; }
+
+function renderNotes() {
+  const all = CURRENT.notes;
+  document.getElementById("noteCount").textContent = all.length;
+
+  const f = document.getElementById("filters");
+  const opts = [["all","Vše"], ...CURRENT.readings.map(r => [r.key, r.label])];
+  f.innerHTML = opts.map(([k,l]) => {
+    const n = k==="all" ? all.length : all.filter(x=>x.reading===k).length;
+    return `<button data-f="${k}" aria-pressed="${filter===k}">${l}${n?` ${n}`:""}</button>`;
+  }).join("");
+  f.querySelectorAll("[data-f]").forEach(b => b.addEventListener("click", () => { filter=b.dataset.f; renderNotes(); }));
+
+  const list = all.filter(n => filter==="all" || n.reading===filter);
+  const el = document.getElementById("noteList");
+  if (!list.length) { el.innerHTML = `<p class="empty">${all.length ? "V tomhle čtení zatím nic." : "Zatím prázdné. Označ si něco v textu — objeví se to tady."}</p>`; return; }
+  el.innerHTML = list.slice().reverse().map(n => `
+    <div class="bubble" data-cat="${n.cat}">
+      <span class="tag">${CATS[n.cat]} <span class="src">${esc(readingLabel(n.reading))}</span></span>
+      <blockquote>„${esc(n.quote)}"</blockquote>
+      ${n.note ? `<p>${esc(n.note)}</p>` : ""}
+    </div>`).join("");
+}
+
+function renderArchive() {
+  const el = document.getElementById("archiveList");
+  if (!ARCHIVE.length) { el.innerHTML = `<li><span class="empty">Zatím žádná.</span></li>`; return; }
+  el.innerHTML = ARCHIVE.map(a => `
+    <li>
+      <div><span class="an">${esc(a.name)}</span><span class="ad">${a.date} · ${a.notes} poznámek</span></div>
+      <span class="st ${a.status==='draft'?'draft':''}">${a.status==='draft' ? 'rozpracováno' : 'hotovo'}</span>
+    </li>`).join("");
+}
+
+// ---------------------------------------------------------------------------
+// Označování — uloží se hned po volbě kategorie (jako v hlavním textu)
+// ---------------------------------------------------------------------------
+let pop=null, pending=null, editor=null;
+function closePop(){ if(pop){pop.remove();pop=null;} pending=null; }
+function closeEditor(){ if(editor){editor.remove();editor=null;} }
+
+document.addEventListener("mouseup", e => {
+  if (pop && pop.contains(e.target)) return;
+  if (editor && editor.contains(e.target)) return;
+  closePop();
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed) return;
+  const quote = sel.toString().trim();
+  if (quote.length < 2) return;
+  const body = document.getElementById("textBody");
+  const rng = sel.getRangeAt(0);
+  if (!body.contains(rng.startContainer)) return;
+  const n = rng.startContainer.nodeType===1 ? rng.startContainer : rng.startContainer.parentElement;
+  const vEl = n.closest("[data-verse]");
+  if (!vEl) return;
+  const rect = rng.getBoundingClientRect();
+  pending = { quote, verse:Number(vEl.dataset.verse), reading:activeReading };
+  pop = document.createElement("div");
+  pop.className = "selpop";
+  pop.style.left = Math.min(Math.max(rect.left + rect.width/2 - 150, 8), innerWidth-320) + "px";
+  pop.style.top = Math.max(rect.top - 46, 8) + "px";
+  pop.innerHTML = Object.entries(CATS).map(([id,l]) => `<button class="${id}" data-cat="${id}">${l}</button>`).join("");
+  document.body.appendChild(pop);
+  pop.querySelectorAll("[data-cat]").forEach(b => b.addEventListener("click", () => {
+    CURRENT.notes.push({ id:"n"+Date.now(), reading:pending.reading, verse:pending.verse, cat:b.dataset.cat, quote:pending.quote, note:"" });
+    window.getSelection().removeAllRanges();
+    closePop(); renderTabs(); renderText(); renderNotes();
+  }));
+});
+
+function openEditor(id, rect) {
+  closeEditor(); closePop();
+  const n = CURRENT.notes.find(x => x.id===id); if (!n) return;
+  editor = document.createElement("div");
+  editor.className = "editor";
+  editor.style.left = Math.min(Math.max(rect.left, 8), innerWidth-340) + "px";
+  editor.style.top = (rect.bottom + 8) + "px";
+  editor.innerHTML = `
+    <p class="quote">„${esc(n.quote)}" <span style="font-style:normal;font-size:11px;color:#756d66">— ${esc(readingLabel(n.reading))}</span></p>
+    <textarea placeholder="Poznámka (nepovinná)…">${esc(n.note)}</textarea>
+    <div class="row">
+      <div><button class="btn danger" id="edDel">Smazat značku</button></div>
+      <div><button class="btn ghost" id="edCancel">Zrušit</button><button class="btn sage" id="edSave">Uložit</button></div>
+    </div>`;
+  document.body.appendChild(editor);
+  editor.querySelector("textarea").focus();
+  editor.querySelector("#edSave").addEventListener("click", () => { n.note = editor.querySelector("textarea").value.trim(); closeEditor(); renderText(); renderNotes(); });
+  editor.querySelector("#edCancel").addEventListener("click", closeEditor);
+  editor.querySelector("#edDel").addEventListener("click", () => { CURRENT.notes = CURRENT.notes.filter(x=>x.id!==id); closeEditor(); renderTabs(); renderText(); renderNotes(); });
+}
+document.addEventListener("keydown", e => { if (e.key==="Escape") { closePop(); closeEditor(); document.getElementById("dlg").hidden = true; } });
+
+// pole kázání
+document.getElementById("fCentral").addEventListener("input", e => CURRENT.sermon.central = e.target.value);
+document.getElementById("fThesis").addEventListener("input",  e => CURRENT.sermon.thesis  = e.target.value);
+
+// ---------------------------------------------------------------------------
+// Nová neděle: když je něco rozpracované, zeptáme se. Jinak rovnou.
+// ---------------------------------------------------------------------------
+function hasWork(s){ return s.notes.length>0 || s.sermon.central.trim() || s.sermon.thesis.trim(); }
+
+function startNew() {
+  if (!hasWork(CURRENT)) { switchTo(SUNDAYS.sept); return; }
+  const sum = document.getElementById("dlgSum");
+  const byReading = CURRENT.readings.map(r => { const n=CURRENT.notes.filter(x=>x.reading===r.key).length; return n ? `${r.label} ${n}` : null; }).filter(Boolean).join(" · ");
+  sum.innerHTML = `<b>${esc(CURRENT.name)}</b> — ${CURRENT.date}<br>
+    ${CURRENT.notes.length} označení${byReading ? ` (${byReading})` : ""}<br>
+    Kázání: ${CURRENT.sermon.central.trim() ? "centrální myšlenka napsaná, text nezačatý" : "nezačaté"}`;
+  document.getElementById("dlg").hidden = false;
+}
+function switchTo(s) {
+  CURRENT = s; activeReading = "first"; filter = "all";
+  document.getElementById("returning").hidden = true;
+  renderSunday();
+}
+document.getElementById("btnStartNew").addEventListener("click", startNew);
+document.getElementById("btnNewSunday").addEventListener("click", startNew);
+document.getElementById("btnContinueOld").addEventListener("click", () => { document.getElementById("returning").hidden = true; });
+document.getElementById("dlgBack").addEventListener("click", () => document.getElementById("dlg").hidden = true);
+document.getElementById("dlgKeep").addEventListener("click", () => {
+  ARCHIVE.unshift({ id:CURRENT.id, name:CURRENT.name, date:CURRENT.date.replace(/ 2026$/,""), status:"draft", notes:CURRENT.notes.length });
+  document.getElementById("dlg").hidden = true;
+  switchTo(SUNDAYS.sept);
+});
+document.getElementById("dlgDiscard").addEventListener("click", () => {
+  document.getElementById("dlg").hidden = true;
+  switchTo(SUNDAYS.sept);
+});
+
+renderSunday();
+</script>
+</body>
+</html>

@@ -36,9 +36,15 @@ function generateId(): string {
 
 const emptyStore: AnnotationStore = { textHash: "", annotations: [] };
 
-export function useAnnotations(currentText: string) {
+/**
+ * @param storageKey Which store to read. Each of the Sunday's readings keeps
+ *   its own (`kazani-annotations-<reading>`), so switching between the first
+ *   reading, the epistle and the gospel never orphans or discards marks. The
+ *   default is the pre-slot store, still used by pages that show one text.
+ */
+export function useAnnotations(currentText: string, storageKey: string = STORAGE_KEY) {
   const [store, setStore] = useLocalStorage<AnnotationStore>(
-    STORAGE_KEY,
+    storageKey,
     emptyStore
   );
   const [localStore, setLocalStore] = useState<AnnotationStore>(emptyStore);
