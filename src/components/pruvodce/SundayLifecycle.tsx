@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useSunday, formatCzechDate } from "@/hooks/useSunday";
 import type { ArchivedSunday } from "@/lib/sunday-storage";
 
@@ -48,10 +49,18 @@ export function SundayHeader() {
 export function ReturningBanner() {
   const sunday = useSunday();
   const [dialog, setDialog] = useState(false);
+  // When even the Sunday can't be named, at least say which text it is.
+  const [currentRef] = useLocalStorage<string>("kazani-bible-ref", "");
   if (!sunday.stale || !sunday.target) return null;
 
   const oldName = sunday.meta?.name;
   const oldDate = sunday.meta?.id && sunday.meta.id !== "unknown" ? formatCzechDate(sunday.meta.id) : null;
+  const s = sunday.summary;
+  const whatIsThere = [
+    s?.annotations ? `${s.annotations} označení` : null,
+    s?.translationNotes ? `${s.translationNotes} poznámek k překladům` : null,
+    s?.hasSermonText ? "text kázání" : s?.centralIdea ? "centrální myšlenka" : null,
+  ].filter(Boolean);
 
   return (
     <>
@@ -66,7 +75,12 @@ export function ReturningBanner() {
               {`.`}
             </>
           ) : (
-            `Na stole ti leží rozpracovaná příprava z dřívějška.`
+            <>
+              {`Na stole ti leží rozpracovaná příprava`}
+              {currentRef ? <> {`k textu `}<b>{currentRef}</b></> : null}
+              {whatIsThere.length > 0 ? ` (${whatIsThere.join(" · ")})` : ""}
+              {`.`}
+            </>
           )}
           <span className="block text-[12px] text-text-muted">
             {`Příprava teď míří na `}
