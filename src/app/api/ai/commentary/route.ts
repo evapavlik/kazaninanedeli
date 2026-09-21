@@ -13,13 +13,16 @@ import { supabaseCteni } from "@/lib/supabase-cteni";
  */
 function writerClient() {
   const key = process.env.SUPABASE_CTENI_SERVICE_KEY;
-  return key ? createClient("https://uedluysdwvcdrhjiotjc.supabase.co", key) : supabaseCteni;
+  return key
+    ? createClient("https://uedluysdwvcdrhjiotjc.supabase.co", key)
+    : supabaseCteni;
 }
 
 export const runtime = "nodejs";
-// A full commentary takes tens of seconds; the default function limit is far
-// shorter. (Vercel honours this up to the plan's ceiling.)
-export const maxDuration = 120;
+// A full commentary is ~80 s of output; the default function limit is far
+// shorter. 120 was not enough on production. (Vercel honours this up to the
+// plan's ceiling — 300 s with Fluid Compute.)
+export const maxDuration = 300;
 
 /** Same shape as the hand-written commentaries in commentary-notes.ts. */
 const CommentarySchema = z.object({
@@ -31,7 +34,12 @@ const CommentarySchema = z.object({
   applicationHints: z.array(z.string()),
   verseNotes: z.array(z.object({ verse: z.number(), note: z.string() })),
   cross_references: z.array(
-    z.object({ reference: z.string(), text: z.string(), translation: z.string(), relevance: z.string() })
+    z.object({
+      reference: z.string(),
+      text: z.string(),
+      translation: z.string(),
+      relevance: z.string(),
+    }),
   ),
 });
 
@@ -62,24 +70,43 @@ export async function POST(req: Request) {
   const text = (body.text ?? "").trim().slice(0, LIMITS.commentaryTextChars);
   const key = (body.key ?? "").trim().slice(0, 40);
   if (!reference || !text || !/^\d+:\d+(:\d+(-\d+)?)?$/.test(key)) {
-    return Response.json({ error: "Chybí odkaz, text nebo klíč." }, { status: 400 });
+    return Response.json(
+      { error: "Chybí odkaz, text nebo klíč." },
+      { status: 400 },
+    );
   }
 
-  const response = await client.messages.parse({
-    model: AI_MODEL,
-    max_tokens: LIMITS.commentaryMaxTokens,
-    system: COMMENTARY_SYSTEM,
-    output_config: { effort: "medium", format: zodOutputFormat(CommentarySchema) },
-    messages: [
-      {
-        role: "user",
-        content: `Perikopa: ${reference}\n\n${text}\n\nNapiš komentář v požadované struktuře. „title" je krátký výstižný název perikopy (ne citát). „context" je literární a historický kontext ve 3–5 větách. „keyWords" 4–7 pojmů s původním výrazem a výkladem. „structure" popisuje stavbu textu. „theologicalThemes" 3–5 motivů, každý jednou větou. „applicationHints" 3–4 náznaky pro dnešek, ne hotové myšlenky kázání. „verseNotes" poznámky k jednotlivým veršům, kde je co vysvětlit. „cross_references" 2–4 místa jinde v Bibli s citací, překladem (ČEP) a proč sem patří.`,
+  let response;
+  try {
+    response = await client.messages.parse({
+      model: AI_MODEL,
+      max_tokens: LIMITS.commentaryMaxTokens,
+      system: COMMENTARY_SYSTEM,
+      output_config: {
+        effort: "low",
+        format: zodOutputFormat(CommentarySchema),
       },
-    ],
-  });
+      messages: [
+        {
+          role: "user",
+          content: `Perikopa: ${reference}\n\n${text}\n\nNapiš komentář v požadované struktuře — hutně, bez rozvádění. „title" je krátký výstižný název perikopy (ne citát). „context" je literární a historický kontext ve 3–4 větách. „keyWords" 4–6 pojmů s původním výrazem a výkladem v 1–2 větách. „structure" popisuje stavbu textu ve 2–3 větách. „theologicalThemes" 3–4 motivy, každý jednou větou. „applicationHints" 3 náznaky pro dnešek, ne hotové myšlenky kázání. „verseNotes" jen k 3–5 veršům, kde je opravdu co vysvětlit, každá 1–2 věty. „cross_references" 2–3 místa jinde v Bibli s krátkou citací (ČEP) a proč sem patří.`,
+        },
+      ],
+    });
+  } catch (e) {
+    // Say what went wrong (bad key, rate limit, network) instead of a bare
+    // 500 the panel can't explain.
+    const msg =
+      e instanceof Error ? e.message : "Komentář se nepodařilo vytvořit.";
+    return Response.json({ error: msg.slice(0, 300) }, { status: 502 });
+  }
 
   const parsed = response.parsed_output;
-  if (!parsed) return Response.json({ error: "Komentář se nepodařilo sestavit." }, { status: 502 });
+  if (!parsed)
+    return Response.json(
+      { error: "Komentář se nepodařilo sestavit." },
+      { status: 502 },
+    );
 
   const commentary = { reference, ...parsed };
 
@@ -100,7 +127,7 @@ export async function POST(req: Request) {
         verse_notes: parsed.verseNotes,
         cross_references: parsed.cross_references,
       },
-      { onConflict: "book_chapter" }
+      { onConflict: "book_chapter" },
     );
     stored = !error;
   } catch {
