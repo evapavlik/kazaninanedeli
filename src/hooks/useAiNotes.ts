@@ -9,7 +9,7 @@ import { useLocalStorage } from "./useLocalStorage";
  */
 export interface AiNote {
   id: string;
-  kind: "term" | "mirror";
+  kind: "term" | "mirror" | "feedback";
   /** Pericope the note belongs to; the mirror belongs to the Sunday, so "" there. */
   reference: string;
   /** e.g. "Evangelium" — which reading the term was asked in. */

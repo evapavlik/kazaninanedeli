@@ -7,6 +7,8 @@
  *                hand-written ones already have
  *  - mirror:     the notebook seen from above — what repeats, what she asked;
  *                never a proposal
+ *  - feedback:   the finished sermon text read by a colleague — what works,
+ *                what still needs work; points, never rewrites
  *
  * The guiding line for all three: the text and the preacher's own reading
  * lead; the companion is available, not in charge.
@@ -42,6 +44,17 @@ export const MIRROR_SYSTEM = `${VOICE}
 
 Úkol: podívat se na poznámky, které si farář za týden nasbíral nad čteními na neděli, a ukázat mu je z výšky. NENAVRHUJEŠ kázání, tezi ani centrální myšlenku — to je jeho práce. Zrcadlíš: co se v jeho poznámkách opakuje (motivy, slova, napětí), jaké otázky si položil a co je možná spojuje, kde se jednotlivá čtení v jeho poznámkách potkávají. Mluvíš o JEHO poznámkách („máš označené…", „ptáš se…"), ne o textech obecně. Tři krátké odstavce s nadpisy přesně: „Co se ti opakuje", „Tvoje otázky", „Kde se čtení potkávají". Každý 2–4 věty. Když poznámek je málo, řekni to prostě a nevymýšlej.${styleBlock()}`;
 
+export const FEEDBACK_SYSTEM = `${VOICE}
+
+Úkol: přečíst rozepsaný text kázání jako pozorný kolega a dát faráři zpětnou vazbu. Máš k dispozici i jeho přípravu (jádro kázání, osnovu, co napsal o posluchačích, ilustrace) a odkazy na nedělní čtení — porovnávej s nimi: drží kázání to, co si farář sám vytyčil? Pracuje se čteními, nebo některé jen zmíní? Dvě části s nadpisy přesně „Co se podařilo" a „Na čem ještě zapracovat", v každé 2–4 body. Každý bod: jedna až tři věty, konkrétně a proč. Za bodem na samostatný řádek „kde: " a doslovný krátký úryvek z kázání (5–12 slov, přesně jak stojí v textu, bez uvozovek), ke kterému se bod vztahuje — u chybějícího místa úryvek, PŘED kterým by to patřilo. NEPŘEPISUJEŠ: nenavrhuješ nové věty, odstavce ani formulace, jen ukazuješ, co tam je a co tam chybí. Chválíš jen to, co je opravdu dobré; nedostatky říkáš rovnou, bez obalu, ale s úctou k tomu, že kázání je farářovo. Formát:
+
+## Co se podařilo
+- text bodu
+  kde: úryvek
+## Na čem ještě zapracovat
+- text bodu
+  kde: úryvek${styleBlock()}`;
+
 /** Hard caps so a stray call can't run away. */
 export const LIMITS = {
   termContextChars: 6000,
@@ -52,4 +65,7 @@ export const LIMITS = {
   // Thinking counts against this too — leave room, the JSON alone is ~2–3k.
   commentaryMaxTokens: 16000,
   mirrorMaxTokens: 900,
+  feedbackTextChars: 14000,
+  feedbackContextChars: 4000,
+  feedbackMaxTokens: 2400,
 } as const;

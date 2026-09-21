@@ -240,14 +240,20 @@ function buildBubbles(): Bubble[] {
   }
 
   // What the companion said and the preacher kept. A term explanation is a
-  // notebook entry about a word; a mirror is a notebook entry about the week.
+  // notebook entry about a word; a mirror is a notebook entry about the week;
+  // feedback is a notebook entry about the sermon text.
   for (const n of readAiNotes()) {
     const where = [n.readingLabel, n.reference].filter(Boolean).join(" · ");
     bubbles.push({
       id: `ai-${n.id}`,
       source: "notebook",
       category: "notebook",
-      tag: n.kind === "term" ? `Pojem${where ? ` · ${where}` : ""}` : "Zrcadlo",
+      tag:
+        n.kind === "term"
+          ? `Pojem${where ? ` · ${where}` : ""}`
+          : n.kind === "feedback"
+            ? "Zpětná vazba ke kázání"
+            : "Zrcadlo",
       title: n.kind === "term" && n.term ? `„${n.term}"` : undefined,
       body: n.text,
     });
