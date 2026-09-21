@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getCommentary, hasPericopeCommentary, type PericopeCommentary } from "@/data/commentary-notes";
+import { getCommentary, hasPericopeCommentary, commentaryCovers, type PericopeCommentary } from "@/data/commentary-notes";
 import { fetchCommentary } from "@/lib/supabase-cteni";
 import { parseReferenceForApi, getBibleHubCommentaryUrl } from "@/lib/getbible";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
@@ -91,7 +91,9 @@ export default function CommentaryPanel({ reference }: { reference: string }) {
     setCommentaryLoading(true);
     fetchCommentary(parsed.bookNumber, parsed.chapter, parsed.verseStart, parsed.verseEnd)
       .then((dbData) => {
-        if (dbData) {
+        // A chapter-wide row may be one pericope filed under the chapter —
+        // don't show another Sunday's commentary for this one.
+        if (dbData && commentaryCovers(dbData.reference, parsed.verseStart, parsed.verseEnd)) {
           // Map DB format to local format
           setCommentary({
             reference: dbData.reference,
