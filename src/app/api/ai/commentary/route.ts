@@ -110,29 +110,53 @@ export async function POST(req: Request) {
 
   const commentary = { reference, ...parsed };
 
-  // Keep it — best effort. If the table refuses (RLS), the client still gets
-  // the commentary and caches it locally; `stored` tells it which happened.
+  // Keep it — best effort. If the table refuses, the client still gets the
+  // commentary and caches it locally; `stored` tells it which happened and
+  // `storeError` says why, so a refusal can be diagnosed from production.
+  // Update-or-insert by hand rather than upsert: upsert needs a unique index
+  // on book_chapter, and the table may not have one.
   let stored = false;
+  let storeError: string | null = null;
+  const row = {
+    book_chapter: key,
+    reference,
+    title: parsed.title,
+    context: parsed.context,
+    key_words: parsed.keyWords,
+    structure: parsed.structure,
+    theological_themes: parsed.theologicalThemes,
+    application_hints: parsed.applicationHints,
+    verse_notes: parsed.verseNotes,
+    cross_references: parsed.cross_references,
+  };
   try {
-    const { error } = await writerClient().from("commentary").upsert(
-      {
-        book_chapter: key,
-        reference,
-        title: parsed.title,
-        context: parsed.context,
-        key_words: parsed.keyWords,
-        structure: parsed.structure,
-        theological_themes: parsed.theologicalThemes,
-        application_hints: parsed.applicationHints,
-        verse_notes: parsed.verseNotes,
-        cross_references: parsed.cross_references,
-      },
-      { onConflict: "book_chapter" },
-    );
-    stored = !error;
-  } catch {
+    const db = writerClient();
+    const { data: existing, error: selErr } = await db
+      .from("commentary")
+      .select("book_chapter")
+      .eq("book_chapter", key)
+      .limit(1);
+    if (selErr) throw selErr;
+    const { error } =
+      existing && existing.length > 0
+        ? await db.from("commentary").update(row).eq("book_chapter", key)
+        : await db.from("commentary").insert(row);
+    if (error) throw error;
+    stored = true;
+  } catch (e) {
     stored = false;
+    storeError =
+      e instanceof Error
+        ? e.message
+        : typeof e === "object" && e && "message" in e
+          ? String((e as { message: unknown }).message)
+          : String(e);
   }
 
-  return Response.json({ commentary, stored });
+  return Response.json({
+    commentary,
+    stored,
+    storeError,
+    writer: process.env.SUPABASE_CTENI_SERVICE_KEY ? "service" : "anon",
+  });
 }
