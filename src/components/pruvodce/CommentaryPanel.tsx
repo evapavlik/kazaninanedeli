@@ -4,6 +4,27 @@ import { useState, useEffect } from "react";
 import { getCommentary, hasPericopeCommentary, type PericopeCommentary } from "@/data/commentary-notes";
 import { fetchCommentary } from "@/lib/supabase-cteni";
 import { parseReferenceForApi, getBibleHubCommentaryUrl } from "@/lib/getbible";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+
+const CACHE_KEY = "kazani-commentary-cache";
+
+function readCache(key: string): PericopeCommentary | null {
+  try {
+    const all = JSON.parse(localStorage.getItem(CACHE_KEY) ?? "{}") as Record<string, PericopeCommentary>;
+    return all[key] ?? null;
+  } catch {
+    return null;
+  }
+}
+function writeCache(key: string, c: PericopeCommentary) {
+  try {
+    const all = JSON.parse(localStorage.getItem(CACHE_KEY) ?? "{}") as Record<string, PericopeCommentary>;
+    all[key] = c;
+    localStorage.setItem(CACHE_KEY, JSON.stringify(all));
+  } catch {
+    /* quota — the commentary still shows this time */
+  }
+}
 
 /**
  * Commentary panel — shows exegetical notes (AI) + BibleHub link.
@@ -20,8 +41,47 @@ export default function CommentaryPanel({ reference }: { reference: string }) {
   );
   const [commentaryLoading, setCommentaryLoading] = useState(false);
 
+  // Generating on demand: the text on screen is what the commentary is about.
+  const [pericopeText] = useLocalStorage<string>("kazani-bible-text", "");
+  const [generating, setGenerating] = useState(false);
+  const [generateError, setGenerateError] = useState<string | null>(null);
+  const [storedRemotely, setStoredRemotely] = useState<boolean | null>(null);
+  const pericopeKey = parsed
+    ? `${parsed.bookNumber}:${parsed.chapter}${parsed.verseStart != null ? `:${parsed.verseStart}-${parsed.verseEnd ?? parsed.verseStart}` : ""}`
+    : null;
+
+  const generate = async () => {
+    if (!parsed || !pericopeKey || !pericopeText.trim()) return;
+    setGenerating(true);
+    setGenerateError(null);
+    try {
+      const res = await fetch("/api/ai/commentary", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reference, text: pericopeText, key: pericopeKey }),
+      });
+      const j = await res.json().catch(() => ({}));
+      if (!res.ok || !j.commentary) throw new Error(j.error || `Chyba ${res.status}`);
+      setCommentary(j.commentary as PericopeCommentary);
+      setStoredRemotely(Boolean(j.stored));
+      writeCache(pericopeKey, j.commentary as PericopeCommentary);
+    } catch (e) {
+      setGenerateError(e instanceof Error ? e.message : "Komentář se nepodařilo vytvořit.");
+    } finally {
+      setGenerating(false);
+    }
+  };
+
   useEffect(() => {
     if (!parsed) return;
+    // A commentary generated earlier in this browser wins over a network trip.
+    if (pericopeKey) {
+      const cached = readCache(pericopeKey);
+      if (cached) {
+        setCommentary(cached);
+        return;
+      }
+    }
     // Skip DB fetch if we already have a pericope-specific local match.
     // Supabase commentary is keyed only by chapter and would otherwise
     // overwrite the more precise pericope entry.
@@ -29,7 +89,7 @@ export default function CommentaryPanel({ reference }: { reference: string }) {
       return;
     }
     setCommentaryLoading(true);
-    fetchCommentary(parsed.bookNumber, parsed.chapter)
+    fetchCommentary(parsed.bookNumber, parsed.chapter, parsed.verseStart, parsed.verseEnd)
       .then((dbData) => {
         if (dbData) {
           // Map DB format to local format
@@ -64,6 +124,32 @@ export default function CommentaryPanel({ reference }: { reference: string }) {
 
   return (
     <div className="space-y-4">
+      {/* Nothing for this pericope yet — offer to write one. The April batch
+          covered 38 chapters; this fills the rest in the same structure and
+          keeps the result, so it is paid for once. */}
+      {!commentary && !commentaryLoading && (
+        <div className="rounded-xl border border-sage/30 bg-sage-pale px-4 py-3.5">
+          <p className="mb-2 text-[13.5px] leading-relaxed text-text">
+            {`K této perikopě zatím komentář není.`}{" "}
+            {pericopeText.trim()
+              ? `Můžu ho napsat — ve stejné struktuře jako ostatní (kontext, klíčová slova, stavba textu, teologické motivy, podněty pro dnešek). Trvá to minutu až dvě a uloží se pro příště.`
+              : `Nejdřív načti text perikopy, ať je z čeho vycházet.`}
+          </p>
+          {generateError && <p className="mb-2 text-[12.5px] text-brick">{generateError}</p>}
+          <button
+            onClick={generate}
+            disabled={generating || !pericopeText.trim()}
+            className="rounded-lg bg-sage px-3.5 py-1.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-sage-light disabled:opacity-60"
+          >
+            {generating ? `Píšu komentář… (minutu až dvě)` : `Napsat komentář k této perikopě`}
+          </button>
+        </div>
+      )}
+      {commentary && storedRemotely === false && (
+        <p className="text-[11.5px] italic text-text-light">
+          {`Komentář se uložil jen v tomto prohlížeči — do společné databáze se zapsat nepodařilo.`}
+        </p>
+      )}
       {commentary && (
         <>
           {/* AI-generated content warning */}

@@ -12,6 +12,7 @@ import type { LectionaryReading } from "@/data/lectionary";
 import AnnotatedTextDisplay from "./AnnotatedTextDisplay";
 import BreathingPractice from "./BreathingPractice";
 import ReadingTabs from "./ReadingTabs";
+import TermAnswer from "./TermAnswer";
 import {
   fetchChapter,
   formatReference,
@@ -107,6 +108,8 @@ export default function BibleTextPanel({
   const tabbed = !isFirstStep && readings.some((r) => r.lectionary !== null);
   const [slot, setSlot] = useReadingSlot(activeReading);
   const [loadingSlot, setLoadingSlot] = useState<ReadingKey | null>(null);
+  // „Co to znamená?" — the term being asked about, answered under the text.
+  const [askedTerm, setAskedTerm] = useState<string | null>(null);
   const autoLoaded = useRef<Set<string>>(new Set());
 
   // Marks per reading, for the tab badges.
@@ -392,6 +395,7 @@ export default function BibleTextPanel({
           active={activeReading}
           onSelect={(k) => {
             setEditing(false);
+            setAskedTerm(null);
             setActiveReading(k);
           }}
           counts={counts}
@@ -539,6 +543,7 @@ export default function BibleTextPanel({
                   onAddAnnotation={addAnnotation}
                   onRemoveAnnotation={removeAnnotation}
                   onUpdateNote={updateNote}
+                  onAsk={(t) => setAskedTerm(t)}
                   className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto"
                 />
               ) : (
@@ -547,6 +552,15 @@ export default function BibleTextPanel({
                 </div>
               )}
 
+              {askedTerm && (
+                <TermAnswer
+                  term={askedTerm}
+                  reference={localRef}
+                  text={localText}
+                  readingLabel={tabbed ? readings.find((r) => r.key === activeReading)?.label : undefined}
+                  onClose={() => setAskedTerm(null)}
+                />
+              )}
             </div>
 
         </>

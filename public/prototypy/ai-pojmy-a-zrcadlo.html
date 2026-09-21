@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototyp — zeptat se na pojem, zrcadlo zápisníku</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Lora:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --off-white:#faf8f5; --cream:#f4f0ea;
+    --text:#1f1a16; --muted:#6b6259; --light:#756d66;
+    --brick:#c41e1e; --brick-pale:#fdf0f0;
+    --sage:#4a7c6f; --sage-pale:#eaf3f1;
+    --sand:#d4c4a8; --plum:#7b5ea7;
+    --border:#e8e0d5; --border-strong:#d0c4b4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--off-white);color:var(--text);font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+  .wrap{max-width:1400px;margin:0 auto;padding:22px 32px 80px}
+  .note{border:1px dashed var(--border-strong);background:var(--cream);border-radius:12px;padding:12px 16px;margin-bottom:18px;font-size:12.5px;line-height:1.7;color:var(--muted)}
+  .note b{color:var(--text)}
+  .note kbd{background:#fff;border:1px solid var(--border);border-radius:5px;padding:1px 6px;font:inherit;font-size:11.5px;color:var(--brick)}
+
+  .layout{display:grid;grid-template-columns:300px minmax(0,1fr) 320px;gap:24px;align-items:start}
+
+  .rail{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px;position:sticky;top:20px}
+  .eyebrow{font-family:"Cormorant Garamond",serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--brick);margin:0}
+  .rail h2{font-family:Lora,serif;font-size:15.5px;font-weight:700;margin:1px 0 14px}
+  .steps{display:flex;flex-direction:column;gap:1px;margin-bottom:14px}
+  .step{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:8px;font:500 13px/1.3 "Plus Jakarta Sans",sans-serif;color:var(--muted)}
+  .step .dot{width:7px;height:7px;border-radius:50%;background:var(--border-strong)}
+  .step.on{background:var(--brick-pale);color:var(--brick);font-weight:600}
+  .step.on .dot{background:var(--brick)}
+  .item{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--border);font-size:13px;line-height:1.6}
+  .item:first-of-type{border-top:0}
+  .cb{width:16px;height:16px;border:1.5px solid var(--border-strong);border-radius:5px;flex:0 0 auto;margin-top:2px;background:#fff}
+
+  .panel{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden}
+  .sunday{padding:14px 20px;border-bottom:1px solid var(--border)}
+  .sunday .name{font-family:Lora,serif;font-weight:700;font-size:15px}
+  .sunday .date{font-size:11.5px;color:var(--light)}
+  .readings{display:flex;border-bottom:1px solid var(--border);background:var(--off-white)}
+  .reading{flex:1;border:0;background:transparent;cursor:pointer;padding:12px 14px;text-align:left;border-bottom:2px solid transparent;display:flex;flex-direction:column;gap:2px;position:relative}
+  .reading .lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--light)}
+  .reading .ref{font-family:Lora,serif;font-size:14px;font-weight:600}
+  .reading[aria-selected=true]{background:#fff;border-bottom-color:var(--brick)}
+  .reading[aria-selected=true] .lbl{color:var(--brick)}
+  .text-body{padding:22px 24px 8px;font-family:Literata,Georgia,serif;font-size:17px;line-height:1.95}
+  .text-body sup{font-size:10.5px;color:var(--light);margin-right:3px;font-family:"Plus Jakarta Sans",sans-serif}
+  .text-hint{padding:0 24px 16px;font-size:11.5px;font-style:italic;color:var(--light)}
+  .loading{padding:26px;text-align:center;color:var(--light);font-size:13px}
+  mark{border-radius:2px;background:transparent}
+  mark.keyword {background:rgba(196,30,30,.20)}
+  mark.actor   {background:rgba(74,124,111,.22)}
+  mark.tension {background:rgba(212,196,168,.55)}
+  mark.question{background:rgba(123,94,167,.20)}
+  mark.asked   {background:transparent;border-bottom:2px dotted var(--sage)}
+
+  /* popup */
+  .selpop{position:fixed;z-index:60;display:flex;flex-direction:column;gap:5px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:7px;box-shadow:0 8px 26px rgba(0,0,0,.14)}
+  .selpop .row{display:flex;gap:4px;align-items:center}
+  .selpop .row .lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--light);width:54px;flex:0 0 auto}
+  .selpop .row.ask-row{border-top:1px solid var(--border);padding-top:5px}
+  .selpop button{border:0;border-radius:8px;padding:6px 10px;cursor:pointer;font:600 11px/1 "Plus Jakarta Sans",sans-serif;white-space:nowrap}
+  .selpop .keyword {background:rgba(196,30,30,.10);color:var(--brick)}
+  .selpop .actor   {background:rgba(74,124,111,.12);color:var(--sage)}
+  .selpop .tension {background:rgba(212,196,168,.35);color:var(--text)}
+  .selpop .question{background:rgba(123,94,167,.12);color:var(--plum)}
+  .selpop .ask{background:var(--sage);color:#fff;display:flex;align-items:center;gap:5px}
+  .selpop .ask:hover{background:#3d6a5e}
+
+  /* odpověď na pojem — pod veršem, v textu */
+  .answer{margin:10px 0 14px;border:1px solid rgba(74,124,111,.35);background:var(--sage-pale);border-radius:12px;padding:12px 14px;
+    font-family:"Plus Jakarta Sans",sans-serif;font-size:13.5px;line-height:1.7;color:var(--text)}
+  .answer .head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+  .answer .term{font-family:Lora,serif;font-weight:700;font-size:14px}
+  .answer .term small{font-family:"Plus Jakarta Sans",sans-serif;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--sage);margin-left:8px}
+  .answer p{margin:0 0 6px}
+  .answer .ctx{font-size:11.5px;color:var(--light);font-style:italic;margin-top:6px}
+  .answer .acts{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+  .btn{border:1px solid var(--border);background:#fff;border-radius:8px;padding:6px 11px;cursor:pointer;font:600 12px/1 "Plus Jakarta Sans",sans-serif;color:var(--muted)}
+  .btn:hover{border-color:var(--sage);color:var(--sage)}
+  .btn.sage{background:var(--sage);border-color:var(--sage);color:#fff}
+  .btn.sage:hover{background:#3d6a5e;color:#fff}
+  .btn.ghost{border-color:transparent}
+  .cursor::after{content:"▍";color:var(--sage);animation:blink 1s steps(1) infinite}
+  .followup{margin-top:10px;border-top:1px solid rgba(74,124,111,.25);padding-top:10px}
+  .followup .q{font-size:12px;color:var(--sage);font-weight:600;margin:0 0 4px}
+  .followup input{width:100%;border:1px solid var(--border);border-radius:8px;padding:7px 10px;font:400 13px/1.4 "Plus Jakarta Sans",sans-serif;outline:none;background:#fff}
+  .followup input:focus{border-color:var(--sage)}
+  .followup .hint{font-size:11px;color:var(--light);margin:4px 0 0}
+  @keyframes blink{50%{opacity:0}}
+
+  /* pravý sloupec */
+  .side{position:sticky;top:20px;display:flex;flex-direction:column;gap:16px}
+  .card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px}
+  .card h3{font-family:Lora,serif;font-size:14px;margin:0 0 10px;display:flex;align-items:center;gap:7px}
+  .count-pill{background:var(--brick-pale);color:var(--brick);border-radius:999px;padding:1px 8px;font:700 11px/1.6 "Plus Jakarta Sans",sans-serif}
+  .mirror-btn{margin-left:auto;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--sage);background:#fff;color:var(--sage);border-radius:999px;padding:5px 11px;cursor:pointer;font:600 11.5px/1 "Plus Jakarta Sans",sans-serif}
+  .mirror-btn:hover{background:var(--sage-pale)}
+  .mirror-btn:disabled{opacity:.6;cursor:default}
+
+  .mirror{border:1px solid rgba(74,124,111,.35);background:var(--sage-pale);border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:13px;line-height:1.7}
+  .mirror h4{margin:0 0 2px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--sage)}
+  .mirror p{margin:0 0 10px}
+  .mirror p:last-of-type{margin-bottom:0}
+  .mirror .disclaimer{font-size:11.5px;color:var(--light);font-style:italic;border-top:1px solid rgba(74,124,111,.25);padding-top:8px;margin-top:10px}
+  .mirror .acts{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+
+  .filters{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+  .filters button{border:1px solid var(--border);background:#fff;border-radius:999px;padding:4px 9px;cursor:pointer;font:600 11px/1 "Plus Jakarta Sans",sans-serif;color:var(--muted)}
+  .filters button[aria-pressed=true]{border-color:var(--brick);background:var(--brick-pale);color:var(--brick)}
+  .bubble{border:1px solid var(--border);border-radius:10px;padding:9px 10px;margin-bottom:8px;background:var(--off-white)}
+  .bubble .tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);display:flex;gap:6px;align-items:center;margin-bottom:4px;flex-wrap:wrap}
+  .bubble .tag .src{background:var(--sage-pale);color:var(--sage);border-radius:4px;padding:1px 5px;text-transform:none;letter-spacing:0;font-weight:600}
+  .bubble blockquote{margin:0 0 4px;font-family:Literata,Georgia,serif;font-size:12.5px;font-style:italic;color:var(--text);border-left:2px solid var(--border-strong);padding-left:8px}
+  .bubble p{margin:0;font-size:12.5px;line-height:1.55;color:var(--muted)}
+  .bubble[data-cat=keyword] {border-left:3px solid var(--brick)}
+  .bubble[data-cat=actor]   {border-left:3px solid var(--sage)}
+  .bubble[data-cat=tension] {border-left:3px solid var(--sand)}
+  .bubble[data-cat=question]{border-left:3px solid var(--plum)}
+  .bubble[data-cat=term]    {border-left:3px solid var(--sage);background:#fff}
+  .bubble[data-cat=mirror]  {border-left:3px solid var(--sage);background:#fff}
+  [hidden]{display:none !important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="note">
+    <b>Dvě věci k vyzkoušení.</b>
+    (1) V textu označ myší pojem — třeba <b>dům izraelský</b> v Ezechielovi — a v popupu vedle kategorií je nově <kbd>Co to znamená?</kbd>.
+    Odpověď se objeví <b>přímo pod veršem</b>, v souvislosti té perikopy, a dá se uložit do zápisníku. Odpovědi jsou v prototypu napsané ručně
+    (pro <i>dům izraelský, Panovník Hospodin, obraťte se, vyprázdnil sám sebe, s bázní a chvěním, velekněží a starší, celníci a nevěstky</i>) — naostro by odpovídal model.
+    (2) Vpravo v zápisníku je tlačítko <kbd>Zrcadlo</kbd>: podívá se na tvoje poznámky ze všech tří čtení a řekne ti, co se v nich opakuje a na co se ptáš. Nic nenavrhuje.
+  </div>
+
+  <div class="layout">
+    <aside class="rail">
+      <p class="eyebrow">Fáze 2 ze 4</p>
+      <h2>Práce s textem</h2>
+      <div class="steps">
+        <div class="step on"><span class="dot"></span>Čtení</div>
+        <div class="step"><span class="dot"></span>Kontext</div>
+        <div class="step"><span class="dot"></span>Výklad</div>
+      </div>
+      <div class="item"><span class="cb"></span><p style="margin:0">Přečti si všechna čtení té neděle pomalu a nahlas — první čtení, epištolu i evangelium.</p></div>
+      <div class="item"><span class="cb"></span><p style="margin:0">Čti znovu a označuj klíčová slova a opakující se motivy — v každém z textů.</p></div>
+      <div class="item"><span class="cb"></span><p style="margin:0">Při dalším čtení si všímej struktury — kde je zlom, kdo jedná, kde je napětí.</p></div>
+    </aside>
+
+    <main>
+      <section class="panel">
+        <div class="sunday">
+          <div class="name">Neděle po svatém Duchu (26. v mezidobí)</div>
+          <div class="date">27. září 2026</div>
+        </div>
+        <div class="readings" id="readingTabs"></div>
+        <div class="text-body" id="textBody"><div class="loading">Načítám text…</div></div>
+        <div class="text-hint">Označ myší slovo nebo větu — uloží se hned. Nebo se zeptej, co pojem znamená.</div>
+      </section>
+    </main>
+
+    <aside class="side">
+      <div class="card">
+        <h3>Můj zápisník <span class="count-pill" id="noteCount">0</span>
+          <button class="mirror-btn" id="mirrorBtn" title="Podívat se na poznámky z výšky">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg>
+            Zrcadlo
+          </button>
+        </h3>
+        <div id="mirrorBox" hidden></div>
+        <div class="filters" id="filters"></div>
+        <div id="noteList"></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+// ---------------------------------------------------------------------------
+const CATS = { keyword:"Klíčové slovo", actor:"Osoby a děje", tension:"Zlom · napětí", question:"Otázka" };
+const esc = s => s.replace(/[&<>]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[c]));
+const READINGS = [
+  { key:"first",  label:"1. čtení",   ref:"Ez 18,1.29–32", book:26, ch:18, segs:[[1,1],[29,32]] },
+  { key:"second", label:"2. čtení",   ref:"Fp 2,1–13",     book:50, ch:2,  vs:1,  ve:13 },
+  { key:"gospel", label:"Evangelium", ref:"Mt 21,23–32",   book:40, ch:21, vs:23, ve:32 },
+];
+const label = k => { const r=READINGS.find(x=>x.key===k); return r ? `${r.label} · ${r.ref}` : k; };
+
+// Poznámky, které by si Eva mohla za týden nasbírat — slova a věty, ne eseje.
+let NOTES = [
+  { id:"n1", reading:"first",  verse:32, cat:"keyword",  quote:"obraťte se tedy a budete žít", note:"" },
+  { id:"n2", reading:"first",  verse:31, cat:"tension",  quote:"Proč byste měli zemřít, dome izraelský?", note:"Otázka, ne hrozba." },
+  { id:"n3", reading:"first",  verse:29, cat:"question", quote:"Cesta Panovníkova není správná", note:`Kdo je „dům izraelský" — všichni, nebo jen ti v exilu?` },
+  { id:"n4", reading:"second", verse:5,  cat:"keyword",  quote:"Smýšlejte tak, jak smýšlel Kristus Ježíš", note:"" },
+  { id:"n5", reading:"second", verse:7,  cat:"actor",    quote:"sám sebe zmařil", note:"" },
+  { id:"n6", reading:"second", verse:12, cat:"question", quote:"s bázní a chvěním", note:"Jak jde bázeň a chvění dohromady s radostí z 2,2?" },
+  { id:"n7", reading:"gospel", verse:23, cat:"keyword",  quote:"Jakou mocí to činíš?", note:"" },
+  { id:"n8", reading:"gospel", verse:31, cat:"tension",  quote:"Kdo z těch dvou splnil vůli svého otce?", note:"Ten, který nejdřív řekl ne." },
+  { id:"n9", reading:"gospel", verse:31, cat:"actor",    quote:"celníci a nevěstky předcházejí vás", note:"Proč zrovna oni?" },
+];
+
+// Ručně napsané odpovědi — naostro by je psal model, v souvislosti té perikopy.
+const TERMS = [
+  { match:/d[ůu]m izraelsk/i, reading:"first", term:"Dům izraelský",
+    text:`„Dům" (hebrejsky <i>bajit</i>) tu neznamená stavbu, ale <b>rod, domácnost, celý lid</b> — jako když se řekne „dům Davidův". Ezechiel mluví k Judejcům odvlečeným do Babylonu (597 př. Kr.) a oslovuje je jako jeden celek: <b>vy všichni, jako rodina, jste odpovědní</b>. To je pointa 18. kapitoly: lidé v exilu si opakují přísloví, že otcové jedli kyselé hrozny a synům trnou zuby — tedy že trpí za viny předků. Ezechiel to odmítá: každý stojí před Hospodinem sám za sebe, a proto se každý může obrátit.`,
+    ctx:"Ezechiel 18 · Babylon, kolem 590 př. Kr. · slovo <i>bajit</i> = dům/rod" },
+  { match:/panovn[íi]k[a-z]* hospodin/i, reading:"first", term:"Panovník Hospodin",
+    text:`Ezechielův oblíbený titul — <i>Adonaj JHVH</i>, v jeho knize přes dvě stě krát, jinde v Bibli zřídka. Spojuje Boží jméno (JHVH, „Hospodin") s oslovením „můj Pane" (<i>Adonaj</i>). V exilu, kdy padl chrám i král, tím Ezechiel říká: <b>skutečný panovník není v Babylonu ani v Jeruzalémě — je to Hospodin, a ten je s vámi i tady</b>.`,
+    ctx:"Ezechiel 18 · titul <i>Adonaj JHVH</i>" },
+  { match:/obra[ťt]/i, reading:"first", term:"Obraťte se",
+    text:`Hebrejsky <i>šúvu</i>, od slovesa <i>šúv</i> — „vrátit se, otočit se". Není to pocit lítosti, ale <b>změna směru cesty</b>: jít jinam, než kam jsi šel. V 18. kapitole je to sloveso klíčové — Ezechiel je opakuje čtyřikrát v pěti verších a staví ho proti smrti: kdo se otočí, žije. Řecké <i>metanoia</i> v Novém zákoně je toho překladem.`,
+    ctx:"Ezechiel 18,30–32 · sloveso <i>šúv</i>" },
+  { match:/zma[řr]il|vypr[áa]zdnil/i, reading:"second", term:"Sám sebe zmařil",
+    text:`Řecky <i>heauton ekenósen</i> — doslova „<b>vyprázdnil sám sebe</b>". Odtud pojem <i>kenoze</i>. Pavel tu pravděpodobně cituje starší hymnus, který Filipští znali. Nejde o to, že by Kristus přestal být Bohem, ale že <b>se vzdal nároku</b> — postavení, práv, ochrany — a šel dolů až k otrocké smrti. V Pavlově logice to není smutný obraz, ale vzor: „smýšlejte tak" (v. 5).`,
+    ctx:"Filipským 2,7 · <i>kenóō</i> = vyprázdnit" },
+  { match:/b[áa]zn[íi] a chv[ěe]n/i, reading:"second", term:"S bázní a chvěním",
+    text:`Ustálené starozákonní spojení (<i>fobos kai tromos</i>) — ne strach z trestu, ale <b>vážnost před tím, co je větší než já</b>. Pavel ho staví hned vedle důvěry: „Bůh je ten, který ve vás působí" (v. 13). Bázeň a radost si tu neodporují — bázeň je, že jde o něco; radost je, že to není jen na mně.`,
+    ctx:"Filipským 2,12–13 · srov. Ž 2,11" },
+  { match:/velekn[ěe]ž[íi] a star/i, reading:"gospel", term:"Velekněží a starší lidu",
+    text:`Dvě ze tří skupin, které tvořily <b>veleradu (sanhedrin)</b> — nejvyšší židovskou autoritu v Jeruzalémě. Velekněží spravovali chrám, starší byli hlavy vlivných rodin. Když se ptají „jakou mocí", ptají se <b>z pozice těch, kdo moc udělují</b>. Ježíš stojí v jejich chrámu a učí bez jejich pověření.`,
+    ctx:"Matouš 21,23 · Jeruzalém, chrámové nádvoří" },
+  { match:/celn[íi]ci a nev[ěe]stky/i, reading:"gospel", term:"Celníci a nevěstky",
+    text:`Dva typy lidí, které Ježíšovi současníci považovali za <b>viditelně ztracené</b>: celníci vybírali daně pro Řím (kolaboranti, často podvodníci), nevěstky byly mimo jakoukoli počestnost. Ježíš je staví proti veleradě: ti první „řekli ne" celým životem, ale uvěřili Janovi — a tak jsou dál než ti, kdo říkají ano a nejdou.`,
+    ctx:"Matouš 21,31–32 · odkaz na Janův křest" },
+];
+const FOLLOWUPS = [
+  { match:/exil|babylon|slyšel/i, text:`Pro lidi v Babylonu to bylo osvobozující i nepříjemné zároveň. Osvobozující: <b>nejsi odsouzen za to, co udělali tvoji otcové</b> — pád Jeruzaléma není tvůj rozsudek. Nepříjemné: <b>nemůžeš se za otce ani schovat</b>. Přísloví o kyselých hroznech bylo pohodlné — vysvětlovalo neštěstí a zbavovalo odpovědnosti. Ezechiel ho bere a dává místo něj otázku: a ty?` },
+  { match:/dnes|dneš|my|nás|církev/i, text:`Dnešní posluchač si to přísloví o hroznech taky říká, jen jinými slovy: <i>takhle jsem byl vychovaný, takhle to u nás bylo vždycky, za to nemůžu</i>. Ezechiel to nepopírá — otcové opravdu jedli — ale odmítá, že by to bylo poslední slovo. „Obraťte se a budete žít" je adresované jednotlivci, který se právě chce schovat za celek.` },
+  { match:/jinde|bibl|odkaz|paralel/i, text:`Nejbližší místo je <b>Jeremjáš 31,29–30</b> — stejné přísloví, stejné odmítnutí, stejná doba. A za tím <b>Deuteronomium 24,16</b>: „Otcové nebudou usmrcováni za syny a synové za otce." Ezechiel tedy neříká nic nového — připomíná Zákon těm, kdo ho v exilu vyměnili za osud.` },
+];
+const FOLLOWUP_FALLBACK = `Na tohle bych ti naostro odpověděl model. V prototypu mám připravené jen doplňující otázky na <b>exil</b>, na <b>dnešek</b> a na <b>paralely jinde v Bibli</b> — zkus jednu z nich.`;
+
+const FALLBACK = { term:null, text:`K tomuhle pojmu nemám v prototypu napsanou odpověď — naostro by tu odpověděl model, v souvislosti této perikopy. Vyzkoušej třeba <b>dům izraelský</b>, <b>Panovník Hospodin</b>, <b>obraťte se</b>, <b>sám sebe zmařil</b>, <b>s bázní a chvěním</b>, <b>velekněží a starší</b> nebo <b>celníci a nevěstky</b>.`, ctx:"" };
+
+let active = "first";
+let filter = "all";
+const cache = {};
+let openAnswer = null; // { verse, reading, term, html }
+
+async function chapter(book, ch) {
+  const k = `${book}/${ch}`;
+  if (cache[k]) return cache[k];
+  const r = await fetch(`https://api.getbible.net/v2/cep/${book}/${ch}.json`);
+  const d = await r.json();
+  cache[k] = d.verses.map(v => ({ verse:v.verse, text:v.text.trim() }));
+  return cache[k];
+}
+const inR = (v, r) => r.segs ? r.segs.some(([a,b]) => v>=a && v<=b) : (v>=r.vs && v<=r.ve);
+
+function withMarks(text, marks) {
+  const spans = marks.map(n => ({ n, at:text.indexOf(n.quote) })).filter(s => s.at>=0).sort((a,b)=>a.at-b.at);
+  if (!spans.length) return esc(text);
+  let out="", cur=0;
+  for (const {n,at} of spans) { if (at<cur) continue; out += esc(text.slice(cur,at)) + `<mark class="${n.cat}" title="${esc(n.note||'')}">${esc(n.quote)}</mark>`; cur = at+n.quote.length; }
+  return out + esc(text.slice(cur));
+}
+
+function renderTabs() {
+  const el = document.getElementById("readingTabs");
+  el.innerHTML = READINGS.map(r => `<button class="reading" role="tab" data-key="${r.key}" aria-selected="${r.key===active}">
+    <span class="lbl">${r.label}</span><span class="ref">${r.ref}</span></button>`).join("");
+  el.querySelectorAll("[data-key]").forEach(b => b.addEventListener("click", () => { active=b.dataset.key; openAnswer=null; renderTabs(); renderText(); }));
+}
+
+async function renderText() {
+  const r = READINGS.find(x=>x.key===active);
+  const body = document.getElementById("textBody");
+  body.innerHTML = `<div class="loading">Načítám ${r.ref}…</div>`;
+  try {
+    const verses = (await chapter(r.book, r.ch)).filter(v => inR(v.verse, r));
+    if (READINGS.find(x=>x.key===active) !== r) return;
+    let html="", prev=null;
+    for (const v of verses) {
+      if (prev!==null && v.verse!==prev+1) html += `<span style="display:block;text-align:center;color:#756d66;letter-spacing:.3em;margin:12px 0;font-family:'Plus Jakarta Sans'">· · ·</span>`;
+      const marks = NOTES.filter(n => n.reading===r.key && n.verse===v.verse && n.cat!=="term");
+      html += `<span data-verse="${v.verse}"><sup>${v.verse}</sup>${withMarks(v.text, marks)} </span>`;
+      if (openAnswer && openAnswer.reading===r.key && openAnswer.verse===v.verse) html += `<div class="answer" id="answerBox"></div>`;
+      prev = v.verse;
+    }
+    body.innerHTML = html;
+    if (openAnswer) fillAnswer();
+  } catch { body.innerHTML = `<div class="loading">Text se nepodařilo načíst.</div>`; }
+}
+
+// ---- odpověď na pojem: „streamuje" po slovech, ať je vidět, že něco odpovídá
+function fillAnswer() {
+  const box = document.getElementById("answerBox"); if (!box) return;
+  const a = openAnswer;
+  box.innerHTML = `<div class="head"><span class="term">${esc(a.term || a.quote)}<small>Co to znamená?</small></span><button class="btn ghost" id="ansClose">✕</button></div>
+    <p id="ansText" class="cursor"></p>${a.ctx ? `<div class="ctx" id="ansCtx" hidden>${a.ctx}</div>` : ""}
+    <div class="acts" id="ansActs" hidden>
+      <button class="btn" id="ansRetry">Zeptat se jinak</button>
+      <button class="btn sage" id="ansSave">Uložit do zápisníku</button>
+    </div>`;
+  box.querySelector("#ansClose").addEventListener("click", () => { openAnswer=null; renderText(); });
+  // streaming
+  const words = a.html.split(/(\s+)/); let i=0; const p = box.querySelector("#ansText");
+  const tick = () => {
+    if (i >= words.length) { p.classList.remove("cursor"); box.querySelector("#ansCtx")?.removeAttribute("hidden"); box.querySelector("#ansActs").hidden=false;
+      box.querySelector("#ansSave").addEventListener("click", () => {
+        NOTES.push({ id:"t"+Date.now(), reading:a.reading, verse:a.verse, cat:"term", quote:a.term || a.quote, note:p.textContent.trim() });
+        renderNotes(); box.querySelector("#ansSave").textContent = "Uloženo ✓"; box.querySelector("#ansSave").disabled = true;
+      });
+      box.querySelector("#ansRetry").addEventListener("click", () => {
+        if (box.querySelector(".followup")) { box.querySelector(".followup input").focus(); return; }
+        const f = document.createElement("div"); f.className = "followup";
+        f.innerHTML = `<input placeholder="Na co přesně se ptáš? Např. „a jak to slyšeli lidé v exilu?"" /><p class="hint">Enter = zeptat se. Odpověď se přidá pod tu první.</p>`;
+        box.querySelector("#ansActs").before(f);
+        const inp = f.querySelector("input"); inp.focus();
+        inp.addEventListener("keydown", ev => {
+          if (ev.key !== "Enter" || !inp.value.trim()) return;
+          const q = inp.value.trim(); inp.disabled = true;
+          const ans = FOLLOWUPS.find(x => x.match.test(q))?.text || FOLLOWUP_FALLBACK;
+          const qEl = document.createElement("p"); qEl.className = "q"; qEl.textContent = "Ty: " + q;
+          const aEl = document.createElement("p"); aEl.className = "cursor";
+          f.replaceChildren(qEl, aEl);
+          const ws = ans.split(/(\s+)/); let j = 0;
+          const t2 = () => { if (j >= ws.length) { aEl.classList.remove("cursor"); return; } aEl.innerHTML += ws[j]; j++; setTimeout(t2, ws[j-1].trim() ? 28 : 0); };
+          t2();
+        });
+      });
+      return; }
+    p.innerHTML += words[i]; i++; setTimeout(tick, words[i-1].trim() ? 28 : 0);
+  };
+  // html tokeny nechceme trhat — proto se streamuje po slovech hotového HTML, v prototypu to stačí
+  tick();
+}
+
+// ---- výběr → popup (4 kategorie + Co to znamená?)
+let pop=null, pending=null;
+function closePop(){ if(pop){pop.remove();pop=null;} pending=null; }
+document.addEventListener("mouseup", e => {
+  if (pop && pop.contains(e.target)) return;
+  closePop();
+  const sel = getSelection(); if (!sel || sel.isCollapsed) return;
+  const quote = sel.toString().trim(); if (quote.length < 2) return;
+  const body = document.getElementById("textBody"); const rng = sel.getRangeAt(0);
+  if (!body.contains(rng.startContainer)) return;
+  const n = rng.startContainer.nodeType===1 ? rng.startContainer : rng.startContainer.parentElement;
+  const vEl = n.closest("[data-verse]"); if (!vEl) return;
+  const rect = rng.getBoundingClientRect();
+  pending = { quote, verse:Number(vEl.dataset.verse), reading:active };
+  pop = document.createElement("div"); pop.className="selpop";
+  pop.style.left = Math.min(Math.max(rect.left + rect.width/2 - 230, 8), innerWidth-470) + "px";
+  pop.style.top = Math.max(rect.top - 84, 8) + "px";
+  pop.innerHTML = `<div class="row"><span class="lbl">Označit</span>${Object.entries(CATS).map(([id,l]) => `<button class="${id}" data-cat="${id}">${l}</button>`).join("")}</div>
+    <div class="row ask-row"><span class="lbl">Zeptat se</span><button class="ask" id="askBtn"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="6"/><path d="M6.2 6.2a1.8 1.8 0 1 1 2.6 1.6c-.6.3-.8.6-.8 1.2M8 11.4v.1"/></svg>Co to znamená?</button><span style="font-size:11px;color:#756d66;margin-left:6px">— odpověď, neuloží se, dokud nechceš</span></div>`;
+  document.body.appendChild(pop);
+  pop.querySelectorAll("[data-cat]").forEach(b => b.addEventListener("click", () => {
+    NOTES.push({ id:"n"+Date.now(), reading:pending.reading, verse:pending.verse, cat:b.dataset.cat, quote:pending.quote, note:"" });
+    getSelection().removeAllRanges(); closePop(); renderText(); renderNotes();
+  }));
+  pop.querySelector("#askBtn").addEventListener("click", () => {
+    const p = pending; const hit = TERMS.find(t => t.match.test(p.quote));
+    openAnswer = { verse:p.verse, reading:p.reading, quote:p.quote, term: hit ? hit.term : null, html: hit ? hit.text : FALLBACK.text, ctx: hit ? hit.ctx : "" };
+    getSelection().removeAllRanges(); closePop(); renderText();
+  });
+});
+document.addEventListener("keydown", e => { if (e.key==="Escape") { closePop(); } });
+
+// ---- zápisník + zrcadlo
+function renderNotes() {
+  document.getElementById("noteCount").textContent = NOTES.length;
+  const f = document.getElementById("filters");
+  const opts = [["all","Vše"], ...READINGS.map(r => [r.key, r.label])];
+  f.innerHTML = opts.map(([k,l]) => { const n = k==="all" ? NOTES.length : NOTES.filter(x=>x.reading===k).length; return `<button data-f="${k}" aria-pressed="${filter===k}">${l}${n?` ${n}`:""}</button>`; }).join("");
+  f.querySelectorAll("[data-f]").forEach(b => b.addEventListener("click", () => { filter=b.dataset.f; renderNotes(); }));
+  const list = NOTES.filter(n => filter==="all" || n.reading===filter);
+  document.getElementById("noteList").innerHTML = list.slice().reverse().map(n => `
+    <div class="bubble" data-cat="${n.cat}">
+      <span class="tag">${n.cat==="term" ? "Pojem" : n.cat==="mirror" ? "Zrcadlo" : CATS[n.cat]} ${n.reading ? `<span class="src">${esc(label(n.reading))}</span>` : ""}</span>
+      ${n.quote ? `<blockquote>„${esc(n.quote)}"</blockquote>` : ""}
+      ${n.note ? `<p>${esc(n.note)}</p>` : ""}
+    </div>`).join("");
+}
+
+const MIRROR = [
+  ["Co se ti opakuje", `Ve všech třech čteních sis označila místo, kde někdo <b>mění směr</b>: Ezechielovo „obraťte se", syn v podobenství, který nejdřív řekl ne a pak šel, a Kristus, který se vzdal toho, co měl. Slovo <i>obrácení</i> nepadlo ani jednou — ale je pod každou z těch značek.`],
+  ["Tvoje otázky", `Dvě ze tří jsou o tom <b>kdo</b>: kdo je dům izraelský, a proč zrovna celníci a nevěstky. Třetí je o <b>jak</b> — jak jde bázeň dohromady s radostí. Možná se ptáš na jedno a totéž: kdo vlastně patří dovnitř, a co to stojí.`],
+  ["Kde se čtení potkávají", `Ezechiel i Matouš mluví k lidem, kteří si myslí, že jsou v pořádku. Filipským říká, jak vypadá ten, kdo si to nemyslí.`],
+];
+document.getElementById("mirrorBtn").addEventListener("click", async () => {
+  const btn = document.getElementById("mirrorBtn"); const box = document.getElementById("mirrorBox");
+  btn.disabled = true; btn.lastChild.textContent = " Dívám se…";
+  box.hidden = false; box.innerHTML = `<div class="mirror"><p class="cursor" style="color:#756d66;font-style:italic">Čtu tvých ${NOTES.length} poznámek ze tří čtení…</p></div>`;
+  await new Promise(r => setTimeout(r, 1400));
+  box.innerHTML = `<div class="mirror">${MIRROR.map(([h,t]) => `<h4>${h}</h4><p>${t}</p>`).join("")}
+    <div class="disclaimer">Tohle není návrh kázání. Jen tvoje poznámky viděné z výšky — co s tím uděláš, je na tobě.</div>
+    <div class="acts"><button class="btn ghost" id="mirrorClose">Zavřít</button><button class="btn sage" id="mirrorSave">Uložit do zápisníku</button></div></div>`;
+  btn.disabled = false; btn.lastChild.textContent = " Zrcadlo";
+  box.querySelector("#mirrorClose").addEventListener("click", () => { box.hidden = true; });
+  box.querySelector("#mirrorSave").addEventListener("click", () => {
+    NOTES.push({ id:"m"+Date.now(), reading:null, cat:"mirror", quote:"", note: MIRROR.map(([h,t]) => `${h}: ${t.replace(/<[^>]+>/g,"")}`).join(" — ") });
+    renderNotes(); box.hidden = true;
+  });
+});
+
+renderTabs(); renderText(); renderNotes();
+</script>
+</body>
+</html>
