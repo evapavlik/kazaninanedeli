@@ -97,6 +97,35 @@ export default function BubbleDrawer({
   // into a slim rail. Writing wants room; collecting wants the stash.
   const [wide, setWide] = useState(false);
   const sermonRef = useRef<HTMLTextAreaElement | null>(null);
+
+  // A proposed paragraph goes in after the paragraph that holds the quoted
+  // place (or at the end), and comes up selected — it is there to be rewritten.
+  const insertProposal = (paragraph: string, after?: string) => {
+    const value = artifacts.sermonText ?? "";
+    let end = value.length;
+    if (after) {
+      const idx = value.toLowerCase().indexOf(after.toLowerCase());
+      if (idx >= 0) {
+        const nextBreak = value.indexOf("\n\n", idx);
+        end = nextBreak >= 0 ? nextBreak : value.length;
+      }
+    }
+    const head = value.slice(0, end).replace(/\s+$/, "");
+    const tail = value.slice(end).replace(/^\s+/, "");
+    const inserted = head ? `\n\n${paragraph}` : paragraph;
+    const next = `${head}${inserted}${tail ? `\n\n${tail}` : ""}`;
+    onArtifactChange("sermonText", next);
+    const start = head ? head.length + 2 : 0;
+    window.setTimeout(() => {
+      const ta = sermonRef.current;
+      if (!ta) return;
+      ta.focus();
+      ta.setSelectionRange(start, start + paragraph.length);
+      const lineHeight = parseFloat(getComputedStyle(ta).lineHeight) || 20;
+      const line = next.slice(0, start).split("\n").length;
+      ta.scrollTop = Math.max(0, (line - 2) * lineHeight);
+    }, 60);
+  };
   /**
    * Attention wiggle — when the drawer opens we wiggle the first few bubbles
    * so the preacher sees they're interactive. After the first drag / tap
@@ -387,7 +416,7 @@ export default function BubbleDrawer({
             </div>
 
             {/* The sermon read by a colleague — on request, under the text. */}
-            <FeedbackCard artifacts={artifacts} textareaRef={sermonRef} />
+            <FeedbackCard artifacts={artifacts} textareaRef={sermonRef} onInsert={insertProposal} />
           </section>
 
           {/* RIGHT column — bubble stash */}

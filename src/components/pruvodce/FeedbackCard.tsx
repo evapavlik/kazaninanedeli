@@ -10,6 +10,17 @@ interface FeedbackCardProps {
   artifacts: SermonArtifacts;
   /** The sermon textarea — „kde:" selects the quoted place in it. */
   textareaRef: RefObject<HTMLTextAreaElement | null>;
+  /**
+   * Puts a proposed paragraph into the sermon after the paragraph holding
+   * `after` (or at the end), and selects it so it gets rewritten right away.
+   */
+  onInsert: (paragraph: string, after?: string) => void;
+}
+
+interface Proposal {
+  text: string;
+  busy: boolean;
+  error?: string;
 }
 
 interface Point {
@@ -73,16 +84,27 @@ function preparationLines(a: SermonArtifacts): string[] {
  * sections: what works, what still needs work. Each point names a place in
  * the text; clicking it selects that place. Nothing is rewritten.
  */
-export default function FeedbackCard({ artifacts, textareaRef }: FeedbackCardProps) {
+export default function FeedbackCard({ artifacts, textareaRef, onInsert }: FeedbackCardProps) {
   const [text, setText] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const [reviewed, setReviewed] = useState<string>("");
+  // Proposals keyed by "section:point" — only for „Na čem ještě zapracovat".
+  const [proposals, setProposals] = useState<Record<string, Proposal>>({});
   const { add } = useAiNotes();
   const sunday = useSunday();
 
   const sermon = artifacts.sermonText ?? "";
+
+  const requestBase = () => ({
+    sunday: sunday.entry?.sundayName ?? "",
+    readings: sunday.readings
+      .filter((r) => r.lectionary)
+      .map((r) => ({ label: r.label, reference: r.lectionary!.reference })),
+    sermonText: sermon,
+    preparation: preparationLines(artifacts),
+  });
   const words = sermon.trim() ? sermon.trim().split(/\s+/).length : 0;
   const tooShort = words < 40;
   const stale = text !== null && !busy && sermon !== reviewed;
@@ -93,19 +115,13 @@ export default function FeedbackCard({ artifacts, textareaRef }: FeedbackCardPro
     setError(null);
     setSaved(false);
     setText("");
+    setProposals({});
     setReviewed(sermon);
     try {
       const res = await fetch("/api/ai/feedback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sunday: sunday.entry?.sundayName ?? "",
-          readings: sunday.readings
-            .filter((r) => r.lectionary)
-            .map((r) => ({ label: r.label, reference: r.lectionary!.reference })),
-          sermonText: sermon,
-          preparation: preparationLines(artifacts),
-        }),
+        body: JSON.stringify(requestBase()),
       });
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
@@ -140,6 +156,37 @@ export default function FeedbackCard({ artifacts, textareaRef }: FeedbackCardPro
     const line = value.slice(0, idx).split("\n").length;
     ta.scrollTop = Math.max(0, (line - 3) * lineHeight);
   };
+
+  // A shape for one point, from her own material — streamed into a box under
+  // the point, never into the text until she clicks.
+  const propose = async (key: string, point: Point) => {
+    setProposals((p) => ({ ...p, [key]: { text: "", busy: true } }));
+    try {
+      const res = await fetch("/api/ai/propose", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...requestBase(), point: point.text, where: point.where }),
+      });
+      if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        throw new Error(j.error || `Chyba ${res.status}`);
+      }
+      await readStream(res, (chunk) =>
+        setProposals((p) => ({ ...p, [key]: { ...p[key], text: (p[key]?.text ?? "") + chunk } })),
+      );
+      setProposals((p) => ({ ...p, [key]: { ...p[key], busy: false } }));
+    } catch (e) {
+      const error = e instanceof Error ? e.message : "Návrh se nepodařilo sestavit.";
+      setProposals((p) => ({ ...p, [key]: { text: "", busy: false, error } }));
+    }
+  };
+
+  const dropProposal = (key: string) =>
+    setProposals((p) => {
+      const next = { ...p };
+      delete next[key];
+      return next;
+    });
 
   const saveNote = () => {
     if (!text) return;
@@ -207,7 +254,11 @@ export default function FeedbackCard({ artifacts, textareaRef }: FeedbackCardPro
                     />
                     {s.heading}
                   </h4>
-                  {s.points.map((p, i) => (
+                  {s.points.map((p, i) => {
+                    const key = `${s.heading}:${i}`;
+                    const prop = proposals[key];
+                    const canPropose = s.heading === HEADINGS[1] && !busy;
+                    return (
                     <div
                       key={i}
                       className="flex gap-2.5 border-t border-border py-2 text-[12.5px] leading-[1.6] text-text first:border-t-0"
@@ -229,9 +280,76 @@ export default function FeedbackCard({ artifacts, textareaRef }: FeedbackCardPro
                             {`„${p.where}"`}
                           </button>
                         )}
+                        {canPropose && !prop && (
+                          <button
+                            onClick={() => propose(key, p)}
+                            className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-border bg-white px-2 py-1 text-[10.5px] font-semibold text-text-muted hover:border-brick hover:text-brick"
+                          >
+                            {`✎ Navrhni, jak to rozvést`}
+                          </button>
+                        )}
+                        {prop && (
+                          <div className="mt-2 rounded-lg border border-dashed border-brick/35 bg-brick-pale px-3 py-2.5">
+                            <p className="mb-1 text-[9.5px] font-bold uppercase tracking-[0.12em] text-brick">
+                              {`Návrh — z tvé přípravy, přepiš si ho`}
+                            </p>
+                            {prop.error ? (
+                              <p className="text-[12px] text-brick">{prop.error}</p>
+                            ) : (
+                              <div className="font-lora text-[12.5px] leading-[1.65] text-text">
+                                {prop.text
+                                  .split(/\n{2,}/)
+                                  .filter((x) => x.trim())
+                                  .map((para, j) => (
+                                    <p key={j} className="mb-1.5 last:mb-0">
+                                      {para.trim()}
+                                    </p>
+                                  ))}
+                                {prop.busy && <span className="animate-pulse text-brick">{"▍"}</span>}
+                              </div>
+                            )}
+                            {!prop.busy && (
+                              <>
+                                {!prop.error && (
+                                  <p className="mt-1 text-[10.5px] italic text-text-light">
+                                    {p.where
+                                      ? `Vloží se za odstavec s „${p.where.length > 40 ? p.where.slice(0, 40) + "…" : p.where}". Je to jen tvar — slova si nech svoje.`
+                                      : `Vloží se na konec. Je to jen tvar — slova si nech svoje.`}
+                                  </p>
+                                )}
+                                <div className="mt-1.5 flex justify-end gap-1.5">
+                                  <button
+                                    onClick={() => dropProposal(key)}
+                                    className="rounded-md border border-border bg-white px-2 py-1 text-[11px] font-semibold text-text-muted hover:text-text"
+                                  >
+                                    {`Zahodit`}
+                                  </button>
+                                  <button
+                                    onClick={() => propose(key, p)}
+                                    className="rounded-md border border-border bg-white px-2 py-1 text-[11px] font-semibold text-text-muted hover:border-brick hover:text-brick"
+                                  >
+                                    {`Jinak`}
+                                  </button>
+                                  {!prop.error && (
+                                    <button
+                                      onClick={() => {
+                                        onInsert(prop.text.trim(), p.where);
+                                        dropProposal(key);
+                                      }}
+                                      className="rounded-md bg-brick px-2 py-1 text-[11px] font-semibold text-white hover:bg-brick/90"
+                                    >
+                                      {`Vložit do textu`}
+                                    </button>
+                                  )}
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ))}
               {busy && (
