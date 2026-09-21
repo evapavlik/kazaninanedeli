@@ -13,6 +13,7 @@ import {
 } from "@/hooks/useBubbles";
 import type { SermonArtifacts } from "@/hooks/useSermonArtifacts";
 import MirrorCard from "./MirrorCard";
+import FeedbackCard from "./FeedbackCard";
 
 interface BubbleDrawerProps {
   open: boolean;
@@ -92,6 +93,10 @@ export default function BubbleDrawer({
   const [searchQuery, setSearchQuery] = useState("");
   const [pendingBubble, setPendingBubble] = useState<Bubble | null>(null);
   const [mounted, setMounted] = useState(false);
+  // „Roztáhnout": the sermon text takes the whole screen, the stash folds
+  // into a slim rail. Writing wants room; collecting wants the stash.
+  const [wide, setWide] = useState(false);
+  const sermonRef = useRef<HTMLTextAreaElement | null>(null);
   /**
    * Attention wiggle — when the drawer opens we wiggle the first few bubbles
    * so the preacher sees they're interactive. After the first drag / tap
@@ -324,7 +329,7 @@ export default function BubbleDrawer({
         aria-modal="false"
         aria-label="Můj zápisník"
         inert={!open || undefined}
-        className={`fixed top-0 right-0 bottom-0 z-[61] w-[min(760px,96vw)] bg-off-white shadow-[-4px_0_30px_rgba(0,0,0,0.12)] transition-transform duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] overflow-y-auto ${
+        className={`fixed top-0 right-0 bottom-0 z-[61] ${wide ? "w-screen" : "w-[min(760px,96vw)]"} bg-off-white shadow-[-4px_0_30px_rgba(0,0,0,0.12)] transition-transform duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] overflow-y-auto ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -351,9 +356,13 @@ export default function BubbleDrawer({
         </div>
 
         {/* Body — two-column grid on desktop (composition left, stash right) */}
-        <div className="px-5 pb-20 pt-4 md:px-6 md:grid md:grid-cols-[1fr_280px] md:gap-6">
+        <div
+          className={`px-5 pb-20 pt-4 md:grid md:gap-6 md:px-6 ${
+            wide ? "md:grid-cols-[1fr_44px] lg:px-10" : "md:grid-cols-[1fr_280px]"
+          }`}
+        >
           {/* LEFT column — the single „Celý text kázání" workspace */}
-          <section className="mb-6 md:mb-0">
+          <section className={`mb-6 md:mb-0 ${wide ? "w-full max-w-[920px] justify-self-center" : ""}`}>
             <h3 className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-brick">
               Pracovní plocha — celý text kázání
             </h3>
@@ -370,13 +379,31 @@ export default function BubbleDrawer({
                   value={artifacts[t.field] ?? ""}
                   onChange={(value) => onArtifactChange(t.field, value)}
                   onBubbleDrop={(payload) => handleBubbleDrop(payload, t.field)}
+                  wide={wide}
+                  onToggleWide={() => setWide((w) => !w)}
+                  textareaRef={sermonRef}
                 />
               ))}
             </div>
+
+            {/* The sermon read by a colleague — on request, under the text. */}
+            <FeedbackCard artifacts={artifacts} textareaRef={sermonRef} />
           </section>
 
           {/* RIGHT column — bubble stash */}
           <section className="md:sticky md:top-[108px] md:self-start md:max-h-[calc(100vh-124px)] md:overflow-y-auto md:pr-1">
+            {wide ? (
+              // Folded: one vertical rail that brings the stash back.
+              <button
+                onClick={() => setWide(false)}
+                title="Zobrazit zásobník"
+                className="hidden w-full items-center justify-center rounded-lg border border-border bg-cream px-2 py-3 text-[11px] font-semibold tracking-[0.06em] text-text-muted hover:border-border-strong hover:text-brick md:flex"
+                style={{ writingMode: "vertical-rl", transform: "rotate(180deg)", minHeight: 160 }}
+              >
+                {`${availableCount} ${pluralBublinek(availableCount)} v zásobníku`}
+              </button>
+            ) : (
+            <>
             <h3 className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-text-muted">
               Zásobník bublinek
             </h3>
@@ -475,6 +502,8 @@ export default function BubbleDrawer({
                   />
                 ))}
               </div>
+            )}
+            </>
             )}
           </section>
         </div>
@@ -783,6 +812,11 @@ interface CompositionFieldProps {
   onChange: (value: string) => void;
   /** When a bubble is dropped, the parent owns insertion (so undo toast fires). */
   onBubbleDrop: (payload: BubbleDragPayload) => void;
+  /** Whole-screen writing: bigger type, the field fills the window height. */
+  wide: boolean;
+  onToggleWide: () => void;
+  /** Exposed so the feedback card can select a quoted place in the text. */
+  textareaRef: React.RefObject<HTMLTextAreaElement | null>;
 }
 
 function CompositionField({
@@ -792,6 +826,9 @@ function CompositionField({
   value,
   onChange,
   onBubbleDrop,
+  wide,
+  onToggleWide,
+  textareaRef,
 }: CompositionFieldProps) {
   const [drag, setDrag] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -864,9 +901,27 @@ function CompositionField({
             ✓ Uloženo
           </span>
         </span>
-        <span className="text-[10px] italic text-text-light">{hint}</span>
+        <span className="flex items-center gap-2">
+          <span className="hidden text-[10px] italic text-text-light sm:inline">{hint}</span>
+          <button
+            type="button"
+            onClick={onToggleWide}
+            title={wide ? "Vrátit zásobník vedle textu" : "Text přes celou obrazovku"}
+            className={`hidden items-center gap-1 rounded-md border px-2 py-[3px] text-[10.5px] font-semibold transition-colors md:inline-flex ${
+              wide
+                ? "border-brick/25 bg-brick-pale text-brick"
+                : "border-border bg-white text-text-muted hover:border-border-strong hover:text-text"
+            }`}
+          >
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+              {wide ? <path d="M6 2v4H2M10 14v-4h4M2 2l4 4M14 14l-4-4" /> : <path d="M2 6V2h4M14 10v4h-4M2 2l5 5M14 14l-5-5" />}
+            </svg>
+            {wide ? "Zúžit" : "Roztáhnout"}
+          </button>
+        </span>
       </div>
       <textarea
+        ref={textareaRef}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onDragOver={onDragOver}
@@ -874,7 +929,10 @@ function CompositionField({
         onDrop={onDrop}
         rows={rows}
         placeholder="Piš nebo sem přetáhni bublinku…"
-        className={`w-full resize-y rounded-md border bg-white px-2.5 py-1.5 font-lora text-[12px] leading-relaxed text-text placeholder:text-text-light/40 focus:outline-none transition-all ${
+        style={wide ? { minHeight: "calc(100vh - 300px)" } : undefined}
+        className={`w-full resize-y rounded-md border bg-white font-lora text-text placeholder:text-text-light/40 focus:outline-none transition-all ${
+          wide ? "px-4 py-3 text-[14px] leading-[1.75]" : "px-2.5 py-1.5 text-[12px] leading-relaxed"
+        } ${
           drag
             ? "border-brick ring-2 ring-brick/25 bg-brick-pale/40"
             : "border-border focus:border-brick/30 focus:ring-1 focus:ring-brick/10"
