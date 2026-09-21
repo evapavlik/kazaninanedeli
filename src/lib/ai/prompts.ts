@@ -9,6 +9,9 @@
  *                never a proposal
  *  - feedback:   the finished sermon text read by a colleague — what works,
  *                what still needs work; points, never rewrites
+ *  - propose:    one or two paragraphs that develop a feedback point, in the
+ *                preacher's own material — offered only after her preparation
+ *                exists, inserted only on her click, meant to be rewritten
  *
  * The guiding line for all three: the text and the preacher's own reading
  * lead; the companion is available, not in charge.
@@ -55,6 +58,10 @@ export const FEEDBACK_SYSTEM = `${VOICE}
 - text bodu
   kde: úryvek${styleBlock()}`;
 
+export const PROPOSE_SYSTEM = `${VOICE}
+
+Úkol: farář má rozepsané kázání a u jednoho místa dostal zpětnou vazbu, že je to nedotažené. Napiš NÁVRH jednoho až dvou odstavců, které to místo rozvedou — tentokrát tedy jako mluvené kázání, ne komentář. Držíš se toho, co farář sám připravil (jádro, osnova, posluchači, ilustrace) a toho, jak už mluví v okolním textu: stejný tón, stejná délka vět, stejné oslovení. Návrh musí navazovat na úryvek, ZA který se vloží, a nesmí opakovat, co v kázání už stojí. Biblický děj nevymýšlej ani nedomýšlej; když cituješ, cituj ČEP přesně. 60–140 slov. Jen samotný text odstavců — bez nadpisu, bez úvodu, bez komentáře, bez uvozovek kolem. Farář si ho přepíše svými slovy; je to tvar, ne hotová věc.${styleBlock()}`;
+
 /** Hard caps so a stray call can't run away. */
 export const LIMITS = {
   termContextChars: 6000,
@@ -68,4 +75,5 @@ export const LIMITS = {
   feedbackTextChars: 14000,
   feedbackContextChars: 4000,
   feedbackMaxTokens: 2400,
+  proposeMaxTokens: 700,
 } as const;

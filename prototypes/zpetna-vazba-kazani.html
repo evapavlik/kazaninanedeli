@@ -91,6 +91,17 @@
   .bub.fb .tag{color:var(--sage)}
   .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--text);color:#fff;border-radius:999px;padding:8px 16px;font-size:12px;opacity:0;transition:opacity .25s;pointer-events:none}
   .toast.show{opacity:1}
+  /* návrh rozvedení u bodu */
+  .prop-btn{display:inline-flex;align-items:center;gap:5px;margin:6px 0 0 10px;border:1px solid var(--border);background:#fff;border-radius:7px;padding:4px 9px;font:600 10.5px/1 "Plus Jakarta Sans",sans-serif;color:var(--muted);cursor:pointer}
+  .prop-btn:hover{border-color:var(--brick);color:var(--brick)}
+  .prop{display:none;margin-top:8px;border:1px dashed rgba(196,30,30,.35);background:var(--brick-pale);border-radius:10px;padding:10px 12px}
+  .prop.show{display:block}
+  .prop .lbl2{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--brick);margin-bottom:5px}
+  .prop p{margin:0 0 6px;font-family:Lora,serif;font-size:12.5px;line-height:1.65;color:var(--text)}
+  .prop .acts{display:flex;gap:6px;justify-content:flex-end;margin-top:6px}
+  .prop .acts button{border:1px solid var(--border);background:#fff;border-radius:7px;padding:5px 10px;font:600 11px/1 "Plus Jakarta Sans",sans-serif;cursor:pointer;color:var(--muted)}
+  .prop .acts button.primary{background:var(--brick);border-color:var(--brick);color:#fff}
+  .prop .hint2{font-size:10.5px;font-style:italic;color:var(--light);margin-top:4px}
   /* roztažená plocha psaní */
   .drawer.wide .cols{grid-template-columns:minmax(0,1fr) 44px}
   .drawer.wide .stash > *:not(.stash-rail){display:none}
@@ -109,7 +120,7 @@
   <div class="note">
     <b>Prototyp: zpětná vazba na celý text kázání.</b> Otevřený zápisník s rozepsaným kázáním na 27. 9. (Ez 18 · Fp 2 · Mt 21). Zkus:
     <b>Chci zpětnou vazbu</b> pod textem → odpověď přijde pod něj, ve dvou částech. Klikni na <i>kde:</i> u bodu — najde místo v textu.
-    Pak text uprav a všimni si, že se nabídne <b>Znovu</b>. <b>Uložit do zápisníku</b> dá zpětnou vazbu do zásobníku vpravo jako bublinku. Nové: <b>Roztáhnout</b> u pole — zásobník se sbalí do úzké lišty a text dostane celou plochu; klik na lištu nebo znovu na tlačítko to vrátí.
+    Pak text uprav a všimni si, že se nabídne <b>Znovu</b>. <b>Uložit do zápisníku</b> dá zpětnou vazbu do zásobníku vpravo jako bublinku. Nové: u bodů <i>Na čem zapracovat</i> je <b>✎ Navrhni, jak to rozvést</b> → odstavec z tvé přípravy; <b>Vložit do textu</b> ho dá za příslušný odstavec (a označí, ať ho hned přepíšeš). Také <b>Roztáhnout</b> u pole — zásobník se sbalí do úzké lišty a text dostane celou plochu; klik na lištu nebo znovu na tlačítko to vrátí.
   </div>
 
   <div class="drawer">
@@ -175,11 +186,22 @@ Amen.</textarea>
             <div class="sec todo">
               <h4><span class="d"></span>Na čem ještě zapracovat</h4>
               <div class="pt"><span class="n">1</span><div><b>Ezechiel je jen naťuknutý.</b> Dvě věty citace bez rozvedení. Přitom právě on nese tvé „není pozdě“: Bůh nesoudí podle toho, kým člověk byl, ale kým je dnes (Ez 18,29-32). Kdyby tenhle odstavec dostal stejnou váhu jako podobenství, druhá půlka kázání by měla o co se opřít.
-                <span class="where" data-find="Ezechiel říká">„Ezechiel říká, že Bůh nemá zalíbení ve smrti…“</span></div></div>
+                <span class="where" data-find="Ezechiel říká">„Ezechiel říká, že Bůh nemá zalíbení ve smrti…“</span>
+                <button class="prop-btn" data-prop="p1">✎ Navrhni, jak to rozvést</button>
+                <div class="prop" id="p1"><div class="lbl2">Návrh — z tvé přípravy, přepiš si ho</div>
+                <p>Ezechiel mluví do situace, kterou známe: lid v exilu si říká přísloví „otcové jedli nezralé hrozny a synům trnou zuby“. Doplácíme na to, co udělali jiní — a co jsme udělali sami dřív. Ezechiel to přísloví odmítá. Bůh nesoudí podle toho, kým jsi byl, ale kým jsi dnes. „Odhoďte od sebe všechny nevěrnosti… proč byste měli zemřít?“ Není to hrozba, je to pozvání.</p>
+                <p>A přesně tohle dělá ten první syn v podobenství. Řekl ne. Ale Bůh se neptá, co řekl — ptá se, kam jde.</p>
+                <div class="hint2">Vloží se za odstavec s „Ezechiel říká…“. Je to jen tvar — slova si nech svoje.</div>
+                <div class="acts"><button class="prop-close">Zahodit</button><button class="prop-again">Jinak</button><button class="primary prop-insert" data-after="Ezechiel říká">Vložit do textu</button></div></div></div></div>
               <div class="pt"><span class="n">2</span><div><b>Chybí něco, co to podtrhne.</b> Tři čtení tu stojí vedle sebe, ale nic je nesváže do jednoho obrazu nebo příběhu, který by posluchač odnesl v hlavě. V přípravě máš u ilustrací poznámku o člověku, který „řekl ne a přišel“ — v textu není.
                 <span class="where" data-find="Co si tedy odnést">před „Co si tedy odnést?“</span></div></div>
               <div class="pt"><span class="n">3</span><div>Filipským zůstává na úrovni parafráze („není to výzva k výkonu, je to výzva ke smýšlení“). Jak souvisí Kristovo ponížení s prvním synem, který řekl ne a šel? Ta spojka tam ještě není napsaná.
-                <span class="where" data-find="Pavel píše">„Pavel píše do Filip…“</span></div></div>
+                <span class="where" data-find="Pavel píše">„Pavel píše do Filip…“</span>
+                <button class="prop-btn" data-prop="p3">✎ Navrhni, jak to rozvést</button>
+                <div class="prop" id="p3"><div class="lbl2">Návrh — z tvé přípravy, přepiš si ho</div>
+                <p>Ten první syn řekl ne a šel — a to je vlastně malá verze toho, o čem píše Pavel. Kristus se nedržel toho, co měl, ale ponížil se a šel. Smýšlení, které Pavel Filipským přeje, není názor. Je to směr: odkud se dívám a kam jdu. Druhý syn měl správná slova a špatný směr.</p>
+                <div class="hint2">Vloží se za odstavec s „Pavel píše…“. Je to jen tvar — slova si nech svoje.</div>
+                <div class="acts"><button class="prop-close">Zahodit</button><button class="prop-again">Jinak</button><button class="primary prop-insert" data-after="Pavel píše">Vložit do textu</button></div></div></div></div>
             </div>
           </div>
           <div class="stale" id="stale">Text kázání se od té doby změnil — zpětná vazba je k předchozí verzi.</div>
@@ -231,6 +253,16 @@ Amen.</textarea>
   const drawer=document.querySelector('.drawer'), wideBtn=document.getElementById('wideBtn'), wideLbl=document.getElementById('wideLbl');
   function toggleWide(){const on=drawer.classList.toggle('wide');wideLbl.textContent=on?'Zúžit':'Roztáhnout';}
   wideBtn.onclick=toggleWide; document.getElementById('rail').onclick=toggleWide;
+  document.querySelectorAll('.prop-btn').forEach(b=>b.onclick=()=>{const p=document.getElementById(b.dataset.prop);p.classList.add('show');b.style.display='none';});
+  document.querySelectorAll('.prop-close').forEach(b=>b.onclick=()=>{const p=b.closest('.prop');p.classList.remove('show');p.previousElementSibling.style.display='';});
+  document.querySelectorAll('.prop-again').forEach(b=>b.onclick=()=>say('Tady by přišel jiný návrh'));
+  document.querySelectorAll('.prop-insert').forEach(b=>b.onclick=()=>{
+    const p=b.closest('.prop');const para=[...p.querySelectorAll('p')].map(x=>x.textContent).join('\n\n');
+    const v=ta.value;const i=v.indexOf(b.dataset.after);let end=i<0?v.length:v.indexOf('\n\n',i);if(end<0)end=v.length;
+    ta.value=v.slice(0,end)+'\n\n'+para+v.slice(end);ta.dispatchEvent(new Event('input'));
+    ta.focus();ta.setSelectionRange(end+2,end+2+para.length);const before=v.slice(0,end).split('\n').length;ta.scrollTop=Math.max(0,(before-2)*21);
+    p.classList.remove('show');say('Vloženo — je označené, přepiš si ho');
+  });
   btn.onclick=run;
   document.getElementById('fbAgain').onclick=run;
   document.getElementById('fbClose').onclick=()=>{fb.classList.remove('show');};
