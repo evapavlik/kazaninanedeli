@@ -23,6 +23,7 @@ const VOICE = `Jsi průvodce faráře Církve československé husitské při p�
  */
 const STYLE_NOTES: string[] = [
   // např. `Neříkej „radikálně nabourává" — piš „odmítá".`
+  `Nikdy minulý čas ve 2. osobě, který prozrazuje rod („vytyčil sis", „napsal jsi", „označila sis") — piš „máš vytyčené", „píšeš", „máš označené".`,
 ];
 
 const styleBlock = () =>
