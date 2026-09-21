@@ -1966,7 +1966,31 @@ export function getCommentary(
       if (verseEnd != null && verseEnd >= start && verseEnd <= end) return COMMENTARY[key];
     }
   }
-  return COMMENTARY[`${bookNumber}:${chapter}`] || null;
+  const chapterWide = COMMENTARY[`${bookNumber}:${chapter}`];
+  if (!chapterWide) return null;
+  // A "chapter" entry is often really one pericope filed under the chapter
+  // (40:21 is Mt 21,1–11, Palm Sunday). Serving it for Mt 21,23–32 shows the
+  // wrong Sunday — only use it when its own reference reaches the verses asked.
+  return commentaryCovers(chapterWide.reference, verseStart, verseEnd) ? chapterWide : null;
+}
+
+/**
+ * Does a commentary written for `reference` actually speak to these verses?
+ * A reference without verses covers the whole chapter; otherwise the ranges
+ * must overlap.
+ */
+export function commentaryCovers(
+  reference: string,
+  verseStart?: number | null,
+  verseEnd?: number | null
+): boolean {
+  if (verseStart == null) return true;
+  const m = reference.replace(/[–—]/g, "-").match(/,\s*(\d+)(?:[^0-9]*?(\d+))?\s*$/);
+  if (!m) return true; // whole chapter
+  const start = parseInt(m[1], 10);
+  const end = m[2] ? parseInt(m[2], 10) : start;
+  const askEnd = verseEnd ?? verseStart;
+  return verseStart <= end && askEnd >= start;
 }
 
 /**
