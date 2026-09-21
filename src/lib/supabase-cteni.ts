@@ -108,21 +108,27 @@ export interface DbCommentary {
 
 export async function fetchCommentary(
   bookNumber: number,
-  chapter: number
+  chapter: number,
+  verseStart?: number | null,
+  verseEnd?: number | null
 ): Promise<DbCommentary | null> {
-  const key = `${bookNumber}:${chapter}`;
+  // A pericope-specific entry ("40:21:23-32") beats the chapter-wide one —
+  // generated commentaries are stored per pericope, the April batch per chapter.
+  const keys = [
+    verseStart != null ? `${bookNumber}:${chapter}:${verseStart}-${verseEnd ?? verseStart}` : null,
+    `${bookNumber}:${chapter}`,
+  ].filter((k): k is string => k !== null);
 
   const { data, error } = await supabaseCteni
     .from("commentary")
     .select("*")
-    .eq("book_chapter", key)
-    .limit(1);
+    .in("book_chapter", keys);
 
   if (error || !data || data.length === 0) {
     return null;
   }
-
-  return data[0] as DbCommentary;
+  const rows = data as DbCommentary[];
+  return rows.find((r) => r.book_chapter === keys[0]) ?? rows[0];
 }
 
 /**

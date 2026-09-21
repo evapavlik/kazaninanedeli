@@ -65,6 +65,8 @@ interface AnnotatedTextDisplayProps {
   onRemoveAnnotation: (id: string) => void;
   onUpdateNote: (id: string, note: string) => void;
   className?: string;
+  /** „Co to znamená?" for the current selection; omit to hide the option. */
+  onAsk?: (selectedText: string) => void;
 }
 
 export default function AnnotatedTextDisplay({
@@ -74,6 +76,7 @@ export default function AnnotatedTextDisplay({
   onRemoveAnnotation,
   onUpdateNote,
   className = "",
+  onAsk,
 }: AnnotatedTextDisplayProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -318,6 +321,15 @@ export default function AnnotatedTextDisplay({
           position={{ x: selectionPopup.x, y: selectionPopup.y }}
           onSelect={handleCategorySelect}
           onClose={() => setSelectionPopup(null)}
+          onAsk={
+            onAsk
+              ? () => {
+                  onAsk(selectionPopup.selectedText);
+                  setSelectionPopup(null);
+                  window.getSelection()?.removeAllRanges();
+                }
+              : undefined
+          }
         />
       )}
 

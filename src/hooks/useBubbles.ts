@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { phases } from "@/data/phases";
 import type { SermonArtifacts } from "./useSermonArtifacts";
 import type { TranslationNote } from "./useTranslationNotes";
+import { AI_NOTES_KEY, type AiNote } from "./useAiNotes";
 import {
   READING_KEYS,
   annotationsKey,
@@ -158,6 +159,12 @@ function readTranslationNotes(): TranslationNote[] {
   return Array.isArray(raw) ? raw : [];
 }
 
+function readAiNotes(): AiNote[] {
+  if (typeof window === "undefined") return [];
+  const raw = safeParse<AiNote[]>(localStorage.getItem(AI_NOTES_KEY), []);
+  return Array.isArray(raw) ? raw : [];
+}
+
 function readArtifacts(): SermonArtifacts | null {
   if (typeof window === "undefined") return null;
   return safeParse<SermonArtifacts | null>(
@@ -230,6 +237,20 @@ function buildBubbles(): Bubble[] {
         body: n.note,
       });
     }
+  }
+
+  // What the companion said and the preacher kept. A term explanation is a
+  // notebook entry about a word; a mirror is a notebook entry about the week.
+  for (const n of readAiNotes()) {
+    const where = [n.readingLabel, n.reference].filter(Boolean).join(" · ");
+    bubbles.push({
+      id: `ai-${n.id}`,
+      source: "notebook",
+      category: "notebook",
+      tag: n.kind === "term" ? `Pojem${where ? ` · ${where}` : ""}` : "Zrcadlo",
+      title: n.kind === "term" && n.term ? `„${n.term}"` : undefined,
+      body: n.text,
+    });
   }
 
   // Notepads per sub-step

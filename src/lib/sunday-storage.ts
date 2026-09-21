@@ -60,6 +60,8 @@ const PREFERENCE_KEYS = new Set([
   "kazani-onboarding-seen",
   // One-time repairs of stored readings — see BibleTextPanel.
   "kazani-readings-resynced",
+  // Generated commentaries are a cache of the source, not the preacher's work.
+  "kazani-commentary-cache",
 ]);
 /** Bookkeeping for this module — never part of a snapshot. */
 const META_KEYS = new Set([SUNDAY_KEY, ARCHIVE_KEY, "kazani-sunday-seen"]);

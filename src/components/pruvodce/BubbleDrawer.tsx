@@ -12,6 +12,7 @@ import {
   useBubbles,
 } from "@/hooks/useBubbles";
 import type { SermonArtifacts } from "@/hooks/useSermonArtifacts";
+import MirrorCard from "./MirrorCard";
 
 interface BubbleDrawerProps {
   open: boolean;
@@ -379,6 +380,9 @@ export default function BubbleDrawer({
             <h3 className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-text-muted">
               Zásobník bublinek
             </h3>
+
+            {/* The notebook from above — on request, never on its own. */}
+            <MirrorCard bubbles={all} />
 
             {/* Search input */}
             <div className="mb-2 relative">
