@@ -94,10 +94,10 @@ export default function SermonPanel({ artifacts, onArtifactChange }: SermonPanel
     <div className="sticky top-4 flex flex-col rounded-xl border border-border bg-white overflow-hidden max-h-[calc(100vh-180px)]">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-border px-3.5 py-2.5 flex-shrink-0">
-        <span className="text-[10px] font-semibold uppercase tracking-widest text-text-muted">
+        <span className="text-[12px] font-semibold uppercase tracking-widest text-text-muted">
           Moje kázání
         </span>
-        <span className="rounded-full bg-cream px-2 py-0.5 text-[10px] text-text-light">
+        <span className="rounded-full bg-cream px-2 py-0.5 text-[12px] text-text-light">
           {filledFields} / {totalFields} polí
         </span>
       </div>
@@ -114,7 +114,7 @@ export default function SermonPanel({ artifacts, onArtifactChange }: SermonPanel
           <span className="block text-[12px] font-semibold leading-tight text-text">
             Můj zápisník
           </span>
-          <span className="block text-[10px] leading-tight text-text-muted">
+          <span className="block text-[12px] leading-tight text-text-muted">
             {availableCount === 0
               ? "zatím prázdno"
               : `${availableCount} ${availableCount === 1 ? "bublinka" : availableCount < 5 ? "bublinky" : "bublinek"}`}
@@ -130,7 +130,7 @@ export default function SermonPanel({ artifacts, onArtifactChange }: SermonPanel
         {filledFields === 0 ? (
           <div className="flex flex-col items-center justify-center gap-2 py-10 text-center">
             <span className="text-2xl opacity-20">✍️</span>
-            <p className="text-[11px] text-text-light leading-relaxed">
+            <p className="text-[12px] text-text-light leading-relaxed">
               Tady se zobrazí vše,
               <br />
               co máš dosud připravené.
@@ -158,10 +158,10 @@ export default function SermonPanel({ artifacts, onArtifactChange }: SermonPanel
                       opacity: filledInSection > 0 ? 1 : 0.3,
                     }}
                   />
-                  <span className="text-[10px] font-semibold uppercase tracking-wider">
+                  <span className="text-[12px] font-semibold uppercase tracking-wider">
                     {section.label}
                   </span>
-                  <span className="ml-0.5 text-[9px] font-normal opacity-60">
+                  <span className="ml-0.5 text-[12px] font-normal opacity-60">
                     {filledInSection}/{section.fields.length}
                   </span>
                   <svg
@@ -197,14 +197,14 @@ export default function SermonPanel({ artifacts, onArtifactChange }: SermonPanel
                             key={field.key}
                             className="rounded-md px-2.5 py-1.5 pl-[18px] hover:bg-cream transition-colors"
                           >
-                            <div className="text-[9px] font-semibold uppercase tracking-wider text-text-light mb-0.5">
+                            <div className="text-[12px] font-semibold uppercase tracking-wider text-text-light mb-0.5">
                               {field.label}
                             </div>
                             <div
                               className={
                                 field.highlight
                                   ? "font-cormorant text-[13px] italic font-semibold text-brick leading-snug"
-                                  : "text-[11px] text-text leading-snug whitespace-pre-line"
+                                  : "text-[12px] text-text leading-snug whitespace-pre-line"
                               }
                             >
                               {truncate(value, field.highlight ? 100 : 70)}
@@ -215,7 +215,7 @@ export default function SermonPanel({ artifacts, onArtifactChange }: SermonPanel
                         return (
                           <div
                             key={field.key}
-                            className="px-2.5 py-1 pl-[18px] text-[10px] italic text-text-light"
+                            className="px-2.5 py-1 pl-[18px] text-[12px] italic text-text-light"
                           >
                             {field.label} —
                           </div>

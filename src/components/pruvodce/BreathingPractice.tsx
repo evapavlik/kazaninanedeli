@@ -218,7 +218,7 @@ export default function BreathingPractice({
 
         {reading && (
           <div className="mb-5 max-w-[380px] rounded-xl border border-sage-light bg-white px-4 py-3 text-left">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-sage">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-sage">
               {`Tuto neděli · CČSH`}
             </p>
             <p className="mt-0.5 font-lora text-sm font-bold text-text">{reading.title}</p>
@@ -252,7 +252,7 @@ export default function BreathingPractice({
   return (
     <div className="flex min-h-[420px] flex-col items-center justify-center py-10">
       {/* Ties this to the guide step rather than announcing a separate section */}
-      <p className="mb-1 font-cormorant text-[11px] font-semibold uppercase tracking-[0.14em] text-brick">
+      <p className="mb-1 font-cormorant text-[12px] font-semibold uppercase tracking-[0.14em] text-brick">
         {`Fáze 1 · Modlitba a příprava srdce`}
       </p>
       <p className="mb-6 max-w-[30ch] text-center font-lora text-[17px] italic leading-relaxed text-text-muted">
@@ -296,7 +296,7 @@ export default function BreathingPractice({
       <p className="mt-4 font-lora text-[13.5px] italic leading-relaxed text-text-muted">
         {symbol.verse}
       </p>
-      <p className="mt-1 text-[11px] uppercase tracking-[0.1em] text-brick">{symbol.source}</p>
+      <p className="mt-1 text-[12px] uppercase tracking-[0.1em] text-brick">{symbol.source}</p>
 
       <p className="mt-3 text-[12px] text-text-light">
         {running ? `Cyklus ${cycle} ze ${CYCLES}` : `${CYCLES} klidné cykly · klikni na obraz`}

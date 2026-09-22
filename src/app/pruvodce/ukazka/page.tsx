@@ -30,7 +30,7 @@ export default function UkazkaPage() {
             </svg>
             {`Zp\u011Bt na p\u0159ehled`}
           </Link>
-          <div className="mb-5 inline-flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-brick before:h-0.5 before:w-5 before:rounded-sm before:bg-brick before:content-['']">
+          <div className="mb-5 inline-flex items-center gap-2.5 text-[12px] font-semibold uppercase tracking-[0.2em] text-brick before:h-0.5 before:w-5 before:rounded-sm before:bg-brick before:content-['']">
             {`P\u0159\u00EDklad`}
           </div>
           <h1 className="mb-2 font-lora text-[clamp(28px,3.5vw,40px)] font-bold text-text">
@@ -46,7 +46,7 @@ export default function UkazkaPage() {
 
         {/* Bible text */}
         <section className="mb-10 rounded-xl border border-sage/30 bg-sage-pale p-6">
-          <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-sage">
+          <h2 className="mb-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-sage">
             {workedExample.bibleReference}
           </h2>
           <p className="font-lora text-sm leading-relaxed italic text-text">
@@ -84,14 +84,14 @@ export default function UkazkaPage() {
 
                 {/* Checklist (read-only) */}
                 <div className="mb-5">
-                  <h4 className="mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-brick">
+                  <h4 className="mb-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-brick">
                     {`Praktick\u00E9 kroky`}
                   </h4>
                   <ol className="space-y-2">
                     {stepData.practicalSteps.map((ps, i) => (
                       <li key={i} className="flex gap-3 items-start">
                         <span
-                          className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] ${
+                          className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[12px] ${
                             exStep.checkedItems[i]
                               ? "bg-brick text-white"
                               : "bg-brick-pale text-brick"
@@ -130,7 +130,7 @@ export default function UkazkaPage() {
 
                 {/* Question answers */}
                 <div className="mb-5">
-                  <h4 className="mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-sage">
+                  <h4 className="mb-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-sage">
                     {`Ot\u00E1zky a odpov\u011Bdi`}
                   </h4>
                   <div className="space-y-3">
@@ -155,7 +155,7 @@ export default function UkazkaPage() {
                 {/* Notes */}
                 {exStep.notes && (
                   <div className="mb-5">
-                    <h4 className="mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-brick">
+                    <h4 className="mb-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-brick">
                       {`Z\u00E1pisky`}
                     </h4>
                     <div className="rounded-lg border border-brick/10 bg-brick-pale p-3 text-sm leading-relaxed text-text whitespace-pre-line">

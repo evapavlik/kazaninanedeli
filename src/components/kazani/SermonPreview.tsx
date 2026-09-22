@@ -42,7 +42,7 @@ export default function SermonPreview() {
     <div>
       {/* Header */}
       <div className="mb-8 text-center">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-brick">
+        <p className="text-[12px] font-semibold uppercase tracking-[0.15em] text-brick">
           {`N\u00E1hled k\u00E1z\u00E1n\u00ED`}
         </p>
         {bibleRef && (
@@ -85,7 +85,7 @@ export default function SermonPreview() {
       {/* Listeners */}
       {(artifacts.listenerSituation || artifacts.textListenerBridge) && (
         <div className="mt-6 rounded-xl border border-sage/15 bg-sage-pale/20 p-5">
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+          <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-sage">
             {`\uD83E\uDDED Propojen\u00ED s poslucha\u010Di`}
           </p>
           {artifacts.listenerSituation && (
@@ -178,24 +178,24 @@ export default function SermonPreview() {
       {/* Personal context */}
       {(artifacts.personalSituation || artifacts.expectations || artifacts.overallImpression) && (
         <div className="mt-8 rounded-xl border border-dashed border-border bg-cream/50 p-5">
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
+          <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-text-light">
             {`\uD83D\uDD6F\uFE0F Osobn\u00ED kontext`}
           </p>
           {artifacts.personalSituation && (
             <p className="text-[12px] leading-relaxed text-text-muted">
-              <span className="text-[10px] text-text-light">{`Situace: `}</span>
+              <span className="text-[12px] text-text-light">{`Situace: `}</span>
               {artifacts.personalSituation}
             </p>
           )}
           {artifacts.expectations && (
             <p className="mt-1.5 text-[12px] leading-relaxed text-text-muted">
-              <span className="text-[10px] text-text-light">{`O\u010Dek\u00E1v\u00E1n\u00ED: `}</span>
+              <span className="text-[12px] text-text-light">{`O\u010Dek\u00E1v\u00E1n\u00ED: `}</span>
               {artifacts.expectations}
             </p>
           )}
           {artifacts.overallImpression && (
             <p className="mt-1.5 text-[12px] leading-relaxed text-text-muted">
-              <span className="text-[10px] text-text-light">{`Dojem z textu: `}</span>
+              <span className="text-[12px] text-text-light">{`Dojem z textu: `}</span>
               {artifacts.overallImpression}
             </p>
           )}
@@ -205,24 +205,24 @@ export default function SermonPreview() {
       {/* Historical/liturgical context */}
       {(artifacts.author || artifacts.historicalContext || artifacts.liturgicalConnection) && (
         <div className="mt-4 rounded-xl border border-dashed border-border bg-cream/50 p-5">
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
+          <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-text-light">
             {`\uD83D\uDDFA\uFE0F Kontext textu`}
           </p>
           {artifacts.author && (
             <p className="text-[12px] leading-relaxed text-text-muted">
-              <span className="text-[10px] text-text-light">{`Autor: `}</span>
+              <span className="text-[12px] text-text-light">{`Autor: `}</span>
               {artifacts.author}
             </p>
           )}
           {artifacts.historicalContext && (
             <p className="mt-1.5 text-[12px] leading-relaxed text-text-muted">
-              <span className="text-[10px] text-text-light">{`Historick\u00E9 pozad\u00ED: `}</span>
+              <span className="text-[12px] text-text-light">{`Historick\u00E9 pozad\u00ED: `}</span>
               {artifacts.historicalContext}
             </p>
           )}
           {artifacts.liturgicalConnection && (
             <p className="mt-1.5 text-[12px] leading-relaxed text-text-muted">
-              <span className="text-[10px] text-text-light">{`Liturgick\u00FD kontext: `}</span>
+              <span className="text-[12px] text-text-light">{`Liturgick\u00FD kontext: `}</span>
               {artifacts.liturgicalConnection}
             </p>
           )}
@@ -280,12 +280,12 @@ function Section({
     return (
       <div className={compact ? "mt-2" : "mt-6"}>
         {!compact && icon && (
-          <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
+          <p className="mb-1 text-[12px] font-semibold uppercase tracking-[0.15em] text-text-light">
             {`${icon} ${label}`}
           </p>
         )}
         {compact && (
-          <p className="mb-1 text-[10px] text-text-light">{label}</p>
+          <p className="mb-1 text-[12px] text-text-light">{label}</p>
         )}
         <textarea
           autoFocus
@@ -315,7 +315,7 @@ function Section({
           className="w-full rounded-lg border border-dashed border-border bg-cream/30 px-4 py-3 text-left transition-all hover:border-brick/30 hover:bg-brick-pale/20"
         >
           {!compact && icon && (
-            <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
+            <p className="mb-1 text-[12px] font-semibold uppercase tracking-[0.15em] text-text-light">
               {`${icon} ${label}`}
             </p>
           )}
@@ -341,12 +341,12 @@ function Section({
         }`}
       >
         {!compact && icon && (
-          <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light">
+          <p className="mb-1 text-[12px] font-semibold uppercase tracking-[0.15em] text-text-light">
             {`${icon} ${label}`}
           </p>
         )}
         {compact && (
-          <p className="mb-0.5 text-[10px] text-text-light">{label}</p>
+          <p className="mb-0.5 text-[12px] text-text-light">{label}</p>
         )}
         {multiline ? (
           <div className={`text-[13px] leading-relaxed ${highlight ? "font-medium text-text" : "text-text-muted"} whitespace-pre-line`}>

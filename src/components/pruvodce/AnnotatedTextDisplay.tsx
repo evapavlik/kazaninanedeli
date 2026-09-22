@@ -280,7 +280,7 @@ export default function AnnotatedTextDisplay({
                   onClick={() => setEditingNoteId(isEditing ? null : ann.id)}
                 >
                   {/* Snippet from text */}
-                  <p className={`text-[10px] font-medium leading-tight ${cat.color}`}>
+                  <p className={`text-[12px] font-medium leading-tight ${cat.color}`}>
                     {`\u201E${snippet}\u201C`}
                   </p>
 
@@ -296,15 +296,15 @@ export default function AnnotatedTextDisplay({
                       }}
                       placeholder={`Pozn\u00E1mka\u2026`}
                       rows={2}
-                      className="mt-1 w-full rounded border border-border/50 bg-white px-1.5 py-1 text-[11px] leading-relaxed text-text placeholder:text-text-light/40 focus:border-sage focus:outline-none resize-y"
+                      className="mt-1 w-full rounded border border-border/50 bg-white px-1.5 py-1 text-[12px] leading-relaxed text-text placeholder:text-text-light/40 focus:border-sage focus:outline-none resize-y"
                       onClick={(e) => e.stopPropagation()}
                     />
                   ) : ann.note ? (
-                    <p className="mt-0.5 text-[11px] leading-relaxed text-text-muted">
+                    <p className="mt-0.5 text-[12px] leading-relaxed text-text-muted">
                       {ann.note}
                     </p>
                   ) : (
-                    <p className="mt-0.5 text-[10px] italic text-text-light/50">
+                    <p className="mt-0.5 text-[12px] italic text-text-light/50">
                       {`+ p\u0159idat pozn\u00E1mku`}
                     </p>
                   )}

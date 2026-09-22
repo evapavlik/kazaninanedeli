@@ -12,7 +12,7 @@ export default function OProjektuPage() {
   return (
     <div className="px-6 py-[60px] md:px-12">
       <div className="mx-auto max-w-3xl">
-        <div className="mb-5 inline-flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-brick before:h-0.5 before:w-5 before:rounded-sm before:bg-brick before:content-['']">
+        <div className="mb-5 inline-flex items-center gap-2.5 text-[12px] font-semibold uppercase tracking-[0.2em] text-brick before:h-0.5 before:w-5 before:rounded-sm before:bg-brick before:content-['']">
           {`O projektu`}
         </div>
         <h1 className="mb-3 font-lora text-[clamp(28px,3.5vw,40px)] font-bold text-text">
@@ -45,7 +45,7 @@ export default function OProjektuPage() {
 
             {/* Letter text */}
             <div className="flex-1">
-              <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-brick">
+              <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.15em] text-brick">
                 {`Od autorky`}
               </p>
               <div className="space-y-3 text-[15px] leading-[1.75] text-text">

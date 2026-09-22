@@ -392,10 +392,10 @@ export default function BubbleDrawer({
         >
           {/* LEFT column — the single „Celý text kázání" workspace */}
           <section className={`mb-6 md:mb-0 ${wide ? "w-full max-w-[920px] justify-self-center" : ""}`}>
-            <h3 className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-brick">
+            <h3 className="mb-1.5 text-[12px] font-semibold uppercase tracking-[0.12em] text-brick">
               Pracovní plocha — celý text kázání
             </h3>
-            <p className="mb-3 font-lora text-[11px] italic leading-snug text-text-muted">
+            <p className="mb-3 font-lora text-[12px] italic leading-snug text-text-muted">
               Sem přetáhni bublinky a skládej finální text. Jádro, osnovu, úvod a závěr z fáze Stavba najdeš v zásobníku jako bublinky.
             </p>
             <div className="space-y-3">
@@ -426,14 +426,14 @@ export default function BubbleDrawer({
               <button
                 onClick={() => setWide(false)}
                 title="Zobrazit zásobník"
-                className="hidden w-full items-center justify-center rounded-lg border border-border bg-cream px-2 py-3 text-[11px] font-semibold tracking-[0.06em] text-text-muted hover:border-border-strong hover:text-brick md:flex"
+                className="hidden w-full items-center justify-center rounded-lg border border-border bg-cream px-2 py-3 text-[12px] font-semibold tracking-[0.06em] text-text-muted hover:border-border-strong hover:text-brick md:flex"
                 style={{ writingMode: "vertical-rl", transform: "rotate(180deg)", minHeight: 160 }}
               >
                 {`${availableCount} ${pluralBublinek(availableCount)} v zásobníku`}
               </button>
             ) : (
             <>
-            <h3 className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-text-muted">
+            <h3 className="mb-1.5 text-[12px] font-semibold uppercase tracking-[0.12em] text-text-muted">
               Zásobník bublinek
             </h3>
 
@@ -459,7 +459,7 @@ export default function BubbleDrawer({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Hledej v bublinkách…"
-                className="w-full rounded-md border border-border bg-white pl-7 pr-2 py-1 text-[11px] text-text placeholder:text-text-light/50 focus:border-brick/30 focus:outline-none focus:ring-1 focus:ring-brick/10"
+                className="w-full rounded-md border border-border bg-white pl-7 pr-2 py-1 text-[12px] text-text placeholder:text-text-light/50 focus:border-brick/30 focus:outline-none focus:ring-1 focus:ring-brick/10"
               />
               {searchQuery && (
                 <button
@@ -480,7 +480,7 @@ export default function BubbleDrawer({
                   <button
                     key={f.key}
                     onClick={() => setFilter(f.key)}
-                    className={`rounded-full border px-2.5 py-0.5 text-[10px] font-medium transition-colors ${
+                    className={`rounded-full border px-2.5 py-0.5 text-[12px] font-medium transition-colors ${
                       filter === f.key
                         ? "border-text bg-text text-white"
                         : "border-border bg-white text-text-muted hover:border-text-muted"
@@ -493,7 +493,7 @@ export default function BubbleDrawer({
                   </button>
                 );
               })}
-              <span className="ml-auto text-[10px] text-text-light">
+              <span className="ml-auto text-[12px] text-text-light">
                 {availableCount === 0
                   ? "vše použito"
                   : `${availableCount} ${pluralBublinek(availableCount)}`}
@@ -647,10 +647,10 @@ function BubbleCard({
         title="Vrátit do zásobníku"
       >
         <div className="mb-1 flex items-center justify-between gap-2">
-          <span className={`text-[10px] font-semibold uppercase tracking-[0.08em] ${tagColor}`}>
+          <span className={`text-[12px] font-semibold uppercase tracking-[0.08em] ${tagColor}`}>
             {bubble.tag}
           </span>
-          <span className="rounded-full bg-text/10 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-text-muted">
+          <span className="rounded-full bg-text/10 px-1.5 py-0.5 text-[12px] font-semibold uppercase tracking-wide text-text-muted">
             použito · klikni pro vrácení
           </span>
         </div>
@@ -694,7 +694,7 @@ function BubbleCard({
       </span>
       <div className="mb-1.5 flex items-center justify-between gap-2">
         <span
-          className={`text-[10px] font-semibold uppercase tracking-[0.08em] ${tagColor}`}
+          className={`text-[12px] font-semibold uppercase tracking-[0.08em] ${tagColor}`}
         >
           {bubble.tag}
         </span>
@@ -808,7 +808,7 @@ function InsertTargetSheet({ bubble, onPick, onCancel }: InsertTargetSheetProps)
                   <span className="block text-[14px] font-medium text-text">
                     {t.label}
                   </span>
-                  <span className="block text-[11px] text-text-light">{t.hint}</span>
+                  <span className="block text-[12px] text-text-light">{t.hint}</span>
                 </span>
                 <span className="text-text-light">→</span>
               </button>
@@ -920,10 +920,10 @@ function CompositionField({
   return (
     <div>
       <div className="mb-0.5 flex items-baseline justify-between gap-2">
-        <span className="flex items-center gap-2 text-[11px] font-semibold text-text">
+        <span className="flex items-center gap-2 text-[12px] font-semibold text-text">
           {label}
           <span
-            className={`text-[10px] font-normal text-sage transition-opacity duration-300 ${
+            className={`text-[12px] font-normal text-sage transition-opacity duration-300 ${
               saved ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -931,12 +931,12 @@ function CompositionField({
           </span>
         </span>
         <span className="flex items-center gap-2">
-          <span className="hidden text-[10px] italic text-text-light sm:inline">{hint}</span>
+          <span className="hidden text-[12px] italic text-text-light sm:inline">{hint}</span>
           <button
             type="button"
             onClick={onToggleWide}
             title={wide ? "Vrátit zásobník vedle textu" : "Text přes celou obrazovku"}
-            className={`hidden items-center gap-1 rounded-md border px-2 py-[3px] text-[10.5px] font-semibold transition-colors md:inline-flex ${
+            className={`hidden items-center gap-1 rounded-md border px-2 py-[3px] text-[12px] font-semibold transition-colors md:inline-flex ${
               wide
                 ? "border-brick/25 bg-brick-pale text-brick"
                 : "border-border bg-white text-text-muted hover:border-border-strong hover:text-text"
@@ -960,14 +960,14 @@ function CompositionField({
         placeholder="Piš nebo sem přetáhni bublinku…"
         style={wide ? { minHeight: "calc(100vh - 300px)" } : undefined}
         className={`w-full resize-y rounded-md border bg-white font-lora text-text placeholder:text-text-light/40 focus:outline-none transition-all ${
-          wide ? "px-4 py-3 text-[14px] leading-[1.75]" : "px-2.5 py-1.5 text-[12px] leading-relaxed"
+          wide ? "px-5 py-4 text-[16px] leading-[1.8]" : "px-2.5 py-1.5 text-[12px] leading-relaxed"
         } ${
           drag
             ? "border-brick ring-2 ring-brick/25 bg-brick-pale/40"
             : "border-border focus:border-brick/30 focus:ring-1 focus:ring-brick/10"
         }`}
       />
-      <div className="mt-1 flex items-center justify-between gap-2 text-[10px] text-text-light">
+      <div className="mt-1 flex items-center justify-between gap-2 text-[12px] text-text-light">
         <span className="italic">
           Toto je stejné pole jako ve fázi <span className="font-medium text-text-muted">Formulace</span> — text se ukládá společně.
         </span>

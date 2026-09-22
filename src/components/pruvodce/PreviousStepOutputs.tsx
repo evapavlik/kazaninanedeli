@@ -57,7 +57,7 @@ export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputs
 
   return (
     <div className="mb-4 rounded-lg border border-sage/15 bg-sage-pale/30 p-4">
-      <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-sage">
+      <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-sage">
         {`Z p\u0159edchoz\u00EDch krok\u016F`}
       </p>
 
@@ -96,7 +96,7 @@ export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputs
 
       {hasCentralIdea && (
         <div className={hasFCF ? "mb-3" : ""}>
-          <p className="mb-1 text-[11px] font-medium text-text-muted">
+          <p className="mb-1 text-[12px] font-medium text-text-muted">
             {`Centr\u00E1ln\u00ED my\u0161lenka:`}
           </p>
           <p className="text-sm italic text-text">
@@ -109,7 +109,7 @@ export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputs
         <div>
           {fcfData?.need && (
             <div className="mb-1">
-              <p className="text-[11px] font-medium text-text-muted">
+              <p className="text-[12px] font-medium text-text-muted">
                 {`Lidsk\u00E1 pot\u0159eba (FCF):`}
               </p>
               <p className="text-sm text-text">{fcfData.need}</p>
@@ -117,7 +117,7 @@ export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputs
           )}
           {fcfData?.intersection && (
             <div>
-              <p className="text-[11px] font-medium text-text-muted">
+              <p className="text-[12px] font-medium text-text-muted">
                 {`Pr\u016Fse\u010D\u00EDk s poslucha\u010Di:`}
               </p>
               <p className="text-sm text-text">{fcfData.intersection}</p>
@@ -130,7 +130,7 @@ export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputs
         <div className="space-y-2">
           {artifacts.sermonThesis.trim().length > 0 && (
             <div>
-              <p className="mb-1 text-[11px] font-medium text-text-muted">
+              <p className="mb-1 text-[12px] font-medium text-text-muted">
                 {`J\u00E1dro k\u00E1z\u00E1n\u00ED:`}
               </p>
               <p className="text-sm font-medium italic text-brick">
@@ -140,7 +140,7 @@ export default function PreviousStepOutputs({ subStepSlug }: PreviousStepOutputs
           )}
           {artifacts.outlinePoints.trim().length > 0 && (
             <div>
-              <p className="mb-1 text-[11px] font-medium text-text-muted">
+              <p className="mb-1 text-[12px] font-medium text-text-muted">
                 {`Osnova:`}
               </p>
               <p className="whitespace-pre-line text-sm text-text">
@@ -176,7 +176,7 @@ function AnnotationGroup({
 
   return (
     <div>
-      <p className="mb-1.5 text-[11px] font-medium text-text-muted">{`${label}:`}</p>
+      <p className="mb-1.5 text-[12px] font-medium text-text-muted">{`${label}:`}</p>
 
       {/* Annotations with notes — shown as cards with the user's comment */}
       {withNotes.length > 0 && (
@@ -186,10 +186,10 @@ function AnnotationGroup({
               key={a.id}
               className={`rounded-md border-l-2 px-2.5 py-1.5 ${borderClass}`}
             >
-              <p className={`text-[11px] font-semibold leading-tight ${textClass}`}>
+              <p className={`text-[12px] font-semibold leading-tight ${textClass}`}>
                 {`\u201E${a.selectedText}\u201C`}
               </p>
-              <p className="mt-0.5 text-[11px] leading-relaxed text-text-muted">
+              <p className="mt-0.5 text-[12px] leading-relaxed text-text-muted">
                 {a.note}
               </p>
             </div>
@@ -203,7 +203,7 @@ function AnnotationGroup({
           {withoutNotes.map((a) => (
             <span
               key={a.id}
-              className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${pillClass}`}
+              className={`rounded-full px-2 py-0.5 text-[12px] font-medium ${pillClass}`}
             >
               {a.selectedText}
             </span>

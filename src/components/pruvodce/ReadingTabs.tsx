@@ -43,7 +43,7 @@ export default function ReadingTabs({ readings, active, onSelect, counts, loadin
             }`}
           >
             <span
-              className={`text-[10.5px] font-bold uppercase tracking-[0.12em] ${
+              className={`text-[12px] font-bold uppercase tracking-[0.12em] ${
                 isActive ? "text-brick" : "text-text-light"
               }`}
             >
@@ -53,10 +53,10 @@ export default function ReadingTabs({ readings, active, onSelect, counts, loadin
               {r.lectionary?.reference}
             </span>
             {loading === r.key ? (
-              <span className="absolute right-3 top-3 text-[10px] text-text-light">{`…`}</span>
+              <span className="absolute right-3 top-3 text-[12px] text-text-light">{`…`}</span>
             ) : n > 0 ? (
               <span
-                className="absolute right-3 top-3 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-sage-pale px-1.5 text-[10.5px] font-bold text-sage"
+                className="absolute right-3 top-3 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-sage-pale px-1.5 text-[12px] font-bold text-sage"
                 title={`${n} označení`}
               >
                 {n}

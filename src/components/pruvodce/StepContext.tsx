@@ -30,7 +30,7 @@ export default function StepContext({ theory, tip, quiet }: StepContextProps) {
           aria-expanded={open}
           className="flex w-full items-center gap-2 border-y border-border py-2.5 text-left transition-colors hover:text-sage"
         >
-          <span className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.1em] text-sage">
+          <span className="shrink-0 text-[12px] font-semibold uppercase tracking-[0.1em] text-sage">
             {`Teoretické pozadí`}
           </span>
           <span className="min-w-0 flex-1 truncate text-[12.5px] text-text-muted">
@@ -54,7 +54,7 @@ export default function StepContext({ theory, tip, quiet }: StepContextProps) {
             <p className="text-[12.5px] leading-[1.75] text-text-muted">
               {theory.explanation}
             </p>
-            <p className="mt-2 text-[11px] text-text-light">{theory.source}</p>
+            <p className="mt-2 text-[12px] text-text-light">{theory.source}</p>
             <p className="mt-3 border-t border-border pt-3 text-[12.5px] font-light italic leading-relaxed text-text-muted">
               {tip}
             </p>
@@ -76,12 +76,12 @@ export default function StepContext({ theory, tip, quiet }: StepContextProps) {
           <span className="text-lg">{"\uD83D\uDCD6"}</span>
           <div>
             {!open && (
-              <p className="text-[10px] font-medium text-sage/70">
+              <p className="text-[12px] font-medium text-sage/70">
                 {`Teoretick\u00E9 pozad\u00ED`}
               </p>
             )}
             {open && (
-              <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.15em] text-sage">
                 {`Teoretick\u00E9 pozad\u00ED`}
               </p>
             )}
@@ -112,7 +112,7 @@ export default function StepContext({ theory, tip, quiet }: StepContextProps) {
 
           {/* Tip */}
           <div className="mt-4 border-t border-sage/20 pt-3">
-            <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+            <p className="mb-1 text-[12px] font-semibold uppercase tracking-[0.15em] text-sage">
               Tip
             </p>
             <p className="text-sm font-light leading-relaxed italic text-text-muted">

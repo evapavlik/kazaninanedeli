@@ -143,7 +143,7 @@ export default function Home() {
       <section className="px-6 py-16 md:px-12 md:py-20">
         <div className="mx-auto max-w-[760px]">
           <FadeUp>
-            <div className="mb-4 inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-brick before:h-px before:w-6 before:bg-brick before:content-['']">
+            <div className="mb-4 inline-flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-brick before:h-px before:w-6 before:bg-brick before:content-['']">
               I. Tři hlasy, jeden tón
             </div>
             <h2 className="mb-6 font-cormorant text-[clamp(28px,3.8vw,40px)] font-medium leading-[1.15] text-text">
@@ -174,7 +174,7 @@ export default function Home() {
                       <div className="font-cormorant text-2xl font-medium leading-tight text-brick">
                         {voice.name}
                       </div>
-                      <div className="mt-1 text-[11px] font-medium uppercase tracking-[0.12em] text-text-light">
+                      <div className="mt-1 text-[12px] font-medium uppercase tracking-[0.12em] text-text-light">
                         {voice.role}
                       </div>
                     </div>
@@ -212,7 +212,7 @@ export default function Home() {
       <section className="border-t border-brick/15 bg-cream/40 px-6 py-16 md:px-12 md:py-20">
         <div className="mx-auto max-w-[760px]">
           <FadeUp>
-            <div className="mb-4 inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-brick before:h-px before:w-6 before:bg-brick before:content-['']">
+            <div className="mb-4 inline-flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-brick before:h-px before:w-6 before:bg-brick before:content-['']">
               II. Pět účelů kázání
             </div>
             <h2 className="mb-6 font-cormorant text-[clamp(28px,3.8vw,40px)] font-medium leading-[1.15] text-text">
@@ -235,7 +235,7 @@ export default function Home() {
                   <div className="mb-2 font-cormorant text-[22px] font-medium text-brick">
                     {ucel.title}
                     {ucel.subtitle && (
-                      <div className="mt-1 text-[11px] font-normal tracking-wide text-text-light">
+                      <div className="mt-1 text-[12px] font-normal tracking-wide text-text-light">
                         {ucel.subtitle}
                       </div>
                     )}
@@ -264,7 +264,7 @@ export default function Home() {
       <section className="border-t border-brick/15 px-6 py-16 md:px-12 md:py-20">
         <div className="mx-auto max-w-[760px]">
           <FadeUp>
-            <div className="mb-4 inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-brick before:h-px before:w-6 before:bg-brick before:content-['']">
+            <div className="mb-4 inline-flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-brick before:h-px before:w-6 before:bg-brick before:content-['']">
               III. Kam v bohoslužbě patří
             </div>
             <h2 className="mb-8 font-cormorant text-[clamp(28px,3.8vw,40px)] font-medium leading-[1.15] text-text">
@@ -332,7 +332,7 @@ export default function Home() {
         <div className="mx-auto max-w-3xl">
           <FadeUp>
             <div className="mb-8 text-center">
-              <div className="mb-3 inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-brick">
+              <div className="mb-3 inline-flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-brick">
                 Jak na to prakticky
               </div>
               <h2 className="font-cormorant text-[clamp(28px,3.8vw,40px)] font-medium leading-[1.15] text-text">
@@ -353,7 +353,7 @@ export default function Home() {
                   </span>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-cormorant text-[11px] font-semibold tracking-[0.1em] text-brick">
+                      <span className="font-cormorant text-[12px] font-semibold tracking-[0.1em] text-brick">
                         {`0${phase.number}`}
                       </span>
                       <h3 className="font-lora text-base font-semibold text-text group-hover:text-brick">
@@ -362,7 +362,7 @@ export default function Home() {
                     </div>
                     <p className="text-sm text-text-muted">{phase.subtitle}</p>
                   </div>
-                  <span className="flex items-center gap-1 text-[11px] text-text-light">
+                  <span className="flex items-center gap-1 text-[12px] text-text-light">
                     {`~${phase.estimatedMinutes}\u00A0min`}
                   </span>
                   <svg

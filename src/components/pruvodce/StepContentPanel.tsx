@@ -420,7 +420,7 @@ function MobileGuide({
             {phase.icon}
           </span>
           <div>
-            <p className="font-cormorant text-[10px] font-semibold uppercase tracking-[0.12em] text-brick">
+            <p className="font-cormorant text-[12px] font-semibold uppercase tracking-[0.12em] text-brick">
               {`F\u00E1ze ${phase.number} ze 4`}
             </p>
             <h1 className="font-lora text-base font-bold text-text">

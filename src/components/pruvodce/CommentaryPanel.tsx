@@ -148,7 +148,7 @@ export default function CommentaryPanel({ reference }: { reference: string }) {
         </div>
       )}
       {commentary && storedRemotely === false && (
-        <p className="text-[11.5px] italic text-text-light">
+        <p className="text-[12.5px] italic text-text-light">
           {`Komentář se uložil jen v tomto prohlížeči — do společné databáze se zapsat nepodařilo.`}
         </p>
       )}
@@ -182,7 +182,7 @@ export default function CommentaryPanel({ reference }: { reference: string }) {
 
           {/* Key words */}
           <div>
-            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+            <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.15em] text-sage">
               {`Kl\u00ED\u010Dov\u00E1 slova`}
             </p>
             <div className="space-y-2.5">
@@ -197,7 +197,7 @@ export default function CommentaryPanel({ reference }: { reference: string }) {
 
           {/* Structure */}
           <div>
-            <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+            <p className="mb-1.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-sage">
               {`Struktura textu`}
             </p>
             <p className="text-[15px] leading-[1.75] text-text">{commentary.structure}</p>
@@ -205,13 +205,13 @@ export default function CommentaryPanel({ reference }: { reference: string }) {
 
           {/* Verse notes */}
           <div>
-            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+            <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.15em] text-sage">
               {`Pozn\u00E1mky k ver\u0161\u016Fm`}
             </p>
             <div className="space-y-2.5">
               {commentary.verseNotes.map((vn) => (
                 <div key={vn.verse} className="flex gap-2.5">
-                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brick-pale text-[11px] font-bold text-brick">
+                  <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brick-pale text-[12px] font-bold text-brick">
                     {vn.verse}
                   </span>
                   <p className="text-[14px] leading-[1.7] text-text">{vn.note}</p>
@@ -222,7 +222,7 @@ export default function CommentaryPanel({ reference }: { reference: string }) {
 
           {/* Theological themes */}
           <div>
-            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+            <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.15em] text-sage">
               {`Teologick\u00E1 t\u00E9mata`}
             </p>
             <ul className="space-y-1.5">
@@ -237,7 +237,7 @@ export default function CommentaryPanel({ reference }: { reference: string }) {
 
           {/* Application hints */}
           <div className="rounded-lg border border-brick/10 bg-brick-pale/30 px-4 py-3.5">
-            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-brick/70">
+            <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.15em] text-brick/70">
               {`N\u00E1m\u011Bty pro k\u00E1z\u00E1n\u00ED`}
             </p>
             <ul className="space-y-2">
@@ -254,7 +254,7 @@ export default function CommentaryPanel({ reference }: { reference: string }) {
       {/* Cross references with inline Bible text */}
       {commentary?.cross_references && commentary.cross_references.length > 0 && (
         <div>
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+          <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.15em] text-sage">
             {`K\u0159\u00ED\u017Eov\u00E9 reference`}
           </p>
           <div className="space-y-3">
@@ -262,7 +262,7 @@ export default function CommentaryPanel({ reference }: { reference: string }) {
               <div key={i} className="rounded-lg border border-sage/15 bg-sage-pale/20 px-3.5 py-3">
                 <div className="flex items-center gap-2 mb-1.5">
                   <span className="text-[12px] font-bold text-sage">{ref.reference}</span>
-                  <span className="text-[11px] text-text-muted">({ref.translation})</span>
+                  <span className="text-[12px] text-text-muted">({ref.translation})</span>
                 </div>
                 <p className="text-[14px] leading-[1.7] text-text italic border-l-2 border-sage/30 pl-2.5">
                   {ref.text}

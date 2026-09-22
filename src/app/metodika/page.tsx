@@ -10,7 +10,7 @@ export default function MetodikaPage() {
   return (
     <div className="px-6 py-[60px] md:px-12">
       <div className="mx-auto max-w-3xl">
-        <div className="mb-5 inline-flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-brick before:h-0.5 before:w-5 before:rounded-sm before:bg-brick before:content-['']">
+        <div className="mb-5 inline-flex items-center gap-2.5 text-[12px] font-semibold uppercase tracking-[0.2em] text-brick before:h-0.5 before:w-5 before:rounded-sm before:bg-brick before:content-['']">
           {`Metodika`}
         </div>
         <h1 className="mb-3 font-lora text-[clamp(28px,3.5vw,40px)] font-bold text-text">

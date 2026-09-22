@@ -55,13 +55,13 @@ export default function BuildingBlocks({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <span className="text-[12px]">{"\uD83D\uDCCC"}</span>
-            <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-brick/60">
+            <span className="text-[12px] font-semibold uppercase tracking-[0.12em] text-brick/60">
               {`Z va\u0161\u00ED p\u0159\u00EDpravy`}
             </span>
           </div>
           {highlightItem && (
             <p className={`mt-1 text-[13px] leading-relaxed ${highlightItem.highlight ? "font-medium text-text" : "text-text-muted"}`}>
-              <span className="text-[11px] text-text-light">
+              <span className="text-[12px] text-text-light">
                 {highlightItem.label}:{" "}
               </span>
               {highlightItem.value}
@@ -71,7 +71,7 @@ export default function BuildingBlocks({
         {hasMore && (
           <button
             onClick={() => setExpanded(!expanded)}
-            className="shrink-0 rounded-md px-2 py-1 text-[10px] font-medium text-brick/60 transition-colors hover:bg-brick/5 hover:text-brick"
+            className="shrink-0 rounded-md px-2 py-1 text-[12px] font-medium text-brick/60 transition-colors hover:bg-brick/5 hover:text-brick"
           >
             {expanded
               ? `Skr\u00FDt`
@@ -85,7 +85,7 @@ export default function BuildingBlocks({
         <div className="mt-2 space-y-1.5 border-t border-brick/10 pt-2">
           {otherItems.map((item, i) => (
             <p key={i} className="text-[12px] leading-relaxed text-text-muted">
-              <span className="text-[10px] text-text-light">
+              <span className="text-[12px] text-text-light">
                 {item.label}:{" "}
               </span>
               {item.value}
@@ -93,13 +93,13 @@ export default function BuildingBlocks({
           ))}
           {keywords && keywords.length > 0 && (
             <div className="flex flex-wrap gap-1.5 pt-1">
-              <span className="text-[10px] text-text-light">
+              <span className="text-[12px] text-text-light">
                 {`Kl\u00ED\u010Dov\u00E1 slova: `}
               </span>
               {keywords.map((kw, i) => (
                 <span
                   key={i}
-                  className="rounded-full bg-brick/10 px-2 py-0.5 text-[11px] font-medium text-brick"
+                  className="rounded-full bg-brick/10 px-2 py-0.5 text-[12px] font-medium text-brick"
                 >
                   {kw}
                 </span>

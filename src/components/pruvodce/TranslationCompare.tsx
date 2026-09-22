@@ -375,7 +375,7 @@ export default function TranslationCompare({
                 ))}
               </div>
 
-              <p className="mb-4 text-[11.5px] italic text-text-light">
+              <p className="mb-4 text-[12.5px] italic text-text-light">
                 {`Označ myší kus textu, nebo přidej poznámku k celému verši — obojí se uloží do zápisníku.`}
               </p>
 
@@ -520,7 +520,7 @@ function VerseNotes({
             key={n.id}
             className="flex items-start gap-2 rounded-[9px] border border-sage/25 bg-sage-pale/50 px-2.5 py-2"
           >
-            <span className="shrink-0 pt-[2px] text-[9.5px] font-bold uppercase tracking-[0.1em] text-sage">
+            <span className="shrink-0 pt-[2px] text-[12px] font-bold uppercase tracking-[0.1em] text-sage">
               {n.category ? CATEGORY_BY_ID[n.category]?.name : "Verš"}
             </span>
             <button
@@ -604,7 +604,7 @@ function AddNoteButton({ onClick, compact }: { onClick: () => void; compact?: bo
     <button
       onClick={onClick}
       className={`rounded-full border border-border bg-white font-semibold text-text-light opacity-0 transition-all hover:border-sage hover:text-sage focus-visible:opacity-100 group-hover:opacity-100 ${
-        compact ? "px-1.5 py-0.5 text-[11px]" : "px-2.5 py-[3px] text-[11px]"
+        compact ? "px-1.5 py-0.5 text-[12px]" : "px-2.5 py-[3px] text-[12px]"
       }`}
     >
       {compact ? "+" : `+ poznámka`}
@@ -654,7 +654,7 @@ function VerseByVerse({
 
           {sources.map((s) => (
             <div key={s.key} className="grid grid-cols-[84px_minmax(0,1fr)] gap-3 py-0.5">
-              <p className="pt-[5px] text-[10.5px] font-bold uppercase leading-tight tracking-[0.12em] text-sage">
+              <p className="pt-[5px] text-[12px] font-bold uppercase leading-tight tracking-[0.12em] text-sage">
                 {s.label}
               </p>
               <p
@@ -727,7 +727,7 @@ function CompareTable({
             {sources.map((s) => (
               <th
                 key={s.key}
-                className="min-w-[170px] border-b border-border px-3 pb-2.5 text-left text-[10.5px] font-bold uppercase tracking-[0.12em] text-sage"
+                className="min-w-[170px] border-b border-border px-3 pb-2.5 text-left text-[12px] font-bold uppercase tracking-[0.12em] text-sage"
               >
                 {s.label}
               </th>
