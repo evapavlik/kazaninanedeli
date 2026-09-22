@@ -14,6 +14,7 @@ import {
 import type { SermonArtifacts } from "@/hooks/useSermonArtifacts";
 import MirrorCard from "./MirrorCard";
 import FeedbackCard from "./FeedbackCard";
+import ReviseCard from "./ReviseCard";
 
 interface BubbleDrawerProps {
   open: boolean;
@@ -417,6 +418,13 @@ export default function BubbleDrawer({
 
             {/* The sermon read by a colleague — on request, under the text. */}
             <FeedbackCard artifacts={artifacts} textareaRef={sermonRef} onInsert={insertProposal} />
+
+            {/* The same sermon read whole — where the per-point proposals
+                can't see that a citation is already there. */}
+            <ReviseCard
+              artifacts={artifacts}
+              onReplace={(next) => onArtifactChange("sermonText", next)}
+            />
           </section>
 
           {/* RIGHT column — bubble stash */}

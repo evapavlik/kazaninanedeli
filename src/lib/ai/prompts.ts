@@ -12,6 +12,8 @@
  *  - propose:    one or two paragraphs that develop a feedback point, in the
  *                preacher's own material — offered only after her preparation
  *                exists, inserted only on her click, meant to be rewritten
+ *  - revise:     the whole sermon handed back with additions marked, so the
+ *                seams are visible and nothing is rewritten behind her back
  *
  * The guiding line for all three: the text and the preacher's own reading
  * lead; the companion is available, not in charge.
@@ -65,6 +67,21 @@ export const PROPOSE_SYSTEM = `${VOICE}
 
 Úkol: farář má rozepsané kázání a u jednoho místa dostal zpětnou vazbu, že je to nedotažené. Napiš NÁVRH jednoho až dvou odstavců, které to místo rozvedou — tentokrát tedy jako mluvené kázání, ne komentář. Držíš se toho, co farář sám připravil (jádro, osnova, posluchači, ilustrace) a toho, jak už mluví v okolním textu: stejný tón, stejná délka vět, stejné oslovení. Návrh musí navazovat na úryvek, ZA který se vloží, a nesmí opakovat, co v kázání už stojí. Biblický děj nevymýšlej ani nedomýšlej; když cituješ, cituj ČEP přesně. Nejvýš dva odstavce, dohromady 60–140 slov — ne víc, zbytek si dopíše farář. Jen samotný text odstavců — bez nadpisu, bez úvodu, bez komentáře, bez uvozovek kolem. Farář si ho přepíše svými slovy; je to tvar, ne hotová věc.${styleBlock()}`;
 
+export const REVISE_SYSTEM = `${VOICE}
+
+Úkol: projít celé rozepsané kázání a vrátit ho CELÉ znovu, se svými doplňky. Návrhy po částech nevidí na celek — proto se stává, že se citace opakuje nebo že závěr zůstane viset; ty vidíš všechno najednou, tak to spravuj v souvislostech.
+
+Pravidla, která nesmíš porušit:
+1. Farářův text opisuješ DOSLOVA, znak po znaku, včetně jeho pořadí odstavců. Nepřeformulovávej, nezkracuj, nevylepšuj — ani „drobně". Jediné, co smíš tiše opravit, jsou zjevné překlepy a chybějící mezery či diakritika.
+2. Co přidáváš, obal do [[ ]]. Nic jiného do [[ ]] nedávej.
+3. Co navrhuješ vypustit (třeba druhou kopii téže citace), obal do {{ }} — včetně původního znění, ať farář vidí, o co přijde.
+4. Nevkládej nový odstavec tam, kde stačí věta uvnitř toho jeho. Nejčastější a nejlepší zásah je jedna dvě věty vsunuté do jeho odstavce, které dopoví, co v něm chybí.
+5. Nepoužívej rétorické tahy, které farář v kázání sám nikde nepoužívá. Mluvíš jeho slovy, jeho délkou vět, jeho obrazy.
+6. Nedopsaná nebo rozbitá místa (rozsypaná gramatika na konci) dopiš tím směrem, kam zjevně mířila — a celé to obal do [[ ]], ať je vidět, že je to tvoje.
+7. Celkem zasahuj střídmě: tak 3 až 6 míst v celém kázání. Kázání je farářovo.
+
+Na konci nepiš žádné shrnutí ani komentář — jen ten text.${styleBlock()}`;
+
 /** Hard caps so a stray call can't run away. */
 export const LIMITS = {
   termContextChars: 6000,
@@ -80,4 +97,6 @@ export const LIMITS = {
   feedbackMaxTokens: 2400,
   // Thinking counts here too; 700 cut a proposal mid-sentence.
   proposeMaxTokens: 2000,
+  // Revise returns the whole sermon again; thinking counts here too.
+  reviseMaxTokens: 12000,
 } as const;
