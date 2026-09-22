@@ -960,7 +960,7 @@ function CompositionField({
         placeholder="Piš nebo sem přetáhni bublinku…"
         style={wide ? { minHeight: "calc(100vh - 300px)" } : undefined}
         className={`w-full resize-y rounded-md border bg-white font-lora text-text placeholder:text-text-light/40 focus:outline-none transition-all ${
-          wide ? "px-5 py-4 text-[16px] leading-[1.8]" : "px-2.5 py-1.5 text-[12px] leading-relaxed"
+          wide ? "px-5 py-4 text-[16px] leading-[1.8]" : "px-3 py-2 text-[14px] leading-[1.7]"
         } ${
           drag
             ? "border-brick ring-2 ring-brick/25 bg-brick-pale/40"
