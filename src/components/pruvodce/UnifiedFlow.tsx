@@ -255,7 +255,7 @@ export default function UnifiedFlow({
                         onChange={(e) => handleReflection(i, e.target.value)}
                         placeholder={`Tvoje odpov\u011B\u010F\u2026`}
                         rows={2}
-                        className="w-full rounded-md border border-sage/15 bg-white px-2.5 py-1.5 text-[12px] leading-relaxed text-text placeholder:text-text-light/40 focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/20 resize-y"
+                        className="w-full rounded-md border border-sage/15 bg-white px-3 py-2 text-[14px] leading-[1.7] text-text placeholder:text-text-light/40 focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/20 resize-y"
                       />
                       {!isDone && (
                         <div className="mt-1 flex justify-end">
@@ -488,7 +488,7 @@ export function ArtifactInput({
                     ? "rounded-md border border-brick bg-brick-pale/40 px-2 ring-2 ring-brick/20"
                     : "rounded-none border-0 border-b border-border-strong focus:rounded-md focus:border focus:border-sage focus:bg-white focus:px-2"
                 }`
-              : `w-full rounded-md border bg-white px-2.5 py-1.5 text-[12px] leading-relaxed text-text placeholder:text-text-light/40 focus:outline-none resize-y transition-all ${
+              : `w-full rounded-md border bg-white px-3 py-2 text-[14px] leading-[1.7] text-text placeholder:text-text-light/40 focus:outline-none resize-y transition-all ${
                   dragActive
                     ? "border-brick ring-2 ring-brick/20 bg-brick-pale/40"
                     : "border-brick/15 focus:border-brick/30 focus:ring-1 focus:ring-brick/10"
