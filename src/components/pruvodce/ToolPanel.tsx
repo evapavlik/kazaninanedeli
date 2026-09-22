@@ -38,7 +38,7 @@ export default function ToolPanel({ toolKey, reference, onClose }: ToolPanelProp
   return (
     <section className="overflow-hidden rounded-2xl border border-sage/30 bg-white shadow-[0_6px_24px_rgba(74,124,111,0.10)]">
       <div className="flex items-center justify-between gap-3 border-b border-sage/20 bg-sage-pale px-4 py-3">
-        <h3 className="text-[11px] font-bold uppercase tracking-[0.18em] text-sage">
+        <h3 className="text-[12px] font-bold uppercase tracking-[0.18em] text-sage">
           {TOOL_LABELS[toolKey] || toolKey}
         </h3>
         <button

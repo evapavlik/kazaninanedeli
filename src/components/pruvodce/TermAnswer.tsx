@@ -117,7 +117,7 @@ export default function TermAnswer({ term, reference, text, readingLabel, onClos
       <div className="mb-1.5 flex items-center justify-between gap-2">
         <p className="min-w-0 truncate font-lora text-[14px] font-bold">
           {term}
-          <span className="ml-2 font-jakarta text-[10px] font-semibold uppercase tracking-[0.12em] text-sage">
+          <span className="ml-2 font-jakarta text-[12px] font-semibold uppercase tracking-[0.12em] text-sage">
             {`Co to znamená?`}
           </span>
         </p>

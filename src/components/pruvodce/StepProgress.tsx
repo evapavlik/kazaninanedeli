@@ -37,7 +37,7 @@ export default function StepProgress({ currentStep }: StepProgressProps) {
                 {phase.number}
               </Link>
               <span
-                className={`max-w-[44px] text-center text-[9px] leading-tight ${
+                className={`max-w-[56px] text-center text-[12px] leading-tight ${
                   isActive ? "font-semibold text-brick" : "text-text-light"
                 }`}
               >

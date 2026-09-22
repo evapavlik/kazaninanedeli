@@ -51,12 +51,12 @@ export default function SundayReadingCard() {
           className="inline-block h-2.5 w-2.5 rounded-full"
           style={{ backgroundColor: season.colorHex }}
         />
-        <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-muted">
+        <span className="text-[12px] font-semibold uppercase tracking-[0.15em] text-text-muted">
           {season.name}
         </span>
       </div>
 
-      <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.15em] text-brick">
+      <p className="mb-1 text-[12px] font-semibold uppercase tracking-[0.15em] text-brick">
         {`Tuto ned\u011Bli`}
       </p>
       <h3 className="mb-2 font-lora text-lg font-bold text-text">

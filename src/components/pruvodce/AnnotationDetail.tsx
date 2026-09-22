@@ -81,7 +81,7 @@ export default function AnnotationDetail({
         {/* Category badge + text */}
         <div className="mb-2 flex items-center gap-2">
           <span
-            className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${cat.bg} ${cat.color}`}
+            className={`shrink-0 rounded-full px-2 py-0.5 text-[12px] font-medium ${cat.bg} ${cat.color}`}
           >
             {cat.name}
           </span>
@@ -105,7 +105,7 @@ export default function AnnotationDetail({
             onRemove(annotationId);
             onClose();
           }}
-          className="text-[11px] font-medium text-text-light hover:text-brick"
+          className="text-[12px] font-medium text-text-light hover:text-brick"
         >
           {`Smazat anotaci`}
         </button>

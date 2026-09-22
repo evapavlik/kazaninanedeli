@@ -62,7 +62,7 @@ export default function SelectionPopup({
       <div className="flex flex-col gap-1.5 rounded-xl border border-border bg-white px-2 py-1.5 shadow-lg">
         <div className="flex items-center gap-1">
           {onAsk && (
-            <span className="w-[52px] shrink-0 text-[9.5px] font-bold uppercase tracking-[0.12em] text-text-light">
+            <span className="w-[52px] shrink-0 text-[12px] font-bold uppercase tracking-[0.12em] text-text-light">
               {`Označit`}
             </span>
           )}
@@ -70,7 +70,7 @@ export default function SelectionPopup({
             <button
               key={cat.id}
               onClick={() => onSelect(cat.id)}
-              className={`whitespace-nowrap rounded-lg px-2.5 py-1.5 text-[11px] font-medium transition-all hover:scale-105 ${cat.bg} ${cat.color}`}
+              className={`whitespace-nowrap rounded-lg px-2.5 py-1.5 text-[12px] font-medium transition-all hover:scale-105 ${cat.bg} ${cat.color}`}
               title={cat.name}
             >
               {cat.name}
@@ -79,12 +79,12 @@ export default function SelectionPopup({
         </div>
         {onAsk && (
           <div className="flex items-center gap-1 border-t border-border pt-1.5">
-            <span className="w-[52px] shrink-0 text-[9.5px] font-bold uppercase tracking-[0.12em] text-text-light">
+            <span className="w-[52px] shrink-0 text-[12px] font-bold uppercase tracking-[0.12em] text-text-light">
               {`Zeptat se`}
             </span>
             <button
               onClick={onAsk}
-              className="flex items-center gap-1.5 whitespace-nowrap rounded-lg bg-sage px-2.5 py-1.5 text-[11px] font-semibold text-white transition-colors hover:bg-sage-light"
+              className="flex items-center gap-1.5 whitespace-nowrap rounded-lg bg-sage px-2.5 py-1.5 text-[12px] font-semibold text-white transition-colors hover:bg-sage-light"
             >
               <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8">
                 <circle cx="8" cy="8" r="6" />
@@ -92,7 +92,7 @@ export default function SelectionPopup({
               </svg>
               {`Co to znamená?`}
             </button>
-            <span className="ml-1 text-[10.5px] text-text-light">{`odpoví, neuloží`}</span>
+            <span className="ml-1 text-[12px] text-text-light">{`odpoví, neuloží`}</span>
           </div>
         )}
       </div>

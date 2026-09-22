@@ -59,17 +59,17 @@ export default function OriginalLanguagesPanel({
     <div className="rounded-lg border border-sage/20 bg-sage-pale/30 p-4">
       {/* Header */}
       <div className="mb-3 flex items-center gap-2">
-        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-brick/10 text-[11px] font-bold text-brick">
+        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-brick/10 text-[12px] font-bold text-brick">
           {`1`}
         </span>
         <span className="flex h-7 w-7 items-center justify-center rounded-md bg-sage/10 text-[14px] font-semibold text-sage">
           {langIcon}
         </span>
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sage/70">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-sage/70">
             {`Kl\u00ED\u010Dov\u00E1 slova v origin\u00E1le`}
           </p>
-          <p className="text-[11px] text-text-muted">
+          <p className="text-[12px] text-text-muted">
             {`Text je v `}{isOT ? `hebrej\u0161tin\u011B` : `\u0159e\u010Dtin\u011B`}{` \u2014 prozkoumej v\u00FDznam slov`}
           </p>
         </div>
@@ -93,7 +93,7 @@ export default function OriginalLanguagesPanel({
             <p className="text-[12px] font-semibold text-text">
               {`Interline\u00E1rn\u00ED Bible`}
             </p>
-            <p className="text-[10px] text-text-muted">
+            <p className="text-[12px] text-text-muted">
               {`Slovo po slov\u011B: \u010De\u0161tina \u2194 ${langLabel}`}
             </p>
           </div>
@@ -106,7 +106,7 @@ export default function OriginalLanguagesPanel({
       {/* Keywords from annotations */}
       {keywords.length > 0 && (
         <div className="mb-3">
-          <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-text-light">
+          <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.15em] text-text-light">
             {`Tvoje kl\u00ED\u010Dov\u00E1 slova z kroku 2`}
           </p>
           <div className="flex flex-wrap gap-1.5">
@@ -127,7 +127,7 @@ export default function OriginalLanguagesPanel({
               </a>
             ))}
           </div>
-          <p className="mt-1.5 text-[9px] text-text-light/60">
+          <p className="mt-1.5 text-[12px] text-text-light/60">
             {`Klikni pro vyhled\u00E1n\u00ED v origin\u00E1le na BibleHub`}
           </p>
         </div>
@@ -135,7 +135,7 @@ export default function OriginalLanguagesPanel({
 
       {keywords.length === 0 && (
         <div className="mb-3 rounded-md border border-dashed border-sage/20 bg-white/40 px-3 py-2.5">
-          <p className="text-[11px] leading-relaxed text-text-muted">
+          <p className="text-[12px] leading-relaxed text-text-muted">
             {`V kroku 2 (\u010Dten\u00ED) ozna\u010Dte kl\u00ED\u010Dov\u00E1 slova \u2014 objev\u00ED se zde s odkazy na origin\u00E1ln\u00ED jazyk.`}
           </p>
         </div>

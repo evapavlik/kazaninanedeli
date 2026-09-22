@@ -154,13 +154,13 @@ export default function OutlineBuilder({ slug }: { slug: string }) {
       {/* Points */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-brick">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.15em] text-brick">
             {`Hlavn\u00ED body`}
           </p>
           {data.points.length < 4 && (
             <button
               onClick={addPoint}
-              className="text-[11px] font-medium text-brick hover:text-brick-light"
+              className="text-[12px] font-medium text-brick hover:text-brick-light"
             >
               {`+ P\u0159idat bod`}
             </button>
@@ -188,7 +188,7 @@ export default function OutlineBuilder({ slug }: { slug: string }) {
 
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-[11px] font-medium text-text-muted">
+                <label className="mb-1 block text-[12px] font-medium text-text-muted">
                   {`Nadpis`}
                 </label>
                 <input
@@ -239,10 +239,10 @@ export default function OutlineBuilder({ slug }: { slug: string }) {
             : `Za\u010Dn\u011Bte ps\u00E1t pro odhad d\u00E9lky`}
         </span>
         {minutes > 0 && minutes <= 15 && (
-          <span className="ml-auto text-[10px] text-sage">{`\u2713 Ide\u00E1ln\u00ED`}</span>
+          <span className="ml-auto text-[12px] text-sage">{`\u2713 Ide\u00E1ln\u00ED`}</span>
         )}
         {minutes > 15 && (
-          <span className="ml-auto text-[10px] text-brick">{`Del\u0161\u00ED ne\u017E 15 min`}</span>
+          <span className="ml-auto text-[12px] text-brick">{`Del\u0161\u00ED ne\u017E 15 min`}</span>
         )}
       </div>
     </div>

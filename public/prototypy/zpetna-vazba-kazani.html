@@ -91,6 +91,16 @@
   .bub.fb .tag{color:var(--sage)}
   .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--text);color:#fff;border-radius:999px;padding:8px 16px;font-size:12px;opacity:0;transition:opacity .25s;pointer-events:none}
   .toast.show{opacity:1}
+  /* kontrast + : tmavší šedé, spodní hranice 12px, větší text v roztažení */
+  body.hc{--muted:#57504a;--light:#5f5850;--sage:#3f6e61}
+  body.hc .field-head .h,body.hc .under,body.hc .under .i,body.hc .fb-bar .why,body.hc .fb-head .ctx,body.hc .fb-foot,body.hc .pt .where,body.hc .prop .hint2,body.hc .lead,body.hc .stale{font-size:12px}
+  body.hc .bub .tag,body.hc .pt .where::before,body.hc .prop .lbl2,body.hc h3.lbl,body.hc .drawer-head .t small{font-size:11px}
+  body.hc .field-head .l,body.hc .bub{font-size:12.5px}
+  body.hc .pt,body.hc .prop p{font-size:13.5px}
+  body.hc textarea{font-size:14px;line-height:1.75}
+  body.hc .drawer.wide textarea{font-size:16px;line-height:1.8}
+  .hc-toggle{position:fixed;right:18px;bottom:18px;z-index:80;border:1px solid var(--border-strong);background:#fff;border-radius:999px;padding:9px 14px;font:600 12px/1 "Plus Jakarta Sans",sans-serif;color:var(--text);cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+  .hc-toggle b{color:var(--brick)}
   /* návrh rozvedení u bodu */
   .prop-btn{display:inline-flex;align-items:center;gap:5px;margin:6px 0 0 10px;border:1px solid var(--border);background:#fff;border-radius:7px;padding:4px 9px;font:600 10.5px/1 "Plus Jakarta Sans",sans-serif;color:var(--muted);cursor:pointer}
   .prop-btn:hover{border-color:var(--brick);color:var(--brick)}
@@ -120,7 +130,7 @@
   <div class="note">
     <b>Prototyp: zpětná vazba na celý text kázání.</b> Otevřený zápisník s rozepsaným kázáním na 27. 9. (Ez 18 · Fp 2 · Mt 21). Zkus:
     <b>Chci zpětnou vazbu</b> pod textem → odpověď přijde pod něj, ve dvou částech. Klikni na <i>kde:</i> u bodu — najde místo v textu.
-    Pak text uprav a všimni si, že se nabídne <b>Znovu</b>. <b>Uložit do zápisníku</b> dá zpětnou vazbu do zásobníku vpravo jako bublinku. Nové: u bodů <i>Na čem zapracovat</i> je <b>✎ Navrhni, jak to rozvést</b> → odstavec z tvé přípravy; <b>Vložit do textu</b> ho dá za příslušný odstavec (a označí, ať ho hned přepíšeš). Také <b>Roztáhnout</b> u pole — zásobník se sbalí do úzké lišty a text dostane celou plochu; klik na lištu nebo znovu na tlačítko to vrátí.
+    Pak text uprav a všimni si, že se nabídne <b>Znovu</b>. <b>Uložit do zápisníku</b> dá zpětnou vazbu do zásobníku vpravo jako bublinku. Nové: u bodů <i>Na čem zapracovat</i> je <b>✎ Navrhni, jak to rozvést</b> → odstavec z tvé přípravy; <b>Vložit do textu</b> ho dá za příslušný odstavec (a označí, ať ho hned přepíšeš). Vpravo dole přepínač <b>Kontrast před / po</b> (tmavší šedé, nic pod 12 px, v roztažení 16 px). Také <b>Roztáhnout</b> u pole — zásobník se sbalí do úzké lišty a text dostane celou plochu; klik na lištu nebo znovu na tlačítko to vrátí.
   </div>
 
   <div class="drawer">
@@ -233,6 +243,7 @@ Amen.</textarea>
     </div>
   </div>
 </div>
+<button class="hc-toggle" id="hcBtn">Kontrast: <b>před</b> · klikni pro <i>po</i></button>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -263,6 +274,8 @@ Amen.</textarea>
     ta.focus();ta.setSelectionRange(end+2,end+2+para.length);const before=v.slice(0,end).split('\n').length;ta.scrollTop=Math.max(0,(before-2)*21);
     p.classList.remove('show');say('Vloženo — je označené, přepiš si ho');
   });
+  const hcBtn=document.getElementById('hcBtn');
+  hcBtn.onclick=()=>{const on=document.body.classList.toggle('hc');hcBtn.innerHTML=on?'Kontrast: <b>po</b> · klikni pro <i>před</i>':'Kontrast: <b>před</b> · klikni pro <i>po</i>';};
   btn.onclick=run;
   document.getElementById('fbAgain').onclick=run;
   document.getElementById('fbClose').onclick=()=>{fb.classList.remove('show');};

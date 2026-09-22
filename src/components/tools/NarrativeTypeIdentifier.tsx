@@ -57,7 +57,7 @@ export default function NarrativeTypeIdentifier({ slug }: { slug: string }) {
           >
             <span className="text-lg">{type.icon}</span>
             <span
-              className={`text-[11px] font-medium leading-tight ${
+              className={`text-[12px] font-medium leading-tight ${
                 selectedId === type.id ? "text-brick" : "text-text-muted"
               }`}
             >
@@ -81,7 +81,7 @@ export default function NarrativeTypeIdentifier({ slug }: { slug: string }) {
           </p>
 
           <div className="mb-4">
-            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-brick">
+            <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.15em] text-brick">
               {`Na co si d\u00E1t pozor`}
             </p>
             <ul className="space-y-1">
@@ -95,7 +95,7 @@ export default function NarrativeTypeIdentifier({ slug }: { slug: string }) {
           </div>
 
           <div>
-            <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-brick">
+            <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.15em] text-brick">
               {`Ot\u00E1zky pro tento \u017E\u00E1nr`}
             </p>
             <ul className="space-y-1">

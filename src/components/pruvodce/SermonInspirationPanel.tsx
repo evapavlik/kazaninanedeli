@@ -51,7 +51,7 @@ export default function SermonInspirationPanel({
     <div className="space-y-5">
       {/* Pedagogický úvod podle Pokorného */}
       <div className="rounded-lg border border-sage/30 bg-sage-pale/30 px-4 py-3.5">
-        <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage">
+        <p className="mb-1.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-sage">
           {`D\u011bjiny p\u016fsoben\u00ed textu`}
         </p>
         <p className="text-[14px] leading-[1.7] text-text">
@@ -69,7 +69,7 @@ export default function SermonInspirationPanel({
       {/* Farský postily */}
       {postily.length > 0 && (
         <div>
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-brick/70">
+          <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.15em] text-brick/70">
             {`Postily Karla Farsk\u00e9ho`}
             <span className="ml-2 font-normal normal-case tracking-normal text-text-muted">
               {`\u2014 Patriarcha I., 1922\u20131924`}
@@ -118,7 +118,7 @@ export default function SermonInspirationPanel({
                   <div className="border-t border-brick/10 px-3 py-3">
                     {p.biblical_text && (
                       <div className="mb-3 rounded-md bg-white/60 px-3.5 py-2.5">
-                        <p className="text-[11px] font-semibold uppercase tracking-wider text-sage/80 mb-1">
+                        <p className="text-[12px] font-semibold uppercase tracking-wider text-sage/80 mb-1">
                           {`Biblick\u00fd text`}
                         </p>
                         <p className="font-literata text-[14px] italic leading-[1.7] text-text">
@@ -138,7 +138,7 @@ export default function SermonInspirationPanel({
       {/* Český zápas */}
       {cZapas.length > 0 && (
         <div>
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-sage/80">
+          <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.15em] text-sage/80">
             {`K\u00e1z\u00e1n\u00ed z \u010cesk\u00e9ho z\u00e1pasu`}
             <span className="ml-2 font-normal normal-case tracking-normal text-text-muted">
               {`\u2014 sou\u010dasn\u00ed C\u010cSH kazatel\u00e9`}
@@ -162,7 +162,7 @@ export default function SermonInspirationPanel({
                     <p className="text-[13px] font-semibold text-text">
                       {a.title}
                     </p>
-                    <p className="mt-0.5 text-[10px] text-text-light">
+                    <p className="mt-0.5 text-[12px] text-text-light">
                       {a.author ? `${a.author} \u2014 ` : ""}
                       {a.source_ref}
                       {a.biblical_refs_raw

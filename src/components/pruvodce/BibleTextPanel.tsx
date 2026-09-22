@@ -404,12 +404,12 @@ export default function BibleTextPanel({
       )}
       <div className="mb-4 flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-text-light shrink-0">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.15em] text-text-light shrink-0">
             {`Biblick\u00FD text`}
           </p>
           {hasText && localSource && (
             <span
-              className="inline-flex items-center rounded-full border border-sage/30 bg-sage-pale/40 px-2 py-0.5 text-[10px] font-medium text-sage"
+              className="inline-flex items-center rounded-full border border-sage/30 bg-sage-pale/40 px-2 py-0.5 text-[12px] font-medium text-sage"
               title={localSource === "custom"
                 ? "Text vlo\u017Een\u00FD u\u017Eivatelem \u2014 p\u0159eklad nen\u00ED ozna\u010Den"
                 : `P\u0159eklad na\u010Dten\u00FD z ${TEXT_SOURCE_LABELS[localSource]}`}
@@ -420,7 +420,7 @@ export default function BibleTextPanel({
         </div>
         <div className="flex items-center gap-2 shrink-0">
           {showSaved && (
-            <span className="text-[11px] text-sage">{`\u2713 Ulo\u017Eeno`}</span>
+            <span className="text-[12px] text-sage">{`\u2713 Ulo\u017Eeno`}</span>
           )}
           {tabbed && hasText && !editing && readings.find((r) => r.key === activeReading)?.lectionary && (
             <button
@@ -435,7 +435,7 @@ export default function BibleTextPanel({
                 setLoadingSlot((cur) => (cur === activeReading ? null : cur));
               }}
               title="Stáhnout text tohoto čtení znovu z ČEP"
-              className="text-[11px] font-medium text-text-light hover:text-brick"
+              className="text-[12px] font-medium text-text-light hover:text-brick"
             >
               {loadingSlot === activeReading ? `Načítám…` : `Načíst znovu`}
             </button>
@@ -443,7 +443,7 @@ export default function BibleTextPanel({
           {hasText && !editing && (
             <button
               onClick={() => setEditing(true)}
-              className="text-[11px] font-medium text-text-light hover:text-brick"
+              className="text-[12px] font-medium text-text-light hover:text-brick"
             >
               {`Upravit`}
             </button>
@@ -481,19 +481,19 @@ export default function BibleTextPanel({
       {/* Text mismatch warning */}
       {textMismatch && hasText && !editing && (
         <div className="mb-3 flex items-center justify-between rounded-lg border border-brick/20 bg-brick-pale px-3 py-2">
-          <p className="text-[11px] text-brick">
+          <p className="text-[12px] text-brick">
             {`Text se zm\u011Bnil, anotace nemus\u00ED odpov\u00EDdat.`}
           </p>
           <div className="flex gap-2">
             <button
               onClick={syncHash}
-              className="text-[11px] font-medium text-brick hover:underline"
+              className="text-[12px] font-medium text-brick hover:underline"
             >
               {`Ponechat`}
             </button>
             <button
               onClick={clearAnnotations}
-              className="text-[11px] font-medium text-text-light hover:text-brick"
+              className="text-[12px] font-medium text-text-light hover:text-brick"
             >
               {`Smazat anotace`}
             </button>
@@ -504,7 +504,7 @@ export default function BibleTextPanel({
       {/* Annotation legend */}
       {annotationsEnabled && annotations.length > 0 && hasText && !editing && (
         <div className="mb-3 flex flex-wrap items-center gap-2">
-          <span className="text-[10px] text-text-light">
+          <span className="text-[12px] text-text-light">
             {`${annotations.length} anotac\u00ED`}
           </span>
           {annotationCategories.map((cat) => {
@@ -513,7 +513,7 @@ export default function BibleTextPanel({
             return (
               <span
                 key={cat.id}
-                className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${cat.bg} ${cat.color}`}
+                className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-[12px] font-medium ${cat.bg} ${cat.color}`}
               >
                 {cat.name} {count}
               </span>
@@ -530,7 +530,7 @@ export default function BibleTextPanel({
                 <p className="mb-3 flex flex-wrap items-baseline gap-x-2 font-cormorant text-[15px] font-semibold uppercase tracking-[0.06em] text-brick">
                   <span>{localRef}</span>
                   {localSource && (
-                    <span className="text-[11px] font-medium tracking-[0.1em] text-text-light">
+                    <span className="text-[12px] font-medium tracking-[0.1em] text-text-light">
                       {`\u00B7 ${TEXT_SOURCE_LABELS[localSource]}`}
                     </span>
                   )}
@@ -620,7 +620,7 @@ function AnnotationGuide({ hasAnnotations }: { hasAnnotations: boolean }) {
           <circle cx="10" cy="10" r="8" />
           <path d="M10 9v4M10 7v0" />
         </svg>
-        <span className="text-[11px] font-medium text-sage">
+        <span className="text-[12px] font-medium text-sage">
           {`Pro\u010D ozna\u010Dovat text?`}
         </span>
         <svg
@@ -637,39 +637,39 @@ function AnnotationGuide({ hasAnnotations }: { hasAnnotations: boolean }) {
       </button>
       {open && (
         <div className="mt-2 rounded-lg border border-sage/20 bg-sage-pale/50 px-3 py-3">
-          <p className="mb-3 text-[11px] leading-relaxed text-text-muted">
+          <p className="mb-3 text-[12px] leading-relaxed text-text-muted">
             {`Ozna\u010Dov\u00E1n\u00ED ti pom\u016F\u017Ee vid\u011Bt text hloub\u011Bji. Ozna\u010D my\u0161\u00ED libovolnou fr\u00E1zi a vyber kategorii. Pozn\u00E1mky z\u016Fstanou ulo\u017Een\u00E9 a prov\u00E1z\u00ED t\u011B v\u0161emi kroky.`}
           </p>
           <div className="space-y-2">
             <div className="flex items-start gap-2">
-              <span className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${annotationCategories[0].bg} ${annotationCategories[0].color}`}>
+              <span className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[12px] font-medium ${annotationCategories[0].bg} ${annotationCategories[0].color}`}>
                 {annotationCategories[0].name}
               </span>
-              <p className="text-[11px] leading-relaxed text-text-muted">
+              <p className="text-[12px] leading-relaxed text-text-muted">
                 {`Opakuj\u00EDc\u00ED se slova a hlavn\u00ED pojmy. Ve v\u00FDkladu z nich vych\u00E1z\u00ED\u0161.`}
               </p>
             </div>
             <div className="flex items-start gap-2">
-              <span className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${annotationCategories[1].bg} ${annotationCategories[1].color}`}>
+              <span className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[12px] font-medium ${annotationCategories[1].bg} ${annotationCategories[1].color}`}>
                 {annotationCategories[1].name}
               </span>
-              <p className="text-[11px] leading-relaxed text-text-muted">
+              <p className="text-[12px] leading-relaxed text-text-muted">
                 {`Kdo v textu jedn\u00E1, mluv\u00ED, co se d\u011Bje. Pom\u016F\u017Ee vid\u011Bt p\u0159\u00EDb\u011Bh.`}
               </p>
             </div>
             <div className="flex items-start gap-2">
-              <span className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${annotationCategories[2].bg} ${annotationCategories[2].color}`}>
+              <span className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[12px] font-medium ${annotationCategories[2].bg} ${annotationCategories[2].color}`}>
                 {annotationCategories[2].name}
               </span>
-              <p className="text-[11px] leading-relaxed text-text-muted">
+              <p className="text-[12px] leading-relaxed text-text-muted">
                 {`P\u0159ed\u011Bly, kontrasty, p\u0159ekvapen\u00ED. Pr\u00E1v\u011B tam b\u00FDv\u00E1 j\u00E1dro k\u00E1z\u00E1n\u00ED.`}
               </p>
             </div>
             <div className="flex items-start gap-2">
-              <span className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${annotationCategories[3].bg} ${annotationCategories[3].color}`}>
+              <span className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[12px] font-medium ${annotationCategories[3].bg} ${annotationCategories[3].color}`}>
                 {annotationCategories[3].name}
               </span>
-              <p className="text-[11px] leading-relaxed text-text-muted">
+              <p className="text-[12px] leading-relaxed text-text-muted">
                 {`Co ti nen\u00ED jasn\u00E9 nebo t\u011B zarazilo. Stoj\u00ED za to hledat odpov\u011B\u010F.`}
               </p>
             </div>
@@ -697,7 +697,7 @@ function SundaySuggestion({
         className="flex w-full items-center justify-between text-left"
       >
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-brick">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.15em] text-brick">
             {`Tuto ned\u011Bli v CC\u0160H`}
           </p>
           <p className="mt-0.5 text-xs font-medium text-text">
@@ -725,13 +725,13 @@ function SundaySuggestion({
               onClick={() => onApply(r.reference, r.text, "cep")}
               className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left transition-all hover:bg-brick-pale"
             >
-              <span className="shrink-0 text-[10px] font-semibold uppercase text-text-light">
+              <span className="shrink-0 text-[12px] font-semibold uppercase text-text-light">
                 {r.label}
               </span>
               <span className="flex-1 truncate text-xs font-medium text-text">
                 {r.reference}
               </span>
-              <span className="shrink-0 text-[10px] text-brick">
+              <span className="shrink-0 text-[12px] text-brick">
                 {`Pou\u017E\u00EDt \u2192`}
               </span>
             </button>
@@ -813,7 +813,7 @@ function LectionarySuggestion({
         className="flex w-full items-center justify-between text-left"
       >
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-brick">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.15em] text-brick">
             {`Tuto ned\u011Bli v C\u010CSH`}
           </p>
           <p className="mt-0.5 text-xs font-medium text-text">
@@ -835,7 +835,7 @@ function LectionarySuggestion({
 
       {expanded && (
         <div className="mt-3 space-y-2">
-          <p className="text-[10px] text-text-light">
+          <p className="text-[12px] text-text-light">
             {`Klikni na \u010Dten\u00ED \u2014 na\u010Dte se text z \u010CEP p\u0159ekladu.`}
           </p>
           {readings.map((r) => {
@@ -847,20 +847,20 @@ function LectionarySuggestion({
                 disabled={isLoading}
                 className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left transition-all hover:bg-brick-pale disabled:opacity-50"
               >
-                <span className="shrink-0 text-[10px] font-semibold uppercase text-text-light">
+                <span className="shrink-0 text-[12px] font-semibold uppercase text-text-light">
                   {r.label}
                 </span>
                 <span className="flex-1 truncate text-xs font-medium text-text">
                   {r.data.reference}
                 </span>
-                <span className="shrink-0 text-[10px] text-brick">
+                <span className="shrink-0 text-[12px] text-brick">
                   {isLoading ? `Na\u010D\u00EDt\u00E1m\u2026` : `Na\u010D\u00EDst \u2192`}
                 </span>
               </button>
             );
           })}
           {error && (
-            <p className="text-[11px] text-brick">{error}</p>
+            <p className="text-[12px] text-brick">{error}</p>
           )}
         </div>
       )}

@@ -93,7 +93,7 @@ export default function BibleBookContext({ slug }: { slug: string }) {
                   onClick={() => handleSelect(book.id)}
                   className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-text hover:bg-cream"
                 >
-                  <span className={`text-[10px] font-medium uppercase ${book.testament === "nz" ? "text-brick" : "text-sage"}`}>
+                  <span className={`text-[12px] font-medium uppercase ${book.testament === "nz" ? "text-brick" : "text-sage"}`}>
                     {book.testament === "nz" ? "NZ" : "SZ"}
                   </span>
                   {book.name}
@@ -126,11 +126,11 @@ export default function BibleBookContext({ slug }: { slug: string }) {
       {selected && (
         <div className="rounded-lg border border-border/50 bg-white/60 p-4 space-y-3">
           <div className="flex items-center gap-2">
-            <span className={`text-[10px] font-semibold uppercase tracking-wider ${selected.testament === "nz" ? "text-brick" : "text-sage"}`}>
+            <span className={`text-[12px] font-semibold uppercase tracking-wider ${selected.testament === "nz" ? "text-brick" : "text-sage"}`}>
               {selected.testament === "nz" ? `Nov\u00FD z\u00E1kon` : `Star\u00FD z\u00E1kon`}
             </span>
-            <span className="text-[10px] text-text-light">{"\u2022"}</span>
-            <span className="text-[10px] text-text-muted">{selected.genre}</span>
+            <span className="text-[12px] text-text-light">{"\u2022"}</span>
+            <span className="text-[12px] text-text-muted">{selected.genre}</span>
           </div>
 
           <InfoRow label="Autor" value={selected.author} />
@@ -139,14 +139,14 @@ export default function BibleBookContext({ slug }: { slug: string }) {
           <InfoRow label="Struktura" value={selected.structure} />
 
           <div>
-            <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-brick">
+            <p className="mb-1.5 text-[12px] font-semibold uppercase tracking-[0.15em] text-brick">
               {`Kl\u00ED\u010Dov\u00E1 t\u00E9mata`}
             </p>
             <div className="flex flex-wrap gap-1.5">
               {selected.keyThemes.map((theme, i) => (
                 <span
                   key={i}
-                  className="rounded-full bg-brick/10 px-2.5 py-0.5 text-[11px] text-brick"
+                  className="rounded-full bg-brick/10 px-2.5 py-0.5 text-[12px] text-brick"
                 >
                   {theme}
                 </span>
@@ -200,7 +200,7 @@ function BookGroup({
             <button
               key={book.id}
               onClick={() => onSelect(book.id)}
-              className={`rounded-md px-2 py-1 text-[11px] transition-all hover:bg-${accent}/10 text-text-muted hover:text-${accent}`}
+              className={`rounded-md px-2 py-1 text-[12px] transition-all hover:bg-${accent}/10 text-text-muted hover:text-${accent}`}
             >
               {book.name}
             </button>
@@ -214,7 +214,7 @@ function BookGroup({
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="text-[10px] font-medium uppercase tracking-wider text-text-light">
+      <p className="text-[12px] font-medium uppercase tracking-wider text-text-light">
         {label}
       </p>
       <p className="text-xs leading-relaxed text-text">{value}</p>

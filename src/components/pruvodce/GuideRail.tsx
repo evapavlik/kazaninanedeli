@@ -140,7 +140,7 @@ export default function GuideRail({
             {phase.icon}
           </span>
           <div>
-            <p className="font-cormorant text-[11px] font-semibold uppercase tracking-[0.12em] text-brick">
+            <p className="font-cormorant text-[12px] font-semibold uppercase tracking-[0.12em] text-brick">
               {`Fáze ${phase.number} ze 4`}
             </p>
             <h2 className="font-lora text-[15.5px] font-bold leading-tight text-text">
@@ -183,7 +183,7 @@ export default function GuideRail({
           </button>
         ))}
       </div>
-      <p className="mb-3.5 text-center text-[11.5px] italic text-text-light">
+      <p className="mb-3.5 text-center text-[12.5px] italic text-text-light">
         {minimal
           ? `Jen páteř: myšlenka → thesis → text.`
           : `Krok za krokem podle Pokorného hermeneutiky.`}

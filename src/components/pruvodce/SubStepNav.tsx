@@ -51,7 +51,7 @@ export default function SubStepNav({
               />
               {sub.shortTitle || sub.title}
               {isActive && (
-                <span className="ml-auto text-[10.5px] font-normal text-text-light">
+                <span className="ml-auto text-[12px] font-normal text-text-light">
                   {`${i + 1} ze ${subSteps.length}`}
                 </span>
               )}
@@ -80,7 +80,7 @@ export default function SubStepNav({
                   : "bg-cream text-text-muted hover:bg-sand/30"
             }`}
           >
-            <span className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold ${
+            <span className={`flex h-5 w-5 items-center justify-center rounded-full text-[12px] font-bold ${
               isDone
                 ? "bg-brick/20 text-brick"
                 : isActive

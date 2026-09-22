@@ -259,7 +259,7 @@ export default function UnifiedFlow({
                       />
                       {!isDone && (
                         <div className="mt-1 flex justify-end">
-                          <button onClick={() => completeReflect(i)} className="rounded-md bg-sage/70 px-2.5 py-0.5 text-[11px] font-medium text-white transition-colors hover:bg-sage">
+                          <button onClick={() => completeReflect(i)} className="rounded-md bg-sage/70 px-2.5 py-0.5 text-[12px] font-medium text-white transition-colors hover:bg-sage">
                             {`Hotovo \u2192`}
                           </button>
                         </div>
@@ -270,7 +270,7 @@ export default function UnifiedFlow({
 
                 {/* Artifact item — connected to sermon artifacts */}
                 {isArtifact && artifactContextField && artifactContextValue && (
-                  <div className="mb-2 rounded-md bg-cream px-3 py-2 text-[11px]">
+                  <div className="mb-2 rounded-md bg-cream px-3 py-2 text-[12px]">
                     <span className="font-medium text-text-muted">{artifactContextLabel}:</span>
                     <span className="ml-1 italic text-text">{artifactContextValue}</span>
                   </div>
@@ -308,7 +308,7 @@ export default function UnifiedFlow({
                         {helper.openToolKey ? (
                           <button
                             onClick={() => onOpenTool?.(helper.openToolKey!)}
-                            className="flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[11px] font-medium text-text-light hover:bg-brick-pale hover:text-brick transition-all"
+                            className="flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[12px] font-medium text-text-light hover:bg-brick-pale hover:text-brick transition-all"
                           >
                             <span className="text-[13px] leading-none">{helper.icon}</span>
                             <span>{helper.label}</span>
@@ -320,7 +320,7 @@ export default function UnifiedFlow({
                           <>
                             <button
                               onClick={() => setOpenToolIndex(isToolOpen ? null : i)}
-                              className={`flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[11px] font-medium transition-all ${
+                              className={`flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[12px] font-medium transition-all ${
                                 isToolOpen
                                   ? "bg-brick/10 text-brick"
                                   : "text-text-light hover:bg-brick-pale hover:text-brick"
@@ -503,7 +503,7 @@ export function ArtifactInput({
           <button
             onClick={handleComplete}
             disabled={!localValue.trim()}
-            className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium transition-all duration-200 ${
+            className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-[12px] font-medium transition-all duration-200 ${
               localValue.trim()
                 ? "bg-sage/15 text-sage hover:bg-sage/25 cursor-pointer"
                 : "text-text-light cursor-not-allowed"

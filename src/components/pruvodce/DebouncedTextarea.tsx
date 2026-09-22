@@ -57,7 +57,7 @@ export default function DebouncedTextarea({
         <div className="mb-1.5 flex items-center justify-between">
           <label className="text-xs font-medium text-text-muted">{label}</label>
           {showSaved && (
-            <span className="text-[11px] text-sage">{`\u2713 Ulo\u017Eeno`}</span>
+            <span className="text-[12px] text-sage">{`\u2713 Ulo\u017Eeno`}</span>
           )}
         </div>
       )}

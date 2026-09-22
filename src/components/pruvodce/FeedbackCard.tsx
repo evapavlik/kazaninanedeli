@@ -219,7 +219,7 @@ export default function FeedbackCard({ artifacts, textareaRef, onInsert }: Feedb
             </svg>
             {`Chci zpětnou vazbu`}
           </button>
-          <span className="text-[11px] italic text-text-light">
+          <span className="text-[12px] italic text-text-light">
             {`Co se podařilo a na čem ještě zapracovat. Nepřepisuje, jen ukazuje.`}
           </span>
         </div>
@@ -227,7 +227,7 @@ export default function FeedbackCard({ artifacts, textareaRef, onInsert }: Feedb
         <div className="overflow-hidden rounded-xl border border-sage/35 bg-[#fbfdfc]">
           <div className="border-b border-sage/20 bg-sage-pale px-3.5 py-2.5">
             <div className="font-lora text-[13.5px] font-bold text-text">{`Zpětná vazba`}</div>
-            <div className="mt-0.5 text-[10.5px] leading-snug text-text-muted">
+            <div className="mt-0.5 text-[12px] leading-snug text-text-muted">
               {thesis ? (
                 <>
                   {`Čteno vedle tvého jádra kázání `}
@@ -263,7 +263,7 @@ export default function FeedbackCard({ artifacts, textareaRef, onInsert }: Feedb
                       key={i}
                       className="flex gap-2.5 border-t border-border py-2 text-[12.5px] leading-[1.6] text-text first:border-t-0"
                     >
-                      <span className="mt-[3px] flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-cream text-[10px] font-bold text-text-muted">
+                      <span className="mt-[3px] flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-cream text-[12px] font-bold text-text-muted">
                         {i + 1}
                       </span>
                       <div className="min-w-0">
@@ -272,9 +272,9 @@ export default function FeedbackCard({ artifacts, textareaRef, onInsert }: Feedb
                           <button
                             onClick={() => locate(p.where!)}
                             title="Najít v textu"
-                            className="mt-1 block border-l-2 border-sand pl-2 text-left font-lora text-[11px] italic text-text-muted hover:border-brick hover:text-text"
+                            className="mt-1 block border-l-2 border-sand pl-2 text-left font-lora text-[12px] italic text-text-muted hover:border-brick hover:text-text"
                           >
-                            <span className="mr-1 font-sans text-[9.5px] font-semibold uppercase not-italic tracking-[0.1em] text-text-light">
+                            <span className="mr-1 font-sans text-[12px] font-semibold uppercase not-italic tracking-[0.1em] text-text-light">
                               kde:
                             </span>
                             {`„${p.where}"`}
@@ -283,14 +283,14 @@ export default function FeedbackCard({ artifacts, textareaRef, onInsert }: Feedb
                         {canPropose && !prop && (
                           <button
                             onClick={() => propose(key, p)}
-                            className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-border bg-white px-2 py-1 text-[10.5px] font-semibold text-text-muted hover:border-brick hover:text-brick"
+                            className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-border bg-white px-2 py-1 text-[12px] font-semibold text-text-muted hover:border-brick hover:text-brick"
                           >
                             {`✎ Navrhni, jak to rozvést`}
                           </button>
                         )}
                         {prop && (
                           <div className="mt-2 rounded-lg border border-dashed border-brick/35 bg-brick-pale px-3 py-2.5">
-                            <p className="mb-1 text-[9.5px] font-bold uppercase tracking-[0.12em] text-brick">
+                            <p className="mb-1 text-[12px] font-bold uppercase tracking-[0.12em] text-brick">
                               {`Návrh — z tvé přípravy, přepiš si ho`}
                             </p>
                             {prop.error ? (
@@ -311,7 +311,7 @@ export default function FeedbackCard({ artifacts, textareaRef, onInsert }: Feedb
                             {!prop.busy && (
                               <>
                                 {!prop.error && (
-                                  <p className="mt-1 text-[10.5px] italic text-text-light">
+                                  <p className="mt-1 text-[12px] italic text-text-light">
                                     {p.where
                                       ? `Vloží se za odstavec s „${p.where.length > 40 ? p.where.slice(0, 40) + "…" : p.where}". Je to jen tvar — slova si nech svoje.`
                                       : `Vloží se na konec. Je to jen tvar — slova si nech svoje.`}
@@ -320,13 +320,13 @@ export default function FeedbackCard({ artifacts, textareaRef, onInsert }: Feedb
                                 <div className="mt-1.5 flex justify-end gap-1.5">
                                   <button
                                     onClick={() => dropProposal(key)}
-                                    className="rounded-md border border-border bg-white px-2 py-1 text-[11px] font-semibold text-text-muted hover:text-text"
+                                    className="rounded-md border border-border bg-white px-2 py-1 text-[12px] font-semibold text-text-muted hover:text-text"
                                   >
                                     {`Zahodit`}
                                   </button>
                                   <button
                                     onClick={() => propose(key, p)}
-                                    className="rounded-md border border-border bg-white px-2 py-1 text-[11px] font-semibold text-text-muted hover:border-brick hover:text-brick"
+                                    className="rounded-md border border-border bg-white px-2 py-1 text-[12px] font-semibold text-text-muted hover:border-brick hover:text-brick"
                                   >
                                     {`Jinak`}
                                   </button>
@@ -336,7 +336,7 @@ export default function FeedbackCard({ artifacts, textareaRef, onInsert }: Feedb
                                         onInsert(prop.text.trim(), p.where);
                                         dropProposal(key);
                                       }}
-                                      className="rounded-md bg-brick px-2 py-1 text-[11px] font-semibold text-white hover:bg-brick/90"
+                                      className="rounded-md bg-brick px-2 py-1 text-[12px] font-semibold text-white hover:bg-brick/90"
                                     >
                                       {`Vložit do textu`}
                                     </button>
@@ -361,18 +361,18 @@ export default function FeedbackCard({ artifacts, textareaRef, onInsert }: Feedb
           )}
 
           {stale && (
-            <p className="mx-3.5 mb-2 rounded-lg border border-[#f0dcb0] bg-[#fff7e6] px-2.5 py-1.5 text-[11px] text-[#7a5a12]">
+            <p className="mx-3.5 mb-2 rounded-lg border border-[#f0dcb0] bg-[#fff7e6] px-2.5 py-1.5 text-[12px] text-[#7a5a12]">
               {`Text kázání se od té doby změnil — zpětná vazba je k předchozí verzi.`}
             </p>
           )}
 
           {!busy && (
-            <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border px-3.5 py-2 text-[10.5px] text-text-light">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border px-3.5 py-2 text-[12px] text-text-light">
               <span>{`Zpětná vazba není známka. Kázání je tvoje — vezmi si, co ti sedí.`}</span>
               <span className="flex gap-1.5">
                 <button
                   onClick={run}
-                  className="rounded-lg border border-border bg-white px-2.5 py-1 text-[11.5px] font-semibold text-text-muted hover:border-sage hover:text-sage"
+                  className="rounded-lg border border-border bg-white px-2.5 py-1 text-[12.5px] font-semibold text-text-muted hover:border-sage hover:text-sage"
                 >
                   {`Znovu`}
                 </button>
@@ -380,14 +380,14 @@ export default function FeedbackCard({ artifacts, textareaRef, onInsert }: Feedb
                   <button
                     onClick={saveNote}
                     disabled={saved}
-                    className="rounded-lg bg-sage px-2.5 py-1 text-[11.5px] font-semibold text-white hover:bg-sage-light disabled:opacity-60"
+                    className="rounded-lg bg-sage px-2.5 py-1 text-[12.5px] font-semibold text-white hover:bg-sage-light disabled:opacity-60"
                   >
                     {saved ? `Uloženo ✓` : `Uložit do zápisníku`}
                   </button>
                 )}
                 <button
                   onClick={() => setText(null)}
-                  className="rounded-lg px-2.5 py-1 text-[11.5px] font-semibold text-text-muted hover:text-text"
+                  className="rounded-lg px-2.5 py-1 text-[12.5px] font-semibold text-text-muted hover:text-text"
                 >
                   {`Zavřít`}
                 </button>

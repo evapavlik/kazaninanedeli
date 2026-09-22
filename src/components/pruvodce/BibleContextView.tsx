@@ -64,7 +64,7 @@ export default function BibleContextView({ reference }: BibleContextViewProps) {
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sage/70">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-sage/70">
             {`Struktura knihy`}
           </p>
           <p className="mt-0.5 font-cormorant text-[16px] font-semibold text-text">
@@ -76,7 +76,7 @@ export default function BibleContextView({ reference }: BibleContextViewProps) {
             <button
               key={t}
               onClick={() => setTranslation(t)}
-              className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-all ${
+              className={`rounded-md px-2.5 py-1 text-[12px] font-medium transition-all ${
                 translation === t
                   ? "bg-sage text-white shadow-sm"
                   : "text-text-light hover:text-text"
@@ -109,7 +109,7 @@ export default function BibleContextView({ reference }: BibleContextViewProps) {
                 }`}
               >
                 <div className="flex items-start gap-2">
-                  <span className={`mt-0.5 shrink-0 text-[10px] font-bold ${
+                  <span className={`mt-0.5 shrink-0 text-[12px] font-bold ${
                     isActivePart ? "text-brick" : "text-text-light/50"
                   }`}>
                     {part.chapters}
@@ -120,12 +120,12 @@ export default function BibleContextView({ reference }: BibleContextViewProps) {
                     }`}>
                       {part.title}
                       {isActivePart && (
-                        <span className="ml-1.5 inline-block rounded bg-brick/10 px-1.5 py-0.5 align-middle text-[9px] font-bold uppercase tracking-wider text-brick">
+                        <span className="ml-1.5 inline-block rounded bg-brick/10 px-1.5 py-0.5 align-middle text-[12px] font-bold uppercase tracking-wider text-brick">
                           {`tv\u016Fj text`}
                         </span>
                       )}
                     </p>
-                    <p className={`text-[11px] leading-relaxed ${
+                    <p className={`text-[12px] leading-relaxed ${
                       isActivePart ? "text-text-muted" : "text-text-light/60"
                     }`}>
                       {part.description}
@@ -140,7 +140,7 @@ export default function BibleContextView({ reference }: BibleContextViewProps) {
 
       {/* Surrounding chapters detail */}
       <div className="space-y-3">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-sage/50">
+        <p className="text-[12px] font-semibold uppercase tracking-[0.15em] text-sage/50">
           {`Okol\u00ED va\u0161\u00ED perikopy`}
         </p>
         {chaptersToShow.map((ch) => (
@@ -189,7 +189,7 @@ function ChapterTOC({
       {/* Chapter header */}
       <div className={`px-3 py-2 ${isCurrent ? "" : "opacity-60"}`}>
         <p
-          className={`text-[11px] font-semibold uppercase tracking-[0.15em] ${
+          className={`text-[12px] font-semibold uppercase tracking-[0.15em] ${
             isCurrent ? "text-brick" : "text-text-light"
           }`}
         >
@@ -298,14 +298,14 @@ function SectionRow({
         >
           {section.title}
           {isActive && (
-            <span className="ml-1.5 inline-block rounded bg-brick/10 px-1.5 py-0.5 align-middle text-[9px] font-bold uppercase tracking-wider text-brick">
+            <span className="ml-1.5 inline-block rounded bg-brick/10 px-1.5 py-0.5 align-middle text-[12px] font-bold uppercase tracking-wider text-brick">
               {`tvoje perikopa`}
             </span>
           )}
         </span>
 
         {/* Verse range */}
-        <span className="shrink-0 text-[10px] text-text-light/60">
+        <span className="shrink-0 text-[12px] text-text-light/60">
           {section.startVerse === section.endVerse
             ? `v. ${section.startVerse}`
             : `v. ${section.startVerse}\u2013${section.endVerse}`}
@@ -333,13 +333,13 @@ function SectionRow({
           {loading ? (
             <div className="flex items-center gap-2 py-2">
               <div className="h-4 w-4 animate-spin rounded-full border-2 border-sage/30 border-t-sage" />
-              <span className="text-[11px] text-text-muted">{`Na\u010D\u00EDt\u00E1m\u2026`}</span>
+              <span className="text-[12px] text-text-muted">{`Na\u010D\u00EDt\u00E1m\u2026`}</span>
             </div>
           ) : verses ? (
             <div className="font-literata text-[15px] leading-[1.9] text-text">
               {verses.map((v) => (
                 <span key={v.verse}>
-                  <sup className="mr-0.5 text-[10px] font-semibold text-text-light/60">
+                  <sup className="mr-0.5 text-[12px] font-semibold text-text-light/60">
                     {v.verse}
                   </sup>
                   {v.text.trim()}{" "}
@@ -347,7 +347,7 @@ function SectionRow({
               ))}
             </div>
           ) : (
-            <p className="text-[11px] text-text-muted">
+            <p className="text-[12px] text-text-muted">
               {`Text se nepoda\u0159ilo na\u010D\u00EDst.`}
             </p>
           )}

@@ -81,7 +81,7 @@ export default function MinimalPath({
           >
             <div className="mb-1 flex items-center gap-2">
               <span
-                className={`flex h-[22px] w-[22px] items-center justify-center rounded-full text-[11.5px] font-bold ${
+                className={`flex h-[22px] w-[22px] items-center justify-center rounded-full text-[12.5px] font-bold ${
                   done ? "bg-sage text-white" : "bg-sage-pale text-sage"
                 }`}
               >
@@ -89,7 +89,7 @@ export default function MinimalPath({
               </span>
               <h3 className="font-lora text-[14px] font-bold text-text">{s.title}</h3>
             </div>
-            <p className="mb-2 text-[11.5px] leading-snug text-text-light">{s.why}</p>
+            <p className="mb-2 text-[12.5px] leading-snug text-text-light">{s.why}</p>
 
             <ArtifactInput
               text=""
@@ -103,7 +103,7 @@ export default function MinimalPath({
 
             <button
               onClick={() => router.push(`/pruvodce/${s.phase}`)}
-              className="mt-1.5 text-[11.5px] text-text-light underline transition-colors hover:text-brick"
+              className="mt-1.5 text-[12.5px] text-text-light underline transition-colors hover:text-brick"
             >
               {`Projít tento krok celou cestou →`}
             </button>

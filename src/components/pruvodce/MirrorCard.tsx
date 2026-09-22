@@ -76,19 +76,19 @@ export default function MirrorCard({ bubbles }: { bubbles: Bubble[] }) {
           )}
           {!busy && !error && (
             <>
-              <p className="mt-2.5 border-t border-sage/25 pt-2 text-[11px] italic text-text-light">
+              <p className="mt-2.5 border-t border-sage/25 pt-2 text-[12px] italic text-text-light">
                 {`Tohle není návrh kázání. Jen tvoje poznámky viděné z výšky — co s tím uděláš, je na tobě.`}
               </p>
               <div className="mt-2 flex justify-end gap-2">
                 <button
                   onClick={() => setText(null)}
-                  className="rounded-lg px-2.5 py-1 text-[11.5px] font-semibold text-text-muted hover:text-text"
+                  className="rounded-lg px-2.5 py-1 text-[12.5px] font-semibold text-text-muted hover:text-text"
                 >
                   {`Zavřít`}
                 </button>
                 <button
                   onClick={run}
-                  className="rounded-lg border border-border bg-white px-2.5 py-1 text-[11.5px] font-semibold text-text-muted hover:border-sage hover:text-sage"
+                  className="rounded-lg border border-border bg-white px-2.5 py-1 text-[12.5px] font-semibold text-text-muted hover:border-sage hover:text-sage"
                 >
                   {`Znovu`}
                 </button>
@@ -98,7 +98,7 @@ export default function MirrorCard({ bubbles }: { bubbles: Bubble[] }) {
                     setSaved(true);
                   }}
                   disabled={saved}
-                  className="rounded-lg bg-sage px-2.5 py-1 text-[11.5px] font-semibold text-white hover:bg-sage-light disabled:opacity-60"
+                  className="rounded-lg bg-sage px-2.5 py-1 text-[12.5px] font-semibold text-white hover:bg-sage-light disabled:opacity-60"
                 >
                   {saved ? `Uloženo ✓` : `Uložit do zápisníku`}
                 </button>
@@ -121,7 +121,7 @@ function MirrorText({ text, busy }: { text: string; busy: boolean }) {
         const clean = l.replace(/^[#*\s]+|[*:\s]+$/g, "");
         if (HEADINGS.includes(clean)) {
           return (
-            <p key={i} className="mb-0.5 mt-2.5 text-[10px] font-bold uppercase tracking-[0.12em] text-sage first:mt-0">
+            <p key={i} className="mb-0.5 mt-2.5 text-[12px] font-bold uppercase tracking-[0.12em] text-sage first:mt-0">
               {clean}
             </p>
           );

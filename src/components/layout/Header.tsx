@@ -35,7 +35,7 @@ export default function Header() {
             >
               <span>{link.label}</span>
               {link.badge && (
-                <span className="mt-0.5 text-[9px] font-normal uppercase tracking-[0.12em] text-text-light/70 group-hover:text-brick/70">
+                <span className="mt-0.5 text-[12px] font-normal uppercase tracking-[0.12em] text-text-light/70 group-hover:text-brick/70">
                   {link.badge}
                 </span>
               )}
@@ -74,7 +74,7 @@ export default function Header() {
               >
                 <span>{link.label}</span>
                 {link.badge && (
-                  <span className="text-[9px] font-normal uppercase tracking-[0.12em] text-text-light/70">
+                  <span className="text-[12px] font-normal uppercase tracking-[0.12em] text-text-light/70">
                     {link.badge}
                   </span>
                 )}

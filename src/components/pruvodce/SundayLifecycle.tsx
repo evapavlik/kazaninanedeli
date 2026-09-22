@@ -24,7 +24,7 @@ export function SundayHeader() {
         <div className="min-w-0">
           <p className="truncate font-lora text-[15px] font-bold text-text">{name}</p>
           {date && date !== "unknown" && (
-            <p className="text-[11.5px] text-text-light">{formatCzechDate(date)}</p>
+            <p className="text-[12.5px] text-text-light">{formatCzechDate(date)}</p>
           )}
         </div>
         {sunday.target && !isTarget && (
@@ -201,11 +201,11 @@ function ArchiveRow({ item, onRestore }: { item: ArchivedSunday; onRestore: () =
     <li className="flex items-center justify-between gap-2 border-t border-border py-2.5 first:border-t-0 first:pt-0">
       <div className="min-w-0">
         <p className="truncate text-[12.5px] font-semibold text-text">{item.meta.name}</p>
-        <p className="text-[11px] text-text-light">{bits.join(" · ")}</p>
+        <p className="text-[12px] text-text-light">{bits.join(" · ")}</p>
       </div>
       <div className="flex shrink-0 items-center gap-2">
         <span
-          className={`rounded px-1.5 py-0.5 text-[10.5px] font-semibold ${
+          className={`rounded px-1.5 py-0.5 text-[12px] font-semibold ${
             item.status === "done" ? "bg-sage-pale text-sage" : "bg-brick-pale text-brick"
           }`}
         >
@@ -214,7 +214,7 @@ function ArchiveRow({ item, onRestore }: { item: ArchivedSunday; onRestore: () =
         <button
           onClick={onRestore}
           title="Vrátit na stůl — současná příprava se uloží do archivu"
-          className="text-[11.5px] font-semibold text-text-muted hover:text-brick"
+          className="text-[12.5px] font-semibold text-text-muted hover:text-brick"
         >
           {`Otevřít`}
         </button>
