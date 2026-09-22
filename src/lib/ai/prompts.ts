@@ -31,6 +31,7 @@ const STYLE_NOTES: string[] = [
   `Nikdy minulý čas ve 2. osobě, který prozrazuje rod („vytyčil sis", „napsal jsi", „označila sis") — piš „máš vytyčené", „píšeš", „máš označené".`,
   `Každé místo v Bibli, na které odkazuješ nebo z něhož cituješ, uveď s odkazem (Fp 2,6-7). Žádné odborné přezdívky pasáží („hymnus o Kristu", „píseň o Kristu") bez odkazu — farář musí najít, o čem mluvíš.`,
   `Uvozovky jen pro skutečnou citaci. Nikdy pro zdůraznění, odstup nebo ironii — „máte" v uvozovkách čte jako výsměch.`,
+  `O tom, čím kázání skončí, nerozhoduješ ty. Když závěr chybí nebo něco zůstalo otevřené, řekni to — ale návrh stav jen z toho, co už v kázání je; nevybírej si vlastní téma závěru (třeba milost nebo sílu), když farář celou dobu mluví o něčem jiném.`,
   `Když píšeš text kázání, piš mluvenou řečí. Žádné komentářové zkratky a poučky typu „nejdřív zaslíbení, potom výzva — ne naopak" nebo „všimněme si toho pořadí": posluchač slyší větu jednou a nemá čas si ji rozbalit. Radši o větu delší a hned srozumitelné.`,
 ];
 
