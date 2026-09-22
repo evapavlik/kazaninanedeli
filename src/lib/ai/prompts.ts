@@ -27,6 +27,8 @@ const VOICE = `Jsi průvodce faráře Církve československé husitské při p�
 const STYLE_NOTES: string[] = [
   // např. `Neříkej „radikálně nabourává" — piš „odmítá".`
   `Nikdy minulý čas ve 2. osobě, který prozrazuje rod („vytyčil sis", „napsal jsi", „označila sis") — piš „máš vytyčené", „píšeš", „máš označené".`,
+  `Každé místo v Bibli, na které odkazuješ nebo z něhož cituješ, uveď s odkazem (Fp 2,6-7). Žádné odborné přezdívky pasáží („hymnus o Kristu", „píseň o Kristu") bez odkazu — farář musí najít, o čem mluvíš.`,
+  `Uvozovky jen pro skutečnou citaci. Nikdy pro zdůraznění, odstup nebo ironii — „máte" v uvozovkách čte jako výsměch.`,
 ];
 
 const styleBlock = () =>
@@ -61,7 +63,7 @@ export const FEEDBACK_SYSTEM = `${VOICE}
 
 export const PROPOSE_SYSTEM = `${VOICE}
 
-Úkol: farář má rozepsané kázání a u jednoho místa dostal zpětnou vazbu, že je to nedotažené. Napiš NÁVRH jednoho až dvou odstavců, které to místo rozvedou — tentokrát tedy jako mluvené kázání, ne komentář. Držíš se toho, co farář sám připravil (jádro, osnova, posluchači, ilustrace) a toho, jak už mluví v okolním textu: stejný tón, stejná délka vět, stejné oslovení. Návrh musí navazovat na úryvek, ZA který se vloží, a nesmí opakovat, co v kázání už stojí. Biblický děj nevymýšlej ani nedomýšlej; když cituješ, cituj ČEP přesně. 60–140 slov. Jen samotný text odstavců — bez nadpisu, bez úvodu, bez komentáře, bez uvozovek kolem. Farář si ho přepíše svými slovy; je to tvar, ne hotová věc.${styleBlock()}`;
+Úkol: farář má rozepsané kázání a u jednoho místa dostal zpětnou vazbu, že je to nedotažené. Napiš NÁVRH jednoho až dvou odstavců, které to místo rozvedou — tentokrát tedy jako mluvené kázání, ne komentář. Držíš se toho, co farář sám připravil (jádro, osnova, posluchači, ilustrace) a toho, jak už mluví v okolním textu: stejný tón, stejná délka vět, stejné oslovení. Návrh musí navazovat na úryvek, ZA který se vloží, a nesmí opakovat, co v kázání už stojí. Biblický děj nevymýšlej ani nedomýšlej; když cituješ, cituj ČEP přesně. Nejvýš dva odstavce, dohromady 60–140 slov — ne víc, zbytek si dopíše farář. Jen samotný text odstavců — bez nadpisu, bez úvodu, bez komentáře, bez uvozovek kolem. Farář si ho přepíše svými slovy; je to tvar, ne hotová věc.${styleBlock()}`;
 
 /** Hard caps so a stray call can't run away. */
 export const LIMITS = {
@@ -76,5 +78,6 @@ export const LIMITS = {
   feedbackTextChars: 14000,
   feedbackContextChars: 4000,
   feedbackMaxTokens: 2400,
-  proposeMaxTokens: 700,
+  // Thinking counts here too; 700 cut a proposal mid-sentence.
+  proposeMaxTokens: 2000,
 } as const;
