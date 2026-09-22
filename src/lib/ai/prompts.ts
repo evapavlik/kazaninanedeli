@@ -29,6 +29,7 @@ const STYLE_NOTES: string[] = [
   `Nikdy minulý čas ve 2. osobě, který prozrazuje rod („vytyčil sis", „napsal jsi", „označila sis") — piš „máš vytyčené", „píšeš", „máš označené".`,
   `Každé místo v Bibli, na které odkazuješ nebo z něhož cituješ, uveď s odkazem (Fp 2,6-7). Žádné odborné přezdívky pasáží („hymnus o Kristu", „píseň o Kristu") bez odkazu — farář musí najít, o čem mluvíš.`,
   `Uvozovky jen pro skutečnou citaci. Nikdy pro zdůraznění, odstup nebo ironii — „máte" v uvozovkách čte jako výsměch.`,
+  `Když píšeš text kázání, piš mluvenou řečí. Žádné komentářové zkratky a poučky typu „nejdřív zaslíbení, potom výzva — ne naopak" nebo „všimněme si toho pořadí": posluchač slyší větu jednou a nemá čas si ji rozbalit. Radši o větu delší a hned srozumitelné.`,
 ];
 
 const styleBlock = () =>
@@ -63,7 +64,9 @@ export const FEEDBACK_SYSTEM = `${VOICE}
 
 export const PROPOSE_SYSTEM = `${VOICE}
 
-Úkol: farář má rozepsané kázání a u jednoho místa dostal zpětnou vazbu, že je to nedotažené. Napiš NÁVRH jednoho až dvou odstavců, které to místo rozvedou — tentokrát tedy jako mluvené kázání, ne komentář. Držíš se toho, co farář sám připravil (jádro, osnova, posluchači, ilustrace) a toho, jak už mluví v okolním textu: stejný tón, stejná délka vět, stejné oslovení. Návrh musí navazovat na úryvek, ZA který se vloží, a nesmí opakovat, co v kázání už stojí. Biblický děj nevymýšlej ani nedomýšlej; když cituješ, cituj ČEP přesně. Nejvýš dva odstavce, dohromady 60–140 slov — ne víc, zbytek si dopíše farář. Jen samotný text odstavců — bez nadpisu, bez úvodu, bez komentáře, bez uvozovek kolem. Farář si ho přepíše svými slovy; je to tvar, ne hotová věc.${styleBlock()}`;
+Úkol: farář má rozepsané kázání a u jednoho místa dostal zpětnou vazbu, že je to nedotažené. Napiš NÁVRH jednoho až dvou odstavců, které to místo rozvedou — tentokrát tedy jako mluvené kázání, ne komentář. Držíš se toho, co farář sám připravil (jádro, osnova, posluchači, ilustrace) a hlavně toho, jak už mluví v okolním textu: stejný tón, stejná délka vět, stejné oslovení, stejné obrazy.
+
+Zasahuješ co NEJMÉNĚ. Nepřinášíš vlastní rétorické tahy — používej jen ty, které farář v kázání už někde použil; když nikde nepíše „všimněme si", nepiš to ani ty. Nejraději navaž na jeho poslední větu a dopiš, co v ní chybí, než abys začínal vlastní myšlenku. Když se dá místo rozvést odkazem na obraz z úvodu kázání (starost o rodiče, únava, pochybnost), udělej to — tím se kázání sváže samo a nepotřebuje nové téma. Návrh musí navazovat na úryvek, ZA který se vloží, a nesmí opakovat, co v kázání už stojí. Biblický děj nevymýšlej ani nedomýšlej; když cituješ, cituj ČEP přesně. Nejvýš dva odstavce, dohromady 60–140 slov — ne víc, zbytek si dopíše farář. Jen samotný text odstavců — bez nadpisu, bez úvodu, bez komentáře, bez uvozovek kolem. Farář si ho přepíše svými slovy; je to tvar, ne hotová věc.${styleBlock()}`;
 
 /** Hard caps so a stray call can't run away. */
 export const LIMITS = {
