@@ -33,8 +33,9 @@ export default async function PhasePage({ params }: PageProps) {
   return (
     <div className="px-4 py-8 lg:px-8">
       <div className="mx-auto max-w-[1400px]">
-        {/* Progress bar */}
-        <div className="mb-8 flex justify-center">
+        {/* Progress bar — data-guide-chrome so „soustředění" can quiet it
+            along with everything else that is not the text. */}
+        <div className="mb-8 flex justify-center" data-guide-chrome>
           <StepProgress currentStep={phase.number} />
         </div>
 

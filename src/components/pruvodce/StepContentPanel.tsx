@@ -10,6 +10,9 @@ import type { FlowToolHelper } from "./UnifiedFlow";
 import BibleTextPanel from "./BibleTextPanel";
 import BuildingBlocks from "./BuildingBlocks";
 import GuideRail from "./GuideRail";
+import GuideChip from "./GuideChip";
+import ReadingToolbar from "./ReadingToolbar";
+import BubbleDrawer from "./BubbleDrawer";
 import ToolPanel from "./ToolPanel";
 import SermonPanel from "./SermonPanel";
 import { ReturningBanner, SundayHeader, SundayArchive } from "./SundayLifecycle";
@@ -82,11 +85,17 @@ export default function StepContentPanel({
 
   // Guide rail: open by default, remembers the reader's choice across visits.
   // When quiet it shrinks to a 56px strip so the text stays dominant.
-  const [guideQuiet, setGuideQuiet] = useLocalStorage<boolean>("kazani-guide-quiet", false);
 
   // Pace: the full method, or just the sermon spine on a tight week.
   // Remembered like the quiet choice, so a hurried week stays hurried.
   const [minimalPath, setMinimalPath] = useLocalStorage<boolean>("kazani-minimal-path", false);
+
+  // Reading screen state. „Soustředění" quiets everything but the text; the
+  // notebook and „Moje kázání" are reached from the floating bar, so neither
+  // needs a column of its own.
+  const [focus, setFocus] = useState(false);
+  const [notebookOpen, setNotebookOpen] = useState(false);
+  const [sermonOpen, setSermonOpen] = useState(false);
 
   // Track which sub-steps are completed
   const [completedSubStepsArr, setCompletedSubStepsArr] = useLocalStorage<number[]>(
@@ -203,6 +212,15 @@ export default function StepContentPanel({
     }
   }, []);
 
+  // „Soustředění" also quiets chrome this component does not own — the phase
+  // stepper above it. Marked with data-guide-chrome, hidden from the root.
+  useEffect(() => {
+    const root = document.documentElement;
+    if (focus) root.setAttribute("data-focus", "true");
+    else root.removeAttribute("data-focus");
+    return () => root.removeAttribute("data-focus");
+  }, [focus]);
+
   /** Once the reader is ready, move on to the text phase. */
   const handleOpenText = useCallback(() => {
     router.push("/pruvodce/text");
@@ -240,71 +258,137 @@ export default function StepContentPanel({
           )}
         </div>
 
-        {/* Desktop: guide rail | text | Moje kázání. The rail sits beside the
-            text (never over it) and can be quieted to a 56px strip. */}
+        {/* Desktop — one reading column. The guide folds into a chip above
+            the text, tools and the notebook wait in a floating bar below it,
+            and „soustředění" fades both away. */}
         <div className="hidden lg:block">
-          <div className="guide-layout" data-quiet={guideQuiet ? "true" : undefined}>
-            <GuideRail
-              phase={phase}
-              currentSub={currentSub}
-              subSlug={subSlug}
-              activeSubStep={activeSubStep}
-              completedSubSteps={completedSubSteps}
-              onSubStepSelect={handleSubStepSelect}
-              flowToolHelpers={flowToolHelpers}
-              onFlowCountChange={handleFlowCountChange}
-              artifacts={artifacts}
-              onArtifactChange={(field, value) => updateField(field as keyof typeof artifacts, value)}
-              prevPhase={prevPhase}
-              nextPhase={nextPhase}
-              onOpenTool={handleOpenTool}
-              checkCount={checkCount}
-              collapsed={guideQuiet}
-              onToggleCollapse={() => setGuideQuiet((q) => !q)}
-              minimal={minimalPath}
-              onMinimalChange={setMinimalPath}
-            />
-
-            {/* Reading column — capped and centred so quieting the guide gives
-                balanced margins, not an empty right-hand gutter. */}
-            <div className="mx-auto w-full max-w-[800px]">
+          <div className="mx-auto w-full max-w-[820px]">
+            <div
+              className={`transition-opacity duration-300 ${
+                focus ? "pointer-events-none opacity-0" : "opacity-100"
+              }`}
+            >
               <OnboardingHint />
               <SundayHeader />
               <BuildingBlocksForStep slug={currentSub.slug} getStepContext={getStepContext} />
 
-              {/* An open tool sits above the text at full reading width — the
-                  text stays right below it, never replaced. */}
-              {activeTool && (
-                <div ref={toolRef} className="mb-5">
-                  <ToolPanel
-                    toolKey={activeTool}
-                    reference={savedRef}
-                    onClose={() => setActiveTool(null)}
-                  />
-                </div>
-              )}
-
-              <BibleTextPanel
-                currentSlug={subSlug}
-                onBreathingComplete={handleBreathingComplete}
-                onOpenText={handleOpenText}
-              />
+              <GuideChip
+                phase={phase}
+                currentSub={currentSub}
+                activeSubStep={activeSubStep}
+                checkCount={checkCount}
+              >
+                <GuideRail
+                  phase={phase}
+                  currentSub={currentSub}
+                  subSlug={subSlug}
+                  activeSubStep={activeSubStep}
+                  completedSubSteps={completedSubSteps}
+                  onSubStepSelect={handleSubStepSelect}
+                  flowToolHelpers={flowToolHelpers}
+                  onFlowCountChange={handleFlowCountChange}
+                  artifacts={artifacts}
+                  onArtifactChange={(field, value) =>
+                    updateField(field as keyof typeof artifacts, value)
+                  }
+                  prevPhase={prevPhase}
+                  nextPhase={nextPhase}
+                  onOpenTool={handleOpenTool}
+                  checkCount={checkCount}
+                  collapsed={false}
+                  onToggleCollapse={() => {}}
+                  minimal={minimalPath}
+                  onMinimalChange={setMinimalPath}
+                  bare
+                />
+              </GuideChip>
             </div>
 
-            {/* Moje kázání — third column at ≥1280px, a full-width row below the
-                text under that (never hidden: it holds the only notebook entry) */}
-            <div className="guide-sermon">
-              <SermonPanel
-                artifacts={artifacts}
-                onArtifactChange={(field, value) =>
-                  updateField(field as keyof typeof artifacts, value)
-                }
-              />
-              <div className="mt-4">
-                <SundayArchive />
+            {/* An open tool sits above the text at full reading width — the
+                text stays right below it, never replaced. */}
+            {activeTool && !focus && (
+              <div ref={toolRef} className="mb-5">
+                <ToolPanel
+                  toolKey={activeTool}
+                  reference={savedRef}
+                  onClose={() => setActiveTool(null)}
+                />
               </div>
+            )}
+
+            <BibleTextPanel
+              currentSlug={subSlug}
+              onBreathingComplete={handleBreathingComplete}
+              onOpenText={handleOpenText}
+            />
+
+            <ReadingToolbar
+              activeTool={activeTool}
+              onOpenTool={handleOpenTool}
+              onOpenNotebook={() => setNotebookOpen(true)}
+              onOpenSermon={() => setSermonOpen(true)}
+              focus={focus}
+              onToggleFocus={() => setFocus((f) => !f)}
+            />
+
+            {/* Leaving „soustředění" — the only thing still on screen. */}
+            {focus && (
+              <button
+                onClick={() => setFocus(false)}
+                className="fixed bottom-6 right-6 z-30 rounded-full border border-border bg-white/95 px-4 py-2 text-[13px] font-medium text-text-muted shadow-[0_6px_20px_rgba(0,0,0,0.08)] backdrop-blur hover:text-text"
+              >
+                {`Ukončit soustředění`}
+              </button>
+            )}
+
+            <div className={focus ? "hidden" : "mt-10"}>
+              <SundayArchive />
             </div>
           </div>
+
+          {/* „Moje kázání" — a sheet from the bar, not a permanent column. */}
+          {sermonOpen && (
+            <>
+              <div
+                className="fixed inset-0 z-[55] bg-text/30"
+                onClick={() => setSermonOpen(false)}
+              />
+              <aside
+                role="dialog"
+                aria-label="Moje kázání"
+                className="fixed right-0 top-0 bottom-0 z-[56] w-[min(380px,94vw)] overflow-y-auto border-l border-border bg-white shadow-[-4px_0_30px_rgba(0,0,0,0.12)]"
+              >
+                <div className="flex items-center justify-end border-b border-border px-4 py-2">
+                  <button
+                    onClick={() => setSermonOpen(false)}
+                    aria-label="Zavřít"
+                    className="rounded-lg px-2 py-0.5 text-lg text-text-muted hover:bg-cream hover:text-brick"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <div className="p-2">
+                  <SermonPanel
+                    artifacts={artifacts}
+                    onArtifactChange={(field, value) =>
+                      updateField(field as keyof typeof artifacts, value)
+                    }
+                    embedded
+                  />
+                </div>
+              </aside>
+            </>
+          )}
+
+          {/* One drawer for the whole reading screen, opened from the bar. */}
+          <BubbleDrawer
+            open={notebookOpen}
+            onClose={() => setNotebookOpen(false)}
+            artifacts={artifacts}
+            onArtifactChange={(field, value) =>
+              updateField(field as keyof typeof artifacts, value)
+            }
+          />
         </div>
 
         {/* Mobile: show guide inline below text */}
@@ -356,7 +440,7 @@ function OnboardingHint() {
   return (
     <div className="mb-5 flex items-center gap-2.5 rounded-[10px] border border-brick/15 bg-brick-pale px-4 py-2.5 text-[13px] text-brick animate-in fade-in slide-in-from-top-1 duration-500 delay-1000 fill-mode-both">
       <span className="shrink-0 text-base">{"\uD83D\uDC48"}</span>
-      <span>{`Pr\u016Fvodce p\u0159\u00EDpravou najde\u0161 vlevo. Provede t\u011B krok za krokem.`}</span>
+      <span>{`Pr\u016Fvodce m\u00E1\u0161 nad textem \u2014 jedno kliknut\u00ED a provede t\u011B krok za krokem.`}</span>
       <button
         onClick={dismiss}
         className="ml-auto shrink-0 px-1 text-brick/50 transition-opacity hover:text-brick"

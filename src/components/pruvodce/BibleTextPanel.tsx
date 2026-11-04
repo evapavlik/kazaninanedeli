@@ -360,7 +360,7 @@ export default function BibleTextPanel({
                   {localRef}
                 </p>
               )}
-              <div className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto blur-[3px] select-none">
+              <div className="reading-measure font-literata text-[20px] leading-[1.85] text-text whitespace-pre-wrap blur-[3px] select-none">
                 {localText}
               </div>
             </div>
@@ -544,10 +544,10 @@ export default function BibleTextPanel({
                   onRemoveAnnotation={removeAnnotation}
                   onUpdateNote={updateNote}
                   onAsk={(t) => setAskedTerm(t)}
-                  className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto"
+                  className="reading-measure font-literata text-[20px] leading-[1.85] text-text whitespace-pre-wrap"
                 />
               ) : (
-                <div className="font-literata text-[18px] leading-[2.0] text-text whitespace-pre-wrap text-justify hyphens-auto">
+                <div className="reading-measure font-literata text-[20px] leading-[1.85] text-text whitespace-pre-wrap">
                   {localText}
                 </div>
               )}
