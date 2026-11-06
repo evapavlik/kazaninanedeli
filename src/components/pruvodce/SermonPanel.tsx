@@ -8,6 +8,12 @@ import BubbleDrawer from "./BubbleDrawer";
 interface SermonPanelProps {
   artifacts: SermonArtifacts;
   onArtifactChange: (field: keyof SermonArtifacts, value: string) => void;
+  /**
+   * Rendered inside something that already owns the notebook — the reading
+   * screen's sheet. The panel then drops its own notebook button and drawer
+   * so only one drawer is ever mounted.
+   */
+  embedded?: boolean;
 }
 
 interface PanelField {
@@ -70,7 +76,7 @@ function truncate(str: string, max: number): string {
   return firstLine + (hasMore ? "\n…" : "");
 }
 
-export default function SermonPanel({ artifacts, onArtifactChange }: SermonPanelProps) {
+export default function SermonPanel({ artifacts, onArtifactChange, embedded = false }: SermonPanelProps) {
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({
     kostra: false,
     posluchaci: false,
@@ -91,7 +97,13 @@ export default function SermonPanel({ artifacts, onArtifactChange }: SermonPanel
   };
 
   return (
-    <div className="sticky top-4 flex flex-col rounded-xl border border-border bg-white overflow-hidden max-h-[calc(100vh-180px)]">
+    <div
+      className={
+        embedded
+          ? "flex flex-col overflow-hidden"
+          : "sticky top-4 flex flex-col rounded-xl border border-border bg-white overflow-hidden max-h-[calc(100vh-180px)]"
+      }
+    >
       {/* Header */}
       <div className="flex items-center justify-between border-b border-border px-3.5 py-2.5 flex-shrink-0">
         <span className="text-[12px] font-semibold uppercase tracking-widest text-text-muted">
@@ -103,6 +115,7 @@ export default function SermonPanel({ artifacts, onArtifactChange }: SermonPanel
       </div>
 
       {/* Můj zápisník button — opens the drawer with all collected material */}
+      {!embedded && (
       <button
         onClick={() => setDrawerOpen(true)}
         className="group mx-2.5 mt-2.5 flex items-center gap-2.5 rounded-lg border border-brick/20 bg-gradient-to-br from-brick-pale to-sage-pale px-3 py-2.5 text-left transition-all hover:-translate-y-[1px] hover:border-brick hover:shadow-[0_2px_10px_rgba(196,30,30,0.08)]"
@@ -124,6 +137,7 @@ export default function SermonPanel({ artifacts, onArtifactChange }: SermonPanel
           →
         </span>
       </button>
+      )}
 
       {/* Body */}
       <div className="flex-1 overflow-y-auto p-2.5 space-y-0.5">
@@ -231,12 +245,14 @@ export default function SermonPanel({ artifacts, onArtifactChange }: SermonPanel
       </div>
 
       {/* Drawer — portal-like overlay, closes on backdrop or Esc */}
-      <BubbleDrawer
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-        artifacts={artifacts}
-        onArtifactChange={onArtifactChange}
-      />
+      {!embedded && (
+        <BubbleDrawer
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+          artifacts={artifacts}
+          onArtifactChange={onArtifactChange}
+        />
+      )}
     </div>
   );
 }

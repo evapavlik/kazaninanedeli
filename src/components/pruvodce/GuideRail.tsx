@@ -32,6 +32,12 @@ interface GuideRailProps {
   /** Minimal path: just the sermon spine, for weeks with little time. */
   minimal: boolean;
   onMinimalChange: (minimal: boolean) => void;
+  /**
+   * Rendered inside something that already provides the surface and the
+   * heading — the reading screen's GuideChip. The rail then drops its own
+   * card, sticky positioning and phase header.
+   */
+  bare?: boolean;
 }
 
 /**
@@ -62,9 +68,10 @@ export default function GuideRail({
   onToggleCollapse,
   minimal,
   onMinimalChange,
+  bare = false,
 }: GuideRailProps) {
   // ---- QUIET STRIP -------------------------------------------------------
-  if (collapsed) {
+  if (collapsed && !bare) {
     // Ripening progress dots — one per sub-step, the current one filled with a
     // conic gradient in proportion to items done. Built here rather than at the
     // top of the component: the open rail shows position via SubStepNav and
@@ -131,9 +138,14 @@ export default function GuideRail({
   return (
     <aside
       aria-label="Průvodce přípravou"
-      className="sticky top-[84px] max-h-[calc(100vh-104px)] overflow-y-auto rounded-2xl border border-border bg-white p-[18px]"
+      className={
+        bare
+          ? ""
+          : "sticky top-[84px] max-h-[calc(100vh-104px)] overflow-y-auto rounded-2xl border border-border bg-white p-[18px]"
+      }
     >
-      {/* Header */}
+      {/* Header — the chip already says which step this is. */}
+      {!bare && (
       <div className="mb-4 flex items-start justify-between gap-2">
         <div className="flex items-center gap-2.5">
           <span className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-brick-pale text-[17px]">
@@ -159,6 +171,7 @@ export default function GuideRail({
           </svg>
         </button>
       </div>
+      )}
 
       {/* Pace switch. The full path is the method; the minimal path is its
           spine (myšlenka → thesis → text) for the weeks there isn't time for

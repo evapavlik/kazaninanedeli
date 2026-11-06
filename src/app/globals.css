@@ -137,31 +137,6 @@ html {
  * switch at runtime (open ↔ quiet). Only rendered inside a `hidden lg:block`
  * wrapper, so it is desktop-only by construction.
  */
-.guide-layout {
-  display: grid;
-  grid-template-columns: 330px minmax(0, 1fr);
-  gap: 1.5rem;
-  align-items: start;
-}
-.guide-layout[data-quiet="true"] {
-  grid-template-columns: 56px minmax(0, 1fr);
-}
-@media (min-width: 1280px) {
-  .guide-layout { grid-template-columns: 330px minmax(0, 1fr) 268px; }
-  .guide-layout[data-quiet="true"] { grid-template-columns: 56px minmax(0, 1fr) 268px; }
-}
-
-/*
- * "Moje kázání" placement. Below 1280px a third column would crush the reading
- * width, so the panel drops to a full-width row beneath the text — still
- * present, so the notebook (reachable only from here) never disappears. At
- * ≥1280px it takes its natural place as the third column.
- */
-.guide-sermon { grid-column: 1 / -1; }
-@media (min-width: 1280px) {
-  .guide-sermon { grid-column: auto; }
-}
-
 /*
  * Breathing symbols (Příprava srdce). Continuous, breath-independent motion —
  * water keeps flowing even between breaths — plus the shared "person" shape for
@@ -242,4 +217,24 @@ html {
   html {
     scroll-behavior: auto;
   }
+}
+
+/*
+ * Reading measure. Scripture is read slowly and often aloud, so the line is
+ * capped at ~62 characters — past that the eye loses the line start on the
+ * return sweep. The cap is on the text, not the column, so the column can stay
+ * wide enough for tools and tabs.
+ */
+.reading-measure {
+  max-width: 62ch;
+}
+
+/*
+ * Focus mode on the reading screen: everything that is not the text steps
+ * back. Chrome owned by other components marks itself data-guide-chrome.
+ */
+html[data-focus="true"] [data-guide-chrome] {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }

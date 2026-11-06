@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Lora, Plus_Jakarta_Sans, Cormorant_Garamond, Literata } from "next/font/google";
+import { Lora, DM_Sans, Cormorant_Garamond, Literata } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -12,10 +12,12 @@ const lora = Lora({
   style: ["normal", "italic"],
 });
 
-const jakarta = Plus_Jakarta_Sans({
+// The interface typeface. DM Sans reads cleanly at the small sizes the chrome
+// uses and stays out of the way of Literata, which carries the scripture.
+const jakarta = DM_Sans({
   variable: "--font-jakarta",
   subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const cormorant = Cormorant_Garamond({
