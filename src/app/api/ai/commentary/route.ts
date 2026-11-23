@@ -2,6 +2,7 @@ import { z } from "zod";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { getAiClient, AI_MODEL, notConfigured } from "@/lib/ai/client";
 import { COMMENTARY_SYSTEM, LIMITS } from "@/lib/ai/prompts";
+import { describeAiError } from "@/lib/ai/errors";
 import { createClient } from "@supabase/supabase-js";
 import { supabaseCteni } from "@/lib/supabase-cteni";
 
@@ -94,11 +95,10 @@ export async function POST(req: Request) {
       ],
     });
   } catch (e) {
-    // Say what went wrong (bad key, rate limit, network) instead of a bare
-    // 500 the panel can't explain.
-    const msg =
-      e instanceof Error ? e.message : "Komentář se nepodařilo vytvořit.";
-    return Response.json({ error: msg.slice(0, 300) }, { status: 502 });
+    // Say what went wrong (bad key, no credit, rate limit, network) in Czech
+    // instead of a bare 500 — or the API's raw JSON — the panel can't explain.
+    const { message, status } = describeAiError(e);
+    return Response.json({ error: message }, { status });
   }
 
   const parsed = response.parsed_output;
